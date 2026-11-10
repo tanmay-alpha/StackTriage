@@ -1,0 +1,27 @@
+# Applying this blueprint creates paid resources. Obtain the owner's approval first.
+services:
+  - type: web
+    name: stacktriage
+    runtime: docker
+    repo: https://github.com/tanmay-alpha/StackTriage
+    plan: 0.5c-512mb
+    numInstances: 1
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: 'off'
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: '8000'
+      - key: STACKTRIAGE_ENV
+        value: production
+      - key: STACKTRIAGE_DB
+        value: /data/stacktriage.db
+      - key: STACKTRIAGE_STATIC_DIR
+        value: /app/frontend/dist
+      - key: STACKTRIAGE_API_KEY
+        sync: false
+    disk:
+      name: stacktriage-data
+      mountPath: /data
+      sizeGB: 1
