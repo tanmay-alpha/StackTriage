@@ -24,7 +24,7 @@ row per request.
 | Doesn't ingest ordinary application logs | **Confirmed** | Validating `{"message": "2024-03-05 12:00:01,123 ERROR app.db: connection refused"}` against `LogRecord` fails with 11 validation errors. No text/JSON-lines parser, no stack-trace handling, no timestamps in the model. |
 | ML tests may skip without generated data | **Confirmed** | `pytest` on a fresh clone: `1 passed, 5 skipped` (`tests/test_pipeline.py` skips when `data/train_logs.csv` is absent). Only the `/health` test runs. |
 | No persistent incident-management app | **Confirmed** | No database, no incidents, no review state or notes; `/predict` is stateless. |
-| Docker depends on generated model artifacts | **Confirmed by inspection** | `docker/Dockerfile` has `COPY models/ ./models/`, but `models/*.joblib` is gitignored and `git ls-files models` is empty, so a fresh clone has no `models/` directory and the build step cannot succeed until `python -m src.train` is run. I could not run `docker build` (Docker Desktop daemon was not running); this is from reading the Dockerfile and `git ls-files`. |
+| Docker depends on generated model artifacts | **Confirmed by running it** | `docker/Dockerfile` has `COPY models/ ./models/`, but `models/*.joblib` is gitignored and `git ls-files models` is empty. `docker build -f docker/Dockerfile .` on a fresh clone fails with `failed to compute cache key: "/models": not found`. |
 
 ## Additional findings
 
