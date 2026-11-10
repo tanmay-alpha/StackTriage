@@ -1,0 +1,29 @@
+{
+  "file": "telemetry.csv",
+  "format": "csv",
+  "service": null,
+  "total_events": 550,
+  "window_start": "2026-03-05T10:00:00+00:00",
+  "groups": [
+    {
+      "id": "upstream_timeout",
+      "count": 300,
+      "level": "ERROR",
+      "title_contains": "timeout calling inventory after <N>ms",
+      "exc_type": null,
+      "first_second": "2026-03-05T11:00:04+00:00",
+      "last_second": "2026-03-05T11:59:51+00:00",
+      "ongoing": true
+    },
+    {
+      "id": "disk_warn",
+      "count": 10,
+      "level": "WARNING",
+      "title_contains": "disk usage high",
+      "exc_type": null,
+      "first_second": "2026-03-05T10:11:50+00:00",
+      "last_second": "2026-03-05T11:42:24+00:00",
+      "ongoing": false
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "file": "pino_payments.jsonl",
+  "format": "jsonl",
+  "service": "payments",
+  "total_events": 627,
+  "window_start": "2026-03-05T10:00:00+00:00",
+  "groups": [
+    {
+      "id": "gateway_timeout",
+      "count": 120,
+      "level": "ERROR",
+      "title_contains": "ETIMEDOUT",
+      "exc_type": "Error",
+      "first_second": "2026-03-05T10:40:00+00:00",
+      "last_second": "2026-03-05T11:59:29+00:00",
+      "ongoing": true
+    },
+    {
+      "id": "validation_amount",
+      "count": 8,
+      "level": "ERROR",
+      "title_contains": "\"amount\" must be greater than",
+      "exc_type": "ValidationError",
+      "first_second": "2026-03-05T10:03:40+00:00",
+      "last_second": "2026-03-05T11:17:21+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "retry_warn",
+      "count": 19,
+      "level": "WARNING",
+      "title_contains": "retrying charge, attempt",
+      "exc_type": null,
+      "first_second": "2026-03-05T10:05:23+00:00",
+      "last_second": "2026-03-05T11:35:28+00:00",
+      "ongoing": false
+    }
+  ]
+}

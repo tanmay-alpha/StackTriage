@@ -1,0 +1,79 @@
+{
+  "file": "python_app.log",
+  "format": "python",
+  "service": "orders-api",
+  "total_events": 444,
+  "window_start": "2026-03-05T10:00:00+00:00",
+  "groups": [
+    {
+      "id": "auth_reject",
+      "count": 1,
+      "level": "WARNING",
+      "title_contains": "Rejected request",
+      "exc_type": null,
+      "first_second": "2026-03-05T10:05:00+00:00",
+      "last_second": "2026-03-05T10:05:00+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "login_retry",
+      "count": 1,
+      "level": "WARNING",
+      "title_contains": "Login retry for user bob",
+      "exc_type": null,
+      "first_second": "2026-03-05T10:05:01+00:00",
+      "last_second": "2026-03-05T10:05:01+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "value_error_qty",
+      "count": 14,
+      "level": "ERROR",
+      "title_contains": "invalid literal for int()",
+      "exc_type": "ValueError",
+      "first_second": "2026-03-05T10:10:35+00:00",
+      "last_second": "2026-03-05T11:30:54+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "keyerror_rates",
+      "count": 5,
+      "level": "ERROR",
+      "title_contains": "KeyError",
+      "exc_type": "KeyError",
+      "first_second": "2026-03-05T10:33:04+00:00",
+      "last_second": "2026-03-05T11:20:25+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "value_error_currency",
+      "count": 6,
+      "level": "ERROR",
+      "title_contains": "Unknown currency code",
+      "exc_type": "ValueError",
+      "first_second": "2026-03-05T10:44:19+00:00",
+      "last_second": "2026-03-05T11:14:29+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "db_down",
+      "count": 105,
+      "level": "ERROR",
+      "title_contains": "Connection refused",
+      "exc_type": "sqlalchemy.exc.OperationalError",
+      "first_second": "2026-03-05T11:25:00+00:00",
+      "last_second": "2026-03-05T11:59:43+00:00",
+      "ongoing": true
+    },
+    {
+      "id": "slow_query",
+      "count": 23,
+      "level": "WARNING",
+      "title_contains": "Slow query took",
+      "exc_type": null,
+      "first_second": "2026-03-05T10:06:34+00:00",
+      "last_second": "2026-03-05T11:34:44+00:00",
+      "ongoing": false
+    }
+  ]
+}

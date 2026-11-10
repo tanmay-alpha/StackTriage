@@ -1,0 +1,1031 @@
+2026-03-05T10:00:00.000Z [api-gateway] info: GET /api/users/7331 200 35ms
+2026-03-05T10:00:12.000Z [api-gateway] info: Outbound call {"headers":{"authorization":"Bearer abcdefghijklmnop123456"},"token":"tok_live_998877"}
+2026-03-05T10:00:20.000Z [api-gateway] info: Session 09381efa refreshed
+2026-03-05T10:00:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:01:01.000Z [api-gateway] info: GET /api/users/2389 200 62ms
+2026-03-05T10:01:30.000Z [api-gateway] info: Session a0dce604 refreshed
+2026-03-05T10:01:43.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:02:16.000Z [api-gateway] info: GET /api/users/1994 200 51ms
+2026-03-05T10:02:35.000Z [api-gateway] info: Session e3aa471c refreshed
+2026-03-05T10:02:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:03:04.000Z [api-gateway] info: GET /api/users/6846 200 36ms
+2026-03-05T10:03:21.000Z [api-gateway] info: Session d6ed9fdf refreshed
+2026-03-05T10:03:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:04:13.000Z [api-gateway] info: GET /api/users/1889 200 45ms
+2026-03-05T10:04:24.000Z [api-gateway] info: Session 49469368 refreshed
+2026-03-05T10:04:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:05:03.000Z [api-gateway] info: GET /api/users/7178 200 38ms
+2026-03-05T10:05:31.000Z [api-gateway] info: Session 63e08fb2 refreshed
+2026-03-05T10:05:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:06:15.000Z [api-gateway] info: GET /api/users/362 200 61ms
+2026-03-05T10:06:36.000Z [api-gateway] info: Session 495125cc refreshed
+2026-03-05T10:06:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:07:06.000Z [api-gateway] info: GET /api/users/4635 200 78ms
+2026-03-05T10:07:29.000Z [api-gateway] info: Session c53beebd refreshed
+10.0.0.134 - - [05/Mar/2026:10:07:33 +0000] "POST /api/orders/15367 HTTP/1.1" 404 132 "-" "axios/1.6.2"
+2026-03-05T10:07:53.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:08:10.000Z [api-gateway] info: GET /api/users/1532 200 68ms
+2026-03-05T10:08:33.000Z [api-gateway] info: Session 4edbfef8 refreshed
+2026-03-05T10:08:48.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:09:17.000Z [api-gateway] info: GET /api/users/1007 200 71ms
+2026-03-05T10:09:21.000Z [api-gateway] info: Session 7e365e8a refreshed
+2026-03-05T10:09:49.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:10:09.000Z [api-gateway] info: GET /api/users/4462 200 36ms
+2026-03-05T10:10:31.000Z [api-gateway] info: Session dbaaae92 refreshed
+2026-03-05T10:10:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:11:12.000Z [api-gateway] info: GET /api/users/8548 200 14ms
+2026-03-05T10:11:30.000Z [api-gateway] info: Session de3b3ddd refreshed
+2026-03-05T10:11:56.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:12:08.000Z [api-gateway] info: GET /api/users/7414 200 70ms
+2026-03-05T10:12:36.000Z [api-gateway] info: Session 2eb15ca2 refreshed
+2026-03-05T10:12:51.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:13:06.000Z [api-gateway] info: GET /api/users/1680 200 29ms
+2026-03-05T10:13:35.000Z [api-gateway] info: Session 71b7e67c refreshed
+2026-03-05T10:13:43.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:14:10.000Z [api-gateway] info: GET /api/users/840 200 39ms
+2026-03-05T10:14:26.000Z [api-gateway] info: Session 47955cd6 refreshed
+2026-03-05T10:14:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:15:09.000Z [api-gateway] info: GET /api/users/3819 200 23ms
+2026-03-05T10:15:19.508Z [api-gateway] error: Unhandled error in GET /api/users/519 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:15:24.000Z [api-gateway] info: Session b1a16a1b refreshed
+2026-03-05T10:15:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:16:02.000Z [api-gateway] info: GET /api/users/951 200 51ms
+2026-03-05T10:16:19.110Z [api-gateway] error: Unhandled error in GET /api/users/9812 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:16:21.000Z [api-gateway] info: Session b72ce129 refreshed
+2026-03-05T10:16:52.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:17:17.000Z [api-gateway] info: GET /api/users/9292 200 11ms
+2026-03-05T10:17:32.000Z [api-gateway] info: Session 5d4b69e0 refreshed
+2026-03-05T10:17:34.577Z [api-gateway] error: Unhandled error in GET /api/users/7678 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:17:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:18:18.000Z [api-gateway] info: GET /api/users/7194 200 30ms
+2026-03-05T10:18:21.000Z [api-gateway] info: Session f83e0220 refreshed
+2026-03-05T10:18:52.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:19:09.000Z [api-gateway] info: GET /api/users/663 200 39ms
+2026-03-05T10:19:23.000Z [api-gateway] info: Session 9f0ac017 refreshed
+2026-03-05T10:19:40.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:20:01.000Z [api-gateway] info: GET /api/users/7205 200 35ms
+2026-03-05T10:20:26.000Z [api-gateway] info: Session 4e2f76c2 refreshed
+2026-03-05T10:20:32.788Z [api-gateway] error: Unhandled error in GET /api/users/7634 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:20:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:21:19.000Z [api-gateway] info: GET /api/users/1484 200 64ms
+2026-03-05T10:21:21.000Z [api-gateway] info: Session 82fa5847 refreshed
+2026-03-05T10:21:56.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:22:17.000Z [api-gateway] info: GET /api/users/4591 200 36ms
+2026-03-05T10:22:39.000Z [api-gateway] info: Session d6f9ac8b refreshed
+2026-03-05T10:22:52.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:23:19.000Z [api-gateway] info: GET /api/users/3396 200 75ms
+2026-03-05T10:23:24.000Z [api-gateway] info: Session 7a54c2e3 refreshed
+2026-03-05T10:23:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:24:02.000Z [api-gateway] info: GET /api/users/3730 200 29ms
+10.0.0.147 - - [05/Mar/2026:10:24:18 +0000] "POST /api/orders/16827 HTTP/1.1" 404 132 "-" "axios/1.6.2"
+2026-03-05T10:24:26.000Z [api-gateway] info: Session f3bb6654 refreshed
+2026-03-05T10:24:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:25:14.000Z [api-gateway] info: GET /api/users/4522 200 41ms
+2026-03-05T10:25:25.000Z [api-gateway] info: Session df0bbe3e refreshed
+2026-03-05T10:25:43.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:26:05.000Z [api-gateway] info: GET /api/users/7307 200 50ms
+2026-03-05T10:26:21.000Z [api-gateway] info: Session fedf9a7d refreshed
+10.0.0.171 - - [05/Mar/2026:10:26:43 +0000] "POST /api/orders/76827 HTTP/1.1" 404 132 "-" "axios/1.6.2"
+2026-03-05T10:26:53.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:27:03.000Z [api-gateway] info: GET /api/users/6824 200 75ms
+2026-03-05T10:27:20.000Z [api-gateway] info: Session 926be728 refreshed
+2026-03-05T10:27:51.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:28:04.000Z [api-gateway] info: GET /api/users/6318 200 62ms
+2026-03-05T10:28:29.000Z [api-gateway] info: Session 4afcbac6 refreshed
+2026-03-05T10:28:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:29:08.000Z [api-gateway] info: GET /api/users/8284 200 53ms
+2026-03-05T10:29:29.000Z [api-gateway] info: Session 251e1ae1 refreshed
+2026-03-05T10:29:45.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:30:13.000Z [api-gateway] info: GET /api/users/1540 200 47ms
+2026-03-05T10:30:21.000Z [api-gateway] info: Session f8dce53f refreshed
+10.0.0.95 - - [05/Mar/2026:10:30:44 +0000] "POST /api/orders/26914 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T10:30:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:31:00.000Z [api-gateway] info: GET /api/users/9355 200 68ms
+2026-03-05T10:31:33.000Z [api-gateway] info: Session ad1d2cb9 refreshed
+2026-03-05T10:31:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:32:18.000Z [api-gateway] info: GET /api/users/8705 200 34ms
+2026-03-05T10:32:21.000Z [api-gateway] info: Session 92f54112 refreshed
+2026-03-05T10:32:49.957Z [api-gateway] error: Unhandled error in GET /api/users/7672 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:32:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:33:18.000Z [api-gateway] info: GET /api/users/7311 200 80ms
+2026-03-05T10:33:36.000Z [api-gateway] info: Session 516d8b3b refreshed
+2026-03-05T10:33:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:34:03.000Z [api-gateway] info: GET /api/users/1910 200 42ms
+2026-03-05T10:34:24.717Z [api-gateway] error: Unhandled error in GET /api/users/7245 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:34:33.000Z [api-gateway] info: Session a18fda26 refreshed
+2026-03-05T10:34:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:35:12.000Z [api-gateway] info: GET /api/users/6854 200 28ms
+2026-03-05T10:35:34.000Z [api-gateway] info: Session b115d13b refreshed
+2026-03-05T10:35:42.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:36:00.000Z [api-gateway] info: GET /api/users/1713 200 80ms
+2026-03-05T10:36:32.000Z [api-gateway] info: Session 9128a82e refreshed
+2026-03-05T10:36:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:37:18.000Z [api-gateway] info: GET /api/users/9512 200 30ms
+2026-03-05T10:37:24.000Z [api-gateway] info: Session 1b4d294b refreshed
+2026-03-05T10:37:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:38:13.000Z [api-gateway] info: GET /api/users/7759 200 60ms
+2026-03-05T10:38:37.000Z [api-gateway] info: Session 4683beba refreshed
+2026-03-05T10:38:43.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:39:02.000Z [api-gateway] info: GET /api/users/9639 200 13ms
+10.0.0.61 - - [05/Mar/2026:10:39:24 +0000] "POST /api/orders/32923 HTTP/1.1" 404 132 "-" "axios/1.6.2"
+2026-03-05T10:39:35.000Z [api-gateway] info: Session 05011ece refreshed
+2026-03-05T10:39:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:40:04.000Z [api-gateway] info: GET /api/users/7303 200 11ms
+2026-03-05T10:40:20.000Z [api-gateway] info: Session 0b42312f refreshed
+2026-03-05T10:40:53.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:41:00.000Z [api-gateway] info: GET /api/users/7561 200 43ms
+10.0.0.105 - - [05/Mar/2026:10:41:03 +0000] "POST /api/orders/73783 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T10:41:20.000Z [api-gateway] info: Session ad62558b refreshed
+2026-03-05T10:41:43.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:42:02.000Z [api-gateway] info: GET /api/users/6630 200 67ms
+2026-03-05T10:42:26.000Z [api-gateway] info: Session 2b8028c4 refreshed
+2026-03-05T10:42:43.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:43:04.000Z [api-gateway] info: GET /api/users/6588 200 76ms
+2026-03-05T10:43:35.000Z [api-gateway] info: Session df19a228 refreshed
+2026-03-05T10:43:40.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:44:08.000Z [api-gateway] info: GET /api/users/2119 200 59ms
+2026-03-05T10:44:38.000Z [api-gateway] info: Session 48992613 refreshed
+2026-03-05T10:44:47.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:45:14.000Z [api-gateway] info: GET /api/users/514 200 48ms
+2026-03-05T10:45:25.000Z [api-gateway] info: Session 17b6af7d refreshed
+2026-03-05T10:45:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:46:11.000Z [api-gateway] info: GET /api/users/4035 200 25ms
+2026-03-05T10:46:24.000Z [api-gateway] info: Session 354359fe refreshed
+2026-03-05T10:46:42.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:47:09.000Z [api-gateway] info: GET /api/users/7516 200 21ms
+10.0.0.34 - - [05/Mar/2026:10:47:23 +0000] "POST /api/orders/32442 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T10:47:37.000Z [api-gateway] info: Session 3f0a483a refreshed
+2026-03-05T10:47:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:48:14.000Z [api-gateway] info: GET /api/users/8505 200 16ms
+2026-03-05T10:48:28.000Z [api-gateway] info: Session 4f8fdd84 refreshed
+2026-03-05T10:48:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:49:01.000Z [api-gateway] info: GET /api/users/3893 200 46ms
+2026-03-05T10:49:20.000Z [api-gateway] info: Session e9f21682 refreshed
+2026-03-05T10:49:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:50:00.000Z [api-gateway] info: GET /api/users/5199 200 16ms
+2026-03-05T10:50:00.152Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:50:31.745Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:50:39.000Z [api-gateway] info: Session 484902df refreshed
+2026-03-05T10:50:42.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:51:02.188Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:51:12.000Z [api-gateway] info: GET /api/users/584 200 51ms
+2026-03-05T10:51:29.000Z [api-gateway] info: Session 6688e8aa refreshed
+2026-03-05T10:51:33.440Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:51:38.424Z [api-gateway] error: Unhandled error in GET /api/users/7859 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:51:49.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:52:00.341Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:52:19.000Z [api-gateway] info: GET /api/users/4538 200 33ms
+2026-03-05T10:52:25.000Z [api-gateway] info: Session 6e428d63 refreshed
+2026-03-05T10:52:34.695Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:52:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:53:03.411Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:53:19.000Z [api-gateway] info: GET /api/users/9441 200 68ms
+2026-03-05T10:53:21.000Z [api-gateway] info: Session b22d5728 refreshed
+2026-03-05T10:53:34.117Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:53:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:54:01.039Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:54:11.000Z [api-gateway] info: GET /api/users/5763 200 16ms
+2026-03-05T10:54:33.848Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:54:38.000Z [api-gateway] info: Session 86febef8 refreshed
+2026-03-05T10:54:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:55:00.360Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:55:08.120Z [api-gateway] error: Unhandled error in GET /api/users/1575 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:55:15.000Z [api-gateway] info: GET /api/users/8433 200 11ms
+2026-03-05T10:55:25.000Z [api-gateway] info: Session 3075b546 refreshed
+2026-03-05T10:55:31.125Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:55:44.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:56:02.673Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:56:03.000Z [api-gateway] info: GET /api/users/1072 200 26ms
+2026-03-05T10:56:31.000Z [api-gateway] info: Session 4f806351 refreshed
+2026-03-05T10:56:32.945Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:56:45.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:57:01.215Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+10.0.0.200 - - [05/Mar/2026:10:57:01 +0000] "POST /api/orders/68232 HTTP/1.1" 404 132 "-" "axios/1.6.2"
+2026-03-05T10:57:13.000Z [api-gateway] info: GET /api/users/3997 200 35ms
+2026-03-05T10:57:30.180Z [api-gateway] error: Unhandled error in GET /api/users/1166 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:57:34.671Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:57:35.000Z [api-gateway] info: Session b2b365fd refreshed
+2026-03-05T10:57:52.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:58:00.961Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:58:14.000Z [api-gateway] info: GET /api/users/2032 200 75ms
+2026-03-05T10:58:28.000Z [api-gateway] info: Session 34d1bd92 refreshed
+2026-03-05T10:58:28.450Z [api-gateway] error: Unhandled error in GET /api/users/6614 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T10:58:31.536Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+10.0.0.225 - - [05/Mar/2026:10:58:34 +0000] "POST /api/orders/71096 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T10:58:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T10:59:04.538Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:59:10.000Z [api-gateway] info: GET /api/users/3482 200 10ms
+2026-03-05T10:59:29.000Z [api-gateway] info: Session b39d9ec4 refreshed
+2026-03-05T10:59:32.074Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T10:59:48.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:00:01.000Z [api-gateway] info: GET /api/users/7392 200 64ms
+2026-03-05T11:00:04.226Z [api-gateway] error: Unhandled error in GET /api/users/1363 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:00:04.297Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:00:21.503Z [api-gateway] error: Unhandled error in GET /api/users/2316 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:00:32.501Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:00:39.000Z [api-gateway] info: Session 8eba6514 refreshed
+2026-03-05T11:00:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:01:00.356Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:01:10.000Z [api-gateway] info: GET /api/users/5534 200 77ms
+10.0.0.211 - - [05/Mar/2026:11:01:13 +0000] "POST /api/orders/9144 HTTP/1.1" 404 132 "-" "axios/1.6.2"
+2026-03-05T11:01:32.018Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:01:39.000Z [api-gateway] info: Session 7d0411cb refreshed
+2026-03-05T11:01:40.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:02:03.768Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:02:04.000Z [api-gateway] info: GET /api/users/1590 200 41ms
+2026-03-05T11:02:32.800Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:02:39.000Z [api-gateway] info: Session 2527b6fa refreshed
+2026-03-05T11:02:49.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:03:02.508Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:03:17.524Z [api-gateway] error: Unhandled error in GET /api/users/255 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:03:18.000Z [api-gateway] info: GET /api/users/1774 200 44ms
+2026-03-05T11:03:33.000Z [api-gateway] info: Session 51f5b7f9 refreshed
+2026-03-05T11:03:34.910Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:03:47.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:04:03.952Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:04:12.000Z [api-gateway] info: GET /api/users/4021 200 12ms
+2026-03-05T11:04:32.000Z [api-gateway] info: Session e7bae92c refreshed
+2026-03-05T11:04:34.934Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:04:52.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:05:03.095Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:05:19.000Z [api-gateway] info: GET /api/users/2680 200 43ms
+2026-03-05T11:05:27.000Z [api-gateway] info: Session 29e42f63 refreshed
+2026-03-05T11:05:30.205Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:05:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:06:02.496Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:06:09.000Z [api-gateway] info: GET /api/users/3226 200 32ms
+2026-03-05T11:06:20.000Z [api-gateway] info: Session 6ce9eb66 refreshed
+2026-03-05T11:06:32.286Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:06:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:07:01.884Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:07:08.000Z [api-gateway] info: GET /api/users/8531 200 58ms
+2026-03-05T11:07:28.000Z [api-gateway] info: Session b9895415 refreshed
+2026-03-05T11:07:29.686Z [api-gateway] error: Unhandled error in GET /api/users/3907 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:07:33.310Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:07:53.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:07:54.584Z [api-gateway] error: Unhandled error in GET /api/users/353 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:08:03.612Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:08:05.000Z [api-gateway] info: GET /api/users/9330 200 49ms
+2026-03-05T11:08:34.597Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:08:38.000Z [api-gateway] info: Session 8aefce45 refreshed
+2026-03-05T11:08:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:09:02.553Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:09:09.000Z [api-gateway] info: GET /api/users/5531 200 43ms
+10.0.0.63 - - [05/Mar/2026:11:09:16 +0000] "POST /api/orders/13451 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T11:09:24.000Z [api-gateway] info: Session dd81d987 refreshed
+2026-03-05T11:09:32.774Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:09:50.104Z [api-gateway] error: Unhandled error in GET /api/users/8241 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:09:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:10:01.090Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:10:04.000Z [api-gateway] info: GET /api/users/3745 200 62ms
+2026-03-05T11:10:28.000Z [api-gateway] info: Session 6a97ad18 refreshed
+2026-03-05T11:10:31.206Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:10:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:11:00.143Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:11:15.000Z [api-gateway] info: GET /api/users/6593 200 38ms
+2026-03-05T11:11:31.000Z [api-gateway] info: Session 1cbdd82e refreshed
+2026-03-05T11:11:31.481Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:11:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:12:02.000Z [api-gateway] info: GET /api/users/8116 200 34ms
+2026-03-05T11:12:04.277Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:12:32.786Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:12:37.000Z [api-gateway] info: Session 7084ddd8 refreshed
+2026-03-05T11:12:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:13:03.914Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:13:15.000Z [api-gateway] info: GET /api/users/8540 200 18ms
+2026-03-05T11:13:32.000Z [api-gateway] info: Session 17d660d1 refreshed
+2026-03-05T11:13:33.783Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:13:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:14:04.865Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:14:07.000Z [api-gateway] info: GET /api/users/873 200 52ms
+2026-03-05T11:14:29.000Z [api-gateway] info: Session 75af45a8 refreshed
+2026-03-05T11:14:31.925Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:14:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:15:01.000Z [api-gateway] info: GET /api/users/3403 200 77ms
+2026-03-05T11:15:02.232Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:15:32.000Z [api-gateway] info: Session 4170098e refreshed
+2026-03-05T11:15:32.592Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:15:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:16:01.946Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:16:06.000Z [api-gateway] info: GET /api/users/9992 200 50ms
+2026-03-05T11:16:28.000Z [api-gateway] info: Session 1ceb8f72 refreshed
+2026-03-05T11:16:33.307Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:16:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:17:00.000Z [api-gateway] info: GET /api/users/7419 200 7ms
+2026-03-05T11:17:04.033Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:17:30.594Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:17:32.000Z [api-gateway] info: Session 7cf0b2c5 refreshed
+2026-03-05T11:17:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:18:02.613Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:18:17.000Z [api-gateway] info: GET /api/users/9180 200 42ms
+2026-03-05T11:18:22.000Z [api-gateway] info: Session e01a6ea5 refreshed
+2026-03-05T11:18:27.758Z [api-gateway] error: Unhandled error in GET /api/users/3380 TypeError: Cannot read properties of undefined (reading 'id')
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getUser (/app/routes/users.js:42:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:18:30.103Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:18:57.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:19:04.990Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:19:11.000Z [api-gateway] info: GET /api/users/326 200 8ms
+2026-03-05T11:19:22.000Z [api-gateway] info: Session df80c7f5 refreshed
+2026-03-05T11:19:30.001Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:19:47.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:20:03.352Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:20:12.000Z [api-gateway] info: GET /api/users/6545 200 34ms
+2026-03-05T11:20:34.199Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:20:38.000Z [api-gateway] info: Session 376060af refreshed
+2026-03-05T11:20:56.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:21:02.967Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:21:08.000Z [api-gateway] info: GET /api/users/3563 200 26ms
+2026-03-05T11:21:30.155Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:21:36.000Z [api-gateway] info: Session 93b90dcb refreshed
+2026-03-05T11:21:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:22:02.672Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:22:15.000Z [api-gateway] info: GET /api/users/5596 200 79ms
+2026-03-05T11:22:31.307Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:22:36.000Z [api-gateway] info: Session 3fad6bbb refreshed
+2026-03-05T11:22:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:23:03.051Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:23:06.000Z [api-gateway] info: GET /api/users/6398 200 39ms
+2026-03-05T11:23:26.000Z [api-gateway] info: Session b2d80f0b refreshed
+2026-03-05T11:23:32.176Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:23:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:24:01.341Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:24:06.000Z [api-gateway] info: GET /api/users/7083 200 78ms
+2026-03-05T11:24:22.000Z [api-gateway] info: Session 127098ca refreshed
+2026-03-05T11:24:31.358Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:24:45.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:25:04.460Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:25:09.000Z [api-gateway] info: GET /api/users/5841 200 75ms
+2026-03-05T11:25:31.000Z [api-gateway] info: Session b44817f2 refreshed
+2026-03-05T11:25:34.492Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:25:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:26:03.253Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:26:18.000Z [api-gateway] info: GET /api/users/4088 200 35ms
+2026-03-05T11:26:31.000Z [api-gateway] info: Session 34929c98 refreshed
+2026-03-05T11:26:33.337Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:26:52.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:27:03.760Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:27:16.000Z [api-gateway] info: GET /api/users/9418 200 43ms
+2026-03-05T11:27:24.000Z [api-gateway] info: Session 24d10dbf refreshed
+2026-03-05T11:27:31.372Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:27:47.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:28:01.000Z [api-gateway] info: GET /api/users/3216 200 79ms
+2026-03-05T11:28:01.183Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:28:30.112Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:28:35.000Z [api-gateway] info: Session 77c67cc2 refreshed
+2026-03-05T11:28:51.000Z [api-gateway] info: Listening on port 3000
+10.0.0.29 - - [05/Mar/2026:11:28:52 +0000] "POST /api/orders/8033 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T11:28:57.090Z [api-gateway] error: Unhandled error in GET /api/users/3632 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:29:01.806Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:29:03.000Z [api-gateway] info: GET /api/users/5330 200 27ms
+2026-03-05T11:29:31.000Z [api-gateway] info: Session 0c35b299 refreshed
+2026-03-05T11:29:33.851Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:29:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:30:00.305Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:30:02.000Z [api-gateway] info: GET /api/users/4060 200 12ms
+2026-03-05T11:30:24.000Z [api-gateway] info: Session 144d8e2c refreshed
+2026-03-05T11:30:30.828Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:30:37.577Z [api-gateway] error: Unhandled error in GET /api/users/7542 TypeError: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at getUser (/app/routes/users.js:57:19)
+    at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+    at next (/app/node_modules/express/lib/router/route.js:144:13)
+2026-03-05T11:30:50.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:31:01.071Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:31:19.000Z [api-gateway] info: GET /api/users/182 200 29ms
+2026-03-05T11:31:20.000Z [api-gateway] info: Session 7c7fbd93 refreshed
+2026-03-05T11:31:30.741Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:31:51.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:32:04.572Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:32:08.000Z [api-gateway] info: GET /api/users/5580 200 68ms
+2026-03-05T11:32:33.465Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:32:36.000Z [api-gateway] info: Session 503d63f5 refreshed
+2026-03-05T11:32:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:33:00.000Z [api-gateway] info: GET /api/users/404 200 24ms
+2026-03-05T11:33:01.097Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:33:23.000Z [api-gateway] info: Session 5c9a1f0d refreshed
+2026-03-05T11:33:30.764Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:33:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:34:04.564Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:34:06.000Z [api-gateway] info: GET /api/users/3868 200 38ms
+10.0.0.204 - - [05/Mar/2026:11:34:11 +0000] "POST /api/orders/92935 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T11:34:31.115Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:34:38.000Z [api-gateway] info: Session 8f2e4942 refreshed
+2026-03-05T11:34:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:35:03.806Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:35:18.000Z [api-gateway] info: GET /api/users/4243 200 6ms
+2026-03-05T11:35:31.165Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:35:38.000Z [api-gateway] info: Session a0fffd2e refreshed
+2026-03-05T11:35:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:36:02.609Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:36:08.000Z [api-gateway] info: GET /api/users/2297 200 20ms
+2026-03-05T11:36:28.000Z [api-gateway] info: Session 9b27af30 refreshed
+2026-03-05T11:36:31.402Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:36:53.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:37:03.000Z [api-gateway] info: GET /api/users/8758 200 8ms
+2026-03-05T11:37:04.472Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:37:31.036Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:37:34.000Z [api-gateway] info: Session e98ffeeb refreshed
+2026-03-05T11:37:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:38:01.034Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+10.0.0.55 - - [05/Mar/2026:11:38:06 +0000] "POST /api/orders/91303 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T11:38:19.000Z [api-gateway] info: GET /api/users/533 200 18ms
+2026-03-05T11:38:24.000Z [api-gateway] info: Session 0f5b3637 refreshed
+2026-03-05T11:38:31.040Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:38:48.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:39:01.000Z [api-gateway] info: GET /api/users/3771 200 8ms
+2026-03-05T11:39:04.525Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:39:30.000Z [api-gateway] info: Session 3de88452 refreshed
+2026-03-05T11:39:30.593Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:39:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:40:03.099Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:40:05.000Z [api-gateway] info: GET /api/users/8269 200 32ms
+2026-03-05T11:40:30.422Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:40:32.000Z [api-gateway] info: Session 4cd2595c refreshed
+2026-03-05T11:40:42.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:41:00.000Z [api-gateway] info: GET /api/users/4191 200 25ms
+2026-03-05T11:41:01.662Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:41:21.000Z [api-gateway] info: Session c83c86b7 refreshed
+2026-03-05T11:41:30.713Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:41:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:42:00.135Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:42:17.000Z [api-gateway] info: GET /api/users/3086 200 60ms
+2026-03-05T11:42:31.000Z [api-gateway] info: Session ce15d210 refreshed
+2026-03-05T11:42:33.425Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+10.0.0.60 - - [05/Mar/2026:11:42:36 +0000] "POST /api/orders/12408 HTTP/1.1" 500 132 "-" "axios/1.6.2"
+2026-03-05T11:42:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:43:01.591Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:43:15.000Z [api-gateway] info: GET /api/users/8335 200 50ms
+2026-03-05T11:43:22.000Z [api-gateway] info: Session 6a091d11 refreshed
+2026-03-05T11:43:32.857Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:43:59.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:44:03.361Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:44:12.000Z [api-gateway] info: GET /api/users/351 200 9ms
+2026-03-05T11:44:23.000Z [api-gateway] info: Session b2cbe842 refreshed
+2026-03-05T11:44:33.078Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:44:42.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:45:01.383Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:45:08.000Z [api-gateway] info: GET /api/users/1907 200 20ms
+2026-03-05T11:45:30.000Z [api-gateway] info: Session 6db08606 refreshed
+2026-03-05T11:45:30.745Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:45:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:46:01.679Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:46:07.000Z [api-gateway] info: GET /api/users/5825 200 32ms
+2026-03-05T11:46:22.000Z [api-gateway] info: Session 43bffd76 refreshed
+2026-03-05T11:46:30.751Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:46:56.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:47:01.167Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:47:12.000Z [api-gateway] info: GET /api/users/9219 200 51ms
+2026-03-05T11:47:25.000Z [api-gateway] info: Session a73282be refreshed
+2026-03-05T11:47:33.368Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:47:54.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:48:02.173Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:48:05.000Z [api-gateway] info: GET /api/users/6823 200 39ms
+2026-03-05T11:48:31.000Z [api-gateway] info: Session 6b4d5b9d refreshed
+2026-03-05T11:48:31.678Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:48:47.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:49:04.964Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:49:07.000Z [api-gateway] info: GET /api/users/6816 200 23ms
+2026-03-05T11:49:25.000Z [api-gateway] info: Session 1dbd03e2 refreshed
+2026-03-05T11:49:32.092Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:49:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:50:04.339Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:50:08.000Z [api-gateway] info: GET /api/users/7348 200 75ms
+2026-03-05T11:50:31.000Z [api-gateway] info: Session 003d1921 refreshed
+2026-03-05T11:50:31.005Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:50:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:51:02.862Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:51:17.000Z [api-gateway] info: GET /api/users/6306 200 50ms
+2026-03-05T11:51:20.000Z [api-gateway] info: Session d381bdd5 refreshed
+2026-03-05T11:51:32.660Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:51:41.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:52:02.894Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:52:08.000Z [api-gateway] info: GET /api/users/4440 200 38ms
+2026-03-05T11:52:34.856Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:52:36.000Z [api-gateway] info: Session 245ffb65 refreshed
+2026-03-05T11:52:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:53:01.000Z [api-gateway] info: GET /api/users/8742 200 26ms
+2026-03-05T11:53:01.491Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:53:23.000Z [api-gateway] info: Session a96cbe5d refreshed
+2026-03-05T11:53:31.310Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:53:44.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:54:01.152Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:54:10.000Z [api-gateway] info: GET /api/users/6027 200 59ms
+2026-03-05T11:54:20.000Z [api-gateway] info: Session 6009a07a refreshed
+2026-03-05T11:54:33.267Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:54:46.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:55:00.096Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:55:09.000Z [api-gateway] info: GET /api/users/1541 200 40ms
+2026-03-05T11:55:32.109Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:55:38.000Z [api-gateway] info: Session cc5c2f3f refreshed
+2026-03-05T11:55:58.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:56:03.900Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:56:14.000Z [api-gateway] info: GET /api/users/8108 200 71ms
+2026-03-05T11:56:23.000Z [api-gateway] info: Session 6191f21e refreshed
+2026-03-05T11:56:31.244Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:56:55.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:57:02.119Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:57:10.000Z [api-gateway] info: GET /api/users/9447 200 38ms
+2026-03-05T11:57:31.000Z [api-gateway] info: Session eabb98b9 refreshed
+2026-03-05T11:57:31.156Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:57:48.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:58:04.508Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:58:12.000Z [api-gateway] info: GET /api/users/8704 200 68ms
+2026-03-05T11:58:23.000Z [api-gateway] info: Session cad508e1 refreshed
+2026-03-05T11:58:30.276Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:58:51.000Z [api-gateway] info: Listening on port 3000
+2026-03-05T11:59:01.548Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:59:15.000Z [api-gateway] info: GET /api/users/6255 200 51ms
+2026-03-05T11:59:32.000Z [api-gateway] info: Session cf9251e1 refreshed
+2026-03-05T11:59:33.554Z [api-gateway] error: Redis client error
+Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+    at RedisClient.connect (/app/lib/cache.js:27:11)
+2026-03-05T11:59:45.000Z [api-gateway] info: Listening on port 3000

@@ -1,0 +1,1055 @@
+2026-03-05T10:00:26.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 3872
+2026-03-05T10:00:37.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 33ad1e3160
+2026-03-05T10:01:02.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:01:49.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 2243
+2026-03-05T10:02:10.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 9c5ca054e7
+2026-03-05T10:02:33.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:03:01.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 6959
+2026-03-05T10:03:36.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 9f729eabee
+2026-03-05T10:04:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:04:54.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 1115
+2026-03-05T10:05:00.722+00:00  WARN 4121 --- [shop-orders] [scheduling-1] c.s.orders.job.SyncJob                   : Sync lagging by 189 seconds for warehouse WH-33
+2026-03-05T10:05:22.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 5864687998
+2026-03-05T10:05:35.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:06:26.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 9981
+2026-03-05T10:06:39.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 8ee720c8e3
+2026-03-05T10:07:10.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:07:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 4289
+2026-03-05T10:08:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session b8f7887483
+2026-03-05T10:08:54.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:09:14.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 6257
+2026-03-05T10:09:48.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session 85ae7a7002
+2026-03-05T10:10:29.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:10:35.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 5372
+2026-03-05T10:11:00.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session d1d64cb2ca
+2026-03-05T10:11:40.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:12:29.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 9776
+2026-03-05T10:12:43.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session b96442a535
+2026-03-05T10:13:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:13:43.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 5255
+2026-03-05T10:14:01.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 875c1c034b
+2026-03-05T10:14:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:15:19.032+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:15:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 6029
+2026-03-05T10:15:37.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session ff647f770c
+2026-03-05T10:16:04.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:16:53.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 9712
+2026-03-05T10:17:16.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session 21ae915e34
+2026-03-05T10:17:41.138+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:17:51.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:18:05.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 8086
+2026-03-05T10:18:10.914+00:00  WARN 4121 --- [shop-orders] [scheduling-1] c.s.orders.job.SyncJob                   : Sync lagging by 832 seconds for warehouse WH-54
+2026-03-05T10:18:34.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 7126b229f5
+2026-03-05T10:19:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:19:41.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 5506
+2026-03-05T10:20:02.072+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:20:24.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 72e7653c91
+2026-03-05T10:20:34.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:21:06.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 9474
+2026-03-05T10:21:10.838+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:21:36.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session ea00e0bf46
+2026-03-05T10:22:29.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:22:37.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 9812
+2026-03-05T10:23:21.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 963976edf3
+2026-03-05T10:23:40.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:24:22.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 5615
+2026-03-05T10:24:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session d9449f7402
+2026-03-05T10:25:00.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:25:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 9390
+2026-03-05T10:26:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Cart updated for session 80fc7b0b0c
+2026-03-05T10:26:45.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:27:01.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 8437
+2026-03-05T10:27:45.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session 619d9d85c7
+2026-03-05T10:28:06.245+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:28:16.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:28:37.641+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 690 seconds for warehouse WH-17
+2026-03-05T10:28:42.456+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 657 seconds for warehouse WH-97
+2026-03-05T10:28:54.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 2252
+2026-03-05T10:29:10.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session 64be399429
+2026-03-05T10:29:59.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:30:02.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 1258
+2026-03-05T10:30:54.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session a1a1d9b5b9
+2026-03-05T10:31:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:31:50.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 6820
+2026-03-05T10:32:02.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session ba27646356
+2026-03-05T10:32:36.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:33:25.927+00:00  WARN 4121 --- [shop-orders] [scheduling-1] c.s.orders.job.SyncJob                   : Sync lagging by 821 seconds for warehouse WH-66
+2026-03-05T10:33:27.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Fetched order 6218
+2026-03-05T10:33:50.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session 805a93b16f
+2026-03-05T10:34:01.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:34:21.766+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-4] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null
+	at com.shop.orders.service.InventoryService.reserve(InventoryService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:34:57.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 7293
+2026-03-05T10:35:11.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 6d1c72f47d
+2026-03-05T10:35:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:36:13.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 1708
+2026-03-05T10:36:15.560+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 34 seconds for warehouse WH-67
+2026-03-05T10:36:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session ece2a3eae5
+2026-03-05T10:37:20.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:37:52.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 6809
+2026-03-05T10:38:11.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session e970a64184
+2026-03-05T10:38:48.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:39:05.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 3768
+2026-03-05T10:39:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session 2061b6b402
+2026-03-05T10:40:15.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:40:51.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 1627
+2026-03-05T10:41:24.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session ee09beaac5
+2026-03-05T10:41:53.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:42:15.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 5308
+2026-03-05T10:42:34.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session 35f4db8edd
+2026-03-05T10:43:08.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:43:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Fetched order 2733
+2026-03-05T10:44:13.109+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null
+	at com.shop.orders.service.InventoryService.reserve(InventoryService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:44:22.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 2bd2442b19
+2026-03-05T10:44:59.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:45:09.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 7503
+2026-03-05T10:45:58.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session ead658cc6f
+2026-03-05T10:46:01.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:46:04.449+00:00  WARN 4121 --- [shop-orders] [scheduling-1] c.s.orders.job.SyncJob                   : Sync lagging by 635 seconds for warehouse WH-91
+2026-03-05T10:46:53.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 2808
+2026-03-05T10:47:14.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 7abaeca3bb
+2026-03-05T10:47:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:48:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 6066
+2026-03-05T10:48:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session abfa8387fc
+2026-03-05T10:49:21.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:49:48.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 2862
+2026-03-05T10:50:05.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session 28cbeada73
+2026-03-05T10:50:32.345+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 425 seconds for warehouse WH-75
+2026-03-05T10:50:43.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:50:54.965+00:00  WARN 4121 --- [shop-orders] [scheduling-1] c.s.orders.job.SyncJob                   : Sync lagging by 900 seconds for warehouse WH-16
+2026-03-05T10:51:12.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 1898
+2026-03-05T10:51:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session 44b4dcb223
+2026-03-05T10:52:20.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:52:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 6315
+2026-03-05T10:53:27.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 8c537264ae
+2026-03-05T10:53:46.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:54:09.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 9912
+2026-03-05T10:54:51.783+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:54:53.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session 7ac663ef44
+2026-03-05T10:55:02.936+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 548 seconds for warehouse WH-28
+2026-03-05T10:55:18.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:55:47.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 1579
+2026-03-05T10:56:05.028+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null
+	at com.shop.orders.service.InventoryService.reserve(InventoryService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T10:56:20.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session 527541ada6
+2026-03-05T10:56:50.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:57:03.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 4479
+2026-03-05T10:57:30.508+00:00  WARN 4121 --- [shop-orders] [scheduling-1] c.s.orders.job.SyncJob                   : Sync lagging by 724 seconds for warehouse WH-59
+2026-03-05T10:57:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Cart updated for session 5af29a2b33
+2026-03-05T10:58:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T10:58:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 5071
+2026-03-05T10:59:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Cart updated for session 4897544eb5
+2026-03-05T10:59:38.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:00:24.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 2276
+2026-03-05T11:00:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session e6c4f9b13a
+2026-03-05T11:00:59.160+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 681 seconds for warehouse WH-10
+2026-03-05T11:01:27.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:01:37.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 7700
+2026-03-05T11:02:06.346+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:02:07.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session a557a3fe88
+2026-03-05T11:02:34.512+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 547 seconds for warehouse WH-10
+2026-03-05T11:02:36.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:03:18.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 4422
+2026-03-05T11:03:44.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session 059ff8a94f
+2026-03-05T11:04:17.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:04:37.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 6111
+2026-03-05T11:05:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session f624c6dcbd
+2026-03-05T11:05:45.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:06:18.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 4657
+2026-03-05T11:06:59.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 42ee44adb2
+2026-03-05T11:07:29.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:07:37.864+00:00  WARN 4121 --- [shop-orders] [scheduling-2] c.s.orders.job.SyncJob                   : Sync lagging by 444 seconds for warehouse WH-95
+2026-03-05T11:07:51.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Fetched order 5122
+2026-03-05T11:08:02.912+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-4] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:08:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 39a9c6671d
+2026-03-05T11:08:52.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:09:01.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 4177
+2026-03-05T11:09:42.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session f1e4933929
+2026-03-05T11:10:05.232+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 1152405d
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:10:21.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:10:21.480+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null
+	at com.shop.orders.service.InventoryService.reserve(InventoryService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:10:48.758+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 66df472b
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:10:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 7051
+2026-03-05T11:11:12.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Cart updated for session f9703757fd
+2026-03-05T11:11:36.821+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request f43d9aaf
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:11:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:12:15.317+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request d6c133f4
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:12:20.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 7630
+2026-03-05T11:12:51.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session 76e8ebb348
+2026-03-05T11:13:00.756+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 84beb5b8
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:13:24.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:13:40.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 2112
+2026-03-05T11:13:48.495+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 6a9a1605
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:14:26.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session 240eaa8d63
+2026-03-05T11:14:39.901+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 353b2422
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:14:42.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:15:12.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 2803
+2026-03-05T11:15:20.371+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request dcfb206f
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:15:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session a1dd5a9699
+2026-03-05T11:16:00.670+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 91b94baf
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:16:07.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:16:49.024+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 17a34b0e
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:16:50.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 8675
+2026-03-05T11:17:21.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session a2a189027b
+2026-03-05T11:17:39.536+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-5] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 5b4b0598
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:17:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:18:15.227+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 3810e8b1
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:18:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 2961
+2026-03-05T11:18:40.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 058270fdfa
+2026-03-05T11:19:00.904+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-7] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2861b69b
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:19:18.995+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:19:21.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:19:49.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 3282
+2026-03-05T11:19:50.652+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request ee054dcb
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:20:11.328+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "com.shop.model.Sku.getCode()" because "sku" is null
+	at com.shop.orders.service.InventoryService.reserve(InventoryService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:20:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session a4f2116a0e
+2026-03-05T11:20:33.206+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2fd32149
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:20:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:21:13.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 1256
+2026-03-05T11:21:20.559+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request f4e7f0cf
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:21:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 9209314cd4
+2026-03-05T11:22:04.851+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2eef856b
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:22:09.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:22:30.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 6144
+2026-03-05T11:22:50.932+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 5c992d63
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:23:09.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 062a49707b
+2026-03-05T11:23:34.946+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request f4787e84
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:23:45.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:24:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 7122
+2026-03-05T11:24:20.523+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request eec09be3
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:24:30.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session f0d57bc177
+2026-03-05T11:24:51.193+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 409 seconds for warehouse WH-94
+2026-03-05T11:25:03.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:25:09.573+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 24c847ce
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:25:50.646+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request cdabfbce
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:25:58.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 6272
+2026-03-05T11:26:25.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 0bb57c75fa
+2026-03-05T11:26:36.434+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 46a8bb74
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:26:45.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:27:13.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 5224
+2026-03-05T11:27:21.430+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 77e1d0ce
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:27:43.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session c5b6342b23
+2026-03-05T11:28:04.094+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request cd7ccd77
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:28:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:28:39.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 3443
+2026-03-05T11:28:46.924+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 417071b0
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:29:14.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 550e92ca4d
+2026-03-05T11:29:33.529+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request df5417ef
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:29:34.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:30:10.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 7699
+2026-03-05T11:30:15.999+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request bfcca95d
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:30:47.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session df0d350be3
+2026-03-05T11:31:06.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:31:06.729+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request d69e4594
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:31:32.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 5734
+2026-03-05T11:31:54.947+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 0071975e
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:32:11.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session 3b9544ea7c
+2026-03-05T11:32:33.890+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request de59942a
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:32:42.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:33:15.919+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-7] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2461270a
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:33:27.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Fetched order 2245
+2026-03-05T11:33:29.418+00:00  WARN 4121 --- [shop-orders] [scheduling-2] c.s.orders.job.SyncJob                   : Sync lagging by 511 seconds for warehouse WH-84
+2026-03-05T11:33:35.951+00:00  WARN 4121 --- [shop-orders] [scheduling-3] c.s.orders.job.SyncJob                   : Sync lagging by 185 seconds for warehouse WH-50
+2026-03-05T11:33:44.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session bb697b88c2
+2026-03-05T11:34:02.471+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request a3827454
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:34:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:34:31.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 6375
+2026-03-05T11:34:47.556+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request b8bf892d
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:35:09.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session ee2e24a2ea
+2026-03-05T11:35:34.203+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 68fe2768
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:35:40.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:36:02.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 4393
+2026-03-05T11:36:19.633+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-7] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 4d9dbb30
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:36:38.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session bd3b84e300
+2026-03-05T11:37:05.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:37:08.165+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 720ecd90
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:37:50.145+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 96f8a8fe
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:37:52.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Fetched order 3090
+2026-03-05T11:38:07.265+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:38:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session 121cf3ec8b
+2026-03-05T11:38:31.231+00:00 ERROR 4121 --- [shop-orders] [nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null] with root cause
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because the return value of "Order.getItems()" is null
+	at com.shop.orders.service.OrderService.calculateTotal(OrderService.java:88)
+	at com.shop.orders.web.OrderController.get(OrderController.java:41)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	... 41 common frames omitted
+2026-03-05T11:38:36.127+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-5] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2f0056a4
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:38:44.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:39:13.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 8693
+2026-03-05T11:39:21.491+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 9790abde
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:39:51.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session b05b0de8a8
+2026-03-05T11:40:04.484+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-5] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 32ad343a
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:40:17.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:40:47.606+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 800b60ca
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:40:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Fetched order 2919
+2026-03-05T11:41:07.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session bd3240e98f
+2026-03-05T11:41:33.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:41:33.238+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 11d29908
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:42:06.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 9763
+2026-03-05T11:42:23.102+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request bbeac737
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:42:51.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Cart updated for session 02cc63bbb9
+2026-03-05T11:43:05.343+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request d71c30df
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:43:20.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:43:31.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Fetched order 3844
+2026-03-05T11:43:45.660+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 8c43f33f
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:44:12.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 0c04f1fb33
+2026-03-05T11:44:35.042+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 4c5851e6
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:44:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:45:17.567+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request da00d053
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:45:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 3434
+2026-03-05T11:45:35.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Cart updated for session a35953d3cf
+2026-03-05T11:46:05.810+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request ad601e34
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:46:12.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:46:38.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 6456
+2026-03-05T11:46:47.348+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2eb29664
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:47:10.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 201765b1d5
+2026-03-05T11:47:34.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:47:38.118+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 7ac86cb6
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:48:11.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 3311
+2026-03-05T11:48:15.507+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-5] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request e5287803
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:48:35.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Cart updated for session 08b78e013a
+2026-03-05T11:49:07.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:49:08.358+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-6] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 7a170a58
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:49:41.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 2543
+2026-03-05T11:49:52.340+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-5] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 42b6d19a
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:50:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Cart updated for session f1a9d82d46
+2026-03-05T11:50:35.379+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-7] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 1133a84c
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:50:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-7] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:51:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Fetched order 2767
+2026-03-05T11:51:22.829+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 55161772
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:51:58.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session a9887ca84b
+2026-03-05T11:52:07.841+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-8] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request b0a16099
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:52:28.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-1] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:52:42.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Fetched order 4464
+2026-03-05T11:52:48.022+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 31722360
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:53:09.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session 4342c2e85d
+2026-03-05T11:53:35.060+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 259a997a
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:53:45.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:54:10.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Fetched order 6073
+2026-03-05T11:54:20.233+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 0ebe1f5c
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:54:58.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Cart updated for session 2d50c4b9eb
+2026-03-05T11:55:03.270+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request e90b56cc
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:55:16.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:55:46.969+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request ecd32642
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:55:55.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Fetched order 5016
+2026-03-05T11:56:19.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-4] c.s.orders.OrderController               : Cart updated for session f3b760e527
+2026-03-05T11:56:31.444+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-4] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request baf84cca
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:56:36.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-5] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:57:16.432+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-2] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 4d3bf097
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:57:27.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Fetched order 2092
+2026-03-05T11:57:56.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-6] c.s.orders.OrderController               : Cart updated for session beb485bbb6
+2026-03-05T11:58:05.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-8] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:58:05.086+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 29133dbd
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:58:42.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Fetched order 8466
+2026-03-05T11:58:45.039+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-1] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 2b209563
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted
+2026-03-05T11:59:16.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-3] c.s.orders.OrderController               : Cart updated for session 428ebb7095
+2026-03-05T11:59:30.000+00:00  INFO 4121 --- [shop-orders] [nio-8080-exec-2] c.s.orders.OrderController               : Health check ok
+2026-03-05T11:59:30.474+00:00 ERROR 4121 --- [shop-orders] [http-nio-8080-exec-3] c.s.orders.web.GlobalExceptionHandler    : Unexpected error on request 1b6bc057
+org.springframework.dao.DataAccessResourceFailureException: Unable to acquire JDBC Connection; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)
+	at com.shop.orders.repo.OrderRepositoryImpl.findById(OrderRepositoryImpl.java:57)
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	... 58 common frames omitted

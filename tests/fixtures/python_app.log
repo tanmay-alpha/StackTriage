@@ -1,0 +1,1727 @@
+2026-03-05 10:00:00,000 - app.boot - INFO - Connecting with DATABASE_URL=postgresql://orders:s3cr3tPass@10.0.3.12:5432/orders
+2026-03-05 10:00:10,000 - app.orders - INFO - Order 4714 created for customer 304
+2026-03-05 10:00:29,000 - app.orders - INFO - GET /api/orders/5577 200 68ms
+2026-03-05 10:01:02,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:01:35,000 - app.orders - INFO - Payment 207119 captured
+2026-03-05 10:01:41,000 - app.orders - INFO - Order 4716 created for customer 581
+2026-03-05 10:02:07,000 - app.orders - INFO - GET /api/orders/1031 200 69ms
+2026-03-05 10:02:47,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:02:58,000 - app.orders - INFO - Payment 927468 captured
+2026-03-05 10:03:31,000 - app.orders - INFO - Order 6447 created for customer 188
+2026-03-05 10:04:03,000 - app.orders - INFO - GET /api/orders/3602 200 29ms
+2026-03-05 10:04:11,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:04:51,000 - app.orders - INFO - Payment 675311 captured
+2026-03-05 10:05:00,206 - app.auth - WARNING - Rejected request, Authorization: Bearer abc123SECRETtokenvalue999 from alice@example.com
+2026-03-05 10:05:01,295 - app.auth - WARNING - Login retry for user bob password=hunter2 api_key=sk-live-1234567890abcdefghijklmn
+2026-03-05 10:05:06,000 - app.orders - INFO - Order 9983 created for customer 234
+2026-03-05 10:05:26,000 - app.orders - INFO - GET /api/orders/3281 200 63ms
+2026-03-05 10:05:52,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:06:28,000 - app.orders - INFO - Payment 670795 captured
+2026-03-05 10:06:34,592 - app.db - WARNING - Slow query took 1684 ms (threshold 1000 ms) for order 4827
+2026-03-05 10:06:53,000 - app.orders - INFO - Order 7865 created for customer 954
+2026-03-05 10:07:02,190 - app.db - WARNING - Slow query took 4279 ms (threshold 1000 ms) for order 8404
+2026-03-05 10:07:07,000 - app.orders - INFO - GET /api/orders/9466 200 61ms
+2026-03-05 10:07:37,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:07:57,000 - app.orders - INFO - Payment 738115 captured
+2026-03-05 10:08:37,000 - app.orders - INFO - Order 1064 created for customer 894
+2026-03-05 10:08:58,000 - app.orders - INFO - GET /api/orders/2971 200 79ms
+2026-03-05 10:09:11,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:09:53,000 - app.orders - INFO - Payment 159582 captured
+2026-03-05 10:10:03,000 - app.orders - INFO - Order 5071 created for customer 295
+2026-03-05 10:10:32,000 - app.orders - INFO - GET /api/orders/8408 200 79ms
+2026-03-05 10:10:35,290 - app.orders - ERROR - Failed to process order 4517 for customer 610
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: 'ten'
+2026-03-05 10:11:10,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:11:35,000 - app.orders - INFO - Payment 632840 captured
+2026-03-05 10:11:58,000 - app.orders - INFO - Order 9737 created for customer 926
+2026-03-05 10:12:06,000 - app.orders - INFO - GET /api/orders/5253 200 79ms
+2026-03-05 10:12:47,354 - app.db - WARNING - Slow query took 4314 ms (threshold 1000 ms) for order 3501
+2026-03-05 10:12:48,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:13:13,000 - app.orders - INFO - Payment 549145 captured
+2026-03-05 10:13:32,000 - app.orders - INFO - Order 2198 created for customer 317
+2026-03-05 10:13:46,000 - app.orders - INFO - GET /api/orders/6999 200 26ms
+2026-03-05 10:14:17,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:14:36,000 - app.orders - INFO - Payment 840633 captured
+2026-03-05 10:14:49,213 - app.db - WARNING - Slow query took 2748 ms (threshold 1000 ms) for order 9757
+2026-03-05 10:15:17,000 - app.orders - INFO - Order 8070 created for customer 627
+2026-03-05 10:15:29,000 - app.orders - INFO - GET /api/orders/6218 200 19ms
+2026-03-05 10:15:59,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:16:28,000 - app.orders - INFO - Payment 447600 captured
+2026-03-05 10:16:38,171 - app.db - WARNING - Slow query took 3596 ms (threshold 1000 ms) for order 2481
+2026-03-05 10:16:44,000 - app.orders - INFO - Order 9477 created for customer 738
+2026-03-05 10:17:22,000 - app.orders - INFO - GET /api/orders/4744 200 21ms
+2026-03-05 10:17:22,169 - app.orders - ERROR - Failed to process order 2800 for customer 602
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: 'x12'
+2026-03-05 10:17:33,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:18:13,000 - app.orders - INFO - Payment 525667 captured
+2026-03-05 10:18:29,000 - app.orders - INFO - Order 3447 created for customer 649
+2026-03-05 10:18:51,684 - app.db - WARNING - Slow query took 4793 ms (threshold 1000 ms) for order 9986
+2026-03-05 10:19:02,000 - app.orders - INFO - GET /api/orders/5572 200 15ms
+2026-03-05 10:19:31,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:19:40,000 - app.orders - INFO - Payment 737720 captured
+2026-03-05 10:20:03,000 - app.orders - INFO - Order 4643 created for customer 168
+2026-03-05 10:20:43,000 - app.orders - INFO - GET /api/orders/7844 200 42ms
+2026-03-05 10:21:08,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:21:35,000 - app.orders - INFO - Payment 311569 captured
+2026-03-05 10:21:46,000 - app.orders - INFO - Order 6111 created for customer 743
+2026-03-05 10:22:16,000 - app.orders - INFO - GET /api/orders/8302 200 72ms
+2026-03-05 10:22:33,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:23:03,806 - app.orders - ERROR - Failed to process order 2713 for customer 464
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: '1e3'
+2026-03-05 10:23:12,000 - app.orders - INFO - Payment 677816 captured
+2026-03-05 10:23:42,000 - app.orders - INFO - Order 4104 created for customer 626
+2026-03-05 10:23:47,000 - app.orders - INFO - GET /api/orders/8080 200 71ms
+2026-03-05 10:24:10,806 - app.db - WARNING - Slow query took 3707 ms (threshold 1000 ms) for order 5866
+2026-03-05 10:24:28,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:24:36,000 - app.orders - INFO - Payment 464434 captured
+2026-03-05 10:25:19,000 - app.orders - INFO - Order 1891 created for customer 957
+2026-03-05 10:25:31,000 - app.orders - INFO - GET /api/orders/3674 200 15ms
+2026-03-05 10:25:51,202 - app.db - WARNING - Slow query took 3125 ms (threshold 1000 ms) for order 4491
+2026-03-05 10:26:05,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:26:36,000 - app.orders - INFO - Payment 581771 captured
+2026-03-05 10:26:57,000 - app.orders - INFO - Order 4036 created for customer 261
+2026-03-05 10:27:18,000 - app.orders - INFO - GET /api/orders/6389 200 78ms
+2026-03-05 10:27:54,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:28:05,000 - app.orders - INFO - Payment 187965 captured
+2026-03-05 10:28:34,000 - app.orders - INFO - Order 8776 created for customer 385
+2026-03-05 10:29:03,000 - app.orders - INFO - GET /api/orders/1081 200 19ms
+2026-03-05 10:29:24,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:29:46,000 - app.orders - INFO - Payment 760256 captured
+2026-03-05 10:30:09,000 - app.orders - INFO - Order 4814 created for customer 186
+2026-03-05 10:30:32,000 - app.orders - INFO - GET /api/orders/6343 200 71ms
+2026-03-05 10:30:55,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:31:37,000 - app.orders - INFO - Payment 246074 captured
+2026-03-05 10:31:41,097 - app.orders - ERROR - Failed to process order 7574 for customer 863
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: ''
+2026-03-05 10:32:04,000 - app.orders - INFO - Order 9581 created for customer 870
+2026-03-05 10:32:12,000 - app.orders - INFO - GET /api/orders/4767 200 18ms
+2026-03-05 10:32:32,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:33:04,273 - app.pricing - ERROR - Price lookup failed for order 5939
+Traceback (most recent call last):
+  File "/srv/orders/app/pricing.py", line 88, in convert
+    rate = RATES[code]
+KeyError: 'ABC'
+2026-03-05 10:33:13,000 - app.orders - INFO - Payment 119755 captured
+2026-03-05 10:33:29,000 - app.orders - INFO - Order 9707 created for customer 797
+2026-03-05 10:33:38,543 - app.db - WARNING - Slow query took 1422 ms (threshold 1000 ms) for order 8185
+2026-03-05 10:34:01,000 - app.orders - INFO - GET /api/orders/2148 200 72ms
+2026-03-05 10:34:25,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:34:45,000 - app.orders - INFO - Payment 346190 captured
+2026-03-05 10:35:11,088 - app.orders - ERROR - Failed to process order 7916 for customer 480
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: 'x12'
+2026-03-05 10:35:23,000 - app.orders - INFO - Order 4362 created for customer 336
+2026-03-05 10:35:39,000 - app.orders - INFO - GET /api/orders/8848 200 44ms
+2026-03-05 10:35:59,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:36:14,772 - app.pricing - ERROR - Price lookup failed for order 3532
+Traceback (most recent call last):
+  File "/srv/orders/app/pricing.py", line 88, in convert
+    rate = RATES[code]
+KeyError: 'XQZ'
+2026-03-05 10:36:34,000 - app.orders - INFO - Payment 751323 captured
+2026-03-05 10:36:42,000 - app.orders - INFO - Order 3186 created for customer 112
+2026-03-05 10:37:08,000 - app.orders - INFO - GET /api/orders/2630 200 35ms
+2026-03-05 10:37:46,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:38:08,000 - app.orders - INFO - Payment 308928 captured
+2026-03-05 10:38:25,000 - app.orders - INFO - Order 6106 created for customer 187
+2026-03-05 10:39:08,687 - app.db - WARNING - Slow query took 4715 ms (threshold 1000 ms) for order 2916
+2026-03-05 10:39:09,000 - app.orders - INFO - GET /api/orders/9300 200 65ms
+2026-03-05 10:39:20,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:39:39,000 - app.orders - INFO - Payment 477019 captured
+2026-03-05 10:40:15,000 - app.orders - INFO - Order 3172 created for customer 717
+2026-03-05 10:40:38,000 - app.orders - INFO - GET /api/orders/9157 200 70ms
+2026-03-05 10:40:51,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:41:36,000 - app.orders - INFO - Payment 536397 captured
+2026-03-05 10:41:42,000 - app.orders - INFO - Order 6635 created for customer 485
+2026-03-05 10:42:29,000 - app.orders - INFO - GET /api/orders/6317 200 51ms
+2026-03-05 10:42:47,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:43:13,000 - app.orders - INFO - Payment 511984 captured
+2026-03-05 10:43:30,000 - app.orders - INFO - Order 7392 created for customer 990
+2026-03-05 10:43:55,000 - app.orders - INFO - GET /api/orders/1790 200 43ms
+2026-03-05 10:44:19,978 - app.orders - ERROR - Failed to process order 4101
+Traceback (most recent call last):
+  File "/srv/orders/app/orders.py", line 63, in validate_currency
+    raise ValueError(f"Unknown currency code {code}")
+ValueError: Unknown currency code 'ZZZ'
+2026-03-05 10:44:32,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:44:46,000 - app.orders - INFO - Payment 430932 captured
+2026-03-05 10:45:00,568 - app.db - WARNING - Slow query took 1585 ms (threshold 1000 ms) for order 5333
+2026-03-05 10:45:19,000 - app.orders - INFO - Order 4110 created for customer 891
+2026-03-05 10:45:34,211 - app.orders - ERROR - Failed to process order 5966 for customer 538
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: '1e3'
+2026-03-05 10:45:40,000 - app.orders - INFO - GET /api/orders/9998 200 34ms
+2026-03-05 10:46:08,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:46:23,429 - app.db - WARNING - Slow query took 2059 ms (threshold 1000 ms) for order 3282
+2026-03-05 10:46:29,000 - app.orders - INFO - Payment 151356 captured
+2026-03-05 10:46:42,000 - app.orders - INFO - Order 3085 created for customer 274
+2026-03-05 10:47:07,000 - app.orders - INFO - GET /api/orders/5190 200 41ms
+2026-03-05 10:47:38,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:48:10,000 - app.orders - INFO - Payment 269509 captured
+2026-03-05 10:48:42,000 - app.orders - INFO - Order 2231 created for customer 312
+2026-03-05 10:49:06,000 - app.orders - INFO - GET /api/orders/6453 200 65ms
+2026-03-05 10:49:12,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:49:19,484 - app.db - WARNING - Slow query took 3119 ms (threshold 1000 ms) for order 1957
+2026-03-05 10:49:27,998 - app.orders - ERROR - Failed to process order 2667
+Traceback (most recent call last):
+  File "/srv/orders/app/orders.py", line 63, in validate_currency
+    raise ValueError(f"Unknown currency code {code}")
+ValueError: Unknown currency code 'XQZ'
+2026-03-05 10:49:36,000 - app.orders - INFO - Payment 350742 captured
+2026-03-05 10:50:23,000 - app.orders - INFO - Order 7034 created for customer 364
+2026-03-05 10:50:47,000 - app.orders - INFO - GET /api/orders/7781 200 75ms
+2026-03-05 10:50:59,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:51:35,000 - app.orders - INFO - Payment 820112 captured
+2026-03-05 10:51:58,000 - app.orders - INFO - Order 9247 created for customer 641
+2026-03-05 10:52:07,495 - app.db - WARNING - Slow query took 3013 ms (threshold 1000 ms) for order 3366
+2026-03-05 10:52:26,000 - app.orders - INFO - GET /api/orders/7549 200 90ms
+2026-03-05 10:52:44,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:53:04,000 - app.orders - INFO - Payment 613618 captured
+2026-03-05 10:53:42,000 - app.orders - INFO - Order 1002 created for customer 174
+2026-03-05 10:53:57,000 - app.orders - INFO - GET /api/orders/5070 200 21ms
+2026-03-05 10:54:29,717 - app.db - WARNING - Slow query took 3112 ms (threshold 1000 ms) for order 5039
+2026-03-05 10:54:31,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:54:39,740 - app.pricing - ERROR - Price lookup failed for order 3555
+Traceback (most recent call last):
+  File "/srv/orders/app/pricing.py", line 88, in convert
+    rate = RATES[code]
+KeyError: 'ABC'
+2026-03-05 10:54:46,000 - app.orders - INFO - Payment 920299 captured
+2026-03-05 10:55:00,000 - app.orders - INFO - Order 3058 created for customer 338
+2026-03-05 10:55:39,000 - app.orders - INFO - GET /api/orders/5125 200 75ms
+2026-03-05 10:55:43,985 - app.orders - ERROR - Failed to process order 2665
+Traceback (most recent call last):
+  File "/srv/orders/app/orders.py", line 63, in validate_currency
+    raise ValueError(f"Unknown currency code {code}")
+ValueError: Unknown currency code 'XQZ'
+2026-03-05 10:56:01,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:56:20,000 - app.orders - INFO - Payment 373554 captured
+2026-03-05 10:56:59,000 - app.orders - INFO - Order 4663 created for customer 909
+2026-03-05 10:57:07,393 - app.orders - ERROR - Failed to process order 3473
+Traceback (most recent call last):
+  File "/srv/orders/app/orders.py", line 63, in validate_currency
+    raise ValueError(f"Unknown currency code {code}")
+ValueError: Unknown currency code 'XQZ'
+2026-03-05 10:57:08,000 - app.orders - INFO - GET /api/orders/5564 200 48ms
+2026-03-05 10:57:24,922 - app.orders - ERROR - Failed to process order 9928 for customer 275
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: '--5'
+2026-03-05 10:57:29,388 - app.orders - ERROR - Failed to process order 4826 for customer 229
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: ''
+2026-03-05 10:57:34,510 - app.db - WARNING - Slow query took 1774 ms (threshold 1000 ms) for order 9839
+2026-03-05 10:57:45,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:57:56,000 - app.orders - INFO - Payment 157995 captured
+2026-03-05 10:58:26,000 - app.orders - INFO - Order 1356 created for customer 298
+2026-03-05 10:59:09,000 - app.orders - INFO - GET /api/orders/4732 200 62ms
+2026-03-05 10:59:19,000 - app.orders - INFO - Cache refreshed
+2026-03-05 10:59:39,000 - app.orders - INFO - Payment 107081 captured
+2026-03-05 11:00:23,000 - app.orders - INFO - Order 5785 created for customer 856
+2026-03-05 11:00:32,000 - app.orders - INFO - GET /api/orders/6107 200 32ms
+2026-03-05 11:01:02,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:01:27,000 - app.orders - INFO - Payment 608614 captured
+2026-03-05 11:01:55,000 - app.orders - INFO - Order 7832 created for customer 781
+2026-03-05 11:02:07,000 - app.orders - INFO - GET /api/orders/4488 200 11ms
+2026-03-05 11:02:35,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:03:09,000 - app.orders - INFO - Payment 183216 captured
+2026-03-05 11:03:32,000 - app.orders - INFO - Order 3713 created for customer 437
+2026-03-05 11:04:02,000 - app.orders - INFO - GET /api/orders/8661 200 12ms
+2026-03-05 11:04:18,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:04:39,000 - app.orders - INFO - Payment 393398 captured
+2026-03-05 11:05:13,000 - app.orders - INFO - Order 2323 created for customer 459
+2026-03-05 11:05:42,000 - app.orders - INFO - GET /api/orders/6843 200 47ms
+2026-03-05 11:05:58,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:06:37,000 - app.orders - INFO - Payment 439014 captured
+2026-03-05 11:06:53,000 - app.orders - INFO - Order 6967 created for customer 855
+2026-03-05 11:07:16,000 - app.orders - INFO - GET /api/orders/7631 200 13ms
+2026-03-05 11:07:33,998 - app.pricing - ERROR - Price lookup failed for order 5056
+Traceback (most recent call last):
+  File "/srv/orders/app/pricing.py", line 88, in convert
+    rate = RATES[code]
+KeyError: 'XQZ'
+2026-03-05 11:07:51,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:08:07,000 - app.orders - INFO - Payment 455540 captured
+2026-03-05 11:08:27,000 - app.orders - INFO - Order 6946 created for customer 378
+2026-03-05 11:08:49,000 - app.orders - INFO - GET /api/orders/6185 200 43ms
+2026-03-05 11:08:58,813 - app.orders - ERROR - Failed to process order 5949
+Traceback (most recent call last):
+  File "/srv/orders/app/orders.py", line 63, in validate_currency
+    raise ValueError(f"Unknown currency code {code}")
+ValueError: Unknown currency code 'ZZZ'
+2026-03-05 11:09:12,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:09:40,000 - app.orders - INFO - Payment 914068 captured
+2026-03-05 11:10:04,000 - app.orders - INFO - Order 7332 created for customer 908
+2026-03-05 11:10:32,000 - app.orders - INFO - GET /api/orders/9135 200 31ms
+2026-03-05 11:11:11,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:11:22,000 - app.orders - INFO - Payment 479436 captured
+2026-03-05 11:11:40,000 - app.orders - INFO - Order 2294 created for customer 624
+2026-03-05 11:12:20,000 - app.orders - INFO - GET /api/orders/7680 200 16ms
+2026-03-05 11:12:48,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:13:00,000 - app.orders - INFO - Payment 754942 captured
+2026-03-05 11:13:28,000 - app.orders - INFO - Order 2377 created for customer 313
+2026-03-05 11:13:54,000 - app.orders - INFO - GET /api/orders/4837 200 25ms
+2026-03-05 11:14:10,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:14:29,445 - app.orders - ERROR - Failed to process order 5486
+Traceback (most recent call last):
+  File "/srv/orders/app/orders.py", line 63, in validate_currency
+    raise ValueError(f"Unknown currency code {code}")
+ValueError: Unknown currency code 'XQZ'
+2026-03-05 11:14:39,000 - app.orders - INFO - Payment 392968 captured
+2026-03-05 11:15:13,000 - app.orders - INFO - Order 5385 created for customer 481
+2026-03-05 11:15:42,000 - app.orders - INFO - GET /api/orders/4043 200 39ms
+2026-03-05 11:16:01,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:16:34,000 - app.orders - INFO - Payment 651874 captured
+2026-03-05 11:16:58,000 - app.orders - INFO - Order 4790 created for customer 765
+2026-03-05 11:17:00,544 - app.orders - ERROR - Failed to process order 1555 for customer 695
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: '1e3'
+2026-03-05 11:17:06,334 - app.orders - ERROR - Failed to process order 9548 for customer 988
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: 'ten'
+2026-03-05 11:17:15,000 - app.orders - INFO - GET /api/orders/8778 200 37ms
+2026-03-05 11:17:27,613 - app.db - WARNING - Slow query took 4634 ms (threshold 1000 ms) for order 1108
+2026-03-05 11:17:31,863 - app.orders - ERROR - Failed to process order 8377 for customer 859
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: '--5'
+2026-03-05 11:17:34,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:18:17,000 - app.orders - INFO - Payment 968142 captured
+2026-03-05 11:18:36,000 - app.orders - INFO - Order 4181 created for customer 176
+2026-03-05 11:19:04,000 - app.orders - INFO - GET /api/orders/5258 200 8ms
+2026-03-05 11:19:30,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:19:56,000 - app.orders - INFO - Payment 140093 captured
+2026-03-05 11:20:20,331 - app.orders - ERROR - Failed to process order 3777 for customer 549
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: ''
+2026-03-05 11:20:23,000 - app.orders - INFO - Order 4333 created for customer 934
+2026-03-05 11:20:25,740 - app.pricing - ERROR - Price lookup failed for order 6350
+Traceback (most recent call last):
+  File "/srv/orders/app/pricing.py", line 88, in convert
+    rate = RATES[code]
+KeyError: 'ABC'
+2026-03-05 11:20:26,000 - app.orders - INFO - GET /api/orders/6115 200 17ms
+2026-03-05 11:21:04,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:21:39,000 - app.orders - INFO - Payment 796282 captured
+2026-03-05 11:22:01,000 - app.orders - INFO - Order 3532 created for customer 754
+2026-03-05 11:22:05,164 - app.db - WARNING - Slow query took 4543 ms (threshold 1000 ms) for order 6254
+2026-03-05 11:22:22,000 - app.orders - INFO - GET /api/orders/5442 200 60ms
+2026-03-05 11:22:42,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:23:07,000 - app.orders - INFO - Payment 903904 captured
+2026-03-05 11:23:32,000 - app.orders - INFO - Order 6960 created for customer 759
+2026-03-05 11:23:57,000 - app.orders - INFO - GET /api/orders/1096 200 63ms
+2026-03-05 11:24:13,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:24:31,479 - app.db - WARNING - Slow query took 3950 ms (threshold 1000 ms) for order 9152
+2026-03-05 11:24:50,000 - app.orders - INFO - Payment 115554 captured
+2026-03-05 11:25:00,526 - app.db - ERROR - Database unavailable, attempt 1
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:25:20,000 - app.orders - INFO - Order 1846 created for customer 664
+2026-03-05 11:25:25,781 - app.db - ERROR - Database unavailable, attempt 2
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:25:37,000 - app.orders - INFO - GET /api/orders/7075 200 72ms
+2026-03-05 11:25:40,955 - app.db - ERROR - Database unavailable, attempt 3
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:25:51,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:26:02,125 - app.db - ERROR - Database unavailable, attempt 4
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:26:21,000 - app.orders - INFO - Payment 614336 captured
+2026-03-05 11:26:21,746 - app.db - ERROR - Database unavailable, attempt 5
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:26:42,000 - app.orders - INFO - Order 4233 created for customer 408
+2026-03-05 11:26:43,628 - app.db - ERROR - Database unavailable, attempt 6
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:27:03,364 - app.db - ERROR - Database unavailable, attempt 7
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:27:11,000 - app.orders - INFO - GET /api/orders/7355 200 19ms
+2026-03-05 11:27:20,652 - app.db - ERROR - Database unavailable, attempt 8
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:27:40,057 - app.db - ERROR - Database unavailable, attempt 9
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:27:44,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:28:00,000 - app.orders - INFO - Payment 692893 captured
+2026-03-05 11:28:02,681 - app.db - WARNING - Slow query took 2315 ms (threshold 1000 ms) for order 8631
+2026-03-05 11:28:03,258 - app.db - ERROR - Database unavailable, attempt 10
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:28:23,000 - app.orders - INFO - Order 4573 created for customer 142
+2026-03-05 11:28:23,280 - app.db - ERROR - Database unavailable, attempt 11
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:28:45,391 - app.db - ERROR - Database unavailable, attempt 12
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:28:55,000 - app.orders - INFO - GET /api/orders/3016 200 27ms
+2026-03-05 11:28:55,705 - app.orders - ERROR - Failed to process order 5214 for customer 336
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: '--5'
+2026-03-05 11:29:01,409 - app.db - ERROR - Database unavailable, attempt 13
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:29:24,062 - app.db - ERROR - Database unavailable, attempt 14
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:29:29,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:29:36,000 - app.orders - INFO - Payment 990251 captured
+2026-03-05 11:29:45,013 - app.db - ERROR - Database unavailable, attempt 15
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:30:02,076 - app.db - ERROR - Database unavailable, attempt 16
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:30:03,000 - app.orders - INFO - Order 6017 created for customer 764
+2026-03-05 11:30:23,428 - app.db - ERROR - Database unavailable, attempt 17
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:30:25,000 - app.orders - INFO - GET /api/orders/7376 200 55ms
+2026-03-05 11:30:40,937 - app.db - ERROR - Database unavailable, attempt 18
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:30:54,129 - app.orders - ERROR - Failed to process order 6473 for customer 758
+Traceback (most recent call last):
+  File "/srv/orders/app/api.py", line 112, in create_order
+    qty = parse_qty(payload["qty"])
+  File "/srv/orders/app/orders.py", line 47, in parse_qty
+    return int(raw)
+ValueError: invalid literal for int() with base 10: ''
+2026-03-05 11:31:01,430 - app.db - ERROR - Database unavailable, attempt 19
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:31:08,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:31:19,000 - app.orders - INFO - Payment 900656 captured
+2026-03-05 11:31:22,643 - app.db - ERROR - Database unavailable, attempt 20
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:31:26,383 - app.db - WARNING - Slow query took 2844 ms (threshold 1000 ms) for order 7861
+2026-03-05 11:31:44,715 - app.db - ERROR - Database unavailable, attempt 21
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:31:57,000 - app.orders - INFO - Order 8508 created for customer 956
+2026-03-05 11:32:05,691 - app.db - ERROR - Database unavailable, attempt 22
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:32:08,000 - app.orders - INFO - GET /api/orders/3104 200 53ms
+2026-03-05 11:32:23,360 - app.db - ERROR - Database unavailable, attempt 23
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:32:40,594 - app.db - ERROR - Database unavailable, attempt 24
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:32:41,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:33:05,271 - app.db - ERROR - Database unavailable, attempt 25
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:33:14,000 - app.orders - INFO - Payment 869109 captured
+2026-03-05 11:33:20,000 - app.orders - INFO - Order 6140 created for customer 896
+2026-03-05 11:33:21,111 - app.db - ERROR - Database unavailable, attempt 26
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:33:43,229 - app.db - ERROR - Database unavailable, attempt 27
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:33:47,000 - app.orders - INFO - GET /api/orders/3231 200 11ms
+2026-03-05 11:34:05,310 - app.db - ERROR - Database unavailable, attempt 28
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:34:16,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:34:24,759 - app.db - ERROR - Database unavailable, attempt 29
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:34:33,983 - app.db - WARNING - Slow query took 3868 ms (threshold 1000 ms) for order 2235
+2026-03-05 11:34:44,184 - app.db - WARNING - Slow query took 3709 ms (threshold 1000 ms) for order 6904
+2026-03-05 11:34:44,410 - app.db - ERROR - Database unavailable, attempt 30
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:34:54,000 - app.orders - INFO - Payment 168698 captured
+2026-03-05 11:35:05,962 - app.db - ERROR - Database unavailable, attempt 31
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:35:12,000 - app.orders - INFO - Order 6749 created for customer 725
+2026-03-05 11:35:25,976 - app.db - ERROR - Database unavailable, attempt 32
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:35:29,000 - app.orders - INFO - GET /api/orders/8477 200 26ms
+2026-03-05 11:35:43,539 - app.db - ERROR - Database unavailable, attempt 33
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:36:01,994 - app.db - ERROR - Database unavailable, attempt 34
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:36:10,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:36:23,000 - app.orders - INFO - Payment 138622 captured
+2026-03-05 11:36:25,224 - app.db - ERROR - Database unavailable, attempt 35
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:36:45,820 - app.db - ERROR - Database unavailable, attempt 36
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:36:51,000 - app.orders - INFO - Order 4259 created for customer 286
+2026-03-05 11:37:05,983 - app.db - ERROR - Database unavailable, attempt 37
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:37:24,000 - app.orders - INFO - GET /api/orders/6371 200 56ms
+2026-03-05 11:37:25,401 - app.db - ERROR - Database unavailable, attempt 38
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:37:41,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:37:45,473 - app.db - ERROR - Database unavailable, attempt 39
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:38:04,217 - app.db - ERROR - Database unavailable, attempt 40
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:38:10,000 - app.orders - INFO - Payment 646782 captured
+2026-03-05 11:38:21,168 - app.db - ERROR - Database unavailable, attempt 41
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:38:23,000 - app.orders - INFO - Order 2713 created for customer 358
+2026-03-05 11:38:45,132 - app.db - ERROR - Database unavailable, attempt 42
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:38:48,000 - app.orders - INFO - GET /api/orders/7086 200 41ms
+2026-03-05 11:39:01,951 - app.db - ERROR - Database unavailable, attempt 43
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:39:25,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:39:25,795 - app.db - ERROR - Database unavailable, attempt 44
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:39:40,070 - app.db - ERROR - Database unavailable, attempt 45
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:39:49,000 - app.orders - INFO - Payment 745266 captured
+2026-03-05 11:40:03,829 - app.db - ERROR - Database unavailable, attempt 46
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:40:15,000 - app.orders - INFO - Order 1791 created for customer 403
+2026-03-05 11:40:23,817 - app.db - ERROR - Database unavailable, attempt 47
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:40:40,000 - app.orders - INFO - GET /api/orders/1029 200 12ms
+2026-03-05 11:40:42,649 - app.db - ERROR - Database unavailable, attempt 48
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:40:59,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:41:02,197 - app.db - ERROR - Database unavailable, attempt 49
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:41:17,000 - app.orders - INFO - Payment 338299 captured
+2026-03-05 11:41:25,480 - app.db - ERROR - Database unavailable, attempt 50
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:41:44,000 - app.orders - INFO - Order 1746 created for customer 122
+2026-03-05 11:41:45,657 - app.db - ERROR - Database unavailable, attempt 51
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:42:00,575 - app.db - ERROR - Database unavailable, attempt 52
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:42:08,000 - app.orders - INFO - GET /api/orders/2742 200 74ms
+2026-03-05 11:42:23,738 - app.db - ERROR - Database unavailable, attempt 53
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:42:41,231 - app.db - ERROR - Database unavailable, attempt 54
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:42:53,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:43:03,834 - app.db - ERROR - Database unavailable, attempt 55
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:43:05,000 - app.orders - INFO - Payment 968715 captured
+2026-03-05 11:43:25,986 - app.db - ERROR - Database unavailable, attempt 56
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:43:43,000 - app.orders - INFO - Order 8780 created for customer 262
+2026-03-05 11:43:45,149 - app.db - ERROR - Database unavailable, attempt 57
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:43:53,000 - app.orders - INFO - GET /api/orders/3446 200 65ms
+2026-03-05 11:44:05,361 - app.db - ERROR - Database unavailable, attempt 58
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:44:21,682 - app.db - ERROR - Database unavailable, attempt 59
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:44:25,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:44:42,654 - app.db - ERROR - Database unavailable, attempt 60
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:44:57,000 - app.orders - INFO - Payment 960755 captured
+2026-03-05 11:45:03,850 - app.db - ERROR - Database unavailable, attempt 61
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:45:05,000 - app.orders - INFO - Order 6739 created for customer 708
+2026-03-05 11:45:23,838 - app.db - ERROR - Database unavailable, attempt 62
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:45:41,000 - app.orders - INFO - GET /api/orders/3704 200 8ms
+2026-03-05 11:45:43,814 - app.db - ERROR - Database unavailable, attempt 63
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:45:50,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:46:00,835 - app.db - ERROR - Database unavailable, attempt 64
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:46:21,000 - app.orders - INFO - Payment 112950 captured
+2026-03-05 11:46:24,423 - app.db - ERROR - Database unavailable, attempt 65
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:46:43,479 - app.db - ERROR - Database unavailable, attempt 66
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:46:56,000 - app.orders - INFO - Order 4231 created for customer 245
+2026-03-05 11:47:04,301 - app.db - ERROR - Database unavailable, attempt 67
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:47:16,000 - app.orders - INFO - GET /api/orders/7803 200 86ms
+2026-03-05 11:47:25,778 - app.db - ERROR - Database unavailable, attempt 68
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:47:34,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:47:45,561 - app.db - ERROR - Database unavailable, attempt 69
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:48:01,665 - app.db - ERROR - Database unavailable, attempt 70
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:48:17,000 - app.orders - INFO - Payment 106657 captured
+2026-03-05 11:48:25,128 - app.db - ERROR - Database unavailable, attempt 71
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:48:37,000 - app.orders - INFO - Order 7146 created for customer 964
+2026-03-05 11:48:42,798 - app.db - ERROR - Database unavailable, attempt 72
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:48:45,000 - app.orders - INFO - GET /api/orders/4701 200 21ms
+2026-03-05 11:49:00,853 - app.db - ERROR - Database unavailable, attempt 73
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:49:23,480 - app.db - ERROR - Database unavailable, attempt 74
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:49:34,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:49:43,363 - app.db - ERROR - Database unavailable, attempt 75
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:49:51,000 - app.orders - INFO - Payment 766753 captured
+2026-03-05 11:50:00,802 - app.db - ERROR - Database unavailable, attempt 76
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:50:09,000 - app.orders - INFO - Order 8144 created for customer 802
+2026-03-05 11:50:20,871 - app.db - ERROR - Database unavailable, attempt 77
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:50:42,235 - app.db - ERROR - Database unavailable, attempt 78
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:50:45,000 - app.orders - INFO - GET /api/orders/9313 200 9ms
+2026-03-05 11:50:52,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:51:04,273 - app.db - ERROR - Database unavailable, attempt 79
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:51:21,721 - app.db - ERROR - Database unavailable, attempt 80
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:51:37,000 - app.orders - INFO - Payment 730436 captured
+2026-03-05 11:51:41,385 - app.db - ERROR - Database unavailable, attempt 81
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:51:48,000 - app.orders - INFO - Order 4918 created for customer 488
+2026-03-05 11:52:05,703 - app.db - ERROR - Database unavailable, attempt 82
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:52:21,000 - app.orders - INFO - GET /api/orders/1104 200 11ms
+2026-03-05 11:52:21,259 - app.db - ERROR - Database unavailable, attempt 83
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:52:41,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:52:44,436 - app.db - ERROR - Database unavailable, attempt 84
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:53:00,000 - app.orders - INFO - Payment 134512 captured
+2026-03-05 11:53:02,695 - app.db - ERROR - Database unavailable, attempt 85
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:53:20,190 - app.db - ERROR - Database unavailable, attempt 86
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:53:31,000 - app.orders - INFO - Order 1440 created for customer 214
+2026-03-05 11:53:44,493 - app.db - ERROR - Database unavailable, attempt 87
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:54:03,002 - app.db - ERROR - Database unavailable, attempt 88
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:54:09,000 - app.orders - INFO - GET /api/orders/1470 200 11ms
+2026-03-05 11:54:17,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:54:24,824 - app.db - ERROR - Database unavailable, attempt 89
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:54:41,739 - app.db - ERROR - Database unavailable, attempt 90
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:54:52,000 - app.orders - INFO - Payment 957275 captured
+2026-03-05 11:55:05,818 - app.db - ERROR - Database unavailable, attempt 91
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:55:17,000 - app.orders - INFO - Order 9747 created for customer 780
+2026-03-05 11:55:23,287 - app.db - ERROR - Database unavailable, attempt 92
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:55:44,366 - app.db - ERROR - Database unavailable, attempt 93
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:55:49,000 - app.orders - INFO - GET /api/orders/4328 200 22ms
+2026-03-05 11:56:00,250 - app.db - ERROR - Database unavailable, attempt 94
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:56:06,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:56:25,000 - app.orders - INFO - Payment 202615 captured
+2026-03-05 11:56:25,670 - app.db - ERROR - Database unavailable, attempt 95
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:56:42,309 - app.db - ERROR - Database unavailable, attempt 96
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:57:00,000 - app.orders - INFO - Order 4358 created for customer 401
+2026-03-05 11:57:04,328 - app.db - ERROR - Database unavailable, attempt 97
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:57:12,000 - app.orders - INFO - GET /api/orders/6749 200 40ms
+2026-03-05 11:57:22,491 - app.db - ERROR - Database unavailable, attempt 98
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:57:43,496 - app.db - ERROR - Database unavailable, attempt 99
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:57:49,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:58:05,438 - app.db - ERROR - Database unavailable, attempt 100
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:58:19,000 - app.orders - INFO - Payment 881875 captured
+2026-03-05 11:58:23,638 - app.db - ERROR - Database unavailable, attempt 101
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:58:26,000 - app.orders - INFO - Order 1507 created for customer 907
+2026-03-05 11:58:41,652 - app.db - ERROR - Database unavailable, attempt 102
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:58:52,000 - app.orders - INFO - GET /api/orders/2610 200 52ms
+2026-03-05 11:59:05,087 - app.db - ERROR - Database unavailable, attempt 103
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:59:21,675 - app.db - ERROR - Database unavailable, attempt 104
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:59:22,000 - app.orders - INFO - Cache refreshed
+2026-03-05 11:59:43,918 - app.db - ERROR - Database unavailable, attempt 105
+Traceback (most recent call last):
+  File "/srv/venv/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "10.0.3.12", port 5432 failed: Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/srv/orders/app/db.py", line 33, in get_session
+    session.execute(text('SELECT 1'))
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "10.0.3.12", port 5432 failed: Connection refused
+2026-03-05 11:59:58,000 - app.orders - INFO - Payment 648987 captured

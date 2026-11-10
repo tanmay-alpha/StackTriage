@@ -1,0 +1,49 @@
+{
+  "file": "spring_boot.log",
+  "format": "java",
+  "service": null,
+  "total_events": 340,
+  "window_start": "2026-03-05T10:00:00+00:00",
+  "groups": [
+    {
+      "id": "npe_order_total",
+      "count": 11,
+      "level": "ERROR",
+      "title_contains": "Order.getItems()",
+      "exc_type": "java.lang.NullPointerException",
+      "first_second": "2026-03-05T10:15:19+00:00",
+      "last_second": "2026-03-05T11:38:31+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "npe_inventory",
+      "count": 5,
+      "level": "ERROR",
+      "title_contains": "because \"sku\" is null",
+      "exc_type": "java.lang.NullPointerException",
+      "first_second": "2026-03-05T10:34:21+00:00",
+      "last_second": "2026-03-05T11:20:11+00:00",
+      "ongoing": false
+    },
+    {
+      "id": "hikari_timeout",
+      "count": 67,
+      "level": "ERROR",
+      "title_contains": "Connection is not available, request timed out after <N>ms",
+      "exc_type": "java.sql.SQLTransientConnectionException",
+      "first_second": "2026-03-05T11:10:05+00:00",
+      "last_second": "2026-03-05T11:59:30+00:00",
+      "ongoing": true
+    },
+    {
+      "id": "sync_lag",
+      "count": 17,
+      "level": "WARNING",
+      "title_contains": "Sync lagging by",
+      "exc_type": null,
+      "first_second": "2026-03-05T10:05:00+00:00",
+      "last_second": "2026-03-05T11:33:35+00:00",
+      "ongoing": false
+    }
+  ]
+}

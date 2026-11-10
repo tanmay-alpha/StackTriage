@@ -1,0 +1,551 @@
+timestamp,host,level,message,cpu_pct,latency_ms,queue_depth
+2026-03-05T10:00:05Z,edge-a,INFO,heartbeat ok,15.6,84,1
+2026-03-05T10:00:48Z,edge-b,INFO,heartbeat ok,16.3,60,3
+2026-03-05T10:01:12Z,edge-b,INFO,heartbeat ok,25.5,43,1
+2026-03-05T10:01:44Z,edge-a,INFO,heartbeat ok,19.3,71,0
+2026-03-05T10:02:29Z,edge-b,INFO,heartbeat ok,14.5,30,3
+2026-03-05T10:02:37Z,edge-a,INFO,heartbeat ok,17.8,33,1
+2026-03-05T10:03:13Z,edge-a,INFO,heartbeat ok,13.2,31,5
+2026-03-05T10:03:55Z,edge-a,INFO,heartbeat ok,32.1,86,2
+2026-03-05T10:04:15Z,edge-a,INFO,heartbeat ok,30.6,24,6
+2026-03-05T10:04:37Z,edge-a,INFO,heartbeat ok,26.0,32,3
+2026-03-05T10:05:23Z,edge-b,INFO,heartbeat ok,33.7,31,6
+2026-03-05T10:05:52Z,edge-b,INFO,heartbeat ok,30.0,35,3
+2026-03-05T10:06:02Z,edge-a,INFO,heartbeat ok,20.8,50,2
+2026-03-05T10:06:45Z,edge-a,INFO,heartbeat ok,37.2,65,0
+2026-03-05T10:07:25Z,edge-b,INFO,heartbeat ok,36.9,51,4
+2026-03-05T10:07:43Z,edge-b,INFO,heartbeat ok,15.1,47,5
+2026-03-05T10:08:13Z,edge-a,INFO,heartbeat ok,12.1,37,4
+2026-03-05T10:08:52Z,edge-a,INFO,heartbeat ok,36.9,29,1
+2026-03-05T10:09:08Z,edge-b,INFO,heartbeat ok,26.9,46,6
+2026-03-05T10:09:53Z,edge-a,INFO,heartbeat ok,14.4,63,1
+2026-03-05T10:10:09Z,edge-a,INFO,heartbeat ok,16.7,45,4
+2026-03-05T10:10:43Z,edge-b,INFO,heartbeat ok,32.0,86,0
+2026-03-05T10:11:25Z,edge-a,INFO,heartbeat ok,14.6,42,5
+2026-03-05T10:11:50Z,edge-b,WARN,"disk usage high, volume ""/data"" at 94%",36.2,107,3
+2026-03-05T10:11:53Z,edge-a,INFO,heartbeat ok,14.1,33,2
+2026-03-05T10:12:08Z,edge-b,INFO,heartbeat ok,31.0,68,4
+2026-03-05T10:12:52Z,edge-b,INFO,heartbeat ok,21.3,24,4
+2026-03-05T10:13:21Z,edge-a,INFO,heartbeat ok,13.8,77,6
+2026-03-05T10:13:57Z,edge-a,INFO,heartbeat ok,21.6,75,3
+2026-03-05T10:14:15Z,edge-b,INFO,heartbeat ok,37.7,101,3
+2026-03-05T10:14:52Z,edge-a,INFO,heartbeat ok,13.4,61,4
+2026-03-05T10:15:01Z,edge-b,INFO,heartbeat ok,12.3,39,0
+2026-03-05T10:15:44Z,edge-b,INFO,heartbeat ok,20.2,96,3
+2026-03-05T10:16:15Z,edge-b,INFO,heartbeat ok,35.7,31,2
+2026-03-05T10:16:41Z,edge-a,INFO,heartbeat ok,18.7,85,0
+2026-03-05T10:17:16Z,edge-a,INFO,heartbeat ok,22.0,83,1
+2026-03-05T10:17:30Z,edge-b,INFO,heartbeat ok,20.6,37,6
+2026-03-05T10:18:20Z,edge-b,INFO,heartbeat ok,35.5,67,1
+2026-03-05T10:18:45Z,edge-b,INFO,heartbeat ok,13.9,100,4
+2026-03-05T10:19:05Z,edge-a,INFO,heartbeat ok,12.7,106,2
+2026-03-05T10:19:47Z,edge-b,INFO,heartbeat ok,28.0,53,5
+2026-03-05T10:20:26Z,edge-b,INFO,heartbeat ok,16.2,66,1
+2026-03-05T10:20:39Z,edge-a,INFO,heartbeat ok,29.7,94,6
+2026-03-05T10:21:09Z,edge-a,INFO,heartbeat ok,15.0,86,2
+2026-03-05T10:21:33Z,edge-a,INFO,heartbeat ok,19.9,102,4
+2026-03-05T10:22:15Z,edge-b,INFO,heartbeat ok,36.0,90,5
+2026-03-05T10:22:45Z,edge-b,INFO,heartbeat ok,24.2,86,2
+2026-03-05T10:23:02Z,edge-b,INFO,heartbeat ok,12.8,26,3
+2026-03-05T10:23:32Z,edge-b,INFO,heartbeat ok,12.1,65,1
+2026-03-05T10:24:28Z,edge-a,INFO,heartbeat ok,28.2,85,4
+2026-03-05T10:24:35Z,edge-b,INFO,heartbeat ok,21.3,51,6
+2026-03-05T10:25:14Z,edge-a,INFO,heartbeat ok,14.3,23,2
+2026-03-05T10:25:44Z,edge-b,INFO,heartbeat ok,27.5,103,4
+2026-03-05T10:26:11Z,edge-a,INFO,heartbeat ok,12.9,77,4
+2026-03-05T10:26:45Z,edge-a,INFO,heartbeat ok,27.6,25,2
+2026-03-05T10:27:16Z,edge-a,INFO,heartbeat ok,29.6,31,4
+2026-03-05T10:27:38Z,edge-a,INFO,heartbeat ok,17.0,102,6
+2026-03-05T10:28:16Z,edge-a,INFO,heartbeat ok,19.0,72,2
+2026-03-05T10:28:40Z,edge-a,INFO,heartbeat ok,16.7,94,5
+2026-03-05T10:29:12Z,edge-b,INFO,heartbeat ok,12.2,28,4
+2026-03-05T10:29:49Z,edge-b,INFO,heartbeat ok,34.8,33,4
+2026-03-05T10:30:03Z,edge-b,WARN,"disk usage high, volume ""/data"" at 96%",38.0,109,3
+2026-03-05T10:30:04Z,edge-b,INFO,heartbeat ok,16.7,62,1
+2026-03-05T10:30:44Z,edge-b,INFO,heartbeat ok,30.5,104,6
+2026-03-05T10:31:00Z,edge-a,INFO,heartbeat ok,35.5,33,0
+2026-03-05T10:31:50Z,edge-b,INFO,heartbeat ok,36.3,82,0
+2026-03-05T10:32:17Z,edge-b,INFO,heartbeat ok,30.3,42,6
+2026-03-05T10:32:32Z,edge-a,INFO,heartbeat ok,24.8,61,2
+2026-03-05T10:33:11Z,edge-b,INFO,heartbeat ok,30.5,78,4
+2026-03-05T10:33:39Z,edge-b,INFO,heartbeat ok,35.9,59,5
+2026-03-05T10:34:04Z,edge-a,INFO,heartbeat ok,16.2,57,3
+2026-03-05T10:34:41Z,edge-b,INFO,heartbeat ok,29.1,28,6
+2026-03-05T10:35:24Z,edge-b,INFO,heartbeat ok,24.4,27,2
+2026-03-05T10:35:40Z,edge-b,INFO,heartbeat ok,14.8,32,3
+2026-03-05T10:36:10Z,edge-a,INFO,heartbeat ok,34.6,61,0
+2026-03-05T10:36:53Z,edge-b,INFO,heartbeat ok,24.5,105,1
+2026-03-05T10:37:13Z,edge-a,INFO,heartbeat ok,13.9,80,1
+2026-03-05T10:37:45Z,edge-b,INFO,heartbeat ok,19.6,34,4
+2026-03-05T10:38:19Z,edge-b,INFO,heartbeat ok,24.8,69,4
+2026-03-05T10:38:55Z,edge-a,INFO,heartbeat ok,29.6,68,0
+2026-03-05T10:39:26Z,edge-b,INFO,heartbeat ok,37.9,29,5
+2026-03-05T10:39:30Z,edge-b,INFO,heartbeat ok,16.1,50,2
+2026-03-05T10:40:04Z,edge-b,INFO,heartbeat ok,32.9,103,1
+2026-03-05T10:40:34Z,edge-b,INFO,heartbeat ok,19.7,89,6
+2026-03-05T10:41:06Z,edge-a,INFO,heartbeat ok,18.6,72,2
+2026-03-05T10:41:58Z,edge-b,INFO,heartbeat ok,26.4,93,5
+2026-03-05T10:42:11Z,edge-b,INFO,heartbeat ok,24.7,89,4
+2026-03-05T10:42:37Z,edge-b,INFO,heartbeat ok,13.8,65,0
+2026-03-05T10:43:12Z,edge-a,INFO,heartbeat ok,25.9,83,5
+2026-03-05T10:43:40Z,edge-b,INFO,heartbeat ok,33.9,105,0
+2026-03-05T10:44:12Z,edge-b,INFO,heartbeat ok,12.6,99,5
+2026-03-05T10:44:34Z,edge-b,INFO,heartbeat ok,19.2,85,1
+2026-03-05T10:45:18Z,edge-a,INFO,heartbeat ok,14.6,57,0
+2026-03-05T10:45:44Z,edge-a,INFO,heartbeat ok,36.9,51,2
+2026-03-05T10:46:18Z,edge-b,INFO,heartbeat ok,34.2,26,5
+2026-03-05T10:46:48Z,edge-a,INFO,heartbeat ok,13.8,108,5
+2026-03-05T10:47:16Z,edge-a,INFO,heartbeat ok,22.1,74,2
+2026-03-05T10:47:31Z,edge-b,INFO,heartbeat ok,25.7,66,4
+2026-03-05T10:48:20Z,edge-b,INFO,heartbeat ok,17.5,91,5
+2026-03-05T10:48:21Z,edge-b,WARN,"disk usage high, volume ""/data"" at 89%",21.3,90,3
+2026-03-05T10:48:48Z,edge-a,INFO,heartbeat ok,24.8,44,5
+2026-03-05T10:49:19Z,edge-b,INFO,heartbeat ok,25.0,21,1
+2026-03-05T10:49:56Z,edge-a,INFO,heartbeat ok,13.6,91,4
+2026-03-05T10:50:26Z,edge-a,INFO,heartbeat ok,15.4,67,6
+2026-03-05T10:50:37Z,edge-a,INFO,heartbeat ok,36.6,44,4
+2026-03-05T10:51:10Z,edge-b,INFO,heartbeat ok,33.4,100,6
+2026-03-05T10:51:52Z,edge-a,INFO,heartbeat ok,34.6,28,2
+2026-03-05T10:52:01Z,edge-b,INFO,heartbeat ok,34.3,45,2
+2026-03-05T10:52:19Z,edge-b,WARN,"disk usage high, volume ""/data"" at 91%",26.3,63,3
+2026-03-05T10:52:53Z,edge-b,INFO,heartbeat ok,37.8,27,0
+2026-03-05T10:53:04Z,edge-a,INFO,heartbeat ok,24.0,29,4
+2026-03-05T10:53:47Z,edge-a,INFO,heartbeat ok,21.3,69,2
+2026-03-05T10:54:18Z,edge-a,INFO,heartbeat ok,25.9,100,3
+2026-03-05T10:54:48Z,edge-b,INFO,heartbeat ok,33.3,90,2
+2026-03-05T10:55:02Z,edge-b,INFO,heartbeat ok,38.0,46,1
+2026-03-05T10:55:58Z,edge-a,INFO,heartbeat ok,32.8,75,0
+2026-03-05T10:56:23Z,edge-a,INFO,heartbeat ok,22.6,37,6
+2026-03-05T10:56:39Z,edge-a,INFO,heartbeat ok,37.4,90,1
+2026-03-05T10:57:11Z,edge-b,INFO,heartbeat ok,25.1,33,6
+2026-03-05T10:57:43Z,edge-b,INFO,heartbeat ok,23.3,73,2
+2026-03-05T10:58:20Z,edge-b,INFO,heartbeat ok,32.8,55,0
+2026-03-05T10:58:45Z,edge-a,INFO,heartbeat ok,30.3,90,2
+2026-03-05T10:59:05Z,edge-b,WARN,"disk usage high, volume ""/data"" at 93%",37.9,54,3
+2026-03-05T10:59:09Z,edge-a,INFO,heartbeat ok,30.8,25,2
+2026-03-05T10:59:42Z,edge-b,INFO,heartbeat ok,16.7,58,3
+2026-03-05T11:00:04Z,edge-a,ERROR,"timeout calling inventory after 3044ms, retrying",79.0,3331,73
+2026-03-05T11:00:14Z,edge-b,ERROR,"timeout calling inventory after 3066ms, retrying",88.6,3268,165
+2026-03-05T11:00:24Z,edge-a,ERROR,"timeout calling inventory after 2948ms, retrying",83.7,3223,93
+2026-03-05T11:00:29Z,edge-a,INFO,heartbeat ok,20.3,88,0
+2026-03-05T11:00:36Z,edge-b,ERROR,"timeout calling inventory after 2907ms, retrying",75.5,3119,95
+2026-03-05T11:00:46Z,edge-b,INFO,heartbeat ok,35.3,82,3
+2026-03-05T11:00:48Z,edge-b,ERROR,"timeout calling inventory after 2957ms, retrying",91.1,2928,61
+2026-03-05T11:01:00Z,edge-a,ERROR,"timeout calling inventory after 3090ms, retrying",72.5,3196,155
+2026-03-05T11:01:11Z,edge-b,INFO,heartbeat ok,19.6,78,4
+2026-03-05T11:01:14Z,edge-b,ERROR,"timeout calling inventory after 3067ms, retrying",72.3,2915,47
+2026-03-05T11:01:27Z,edge-a,ERROR,"timeout calling inventory after 3003ms, retrying",91.1,3111,77
+2026-03-05T11:01:36Z,edge-b,INFO,heartbeat ok,30.7,103,3
+2026-03-05T11:01:36Z,edge-a,ERROR,"timeout calling inventory after 2937ms, retrying",84.5,3411,73
+2026-03-05T11:01:48Z,edge-a,ERROR,"timeout calling inventory after 2967ms, retrying",87.6,3543,193
+2026-03-05T11:02:01Z,edge-b,ERROR,"timeout calling inventory after 3096ms, retrying",77.6,3210,62
+2026-03-05T11:02:08Z,edge-b,INFO,heartbeat ok,14.2,34,3
+2026-03-05T11:02:16Z,edge-a,ERROR,"timeout calling inventory after 2903ms, retrying",94.0,3124,176
+2026-03-05T11:02:25Z,edge-a,ERROR,"timeout calling inventory after 2972ms, retrying",80.5,3484,61
+2026-03-05T11:02:38Z,edge-a,ERROR,"timeout calling inventory after 3030ms, retrying",84.8,2919,179
+2026-03-05T11:02:46Z,edge-a,INFO,heartbeat ok,21.1,98,1
+2026-03-05T11:02:52Z,edge-a,ERROR,"timeout calling inventory after 2937ms, retrying",74.4,3228,76
+2026-03-05T11:03:00Z,edge-b,ERROR,"timeout calling inventory after 3042ms, retrying",74.5,3190,149
+2026-03-05T11:03:12Z,edge-a,ERROR,"timeout calling inventory after 2920ms, retrying",80.5,2823,69
+2026-03-05T11:03:24Z,edge-a,ERROR,"timeout calling inventory after 2929ms, retrying",94.8,3388,174
+2026-03-05T11:03:28Z,edge-b,INFO,heartbeat ok,18.1,49,6
+2026-03-05T11:03:37Z,edge-a,INFO,heartbeat ok,33.7,79,1
+2026-03-05T11:03:40Z,edge-a,ERROR,"timeout calling inventory after 2907ms, retrying",83.0,2996,89
+2026-03-05T11:03:49Z,edge-a,ERROR,"timeout calling inventory after 2923ms, retrying",84.5,3531,135
+2026-03-05T11:04:02Z,edge-a,ERROR,"timeout calling inventory after 3054ms, retrying",74.5,2876,190
+2026-03-05T11:04:07Z,edge-b,INFO,heartbeat ok,14.2,29,5
+2026-03-05T11:04:13Z,edge-a,ERROR,"timeout calling inventory after 3099ms, retrying",79.8,3046,178
+2026-03-05T11:04:25Z,edge-b,ERROR,"timeout calling inventory after 2964ms, retrying",87.7,3418,159
+2026-03-05T11:04:38Z,edge-b,ERROR,"timeout calling inventory after 2976ms, retrying",83.2,3187,54
+2026-03-05T11:04:45Z,edge-b,INFO,heartbeat ok,23.1,97,6
+2026-03-05T11:04:51Z,edge-b,ERROR,"timeout calling inventory after 2923ms, retrying",90.7,2934,67
+2026-03-05T11:05:04Z,edge-b,ERROR,"timeout calling inventory after 3001ms, retrying",88.4,3190,54
+2026-03-05T11:05:08Z,edge-b,INFO,heartbeat ok,31.2,66,3
+2026-03-05T11:05:13Z,edge-a,ERROR,"timeout calling inventory after 2962ms, retrying",85.4,2816,185
+2026-03-05T11:05:25Z,edge-a,ERROR,"timeout calling inventory after 2979ms, retrying",78.8,3555,70
+2026-03-05T11:05:35Z,edge-b,INFO,heartbeat ok,15.0,29,0
+2026-03-05T11:05:36Z,edge-a,ERROR,"timeout calling inventory after 2925ms, retrying",93.8,3429,57
+2026-03-05T11:05:49Z,edge-b,ERROR,"timeout calling inventory after 2907ms, retrying",70.9,3599,123
+2026-03-05T11:06:03Z,edge-b,ERROR,"timeout calling inventory after 2938ms, retrying",70.2,2812,173
+2026-03-05T11:06:12Z,edge-b,ERROR,"timeout calling inventory after 2945ms, retrying",94.6,3157,95
+2026-03-05T11:06:15Z,edge-b,INFO,heartbeat ok,32.1,67,2
+2026-03-05T11:06:24Z,edge-a,ERROR,"timeout calling inventory after 2985ms, retrying",94.0,3488,152
+2026-03-05T11:06:40Z,edge-b,ERROR,"timeout calling inventory after 3019ms, retrying",85.6,3039,59
+2026-03-05T11:06:48Z,edge-b,ERROR,"timeout calling inventory after 3100ms, retrying",74.3,3289,132
+2026-03-05T11:06:53Z,edge-b,INFO,heartbeat ok,37.8,52,0
+2026-03-05T11:07:00Z,edge-b,ERROR,"timeout calling inventory after 3044ms, retrying",87.7,3528,154
+2026-03-05T11:07:15Z,edge-a,ERROR,"timeout calling inventory after 2901ms, retrying",84.1,3119,92
+2026-03-05T11:07:17Z,edge-a,INFO,heartbeat ok,34.4,28,5
+2026-03-05T11:07:25Z,edge-a,ERROR,"timeout calling inventory after 3002ms, retrying",85.9,3147,107
+2026-03-05T11:07:33Z,edge-a,INFO,heartbeat ok,36.9,78,1
+2026-03-05T11:07:38Z,edge-a,ERROR,"timeout calling inventory after 3034ms, retrying",78.9,3341,77
+2026-03-05T11:07:49Z,edge-b,ERROR,"timeout calling inventory after 2950ms, retrying",93.8,3297,125
+2026-03-05T11:08:02Z,edge-b,ERROR,"timeout calling inventory after 3059ms, retrying",78.5,2837,180
+2026-03-05T11:08:06Z,edge-b,INFO,heartbeat ok,12.6,36,1
+2026-03-05T11:08:14Z,edge-a,ERROR,"timeout calling inventory after 3050ms, retrying",81.5,2863,63
+2026-03-05T11:08:17Z,edge-b,WARN,"disk usage high, volume ""/data"" at 92%",25.3,59,3
+2026-03-05T11:08:26Z,edge-b,WARN,"disk usage high, volume ""/data"" at 94%",28.4,96,3
+2026-03-05T11:08:28Z,edge-b,ERROR,"timeout calling inventory after 3082ms, retrying",73.4,3245,132
+2026-03-05T11:08:40Z,edge-b,ERROR,"timeout calling inventory after 2958ms, retrying",84.8,3040,123
+2026-03-05T11:08:45Z,edge-b,INFO,heartbeat ok,34.7,98,2
+2026-03-05T11:08:48Z,edge-a,ERROR,"timeout calling inventory after 3039ms, retrying",87.9,3396,66
+2026-03-05T11:09:04Z,edge-b,ERROR,"timeout calling inventory after 2985ms, retrying",70.3,3160,144
+2026-03-05T11:09:16Z,edge-b,ERROR,"timeout calling inventory after 2985ms, retrying",74.8,3148,86
+2026-03-05T11:09:25Z,edge-b,INFO,heartbeat ok,23.3,74,4
+2026-03-05T11:09:27Z,edge-a,ERROR,"timeout calling inventory after 2982ms, retrying",82.3,3311,70
+2026-03-05T11:09:40Z,edge-a,ERROR,"timeout calling inventory after 2903ms, retrying",87.0,2918,156
+2026-03-05T11:09:52Z,edge-b,ERROR,"timeout calling inventory after 3042ms, retrying",82.4,2907,131
+2026-03-05T11:09:57Z,edge-a,INFO,heartbeat ok,29.4,83,2
+2026-03-05T11:10:02Z,edge-a,INFO,heartbeat ok,15.2,74,4
+2026-03-05T11:10:02Z,edge-a,ERROR,"timeout calling inventory after 3057ms, retrying",91.9,2843,151
+2026-03-05T11:10:14Z,edge-b,ERROR,"timeout calling inventory after 3022ms, retrying",79.2,2980,75
+2026-03-05T11:10:26Z,edge-b,ERROR,"timeout calling inventory after 3099ms, retrying",89.8,3144,193
+2026-03-05T11:10:39Z,edge-b,ERROR,"timeout calling inventory after 2904ms, retrying",94.6,2890,119
+2026-03-05T11:10:43Z,edge-b,INFO,heartbeat ok,33.5,103,2
+2026-03-05T11:10:50Z,edge-b,ERROR,"timeout calling inventory after 2926ms, retrying",74.9,3385,103
+2026-03-05T11:11:00Z,edge-a,ERROR,"timeout calling inventory after 3094ms, retrying",82.1,3023,86
+2026-03-05T11:11:13Z,edge-b,ERROR,"timeout calling inventory after 2962ms, retrying",80.5,3388,189
+2026-03-05T11:11:16Z,edge-a,INFO,heartbeat ok,33.6,46,6
+2026-03-05T11:11:28Z,edge-a,ERROR,"timeout calling inventory after 2973ms, retrying",73.4,3539,160
+2026-03-05T11:11:40Z,edge-a,ERROR,"timeout calling inventory after 3014ms, retrying",75.2,3060,88
+2026-03-05T11:11:48Z,edge-b,ERROR,"timeout calling inventory after 3052ms, retrying",93.6,3592,90
+2026-03-05T11:11:55Z,edge-a,INFO,heartbeat ok,26.4,61,0
+2026-03-05T11:12:02Z,edge-a,ERROR,"timeout calling inventory after 2980ms, retrying",93.4,2804,52
+2026-03-05T11:12:16Z,edge-b,ERROR,"timeout calling inventory after 2927ms, retrying",73.5,3565,85
+2026-03-05T11:12:22Z,edge-a,INFO,heartbeat ok,16.1,86,6
+2026-03-05T11:12:26Z,edge-a,ERROR,"timeout calling inventory after 2915ms, retrying",86.7,2999,188
+2026-03-05T11:12:38Z,edge-b,ERROR,"timeout calling inventory after 2986ms, retrying",78.6,3081,127
+2026-03-05T11:12:48Z,edge-a,ERROR,"timeout calling inventory after 3069ms, retrying",87.7,3324,195
+2026-03-05T11:12:52Z,edge-a,INFO,heartbeat ok,21.8,85,2
+2026-03-05T11:13:00Z,edge-a,ERROR,"timeout calling inventory after 3052ms, retrying",78.9,2955,60
+2026-03-05T11:13:08Z,edge-a,INFO,heartbeat ok,32.9,49,1
+2026-03-05T11:13:15Z,edge-b,ERROR,"timeout calling inventory after 3015ms, retrying",81.7,2809,183
+2026-03-05T11:13:26Z,edge-b,ERROR,"timeout calling inventory after 3015ms, retrying",76.6,3166,198
+2026-03-05T11:13:40Z,edge-b,ERROR,"timeout calling inventory after 2965ms, retrying",81.3,3242,98
+2026-03-05T11:13:52Z,edge-b,ERROR,"timeout calling inventory after 3099ms, retrying",71.5,3196,116
+2026-03-05T11:13:55Z,edge-a,INFO,heartbeat ok,12.8,30,5
+2026-03-05T11:14:02Z,edge-b,INFO,heartbeat ok,21.3,85,3
+2026-03-05T11:14:03Z,edge-a,ERROR,"timeout calling inventory after 2951ms, retrying",70.2,3501,110
+2026-03-05T11:14:14Z,edge-a,ERROR,"timeout calling inventory after 2984ms, retrying",81.5,2864,122
+2026-03-05T11:14:27Z,edge-a,ERROR,"timeout calling inventory after 3025ms, retrying",92.8,3244,110
+2026-03-05T11:14:33Z,edge-b,INFO,heartbeat ok,36.5,70,5
+2026-03-05T11:14:37Z,edge-b,ERROR,"timeout calling inventory after 3068ms, retrying",83.2,3339,173
+2026-03-05T11:14:52Z,edge-a,ERROR,"timeout calling inventory after 2915ms, retrying",89.0,3371,63
+2026-03-05T11:15:04Z,edge-b,ERROR,"timeout calling inventory after 2904ms, retrying",73.5,2818,103
+2026-03-05T11:15:15Z,edge-b,ERROR,"timeout calling inventory after 3033ms, retrying",74.2,3338,161
+2026-03-05T11:15:24Z,edge-a,INFO,heartbeat ok,22.9,84,4
+2026-03-05T11:15:26Z,edge-b,ERROR,"timeout calling inventory after 2909ms, retrying",82.2,3423,57
+2026-03-05T11:15:38Z,edge-b,ERROR,"timeout calling inventory after 3037ms, retrying",75.8,3456,76
+2026-03-05T11:15:50Z,edge-b,ERROR,"timeout calling inventory after 2929ms, retrying",73.8,2921,121
+2026-03-05T11:15:58Z,edge-a,INFO,heartbeat ok,22.0,110,4
+2026-03-05T11:16:01Z,edge-b,ERROR,"timeout calling inventory after 3078ms, retrying",88.9,3200,54
+2026-03-05T11:16:03Z,edge-b,INFO,heartbeat ok,13.2,43,6
+2026-03-05T11:16:12Z,edge-a,ERROR,"timeout calling inventory after 3100ms, retrying",85.8,3128,178
+2026-03-05T11:16:28Z,edge-a,ERROR,"timeout calling inventory after 3083ms, retrying",91.5,3385,195
+2026-03-05T11:16:36Z,edge-b,ERROR,"timeout calling inventory after 2997ms, retrying",77.5,3505,43
+2026-03-05T11:16:41Z,edge-b,INFO,heartbeat ok,36.2,26,4
+2026-03-05T11:16:49Z,edge-a,ERROR,"timeout calling inventory after 3034ms, retrying",86.0,3190,109
+2026-03-05T11:17:01Z,edge-b,ERROR,"timeout calling inventory after 3000ms, retrying",79.8,3467,160
+2026-03-05T11:17:14Z,edge-b,ERROR,"timeout calling inventory after 2958ms, retrying",82.6,3548,78
+2026-03-05T11:17:15Z,edge-a,INFO,heartbeat ok,26.0,37,5
+2026-03-05T11:17:24Z,edge-a,ERROR,"timeout calling inventory after 2968ms, retrying",79.6,3385,63
+2026-03-05T11:17:40Z,edge-a,ERROR,"timeout calling inventory after 3050ms, retrying",92.0,3124,47
+2026-03-05T11:17:50Z,edge-a,ERROR,"timeout calling inventory after 3076ms, retrying",78.4,3465,77
+2026-03-05T11:17:56Z,edge-a,INFO,heartbeat ok,37.7,84,0
+2026-03-05T11:18:02Z,edge-a,ERROR,"timeout calling inventory after 3024ms, retrying",73.4,3378,122
+2026-03-05T11:18:07Z,edge-b,INFO,heartbeat ok,12.6,41,1
+2026-03-05T11:18:14Z,edge-b,ERROR,"timeout calling inventory after 3032ms, retrying",73.5,3083,199
+2026-03-05T11:18:27Z,edge-a,ERROR,"timeout calling inventory after 3006ms, retrying",86.4,3295,177
+2026-03-05T11:18:36Z,edge-b,ERROR,"timeout calling inventory after 2998ms, retrying",78.8,2821,98
+2026-03-05T11:18:45Z,edge-a,INFO,heartbeat ok,37.8,104,3
+2026-03-05T11:18:49Z,edge-a,ERROR,"timeout calling inventory after 3026ms, retrying",90.6,3256,190
+2026-03-05T11:19:01Z,edge-b,ERROR,"timeout calling inventory after 2995ms, retrying",72.8,3273,94
+2026-03-05T11:19:02Z,edge-a,INFO,heartbeat ok,12.3,82,6
+2026-03-05T11:19:16Z,edge-b,ERROR,"timeout calling inventory after 2913ms, retrying",77.3,3200,198
+2026-03-05T11:19:24Z,edge-b,ERROR,"timeout calling inventory after 2975ms, retrying",71.8,2846,135
+2026-03-05T11:19:40Z,edge-a,ERROR,"timeout calling inventory after 3001ms, retrying",73.2,3030,136
+2026-03-05T11:19:50Z,edge-b,ERROR,"timeout calling inventory after 2972ms, retrying",84.6,3340,58
+2026-03-05T11:19:50Z,edge-b,WARN,"disk usage high, volume ""/data"" at 88%",25.9,97,3
+2026-03-05T11:19:58Z,edge-a,INFO,heartbeat ok,17.6,80,0
+2026-03-05T11:20:03Z,edge-a,ERROR,"timeout calling inventory after 2904ms, retrying",72.8,3117,163
+2026-03-05T11:20:16Z,edge-a,ERROR,"timeout calling inventory after 3010ms, retrying",75.8,3274,58
+2026-03-05T11:20:25Z,edge-a,ERROR,"timeout calling inventory after 3020ms, retrying",85.3,2821,112
+2026-03-05T11:20:28Z,edge-a,INFO,heartbeat ok,15.2,29,4
+2026-03-05T11:20:36Z,edge-a,ERROR,"timeout calling inventory after 2938ms, retrying",92.5,3514,50
+2026-03-05T11:20:45Z,edge-b,INFO,heartbeat ok,17.7,109,3
+2026-03-05T11:20:52Z,edge-a,ERROR,"timeout calling inventory after 3089ms, retrying",85.5,2823,67
+2026-03-05T11:21:02Z,edge-b,ERROR,"timeout calling inventory after 2982ms, retrying",77.9,3099,63
+2026-03-05T11:21:11Z,edge-a,INFO,heartbeat ok,22.1,81,4
+2026-03-05T11:21:12Z,edge-b,ERROR,"timeout calling inventory after 2993ms, retrying",84.7,3027,140
+2026-03-05T11:21:25Z,edge-a,ERROR,"timeout calling inventory after 2950ms, retrying",94.9,3237,191
+2026-03-05T11:21:36Z,edge-b,ERROR,"timeout calling inventory after 2979ms, retrying",90.2,2954,160
+2026-03-05T11:21:38Z,edge-a,INFO,heartbeat ok,30.5,93,2
+2026-03-05T11:21:48Z,edge-a,ERROR,"timeout calling inventory after 3002ms, retrying",76.6,3537,132
+2026-03-05T11:22:04Z,edge-b,ERROR,"timeout calling inventory after 3080ms, retrying",90.8,2944,176
+2026-03-05T11:22:12Z,edge-b,ERROR,"timeout calling inventory after 2946ms, retrying",70.2,3339,119
+2026-03-05T11:22:27Z,edge-b,INFO,heartbeat ok,29.8,70,2
+2026-03-05T11:22:28Z,edge-a,ERROR,"timeout calling inventory after 2939ms, retrying",94.8,3114,157
+2026-03-05T11:22:34Z,edge-a,INFO,heartbeat ok,18.8,27,0
+2026-03-05T11:22:39Z,edge-b,ERROR,"timeout calling inventory after 2904ms, retrying",87.7,2808,126
+2026-03-05T11:22:49Z,edge-a,ERROR,"timeout calling inventory after 2939ms, retrying",90.8,3579,162
+2026-03-05T11:23:04Z,edge-a,ERROR,"timeout calling inventory after 3008ms, retrying",82.4,3286,185
+2026-03-05T11:23:14Z,edge-b,ERROR,"timeout calling inventory after 2985ms, retrying",84.6,3015,136
+2026-03-05T11:23:24Z,edge-b,ERROR,"timeout calling inventory after 2901ms, retrying",92.5,3561,67
+2026-03-05T11:23:29Z,edge-a,INFO,heartbeat ok,20.8,21,5
+2026-03-05T11:23:39Z,edge-b,ERROR,"timeout calling inventory after 3010ms, retrying",92.3,3384,48
+2026-03-05T11:23:45Z,edge-b,INFO,heartbeat ok,33.8,94,3
+2026-03-05T11:23:48Z,edge-b,ERROR,"timeout calling inventory after 3032ms, retrying",71.6,3385,94
+2026-03-05T11:24:03Z,edge-b,ERROR,"timeout calling inventory after 3084ms, retrying",71.1,3259,147
+2026-03-05T11:24:04Z,edge-b,INFO,heartbeat ok,19.6,75,5
+2026-03-05T11:24:12Z,edge-a,ERROR,"timeout calling inventory after 2949ms, retrying",91.4,2959,95
+2026-03-05T11:24:24Z,edge-b,ERROR,"timeout calling inventory after 3018ms, retrying",82.9,3172,165
+2026-03-05T11:24:31Z,edge-a,INFO,heartbeat ok,12.8,21,1
+2026-03-05T11:24:38Z,edge-b,ERROR,"timeout calling inventory after 3009ms, retrying",94.5,3441,100
+2026-03-05T11:24:49Z,edge-a,ERROR,"timeout calling inventory after 2961ms, retrying",89.3,3190,197
+2026-03-05T11:25:01Z,edge-b,ERROR,"timeout calling inventory after 2976ms, retrying",85.0,2999,134
+2026-03-05T11:25:12Z,edge-b,ERROR,"timeout calling inventory after 3049ms, retrying",86.1,2907,111
+2026-03-05T11:25:26Z,edge-b,INFO,heartbeat ok,27.7,87,6
+2026-03-05T11:25:28Z,edge-a,ERROR,"timeout calling inventory after 2979ms, retrying",92.4,3337,59
+2026-03-05T11:25:35Z,edge-a,INFO,heartbeat ok,14.3,95,1
+2026-03-05T11:25:36Z,edge-a,ERROR,"timeout calling inventory after 3096ms, retrying",92.3,3195,164
+2026-03-05T11:25:51Z,edge-b,ERROR,"timeout calling inventory after 3014ms, retrying",88.2,3050,132
+2026-03-05T11:26:01Z,edge-b,ERROR,"timeout calling inventory after 2973ms, retrying",79.2,3150,79
+2026-03-05T11:26:14Z,edge-a,ERROR,"timeout calling inventory after 3070ms, retrying",71.5,2881,183
+2026-03-05T11:26:22Z,edge-a,INFO,heartbeat ok,15.5,106,3
+2026-03-05T11:26:27Z,edge-b,ERROR,"timeout calling inventory after 3095ms, retrying",73.4,3191,167
+2026-03-05T11:26:37Z,edge-a,ERROR,"timeout calling inventory after 3095ms, retrying",76.3,3342,168
+2026-03-05T11:26:51Z,edge-a,ERROR,"timeout calling inventory after 2900ms, retrying",88.9,3520,187
+2026-03-05T11:26:57Z,edge-a,INFO,heartbeat ok,26.4,84,0
+2026-03-05T11:27:03Z,edge-a,ERROR,"timeout calling inventory after 2912ms, retrying",83.5,3132,107
+2026-03-05T11:27:06Z,edge-b,INFO,heartbeat ok,24.0,72,1
+2026-03-05T11:27:13Z,edge-b,ERROR,"timeout calling inventory after 3090ms, retrying",74.8,3459,136
+2026-03-05T11:27:27Z,edge-a,ERROR,"timeout calling inventory after 3049ms, retrying",91.1,3364,188
+2026-03-05T11:27:40Z,edge-b,ERROR,"timeout calling inventory after 2902ms, retrying",83.2,3229,197
+2026-03-05T11:27:48Z,edge-a,INFO,heartbeat ok,32.3,76,5
+2026-03-05T11:27:49Z,edge-b,ERROR,"timeout calling inventory after 2990ms, retrying",92.7,3218,192
+2026-03-05T11:28:00Z,edge-a,ERROR,"timeout calling inventory after 3059ms, retrying",74.0,3387,73
+2026-03-05T11:28:14Z,edge-a,ERROR,"timeout calling inventory after 2979ms, retrying",74.9,2909,49
+2026-03-05T11:28:15Z,edge-a,INFO,heartbeat ok,26.1,65,2
+2026-03-05T11:28:28Z,edge-a,ERROR,"timeout calling inventory after 2977ms, retrying",76.7,3341,84
+2026-03-05T11:28:40Z,edge-b,ERROR,"timeout calling inventory after 2916ms, retrying",79.3,3455,121
+2026-03-05T11:28:49Z,edge-a,ERROR,"timeout calling inventory after 2974ms, retrying",71.1,3393,167
+2026-03-05T11:28:57Z,edge-a,INFO,heartbeat ok,27.9,87,4
+2026-03-05T11:29:04Z,edge-a,ERROR,"timeout calling inventory after 2934ms, retrying",91.1,3127,125
+2026-03-05T11:29:16Z,edge-b,ERROR,"timeout calling inventory after 2939ms, retrying",87.3,2964,143
+2026-03-05T11:29:19Z,edge-a,INFO,heartbeat ok,21.4,79,6
+2026-03-05T11:29:27Z,edge-a,ERROR,"timeout calling inventory after 2922ms, retrying",91.7,2835,156
+2026-03-05T11:29:34Z,edge-a,INFO,heartbeat ok,24.5,80,1
+2026-03-05T11:29:40Z,edge-b,ERROR,"timeout calling inventory after 3030ms, retrying",82.6,3308,141
+2026-03-05T11:29:52Z,edge-b,ERROR,"timeout calling inventory after 3003ms, retrying",84.1,3347,128
+2026-03-05T11:30:02Z,edge-b,ERROR,"timeout calling inventory after 3010ms, retrying",91.7,3015,61
+2026-03-05T11:30:07Z,edge-a,INFO,heartbeat ok,20.7,85,5
+2026-03-05T11:30:14Z,edge-a,ERROR,"timeout calling inventory after 3066ms, retrying",81.9,3090,68
+2026-03-05T11:30:25Z,edge-a,ERROR,"timeout calling inventory after 2929ms, retrying",85.6,3458,88
+2026-03-05T11:30:40Z,edge-a,ERROR,"timeout calling inventory after 3023ms, retrying",75.8,3110,124
+2026-03-05T11:30:45Z,edge-a,INFO,heartbeat ok,23.7,58,6
+2026-03-05T11:30:49Z,edge-b,ERROR,"timeout calling inventory after 3000ms, retrying",93.3,3538,91
+2026-03-05T11:31:03Z,edge-b,ERROR,"timeout calling inventory after 3060ms, retrying",93.8,2893,140
+2026-03-05T11:31:08Z,edge-b,INFO,heartbeat ok,22.2,73,3
+2026-03-05T11:31:12Z,edge-a,ERROR,"timeout calling inventory after 3095ms, retrying",91.1,3108,174
+2026-03-05T11:31:27Z,edge-a,ERROR,"timeout calling inventory after 2948ms, retrying",87.3,3326,141
+2026-03-05T11:31:40Z,edge-b,ERROR,"timeout calling inventory after 3090ms, retrying",92.3,3307,104
+2026-03-05T11:31:44Z,edge-a,INFO,heartbeat ok,34.8,75,5
+2026-03-05T11:31:49Z,edge-a,ERROR,"timeout calling inventory after 3084ms, retrying",76.2,3170,59
+2026-03-05T11:32:00Z,edge-b,INFO,heartbeat ok,21.4,104,5
+2026-03-05T11:32:01Z,edge-a,ERROR,"timeout calling inventory after 2930ms, retrying",84.9,3502,160
+2026-03-05T11:32:16Z,edge-b,ERROR,"timeout calling inventory after 3005ms, retrying",94.6,2904,196
+2026-03-05T11:32:28Z,edge-a,ERROR,"timeout calling inventory after 3037ms, retrying",91.5,2890,155
+2026-03-05T11:32:33Z,edge-b,INFO,heartbeat ok,32.1,47,2
+2026-03-05T11:32:40Z,edge-a,ERROR,"timeout calling inventory after 3068ms, retrying",76.3,3316,53
+2026-03-05T11:32:52Z,edge-a,ERROR,"timeout calling inventory after 2958ms, retrying",90.3,3258,80
+2026-03-05T11:33:00Z,edge-a,ERROR,"timeout calling inventory after 3042ms, retrying",85.0,2918,94
+2026-03-05T11:33:12Z,edge-b,INFO,heartbeat ok,32.5,56,1
+2026-03-05T11:33:15Z,edge-a,ERROR,"timeout calling inventory after 2919ms, retrying",78.3,2967,137
+2026-03-05T11:33:28Z,edge-a,ERROR,"timeout calling inventory after 2925ms, retrying",73.4,2978,178
+2026-03-05T11:33:38Z,edge-a,INFO,heartbeat ok,36.2,31,1
+2026-03-05T11:33:39Z,edge-b,ERROR,"timeout calling inventory after 2987ms, retrying",81.6,2812,175
+2026-03-05T11:33:48Z,edge-b,ERROR,"timeout calling inventory after 2993ms, retrying",72.3,2858,41
+2026-03-05T11:34:04Z,edge-b,ERROR,"timeout calling inventory after 2942ms, retrying",95.0,2967,69
+2026-03-05T11:34:12Z,edge-b,ERROR,"timeout calling inventory after 3059ms, retrying",71.8,2886,75
+2026-03-05T11:34:23Z,edge-b,INFO,heartbeat ok,16.0,31,4
+2026-03-05T11:34:24Z,edge-b,ERROR,"timeout calling inventory after 2937ms, retrying",85.0,3366,69
+2026-03-05T11:34:39Z,edge-b,ERROR,"timeout calling inventory after 3011ms, retrying",70.8,3301,73
+2026-03-05T11:34:48Z,edge-a,ERROR,"timeout calling inventory after 2965ms, retrying",72.5,3061,92
+2026-03-05T11:34:59Z,edge-a,INFO,heartbeat ok,13.1,54,4
+2026-03-05T11:35:02Z,edge-a,ERROR,"timeout calling inventory after 2943ms, retrying",77.7,3160,98
+2026-03-05T11:35:15Z,edge-a,ERROR,"timeout calling inventory after 3011ms, retrying",83.0,3561,133
+2026-03-05T11:35:23Z,edge-b,INFO,heartbeat ok,16.5,59,1
+2026-03-05T11:35:26Z,edge-b,ERROR,"timeout calling inventory after 3094ms, retrying",93.7,3230,168
+2026-03-05T11:35:38Z,edge-a,ERROR,"timeout calling inventory after 3061ms, retrying",92.5,2876,74
+2026-03-05T11:35:50Z,edge-a,ERROR,"timeout calling inventory after 2972ms, retrying",79.1,3588,149
+2026-03-05T11:35:53Z,edge-b,INFO,heartbeat ok,26.5,96,0
+2026-03-05T11:36:01Z,edge-b,ERROR,"timeout calling inventory after 3042ms, retrying",77.1,2908,136
+2026-03-05T11:36:07Z,edge-a,INFO,heartbeat ok,29.2,21,5
+2026-03-05T11:36:15Z,edge-a,ERROR,"timeout calling inventory after 3086ms, retrying",81.2,2823,141
+2026-03-05T11:36:26Z,edge-a,ERROR,"timeout calling inventory after 2949ms, retrying",90.1,3207,57
+2026-03-05T11:36:39Z,edge-a,ERROR,"timeout calling inventory after 2980ms, retrying",91.2,3225,94
+2026-03-05T11:36:46Z,edge-a,INFO,heartbeat ok,32.9,77,2
+2026-03-05T11:36:49Z,edge-b,ERROR,"timeout calling inventory after 2905ms, retrying",74.6,3236,195
+2026-03-05T11:37:02Z,edge-b,ERROR,"timeout calling inventory after 3054ms, retrying",78.1,2823,116
+2026-03-05T11:37:14Z,edge-a,ERROR,"timeout calling inventory after 3065ms, retrying",86.3,2958,200
+2026-03-05T11:37:27Z,edge-a,INFO,heartbeat ok,35.6,97,4
+2026-03-05T11:37:28Z,edge-b,ERROR,"timeout calling inventory after 2932ms, retrying",83.2,3518,64
+2026-03-05T11:37:40Z,edge-a,ERROR,"timeout calling inventory after 3064ms, retrying",72.3,3434,111
+2026-03-05T11:37:49Z,edge-a,INFO,heartbeat ok,22.7,30,5
+2026-03-05T11:37:50Z,edge-b,ERROR,"timeout calling inventory after 3052ms, retrying",82.6,2855,117
+2026-03-05T11:38:01Z,edge-b,ERROR,"timeout calling inventory after 3045ms, retrying",92.8,3105,91
+2026-03-05T11:38:09Z,edge-a,INFO,heartbeat ok,13.6,73,0
+2026-03-05T11:38:14Z,edge-a,ERROR,"timeout calling inventory after 2956ms, retrying",70.8,3235,69
+2026-03-05T11:38:27Z,edge-b,ERROR,"timeout calling inventory after 2940ms, retrying",79.7,3208,59
+2026-03-05T11:38:40Z,edge-a,ERROR,"timeout calling inventory after 3074ms, retrying",93.1,3422,60
+2026-03-05T11:38:48Z,edge-a,ERROR,"timeout calling inventory after 3088ms, retrying",72.9,3474,132
+2026-03-05T11:38:57Z,edge-b,INFO,heartbeat ok,37.4,85,4
+2026-03-05T11:39:02Z,edge-b,ERROR,"timeout calling inventory after 3075ms, retrying",72.8,2943,113
+2026-03-05T11:39:03Z,edge-a,INFO,heartbeat ok,31.9,55,0
+2026-03-05T11:39:13Z,edge-b,ERROR,"timeout calling inventory after 3078ms, retrying",86.3,3318,135
+2026-03-05T11:39:27Z,edge-a,ERROR,"timeout calling inventory after 2993ms, retrying",71.9,3472,156
+2026-03-05T11:39:29Z,edge-b,WARN,"disk usage high, volume ""/data"" at 90%",30.4,44,3
+2026-03-05T11:39:39Z,edge-b,INFO,heartbeat ok,18.9,29,4
+2026-03-05T11:39:40Z,edge-a,ERROR,"timeout calling inventory after 3040ms, retrying",81.9,2901,125
+2026-03-05T11:39:51Z,edge-a,ERROR,"timeout calling inventory after 2954ms, retrying",80.9,3546,67
+2026-03-05T11:40:03Z,edge-a,ERROR,"timeout calling inventory after 2950ms, retrying",89.1,3331,180
+2026-03-05T11:40:14Z,edge-a,ERROR,"timeout calling inventory after 3058ms, retrying",81.9,3432,102
+2026-03-05T11:40:19Z,edge-a,INFO,heartbeat ok,16.4,40,0
+2026-03-05T11:40:26Z,edge-b,ERROR,"timeout calling inventory after 2999ms, retrying",92.0,2854,190
+2026-03-05T11:40:39Z,edge-b,ERROR,"timeout calling inventory after 2900ms, retrying",93.3,3434,156
+2026-03-05T11:40:51Z,edge-b,ERROR,"timeout calling inventory after 3003ms, retrying",81.3,2853,148
+2026-03-05T11:40:57Z,edge-b,INFO,heartbeat ok,31.0,101,2
+2026-03-05T11:41:01Z,edge-a,INFO,heartbeat ok,33.0,36,1
+2026-03-05T11:41:03Z,edge-b,ERROR,"timeout calling inventory after 3094ms, retrying",78.1,3125,76
+2026-03-05T11:41:16Z,edge-b,ERROR,"timeout calling inventory after 2981ms, retrying",78.7,3570,174
+2026-03-05T11:41:26Z,edge-a,ERROR,"timeout calling inventory after 2982ms, retrying",95.0,3381,51
+2026-03-05T11:41:37Z,edge-a,ERROR,"timeout calling inventory after 3079ms, retrying",86.8,2933,140
+2026-03-05T11:41:38Z,edge-a,INFO,heartbeat ok,12.9,27,1
+2026-03-05T11:41:50Z,edge-a,ERROR,"timeout calling inventory after 3056ms, retrying",71.4,3082,144
+2026-03-05T11:42:01Z,edge-b,ERROR,"timeout calling inventory after 2930ms, retrying",70.3,2874,134
+2026-03-05T11:42:12Z,edge-b,ERROR,"timeout calling inventory after 3100ms, retrying",78.3,2896,86
+2026-03-05T11:42:24Z,edge-b,WARN,"disk usage high, volume ""/data"" at 97%",26.7,120,3
+2026-03-05T11:42:24Z,edge-b,ERROR,"timeout calling inventory after 2965ms, retrying",74.4,3157,197
+2026-03-05T11:42:27Z,edge-a,INFO,heartbeat ok,31.6,20,5
+2026-03-05T11:42:37Z,edge-a,ERROR,"timeout calling inventory after 2994ms, retrying",87.3,3272,71
+2026-03-05T11:42:50Z,edge-a,INFO,heartbeat ok,17.5,60,0
+2026-03-05T11:42:50Z,edge-a,ERROR,"timeout calling inventory after 3053ms, retrying",80.7,3231,188
+2026-03-05T11:43:02Z,edge-b,ERROR,"timeout calling inventory after 3006ms, retrying",91.6,3581,184
+2026-03-05T11:43:05Z,edge-b,INFO,heartbeat ok,15.4,76,5
+2026-03-05T11:43:13Z,edge-a,ERROR,"timeout calling inventory after 2962ms, retrying",88.3,2953,108
+2026-03-05T11:43:27Z,edge-b,ERROR,"timeout calling inventory after 3072ms, retrying",93.9,3396,62
+2026-03-05T11:43:39Z,edge-b,ERROR,"timeout calling inventory after 2966ms, retrying",81.5,3401,107
+2026-03-05T11:43:49Z,edge-b,ERROR,"timeout calling inventory after 2933ms, retrying",92.5,3021,148
+2026-03-05T11:43:59Z,edge-a,INFO,heartbeat ok,24.8,85,6
+2026-03-05T11:44:03Z,edge-a,ERROR,"timeout calling inventory after 2943ms, retrying",74.4,2813,52
+2026-03-05T11:44:07Z,edge-a,INFO,heartbeat ok,16.5,28,1
+2026-03-05T11:44:13Z,edge-b,ERROR,"timeout calling inventory after 3001ms, retrying",86.0,3487,179
+2026-03-05T11:44:25Z,edge-a,ERROR,"timeout calling inventory after 3021ms, retrying",78.2,2821,80
+2026-03-05T11:44:38Z,edge-b,ERROR,"timeout calling inventory after 2934ms, retrying",72.7,2951,136
+2026-03-05T11:44:48Z,edge-b,ERROR,"timeout calling inventory after 2920ms, retrying",94.1,3004,142
+2026-03-05T11:44:50Z,edge-a,INFO,heartbeat ok,16.4,61,0
+2026-03-05T11:45:02Z,edge-b,ERROR,"timeout calling inventory after 3095ms, retrying",79.5,3591,124
+2026-03-05T11:45:04Z,edge-a,INFO,heartbeat ok,30.7,62,4
+2026-03-05T11:45:14Z,edge-b,ERROR,"timeout calling inventory after 2925ms, retrying",76.3,3411,67
+2026-03-05T11:45:24Z,edge-a,ERROR,"timeout calling inventory after 3004ms, retrying",86.8,3431,143
+2026-03-05T11:45:37Z,edge-b,ERROR,"timeout calling inventory after 3013ms, retrying",72.5,3389,62
+2026-03-05T11:45:49Z,edge-a,INFO,heartbeat ok,20.4,67,4
+2026-03-05T11:45:50Z,edge-a,ERROR,"timeout calling inventory after 2986ms, retrying",93.5,2998,76
+2026-03-05T11:46:02Z,edge-a,ERROR,"timeout calling inventory after 3003ms, retrying",72.0,2812,98
+2026-03-05T11:46:13Z,edge-a,ERROR,"timeout calling inventory after 3053ms, retrying",94.6,2954,42
+2026-03-05T11:46:16Z,edge-b,INFO,heartbeat ok,14.3,56,4
+2026-03-05T11:46:27Z,edge-b,ERROR,"timeout calling inventory after 2954ms, retrying",92.0,3568,105
+2026-03-05T11:46:37Z,edge-b,ERROR,"timeout calling inventory after 2944ms, retrying",80.4,3525,86
+2026-03-05T11:46:48Z,edge-b,ERROR,"timeout calling inventory after 3012ms, retrying",82.6,3042,149
+2026-03-05T11:46:59Z,edge-b,INFO,heartbeat ok,28.4,50,5
+2026-03-05T11:47:00Z,edge-a,ERROR,"timeout calling inventory after 2914ms, retrying",74.4,3383,52
+2026-03-05T11:47:16Z,edge-b,ERROR,"timeout calling inventory after 3020ms, retrying",84.0,3173,70
+2026-03-05T11:47:18Z,edge-b,INFO,heartbeat ok,27.4,94,2
+2026-03-05T11:47:25Z,edge-a,ERROR,"timeout calling inventory after 2916ms, retrying",76.6,3039,64
+2026-03-05T11:47:36Z,edge-a,ERROR,"timeout calling inventory after 3004ms, retrying",90.3,3006,121
+2026-03-05T11:47:44Z,edge-a,INFO,heartbeat ok,17.8,22,1
+2026-03-05T11:47:48Z,edge-a,ERROR,"timeout calling inventory after 2980ms, retrying",75.0,3413,129
+2026-03-05T11:48:02Z,edge-b,ERROR,"timeout calling inventory after 2982ms, retrying",84.1,3544,185
+2026-03-05T11:48:04Z,edge-b,INFO,heartbeat ok,30.6,62,0
+2026-03-05T11:48:15Z,edge-b,ERROR,"timeout calling inventory after 2941ms, retrying",80.0,3487,159
+2026-03-05T11:48:25Z,edge-b,ERROR,"timeout calling inventory after 2928ms, retrying",90.6,3552,124
+2026-03-05T11:48:40Z,edge-a,ERROR,"timeout calling inventory after 2976ms, retrying",82.3,3230,108
+2026-03-05T11:48:45Z,edge-b,INFO,heartbeat ok,25.4,91,5
+2026-03-05T11:48:52Z,edge-b,ERROR,"timeout calling inventory after 3082ms, retrying",82.0,3237,145
+2026-03-05T11:49:00Z,edge-a,INFO,heartbeat ok,37.9,39,2
+2026-03-05T11:49:00Z,edge-a,ERROR,"timeout calling inventory after 2987ms, retrying",90.2,3062,152
+2026-03-05T11:49:13Z,edge-b,ERROR,"timeout calling inventory after 3013ms, retrying",91.5,3032,46
+2026-03-05T11:49:25Z,edge-b,ERROR,"timeout calling inventory after 3017ms, retrying",77.7,3346,169
+2026-03-05T11:49:34Z,edge-b,INFO,heartbeat ok,24.7,40,1
+2026-03-05T11:49:37Z,edge-a,ERROR,"timeout calling inventory after 2978ms, retrying",80.0,3346,152
+2026-03-05T11:49:49Z,edge-a,ERROR,"timeout calling inventory after 2939ms, retrying",73.7,3394,109
+2026-03-05T11:50:01Z,edge-b,ERROR,"timeout calling inventory after 3091ms, retrying",81.6,3096,152
+2026-03-05T11:50:06Z,edge-b,INFO,heartbeat ok,35.3,66,5
+2026-03-05T11:50:12Z,edge-b,ERROR,"timeout calling inventory after 3070ms, retrying",90.7,3580,60
+2026-03-05T11:50:24Z,edge-b,ERROR,"timeout calling inventory after 2927ms, retrying",93.5,2810,112
+2026-03-05T11:50:40Z,edge-b,ERROR,"timeout calling inventory after 3090ms, retrying",82.3,3152,65
+2026-03-05T11:50:48Z,edge-a,ERROR,"timeout calling inventory after 3059ms, retrying",90.4,3354,130
+2026-03-05T11:50:52Z,edge-a,INFO,heartbeat ok,31.1,54,2
+2026-03-05T11:51:01Z,edge-b,ERROR,"timeout calling inventory after 2996ms, retrying",92.2,3595,65
+2026-03-05T11:51:13Z,edge-b,ERROR,"timeout calling inventory after 2917ms, retrying",75.2,3024,112
+2026-03-05T11:51:25Z,edge-a,INFO,heartbeat ok,37.2,100,6
+2026-03-05T11:51:25Z,edge-b,ERROR,"timeout calling inventory after 3087ms, retrying",86.0,2841,72
+2026-03-05T11:51:36Z,edge-a,ERROR,"timeout calling inventory after 2953ms, retrying",80.4,3133,107
+2026-03-05T11:51:47Z,edge-a,INFO,heartbeat ok,30.3,83,3
+2026-03-05T11:51:48Z,edge-b,ERROR,"timeout calling inventory after 2988ms, retrying",87.0,3219,140
+2026-03-05T11:52:02Z,edge-b,ERROR,"timeout calling inventory after 2960ms, retrying",93.1,3509,153
+2026-03-05T11:52:11Z,edge-b,INFO,heartbeat ok,25.2,91,4
+2026-03-05T11:52:13Z,edge-a,ERROR,"timeout calling inventory after 3019ms, retrying",82.6,3335,134
+2026-03-05T11:52:24Z,edge-a,ERROR,"timeout calling inventory after 3009ms, retrying",83.6,3076,133
+2026-03-05T11:52:37Z,edge-a,ERROR,"timeout calling inventory after 3045ms, retrying",79.4,3005,181
+2026-03-05T11:52:39Z,edge-b,INFO,heartbeat ok,13.9,83,1
+2026-03-05T11:52:49Z,edge-a,ERROR,"timeout calling inventory after 2957ms, retrying",84.2,3433,74
+2026-03-05T11:53:00Z,edge-a,ERROR,"timeout calling inventory after 3065ms, retrying",86.0,3463,51
+2026-03-05T11:53:09Z,edge-b,INFO,heartbeat ok,18.9,34,6
+2026-03-05T11:53:15Z,edge-b,ERROR,"timeout calling inventory after 3095ms, retrying",75.8,3525,122
+2026-03-05T11:53:28Z,edge-a,ERROR,"timeout calling inventory after 3098ms, retrying",87.4,3193,124
+2026-03-05T11:53:38Z,edge-a,ERROR,"timeout calling inventory after 3004ms, retrying",86.8,3245,193
+2026-03-05T11:53:48Z,edge-b,ERROR,"timeout calling inventory after 2911ms, retrying",79.2,3011,128
+2026-03-05T11:53:56Z,edge-b,INFO,heartbeat ok,34.9,29,6
+2026-03-05T11:54:00Z,edge-b,ERROR,"timeout calling inventory after 3008ms, retrying",90.1,2821,161
+2026-03-05T11:54:16Z,edge-b,ERROR,"timeout calling inventory after 3010ms, retrying",85.2,3162,115
+2026-03-05T11:54:26Z,edge-b,ERROR,"timeout calling inventory after 3005ms, retrying",70.1,2930,43
+2026-03-05T11:54:29Z,edge-b,INFO,heartbeat ok,18.5,89,5
+2026-03-05T11:54:31Z,edge-a,INFO,heartbeat ok,24.1,61,4
+2026-03-05T11:54:38Z,edge-b,ERROR,"timeout calling inventory after 3019ms, retrying",85.7,3099,47
+2026-03-05T11:54:48Z,edge-a,ERROR,"timeout calling inventory after 3083ms, retrying",70.0,3575,52
+2026-03-05T11:55:00Z,edge-b,ERROR,"timeout calling inventory after 3079ms, retrying",81.8,3387,172
+2026-03-05T11:55:12Z,edge-b,ERROR,"timeout calling inventory after 3063ms, retrying",76.0,3241,63
+2026-03-05T11:55:28Z,edge-a,ERROR,"timeout calling inventory after 3011ms, retrying",77.2,3018,47
+2026-03-05T11:55:29Z,edge-a,INFO,heartbeat ok,31.1,105,3
+2026-03-05T11:55:37Z,edge-b,ERROR,"timeout calling inventory after 2970ms, retrying",94.9,3280,82
+2026-03-05T11:55:40Z,edge-b,INFO,heartbeat ok,25.5,88,1
+2026-03-05T11:55:52Z,edge-a,ERROR,"timeout calling inventory after 3070ms, retrying",84.7,3274,194
+2026-03-05T11:56:01Z,edge-b,ERROR,"timeout calling inventory after 2927ms, retrying",90.6,3346,59
+2026-03-05T11:56:14Z,edge-b,INFO,heartbeat ok,24.9,40,6
+2026-03-05T11:56:15Z,edge-b,ERROR,"timeout calling inventory after 3026ms, retrying",89.3,3411,87
+2026-03-05T11:56:26Z,edge-a,ERROR,"timeout calling inventory after 3019ms, retrying",86.3,2810,85
+2026-03-05T11:56:32Z,edge-b,INFO,heartbeat ok,30.1,108,0
+2026-03-05T11:56:37Z,edge-b,ERROR,"timeout calling inventory after 3096ms, retrying",81.6,3317,158
+2026-03-05T11:56:48Z,edge-b,ERROR,"timeout calling inventory after 2984ms, retrying",73.7,3520,86
+2026-03-05T11:57:01Z,edge-a,ERROR,"timeout calling inventory after 3034ms, retrying",77.2,3445,68
+2026-03-05T11:57:07Z,edge-a,INFO,heartbeat ok,29.3,20,3
+2026-03-05T11:57:13Z,edge-a,ERROR,"timeout calling inventory after 3091ms, retrying",78.3,2988,179
+2026-03-05T11:57:24Z,edge-a,ERROR,"timeout calling inventory after 3079ms, retrying",72.4,3033,144
+2026-03-05T11:57:40Z,edge-b,ERROR,"timeout calling inventory after 2929ms, retrying",81.7,3532,78
+2026-03-05T11:57:42Z,edge-b,INFO,heartbeat ok,37.2,46,2
+2026-03-05T11:57:51Z,edge-b,ERROR,"timeout calling inventory after 2985ms, retrying",87.9,3026,77
+2026-03-05T11:58:02Z,edge-a,ERROR,"timeout calling inventory after 3100ms, retrying",84.8,3046,88
+2026-03-05T11:58:08Z,edge-b,INFO,heartbeat ok,13.6,56,2
+2026-03-05T11:58:13Z,edge-a,ERROR,"timeout calling inventory after 2951ms, retrying",87.5,3511,57
+2026-03-05T11:58:28Z,edge-a,ERROR,"timeout calling inventory after 2912ms, retrying",73.1,3446,60
+2026-03-05T11:58:36Z,edge-b,ERROR,"timeout calling inventory after 3040ms, retrying",80.7,2861,138
+2026-03-05T11:58:44Z,edge-b,INFO,heartbeat ok,33.4,24,2
+2026-03-05T11:58:49Z,edge-a,ERROR,"timeout calling inventory after 2974ms, retrying",84.1,3264,171
+2026-03-05T11:59:02Z,edge-b,ERROR,"timeout calling inventory after 2988ms, retrying",93.0,3185,51
+2026-03-05T11:59:04Z,edge-b,INFO,heartbeat ok,34.6,52,4
+2026-03-05T11:59:12Z,edge-b,ERROR,"timeout calling inventory after 3039ms, retrying",80.9,2959,166
+2026-03-05T11:59:27Z,edge-b,ERROR,"timeout calling inventory after 2999ms, retrying",93.5,3093,104
+2026-03-05T11:59:38Z,edge-b,INFO,heartbeat ok,21.7,77,5
+2026-03-05T11:59:38Z,edge-a,ERROR,"timeout calling inventory after 2953ms, retrying",77.1,3441,99
+2026-03-05T11:59:51Z,edge-b,ERROR,"timeout calling inventory after 3030ms, retrying",80.2,3280,103

@@ -1,0 +1,50 @@
+
+== python_app.log
+   format   expected=python  actual=python
+   events   expected=444     actual=444
+   groups   expected=7       actual=7
+   auth_reject            count   1/1   first ok last ok level WARNING/WARNING ongoing False/False OK
+   login_retry            count   1/1   first ok last ok level WARNING/WARNING ongoing False/False OK
+   value_error_qty        count  14/14  first ok last ok level ERROR/ERROR ongoing False/False OK
+   keyerror_rates         count   5/5   first ok last ok level ERROR/ERROR ongoing False/False OK
+   value_error_currency   count   6/6   first ok last ok level ERROR/ERROR ongoing False/False OK
+   db_down                count 105/105 first ok last ok level ERROR/ERROR ongoing True/True OK
+   slow_query             count  23/23  first ok last ok level WARNING/WARNING ongoing False/False OK
+   redactions: {'url_credentials': 1, 'auth_header': 1, 'email': 1, 'api_token': 1, 'secret_kv': 2}
+
+== node_express.log
+   format   expected=node    actual=node
+   events   expected=535     actual=535
+   groups   expected=5       actual=5
+   typeerror_id           count  12/12  first ok last ok level ERROR/ERROR ongoing False/False OK
+   typeerror_email        count   7/7   first ok last ok level ERROR/ERROR ongoing False/False OK
+   redis_down             count 140/140 first ok last ok level ERROR/ERROR ongoing True/True OK
+   http_500               count   9/9   first ok last ok level ERROR/ERROR ongoing False/False OK
+   http_404               count   6/6   first ok last ok level WARNING/WARNING ongoing False/False OK
+   redactions: {'secret_kv': 1}
+
+== spring_boot.log
+   format   expected=java    actual=java
+   events   expected=340     actual=340
+   groups   expected=4       actual=4
+   npe_order_total        count  11/11  first ok last ok level ERROR/ERROR ongoing False/False OK
+   npe_inventory          count   5/5   first ok last ok level ERROR/ERROR ongoing False/False OK
+   hikari_timeout         count  67/67  first ok last ok level ERROR/ERROR ongoing True/True OK
+   sync_lag               count  17/17  first ok last ok level WARNING/WARNING ongoing False/False OK
+
+== pino_payments.jsonl
+   format   expected=jsonl   actual=jsonl
+   events   expected=627     actual=627
+   groups   expected=3       actual=3
+   gateway_timeout        count 120/120 first ok last ok level ERROR/ERROR ongoing True/True OK
+   validation_amount      count   8/8   first ok last ok level ERROR/ERROR ongoing False/False OK
+   retry_warn             count  19/19  first ok last ok level WARNING/WARNING ongoing False/False OK
+
+== telemetry.csv
+   format   expected=csv     actual=csv
+   events   expected=550     actual=550
+   groups   expected=2       actual=2
+   upstream_timeout       count 300/300 first ok last ok level ERROR/ERROR ongoing True/True OK
+   disk_warn              count  10/10  first ok last ok level WARNING/WARNING ongoing False/False OK
+
+RESULT: ALL MATCH
