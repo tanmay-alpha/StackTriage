@@ -154,12 +154,23 @@ def test_event_ids_survive_overlapping_export_with_shifted_lines():
     assert {e.event_id for e in tail} == {e.event_id for e in full[4:]}
 
 
-def test_stack_trace_line_cap():
-    lim = Limits(max_stack_lines=5)
-    text = "2026-03-05 10:00:01,123 - a - ERROR - x\n" + "".join(f"  frame {i}\n" for i in range(50))
-    sess, ev = run(text, limits=lim)
-    assert len(ev[0].stack_trace.splitlines()) == 6 and "truncated" in ev[0].stack_trace
+def test_stack_trace_cap_keeps_head_and_tail():
+    lim = Limits(max_stack_lines=10)
+    body = "".join(f"  frame {i}\n" for i in range(50)) + "ValueError: the real error\n"
+    sess, ev = run("2026-03-05 10:00:01,123 - a - ERROR - x\nTraceback (most recent call last):\n" + body, limits=lim)
+    lines = ev[0].stack_trace.splitlines()
+    assert len(lines) <= 11 and "omitted" in ev[0].stack_trace
+    assert lines[-1] == "ValueError: the real error" and lines[0].startswith("Traceback")
     assert sess.diagnostics.code_counts["STACK_TRUNCATED"] == 1
+
+
+def test_java_caused_by_in_omitted_middle_is_kept():
+    lim = Limits(max_stack_lines=10)
+    text = ("2026-03-05 10:00:01.123 ERROR 1 --- [t] c.e.Foo : boom\n" + "java.lang.RuntimeException: wrapper\n"
+            + "".join(f"\tat a.B.m{i}(B.java:{i})\n" for i in range(30)) + "Caused by: java.io.IOException: mid\n"
+            + "".join(f"\tat a.C.m{i}(C.java:{i})\n" for i in range(30)) + "Caused by: java.lang.IllegalStateException: root\n\tat a.D.go(D.java:7)\n")
+    _, ev = run(text, limits=lim)
+    assert "IllegalStateException: root" in ev[0].stack_trace
 
 
 def test_event_limit_flags_truncation():

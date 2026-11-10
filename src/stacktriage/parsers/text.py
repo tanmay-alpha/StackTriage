@@ -7,7 +7,7 @@ payload) of the current record.
 from __future__ import annotations
 
 import re
-from collections import Counter
+from collections import Counter, deque
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from datetime import datetime
@@ -102,6 +102,44 @@ def has_headerless_trace(sample: Iterable[str]) -> bool:
     return any(_HEADERLESS.match(ln) for ln in sample)
 
 
+class _Cont:
+    """Continuation lines of one record, bounded: keeps the first half and the last
+    half of the allowed lines (the exception line / root `Caused by:` sit at the END of
+    a trace), plus any `Caused by:` headers that fell in the omitted middle."""
+
+    __slots__ = ("head_n", "tail_n", "head", "tail", "dropped", "kept")
+
+    def __init__(self, limit: int) -> None:
+        self.head_n = max(limit // 2, 1)
+        self.tail_n = max(limit - self.head_n, 1)
+        self.head: list[str] = []
+        self.tail: deque[str] = deque()
+        self.dropped = 0
+        self.kept: list[str] = []
+
+    def add(self, line: str) -> None:
+        if len(self.head) < self.head_n:
+            self.head.append(line)
+            return
+        if len(self.tail) >= self.tail_n:
+            old = self.tail.popleft()
+            self.dropped += 1
+            if old.startswith("Caused by:") and len(self.kept) < 20:
+                self.kept.append(old)
+        self.tail.append(line)
+
+    def lines(self) -> list[str]:
+        out = list(self.head)
+        if self.dropped:
+            out.append(f"... [{self.dropped} lines omitted]")
+            out += self.kept
+        out += self.tail
+        return out
+
+    def __bool__(self) -> bool:
+        return bool(self.head)
+
+
 @dataclass(slots=True)
 class _Pending:
     line_no: int
@@ -111,7 +149,7 @@ class _Pending:
     logger: str | None
     msg: str
     fields: dict[str, str]
-    cont: list[str]
+    cont: _Cont
     headerless: bool = False
 
 
@@ -132,12 +170,14 @@ def parse_text(
         stack = None
         msg = p.msg
         if p.cont:
-            text = "\n".join(p.cont)
+            text = "\n".join(p.cont.lines())
+            if p.cont.dropped:
+                diag.add("STACK_TRUNCATED", p.line_no, f"{p.cont.dropped} continuation lines omitted from the middle")
             if len(text) > limits.max_stack_chars:
                 text = text[: limits.max_stack_chars] + "\n... [truncated]"
             stack = redact(text, counts)
         if p.headerless:
-            msg = (exception_summary(stack or "") or (p.cont[0].strip() if p.cont else ""))
+            msg = (exception_summary(stack or "") or (p.cont.head[0].strip() if p.cont else ""))
         msg = redact(msg, counts)
         if len(msg) > limits.max_message_chars:
             msg = msg[: limits.max_message_chars] + "… [truncated]"
@@ -187,7 +227,7 @@ def parse_text(
                 fields["pid"] = gd["pid"]
             elif gd.get("thread"):
                 fields["thread"] = gd["thread"]
-            cur = _Pending(line_no, gd.get("ts"), level, service, gd.get("logger"), msg.strip(), fields, [])
+            cur = _Pending(line_no, gd.get("ts"), level, service, gd.get("logger"), msg.strip(), fields, _Cont(limits.max_stack_lines))
             continue
         if cur is None or (cur.headerless and _HEADERLESS.match(line)):
             if _HEADERLESS.match(line):
@@ -195,18 +235,14 @@ def parse_text(
                     ev = emit(cur)
                     if ev:
                         yield ev
-                cur = _Pending(line_no, None, Level.ERROR, None, None, "", {}, [line], headerless=True)
+                cur = _Pending(line_no, None, Level.ERROR, None, None, "", {}, _Cont(limits.max_stack_lines), headerless=True)
+                cur.cont.add(line)
             else:
                 orphan_lines += 1
                 if orphan_lines <= 3:
                     diag.add("ORPHAN_LINE", line_no, "line before any recognizable record header was skipped")
             continue
-        if len(cur.cont) >= limits.max_stack_lines:
-            if len(cur.cont) == limits.max_stack_lines:
-                cur.cont.append("... [continuation lines truncated]")
-                diag.add("STACK_TRUNCATED", cur.line_no, f"more than {limits.max_stack_lines} continuation lines")
-            continue
-        cur.cont.append(line)
+        cur.cont.add(line)
     if cur is not None:
         ev = emit(cur)
         if ev:

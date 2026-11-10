@@ -1,0 +1,1789 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "StackTriage",
+  "version": "0.1.0"
+ },
+ "paths": {
+  "/api/imports": {
+   "post": {
+    "summary": "Create Import",
+    "description": "Upload a log file as the raw request body (streamed, size-capped).",
+    "operationId": "create_import_api_imports_post",
+    "parameters": [
+     {
+      "name": "filename",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 255,
+       "title": "Filename"
+      }
+     },
+     {
+      "name": "service",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 100
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Service"
+      }
+     },
+     {
+      "name": "format",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Format"
+      }
+     }
+    ],
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportSummary"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "get": {
+    "summary": "List Imports",
+    "operationId": "list_imports_api_imports_get",
+    "parameters": [
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 1000000,
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_ImportSummary_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{import_id}": {
+   "get": {
+    "summary": "Import Detail",
+    "operationId": "import_detail_api_imports__import_id__get",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "summary": "Remove Import",
+    "operationId": "remove_import_api_imports__import_id__delete",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{import_id}/incidents": {
+   "get": {
+    "summary": "Incidents",
+    "operationId": "incidents_api_imports__import_id__incidents_get",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "level",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Level"
+      }
+     },
+     {
+      "name": "service",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 100
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Service"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "enum": [
+          "open",
+          "investigating",
+          "resolved",
+          "ignored"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "name": "ongoing",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Ongoing"
+      }
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(count|first_seen|last_seen|level)$",
+       "default": "count",
+       "title": "Sort"
+      }
+     },
+     {
+      "name": "order",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(asc|desc)$",
+       "default": "desc",
+       "title": "Order"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 1000000,
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_IncidentItem_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{import_id}/incidents/{fingerprint}": {
+   "get": {
+    "summary": "Incident Detail",
+    "operationId": "incident_detail_api_imports__import_id__incidents__fingerprint__get",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     },
+     {
+      "name": "fingerprint",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Fingerprint"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/IncidentDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{import_id}/incidents/{fingerprint}/events": {
+   "get": {
+    "summary": "Incident Events",
+    "operationId": "incident_events_api_imports__import_id__incidents__fingerprint__events_get",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     },
+     {
+      "name": "fingerprint",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Fingerprint"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 20,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 1000000,
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_EventOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{import_id}/events": {
+   "get": {
+    "summary": "Events",
+    "operationId": "events_api_imports__import_id__events_get",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 200
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "level",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Level"
+      }
+     },
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date-time"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Start"
+      }
+     },
+     {
+      "name": "end",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date-time"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "End"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 1000000,
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_EventOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/incidents/{fingerprint}/status": {
+   "put": {
+    "summary": "Put Status",
+    "operationId": "put_status_api_incidents__fingerprint__status_put",
+    "parameters": [
+     {
+      "name": "fingerprint",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Fingerprint"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StatusIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StatusIn"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/incidents/{fingerprint}/notes": {
+   "post": {
+    "summary": "Post Note",
+    "operationId": "post_note_api_incidents__fingerprint__notes_post",
+    "parameters": [
+     {
+      "name": "fingerprint",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Fingerprint"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/NoteIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NoteOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/incidents/{fingerprint}/notes/{note_id}": {
+   "delete": {
+    "summary": "Remove Note",
+    "operationId": "remove_note_api_incidents__fingerprint__notes__note_id__delete",
+    "parameters": [
+     {
+      "name": "fingerprint",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Fingerprint"
+      }
+     },
+     {
+      "name": "note_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Note Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{import_id}/export": {
+   "get": {
+    "summary": "Export Import",
+    "operationId": "export_import_api_imports__import_id__export_get",
+    "parameters": [
+     {
+      "name": "import_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Import Id"
+      }
+     },
+     {
+      "name": "format",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(csv|json|md)$",
+       "default": "csv",
+       "title": "Format"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/overview": {
+   "get": {
+    "summary": "Overview",
+    "operationId": "overview_api_overview_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OverviewOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Activity": {
+    "properties": {
+     "state": {
+      "type": "string",
+      "enum": [
+       "ongoing",
+       "ended",
+       "unknown"
+      ],
+      "title": "State"
+     },
+     "recurrence": {
+      "type": "string",
+      "title": "Recurrence"
+     },
+     "period_seconds": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period Seconds"
+     },
+     "rate_per_minute": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rate Per Minute"
+     },
+     "active_windows": {
+      "type": "integer",
+      "title": "Active Windows"
+     },
+     "peak_window_start": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Peak Window Start"
+     },
+     "peak_window_count": {
+      "type": "integer",
+      "title": "Peak Window Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "state",
+     "recurrence",
+     "period_seconds",
+     "rate_per_minute",
+     "active_windows",
+     "peak_window_start",
+     "peak_window_count"
+    ],
+    "title": "Activity"
+   },
+   "EventOut": {
+    "properties": {
+     "event_id": {
+      "type": "string",
+      "title": "Event Id"
+     },
+     "line_no": {
+      "type": "integer",
+      "title": "Line No"
+     },
+     "timestamp": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Timestamp"
+     },
+     "level": {
+      "type": "string",
+      "title": "Level"
+     },
+     "service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Service"
+     },
+     "logger": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Logger"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message"
+     },
+     "stack_trace": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stack Trace"
+     },
+     "fields": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "Fields"
+     },
+     "metrics": {
+      "additionalProperties": {
+       "type": "number"
+      },
+      "type": "object",
+      "title": "Metrics"
+     },
+     "fingerprint": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fingerprint"
+     }
+    },
+    "type": "object",
+    "required": [
+     "event_id",
+     "line_no",
+     "timestamp",
+     "level",
+     "service",
+     "logger",
+     "message",
+     "stack_trace",
+     "fields",
+     "metrics",
+     "fingerprint"
+    ],
+    "title": "EventOut"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "ImportDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "filename": {
+      "type": "string",
+      "title": "Filename"
+     },
+     "format": {
+      "type": "string",
+      "title": "Format"
+     },
+     "default_service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Service"
+     },
+     "size_bytes": {
+      "type": "integer",
+      "title": "Size Bytes"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "event_count": {
+      "type": "integer",
+      "title": "Event Count"
+     },
+     "incident_count": {
+      "type": "integer",
+      "title": "Incident Count"
+     },
+     "first_event": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Event"
+     },
+     "last_event": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Event"
+     },
+     "window_seconds": {
+      "type": "integer",
+      "title": "Window Seconds"
+     },
+     "truncated": {
+      "type": "boolean",
+      "title": "Truncated"
+     },
+     "duplicate": {
+      "type": "boolean",
+      "title": "Duplicate",
+      "default": false
+     },
+     "level_counts": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Level Counts"
+     },
+     "service_counts": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Service Counts"
+     },
+     "diagnostics": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Diagnostics"
+     },
+     "timeline": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Timeline"
+     },
+     "anomaly": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Anomaly"
+     },
+     "notes": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "filename",
+     "format",
+     "default_service",
+     "size_bytes",
+     "created_at",
+     "event_count",
+     "incident_count",
+     "first_event",
+     "last_event",
+     "window_seconds",
+     "truncated",
+     "level_counts",
+     "service_counts",
+     "diagnostics",
+     "timeline",
+     "anomaly",
+     "notes"
+    ],
+    "title": "ImportDetail"
+   },
+   "ImportSummary": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "filename": {
+      "type": "string",
+      "title": "Filename"
+     },
+     "format": {
+      "type": "string",
+      "title": "Format"
+     },
+     "default_service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Service"
+     },
+     "size_bytes": {
+      "type": "integer",
+      "title": "Size Bytes"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "event_count": {
+      "type": "integer",
+      "title": "Event Count"
+     },
+     "incident_count": {
+      "type": "integer",
+      "title": "Incident Count"
+     },
+     "first_event": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Event"
+     },
+     "last_event": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Event"
+     },
+     "window_seconds": {
+      "type": "integer",
+      "title": "Window Seconds"
+     },
+     "truncated": {
+      "type": "boolean",
+      "title": "Truncated"
+     },
+     "duplicate": {
+      "type": "boolean",
+      "title": "Duplicate",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "filename",
+     "format",
+     "default_service",
+     "size_bytes",
+     "created_at",
+     "event_count",
+     "incident_count",
+     "first_event",
+     "last_event",
+     "window_seconds",
+     "truncated"
+    ],
+    "title": "ImportSummary"
+   },
+   "IncidentDetail": {
+    "properties": {
+     "fingerprint": {
+      "type": "string",
+      "title": "Fingerprint"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "service": {
+      "type": "string",
+      "title": "Service"
+     },
+     "exc_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Exc Type"
+     },
+     "frame": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Frame"
+     },
+     "max_level": {
+      "type": "string",
+      "title": "Max Level"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "first_seen": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Seen"
+     },
+     "last_seen": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Seen"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "investigating",
+       "resolved",
+       "ignored"
+      ],
+      "title": "Status"
+     },
+     "activity": {
+      "$ref": "#/components/schemas/Activity"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "untimed_count": {
+      "type": "integer",
+      "title": "Untimed Count"
+     },
+     "sample_event_id": {
+      "type": "string",
+      "title": "Sample Event Id"
+     },
+     "sample_message": {
+      "type": "string",
+      "title": "Sample Message"
+     },
+     "sample_stack_trace": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sample Stack Trace"
+     },
+     "level_counts": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Level Counts"
+     },
+     "window_seconds": {
+      "type": "integer",
+      "title": "Window Seconds"
+     },
+     "windows": {
+      "items": {
+       "$ref": "#/components/schemas/WindowCount"
+      },
+      "type": "array",
+      "title": "Windows"
+     },
+     "notes": {
+      "items": {
+       "$ref": "#/components/schemas/NoteOut"
+      },
+      "type": "array",
+      "title": "Notes"
+     },
+     "related": {
+      "items": {
+       "$ref": "#/components/schemas/IncidentItem"
+      },
+      "type": "array",
+      "title": "Related"
+     }
+    },
+    "type": "object",
+    "required": [
+     "fingerprint",
+     "title",
+     "service",
+     "exc_type",
+     "frame",
+     "max_level",
+     "count",
+     "first_seen",
+     "last_seen",
+     "status",
+     "activity",
+     "kind",
+     "untimed_count",
+     "sample_event_id",
+     "sample_message",
+     "sample_stack_trace",
+     "level_counts",
+     "window_seconds",
+     "windows",
+     "notes",
+     "related"
+    ],
+    "title": "IncidentDetail"
+   },
+   "IncidentItem": {
+    "properties": {
+     "fingerprint": {
+      "type": "string",
+      "title": "Fingerprint"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "service": {
+      "type": "string",
+      "title": "Service"
+     },
+     "exc_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Exc Type"
+     },
+     "frame": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Frame"
+     },
+     "max_level": {
+      "type": "string",
+      "title": "Max Level"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "first_seen": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Seen"
+     },
+     "last_seen": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Seen"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "investigating",
+       "resolved",
+       "ignored"
+      ],
+      "title": "Status"
+     },
+     "activity": {
+      "$ref": "#/components/schemas/Activity"
+     }
+    },
+    "type": "object",
+    "required": [
+     "fingerprint",
+     "title",
+     "service",
+     "exc_type",
+     "frame",
+     "max_level",
+     "count",
+     "first_seen",
+     "last_seen",
+     "status",
+     "activity"
+    ],
+    "title": "IncidentItem"
+   },
+   "NoteIn": {
+    "properties": {
+     "body": {
+      "type": "string",
+      "maxLength": 5000,
+      "minLength": 1,
+      "title": "Body"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "body"
+    ],
+    "title": "NoteIn"
+   },
+   "NoteOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "body": {
+      "type": "string",
+      "title": "Body"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "body",
+     "created_at"
+    ],
+    "title": "NoteOut"
+   },
+   "OverviewOut": {
+    "properties": {
+     "imports": {
+      "type": "integer",
+      "title": "Imports"
+     },
+     "events": {
+      "type": "integer",
+      "title": "Events"
+     },
+     "groups": {
+      "type": "integer",
+      "title": "Groups"
+     },
+     "latest_import": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ImportSummary"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "status_counts": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Status Counts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "imports",
+     "events",
+     "groups",
+     "latest_import"
+    ],
+    "title": "OverviewOut"
+   },
+   "Page_EventOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/EventOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "Page[EventOut]"
+   },
+   "Page_ImportSummary_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/ImportSummary"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "Page[ImportSummary]"
+   },
+   "Page_IncidentItem_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/IncidentItem"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "Page[IncidentItem]"
+   },
+   "StatusIn": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "investigating",
+       "resolved",
+       "ignored"
+      ],
+      "title": "Status"
+     }
+    },
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+     "status"
+    ],
+    "title": "StatusIn"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   },
+   "WindowCount": {
+    "properties": {
+     "start": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Start"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "start",
+     "count"
+    ],
+    "title": "WindowCount"
+   }
+  }
+ }
+}
