@@ -14,7 +14,7 @@ and a rare brand-new background error type.
     error_spike      main    ERROR volume x8 for 12-18 windows (the easy case)         detects
     traffic_drop     main    traffic (and errors with it) falls to 10 % ("silent")     blind
     latency_rise     main    latency_ms +40 %, queue_depth +50 %, levels unchanged     blind
-    new_error_type   main    3 new error types, ~2 lines/window, volume stays normal   blind
+    new_error_type   main    3 new types REPLACE ~40 % of existing errors (volume same) blind
     busy_healthy     main    TRAP: 2.2x traffic, extra lines are all INFO, no incident false-alarm-free
     natural_bursts   main    TRAP: short x5 error bursts in train AND test, no incident false alarms
     noisy_mixed      main    bursts + busy period + traffic drop + error spike + latency rise
@@ -109,7 +109,9 @@ class _Plan:
     err: list[float] = field(default_factory=list)  # multiplier on the ERROR rate
     latency: list[float] = field(default_factory=list)
     queue: list[float] = field(default_factory=list)
-    extra_errors: dict[int, list[tuple[str, float]]] = field(default_factory=dict)  # window -> [(message, lambda)]
+    extra_errors: dict[int, list[tuple[str, float]]] = field(default_factory=dict)  # window -> [(message, lambda)] ADDED
+    # window -> [(message, share of existing events replaced, force >= 1 replacement)]; volume-neutral
+    replace_errors: dict[int, list[tuple[str, float, bool]]] = field(default_factory=dict)
     labels: list[bool] = field(default_factory=list)
     incidents: list[Incident] = field(default_factory=list)
 
@@ -169,11 +171,14 @@ def _latency_rise(plan: _Plan, a: int, b: int) -> None:
 
 
 def _new_error_types(plan: _Plan, rng: random.Random, a: int) -> None:
+    """Three new error types appear at offsets 0, 2, 4 and each replaces ~40 % of that window's
+    existing ERROR events (volume unchanged). A type is guaranteed to show up in its first window
+    only when that window has at least one ERROR event."""
     kinds = list(_INCIDENT_NEW_TYPES)
     rng.shuffle(kinds)
     for k, off in enumerate((0, 2, 4)):
         for i in range(a + off, min(a + 6, plan.n)):
-            plan.extra_errors.setdefault(i, []).append((kinds[k], 2.0 / 3.0))
+            plan.replace_errors.setdefault(i, []).append((kinds[k], 0.4, i == a + off))
     plan.mark("new_error_type", a, a + 6)
 
 
@@ -235,11 +240,24 @@ def _synthesize(plan: _Plan, rng: random.Random) -> list[LogEvent]:
                 events.append(mk(at(), Level.INFO, "request handled"))
         for _ in range(_poisson(rng, 1.2 * load)):
             events.append(mk(at(), Level.WARNING, "slow response from downstream"))
-        for _ in range(_poisson(rng, 1.6 * load * plan.err[w])):
-            msg = rng.choices(known_msgs, known_w)[0].format(n=rng.randrange(100, 9999))
+        # Error events of this window: the count comes from the unchanged background process.
+        # Novel types only *replace* messages of events that already exist, so the per-window
+        # ERROR count distribution of a novelty scenario equals the healthy one.
+        err_msgs = [rng.choices(known_msgs, known_w)[0].format(n=rng.randrange(100, 9999))
+                    for _ in range(_poisson(rng, 1.6 * load * plan.err[w]))]
+        if novel_pool and err_msgs and rng.random() < 0.004:
+            err_msgs[rng.randrange(len(err_msgs))] = novel_pool.pop()
+        replaced: set[int] = set()
+        for msg, share, force in plan.replace_errors.get(w, ()):
+            free = [i for i in range(len(err_msgs)) if i not in replaced]
+            hit = [i for i in free if rng.random() < share]
+            if force and free and not hit:
+                hit = [rng.choice(free)]  # the type's first appearance (its novelty window)
+            for i in hit:
+                err_msgs[i] = msg
+                replaced.add(i)
+        for msg in err_msgs:
             events.append(mk(at(), Level.ERROR, msg))
-        if novel_pool and rng.random() < 0.004:
-            events.append(mk(at(), Level.ERROR, novel_pool.pop()))
         for msg, lam in plan.extra_errors.get(w, ()):
             for _ in range(_poisson(rng, lam)):
                 events.append(mk(at(), Level.ERROR, msg))
@@ -348,7 +366,8 @@ SPECS: dict[str, _Spec] = {
     "error_spike": _Spec("main", "ERROR volume x8 for 12-18 windows", _b_error_spike),
     "traffic_drop": _Spec("main", "traffic and errors fall to 10 % (silent failure)", _b_traffic_drop),
     "latency_rise": _Spec("main", "latency_ms +40 %, queue_depth +50 %, log levels unchanged", _b_latency_rise),
-    "new_error_type": _Spec("main", "3 new error types at ~2 lines/window, normal ERROR volume", _b_new_error_type),
+    "new_error_type": _Spec("main", "3 new error types replace ~40 % of existing ERROR events, volume unchanged",
+                            _b_new_error_type),
     "busy_healthy": _Spec("main", "TRAP 2.2x traffic of INFO lines, no incident", _b_busy_healthy),
     "natural_bursts": _Spec("main", "TRAP short x5 ERROR bursts in train and test, no incident", _b_natural_bursts),
     "noisy_mixed": _Spec("main", "bursts + busy period + traffic drop + error spike + latency rise", _b_noisy_mixed),

@@ -132,7 +132,9 @@ def ingest(
                 if buf:
                     s.execute(insert(Event), buf)
                 _fill_import(s, imp, result, diagnostics, detector)
-                s.execute(insert(Group), _group_rows(import_id, result))
+                group_rows = _group_rows(import_id, result)
+                if group_rows:  # an empty executemany would run a parameterless INSERT
+                    s.execute(insert(Group), group_rows)
                 return IngestResult(import_id, False)
         except IntegrityError:
             # a concurrent request stored the same run first

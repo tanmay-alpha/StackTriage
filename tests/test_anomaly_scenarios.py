@@ -98,3 +98,21 @@ def test_metrics_are_carried_by_events_through_the_real_pipeline():
     pre = [b.metrics["latency_ms"] for b in sc.timeline.buckets[: sc.eval_from]]
     inc = [b.metrics["latency_ms"] for b, lab in zip(sc.timeline.buckets, sc.labels) if lab]
     assert statistics.fmean(inc) > 1.25 * statistics.fmean(pre)
+
+
+def test_new_error_type_replaces_events_so_error_volume_is_unchanged():
+    inc, train = [], []
+    for seed in range(12):
+        sc = make_scenario("new_error_type", seed)
+        errors = [b.errors for b in sc.timeline.buckets]
+        inc += [e for e, lab in zip(errors, sc.labels) if lab]
+        train += errors[: sc.eval_from]
+    assert len(inc) == 72
+    # healthy mean ~1.6/window; the old "added" construction gave ~2.3-3.6 inside the incident
+    assert abs(statistics.fmean(inc) - statistics.fmean(train)) < 0.4
+    # and the novelty is really there: new error groups start inside the incident windows
+    hits = 0
+    for seed in range(12):
+        sc = make_scenario("new_error_type", seed)
+        hits += sum(b.new_groups for b, lab in zip(sc.timeline.buckets, sc.labels) if lab)
+    assert hits >= 12

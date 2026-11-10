@@ -7,7 +7,7 @@ from math import isfinite
 
 from .models import Level, LogEvent
 
-WINDOW_CHOICES = (1, 5, 10, 30, 60, 300, 900, 1800, 3600, 7200, 21600, 86400)
+WINDOW_CHOICES = (1, 5, 10, 30, 60, 300, 900, 1800, 3600, 7200, 21600, 86400, 604800, 2592000)
 TARGET_BUCKETS = 150
 MAX_BUCKETS = 5000
 
@@ -72,7 +72,7 @@ class TimelineBuilder:
         # sec -> [total, debug, info, warning, error, critical, unknown]
         self._sec: dict[int, list[int]] = {}
         self.untimed = 0
-        # sec -> metric name -> [sum, count]; only seconds with a finite metric value appear
+        # sec -> metric name -> [running mean, count]; only seconds with a finite metric value appear
         self._metric_sec: dict[int, dict[str, list[float]]] = {}
 
     def add(self, ev: LogEvent) -> None:
@@ -89,8 +89,9 @@ class TimelineBuilder:
             if not isfinite(value):
                 continue
             acc = self._metric_sec.setdefault(sec, {}).setdefault(name, [0.0, 0])
-            acc[0] += value
             acc[1] += 1
+            # running mean: raw values are never summed, so a finite mean cannot overflow to inf
+            acc[0] = acc[0] * ((acc[1] - 1) / acc[1]) + value / acc[1]
 
     @property
     def bounds(self) -> tuple[int, int] | None:
@@ -125,14 +126,15 @@ class TimelineBuilder:
             for i in idx:
                 buckets[i].distinct_groups += 1
             buckets[(min(series) - first) // w].new_groups += 1
-        msums: dict[int, dict[str, list[float]]] = {}
+        mstate: dict[int, dict[str, list[float]]] = {}  # bucket -> name -> [mean, count]
         for sec, per_name in self._metric_sec.items():
-            acc_b = msums.setdefault((sec - first) // w, {})
-            for name, (s, c) in per_name.items():
+            acc_b = mstate.setdefault((sec - first) // w, {})
+            for name, (m, c) in per_name.items():
                 acc = acc_b.setdefault(name, [0.0, 0])
-                acc[0] += s
-                acc[1] += c
-        for i, per_name in msums.items():
-            buckets[i].metrics = {name: s / c for name, (s, c) in sorted(per_name.items())}
+                total = acc[1] + c
+                acc[0] = acc[0] * (acc[1] / total) + m * (c / total)  # weighted mean, never sums raw values
+                acc[1] = total
+        for i, per_name in mstate.items():
+            buckets[i].metrics = {name: m for name, (m, _c) in sorted(per_name.items())}
         return Timeline(w, datetime.fromtimestamp(lo, tz=UTC), datetime.fromtimestamp(hi, tz=UTC),
                         buckets, self.untimed)

@@ -218,6 +218,14 @@ def _runs(flags: list[bool]) -> list[list[int]]:
     return runs
 
 
+def _safe_mean(vals: list[float]) -> float:
+    """Mean without summing raw values (a finite mean of huge finite values must not overflow)."""
+    m = 0.0
+    for i, v in enumerate(vals, 1):
+        m = m * ((i - 1) / i) + v / i
+    return m
+
+
 def _episode(report, run, buckets, stats, warmup, n) -> Episode:
     wins = [report.windows[i] for i in run]
     peak = max(wins, key=lambda w: w.score)
@@ -229,9 +237,10 @@ def _episode(report, run, buckets, stats, warmup, n) -> Episode:
     for name, s in stats.items():
         if not name.startswith(METRIC_PREFIX) or abs(s.median) < 1e-9:
             continue
-        vals = [b.metrics[name[len(METRIC_PREFIX):]] for b in span if name[len(METRIC_PREFIX):] in b.metrics]
+        key = name[len(METRIC_PREFIX):]
+        vals = [b.metrics[key] for b in span if key in b.metrics and math.isfinite(b.metrics[key])]
         if vals:
-            shift = abs(sum(vals) / len(vals) / s.median - 1.0)
+            shift = abs(_safe_mean(vals) / s.median - 1.0)
             if shift > metric_shift:
                 metric_shift, metric_name = shift, name
     evidence = EpisodeEvidence(

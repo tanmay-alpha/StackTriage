@@ -192,3 +192,24 @@ def test_episode_lists_contributing_features_but_no_cause():
     ep = run(rows).episodes[0]
     assert "error_count" in ep.features
     assert not hasattr(ep, "root_cause") and not hasattr(ep, "cause")
+
+
+def _metric_episode(latencies):
+    rows = series(N, seed=12)
+    patch_range(rows, 70, 70 + len(latencies), errors=30)
+    for i, v in enumerate(latencies):
+        rows[70 + i]["metrics"] = {**rows[70 + i]["metrics"], "latency_ms": v}
+    return run(rows).episodes[0]
+
+
+def test_severity_ignores_non_finite_metric_values():
+    nan = float("nan")
+    base = _metric_episode([80.0, 80.0, 80.0, 80.0, 80.0])
+    assert not any("shifted" in x for x in base.evidence)
+    # a NaN window must not suppress a real ~110 % latency shift in the other windows
+    shifted = _metric_episode([170.0, 170.0, 170.0, 170.0, nan])
+    assert any("metric.latency_ms shifted" in x and "(+2)" in x for x in shifted.evidence)
+    # +inf must not add spurious points to an otherwise unshifted episode
+    with_inf = _metric_episode([80.0, 80.0, 80.0, 80.0, float("inf")])
+    assert not any("shifted" in x for x in with_inf.evidence)
+    assert with_inf.severity == base.severity

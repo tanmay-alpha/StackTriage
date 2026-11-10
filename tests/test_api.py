@@ -317,3 +317,14 @@ def test_short_log_has_no_anomaly_episodes_and_a_note(client):
     iid = upload(client, "pino_payments.jsonl").json()["id"]
     a = client.get(f"/api/imports/{iid}").json()["anomaly"]
     assert a is not None and "episodes" in a
+
+
+def test_log_without_any_error_groups_imports_cleanly(client):
+    log = "".join(f"2026-03-05 10:00:{i:02d},000 - app - INFO - request {i} ok\n" for i in range(5))
+    r = client.post("/api/imports", params={"filename": "quiet.log"}, content=log.encode())
+    assert r.status_code == 201, r.text
+    assert r.json()["incident_count"] == 0 and r.json()["event_count"] == 5
+    iid = r.json()["id"]
+    assert client.get(f"/api/imports/{iid}/incidents").json() == {"items": [], "total": 0, "limit": 50, "offset": 0}
+    assert client.get(f"/api/imports/{iid}/export", params={"format": "csv"}).status_code == 200
+    assert client.get(f"/api/imports/{iid}/export", params={"format": "md"}).status_code == 200

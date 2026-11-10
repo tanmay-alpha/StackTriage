@@ -42,9 +42,9 @@ def test_empty_and_untimed_only():
 
 
 def test_auto_window_bounds_bucket_count():
-    for span in (1, 59, 3600, 86400, 30 * 86400):
+    for span in (1, 59, 3600, 86400, 30 * 86400, 20 * 365 * 86400):
         w = choose_window(span)
-        assert span / w <= 150 or w == 86400
+        assert span / w <= 150 or w == 2592000
     events = [ev(0), ev(2 * 86400)]
     assert 1 <= len(analyze(events).timeline.buckets) <= 200
 
@@ -91,3 +91,9 @@ def test_group_limit_overflow_is_visible():
     res = analyze(events, max_groups=3)
     assert len(res.groups) == 4 and res.overflowed_events == 7
     assert sum(g.count for g in res.groups) == 10 and any("overflow" in n for n in res.notes)
+
+
+def test_decades_wide_span_still_gets_a_valid_timeline():
+    # e.g. a stray epoch-0-ish timestamp next to current ones must not abort the analysis
+    res = analyze([ev(0), LogEvent("far", 2, "python", datetime(2000, 1, 1, tzinfo=UTC), Level.ERROR, "svc", None, "old"), ev(5)])
+    assert sum(b.total for b in res.timeline.buckets) == 3 and len(res.timeline.buckets) <= 5000
