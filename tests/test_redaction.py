@@ -12,7 +12,7 @@ from stacktriage import redact
     ("token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.abcdefghijk", "eyJhbGci"),
     ("contact alice@example.com now", "alice@example.com"),
     ("card 4111 1111 1111 1111 declined", "4111 1111 1111 1111"),
-    ("ghp_" + "abcdefghijklmnopqrstuvwxyz0123456789", "ghp_abcdef")  # split so scanners ignore the fake,
+    ("ghp_" + "abcdefghijklmnopqrstuvwxyz0123456789", "ghp_abcdef"),  # token built from parts so secret scanners ignore the fake,
     ("Cookie: session=abc; theme=dark", "session=abc"),
     ("-----BEGIN RSA PRIVATE KEY-----\nMIIEow\n-----END RSA PRIVATE KEY-----", "MIIEow"),
     ("client_secret: 'shh-very-secret'", "shh-very-secret"),
