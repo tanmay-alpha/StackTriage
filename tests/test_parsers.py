@@ -195,3 +195,38 @@ def test_nothing_is_executed():
     text = "2026-03-05 10:00:01,123 - a - ERROR - __import__('os').system('echo pwned') {{7*7}} ${jndi:ldap://x}\n"
     sess, res = run_analysis(text)
     assert res.groups[0].sample_message.startswith("__import__")
+
+
+def test_nested_secrets_in_json_are_scrubbed_at_any_depth():
+    text = '{"level":"error","message":"m","req":{"headers":{"authorization":"Bearer 7f3a9c1e5d","cookie":"sid=abc","x":"ok"},"session_id":"s-123"}}\n' * 3
+    _, ev = run(text)
+    blob = str(ev[0].fields)
+    assert "7f3a9c1e5d" not in blob and "sid=abc" not in blob and "s-123" not in blob and "ok" in blob
+
+
+def test_echoed_input_in_diagnostics_fields_and_names_is_redacted_and_bounded():
+    text = ('{"timestamp":"Bearer abcdef0123456789zzzz","level":"error","message":"x","logger":"a@b.co",'
+            '"k_password=hunter2":1,"%s":"v"}\n' % ("n" * 500)) * 3
+    sess, ev = run(text)
+    blob = str(sess.diagnostics.to_dict()) + str(ev[0])
+    assert "abcdef0123456789zzzz" not in blob and "a@b.co" not in blob and "hunter2" not in blob
+    assert all(len(k) <= 100 for k in ev[0].fields)
+    sess, ev = run("2026-01-01T00:00:00Z [token=abc123xyz] ERROR: x\n")
+    assert "abc123xyz" not in str(ev[0].service)
+
+
+@pytest.mark.parametrize("line", [
+    '{"level":NaN,"message":"x"}', '{"level":"\u00b2","message":"x"}', '{"level":1e999,"message":"x"}',
+    '{"message":"x","big":' + "9" * 400 + "}", '{"message":"x","t":' + "9" * 40 + "}",
+])
+def test_hostile_numbers_do_not_abort_the_import(line):
+    sess, ev = run(line + "\n" + '{"message":"ok","level":"info"}\n' * 3)
+    assert len(ev) == 4
+
+
+def test_metric_name_cap_per_file():
+    text = "".join('{"message":"m","level":"info","time":%d,%s}\n' % (1772704801 + i, ",".join(f'"k{i}_{j}":1' for j in range(10)))
+                   for i in range(30))
+    sess, ev = run(text)
+    names = {k for e in ev for k in e.metrics}
+    assert len(names) == 64 and sess.diagnostics.code_counts["METRIC_NAMES_CAPPED"] > 0

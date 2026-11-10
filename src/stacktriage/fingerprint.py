@@ -29,6 +29,13 @@ def _mask_ip(m: re.Match[str]) -> str:
     return f"<IP>:{port}" if int(port) < 32768 else "<IP>:<PORT>"
 
 
+def _mask_id(m: re.Match[str]) -> str:
+    tok = m.group(0)
+    has_digit = any(c.isdigit() for c in tok)
+    has_alpha = any(c.isalpha() for c in tok)
+    return "<ID>" if has_digit and has_alpha else tok
+
+
 _NORM_STEPS: list[tuple[re.Pattern[str], str | Callable[[re.Match[str]], str]]] = [
     (re.compile(r"(?<=[\w/])\?[^\s\"')\]]+"), "?<Q>"),  # URL query strings
     (re.compile(r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b"), "<UUID>"),
@@ -39,7 +46,7 @@ _NORM_STEPS: list[tuple[re.Pattern[str], str | Callable[[re.Match[str]], str]]] 
     # numbers with a unit suffix (3000ms, 45s, 10MB, 87%) must not look like ids
     (re.compile(r"\b\d+(?:\.\d+)?(?=(?:ms|us|ns|s|m|h|d|kb|mb|gb|kib|mib|gib|b)\b)|\b\d+(?:\.\d+)?(?=%)"), "<N>"),
     # alphanumeric ids: has a digit and a letter, 5+ chars (order-8841, req_a1b2c3, 7f3a9c1e)
-    (re.compile(r"\b(?=[\w-]*\d)(?=[\w-]*[A-Za-z])[\w-]{5,}\b"), "<ID>"),
+    (re.compile(r"\b[\w-]{5,}\b"), lambda m: _mask_id(m)),
     (re.compile(r"\b[A-Za-z]+[-_#]\d+\b"), "<ID>"),
     # HTTP status codes identify different errors (500 vs 404) and are kept
     (re.compile(r"(?<![A-Za-z_\d])(?<!HTTP )(?<!<IP>:)(?<!status )(?<!status: )(?<!status=)\d+(?:\.\d+)?"), "<N>"),
@@ -65,7 +72,7 @@ def normalize_message(text: str, limit: int = 300, mask_quoted: bool = False) ->
 
 
 # ------------------------------------------------------------ root extraction
-_PY_FRAME = re.compile(r'^\s*File "(?P<file>[^"]+)", line (?P<line>\d+), in (?P<func>.+?)\s*$')
+_PY_FRAME = re.compile(r'^File "(?P<file>[^"]+)", line (?P<line>\d+), in (?P<func>.+)$')
 _PY_EXC = re.compile(r"^(?P<type>[A-Za-z_][\w.]*)(?::\s?(?P<msg>.*))?$")
 _PY_SKIP = re.compile(r"^(Traceback \(|During handling of|The above exception|\+|\s*\|)")
 _PY_LIB = re.compile(r"site-packages|dist-packages|[/\\]lib[/\\]python|[/\\]Lib[/\\]|<frozen|<string>")
@@ -83,7 +90,6 @@ _JAVA_INFRA = (
 )
 
 _NODE_EXC = re.compile(r"^(?P<type>[A-Z]\w*(?:Error|Exception)|Error)(?::\s?(?P<msg>.*))?$")
-_NODE_FRAME = re.compile(r"^\s+at\s+(?:(?P<fn>.+?)\s+\()?(?P<loc>[^()]+?):(?P<line>\d+)(?::\d+)?\)?\s*$")
 _NODE_INFRA = re.compile(r"node_modules|^node:|^internal/|\(native\)|<anonymous>$")
 
 _MSG_EXC = re.compile(
@@ -98,6 +104,27 @@ class RootError:
     frame: str | None
 
 
+def _node_frame(ln: str) -> tuple[str | None, str, str] | None:
+    """Parse `    at fn (path:line:col)` / `    at path:line:col` -> (fn, path, line). Linear time."""
+    if ln[:1] not in (" ", "\t") or len(ln) > 1000:
+        return None
+    s = ln.strip()
+    if not s.startswith("at "):
+        return None
+    rest = s[3:].strip()
+    fn = None
+    if rest.endswith(")") and " (" in rest:
+        i = rest.rindex(" (")
+        fn, rest = rest[:i].strip(), rest[i + 2 : -1]
+    parts = rest.rsplit(":", 2)
+    if len(parts) == 3 and parts[1].isdigit() and parts[2].isdigit():
+        return fn, parts[0], parts[1]
+    parts = rest.rsplit(":", 1)
+    if len(parts) == 2 and parts[1].isdigit():
+        return fn, parts[0], parts[1]
+    return None
+
+
 def _basename(path: str) -> str:
     return re.split(r"[/\\]", path.rstrip("/\\"))[-1]
 
@@ -108,7 +135,7 @@ def _python_root(lines: list[str]) -> RootError | None:
         return None
     frames: list[tuple[str, str, str]] = []
     for ln in lines[start + 1 :]:
-        m = _PY_FRAME.match(ln)
+        m = _PY_FRAME.match(ln.strip())
         if m:
             frames.append((m["file"], m["func"], m["line"]))
             continue
@@ -153,24 +180,23 @@ def _java_root(lines: list[str]) -> RootError | None:
 
 def _node_root(lines: list[str]) -> RootError | None:
     exc: re.Match[str] | None = None
-    frames: list[re.Match[str]] = []
+    frames: list[tuple[str | None, str, str]] = []
     for ln in lines:
         if ln and ln[0] not in " \t":
             m = _NODE_EXC.match(ln.strip())
             if m and exc is None:
                 exc = m
         else:
-            m = _NODE_FRAME.match(ln)
-            if m:
-                frames.append(m)
+            f = _node_frame(ln)
+            if f:
+                frames.append(f)
     if exc is None:
         return None
-    app = [f for f in frames if not _NODE_INFRA.search(f["loc"])]
+    app = [f for f in frames if not _NODE_INFRA.search(f[1])]
     fr = (app or frames or [None])[0]
     frame = None
     if fr is not None:
-        fn = (fr["fn"] or "<anonymous>").strip()
-        frame = f"{_basename(fr['loc'])}:{fn}:{fr['line']}"
+        frame = f"{_basename(fr[1])}:{(fr[0] or '<anonymous>').strip()}:{fr[2]}"
     return RootError(exc["type"], (exc["msg"] or "").strip(), frame)
 
 
@@ -178,17 +204,17 @@ def extract_root(message: str, stack_trace: str | None) -> RootError | None:
     """Best-effort root exception from a stack trace (Python, Java or Node style)."""
     if not stack_trace:
         return None
-    lines = stack_trace.splitlines()
+    lines = [ln[:2000] for ln in stack_trace.splitlines()]  # bound regex input
     if any(ln.startswith("Traceback (most recent") for ln in lines):
         return _python_root(lines)
     if any(_JAVA_FRAME.match(ln) for ln in lines):
         return _java_root(lines)
-    if any(_NODE_FRAME.match(ln) for ln in lines):
+    if any(_node_frame(ln) for ln in lines):
         r = _node_root(lines)
         if r is not None:
             return r
         # Node traces logged as "error: <message>" put the exception type in the message.
-        m = _MSG_EXC.search(message)
+        m = _MSG_EXC.search(message[:500])
         if m:
             return RootError(m["type"], (m["msg"] or "").strip(), None)
     return None
@@ -217,7 +243,7 @@ def is_groupable(ev: LogEvent) -> bool:
     return ev.level >= 30 or ev.stack_trace is not None
 
 
-@lru_cache(maxsize=8192)
+@lru_cache(maxsize=1024)
 def _fingerprint(service: str, message: str, stack_trace: str | None) -> Fingerprint:
     root = extract_root(message, stack_trace)
     if root is not None:

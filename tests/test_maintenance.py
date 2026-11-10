@@ -15,7 +15,8 @@ def populated(tmp_path):
     from pathlib import Path
 
     data = (Path(__file__).parent / "fixtures" / "spring_boot.log").read_bytes()
-    assert c.post("/api/imports", params={"filename": "s.log"}, content=data).status_code == 201
+    r = c.post("/api/imports", params={"filename": "s.log"}, content=data, headers={"Content-Type": "application/octet-stream"})
+    assert r.status_code == 201
     return db, c
 
 
@@ -64,3 +65,10 @@ def test_cli_backup_check_restore(populated, tmp_path, capsys):
     assert main(["restore", str(out), "--db", str(tmp_path / "fresh.db")]) == 0
     assert count_events(tmp_path / "fresh.db") == 340
     assert main(["check", "--db", str(tmp_path / "missing.db")]) == 1
+
+
+def test_paths_with_uri_special_characters(populated, tmp_path):
+    db, _ = populated
+    odd = tmp_path / "we ird #name%41.db"
+    m.backup(db, odd)
+    assert m.check(odd) == [] and count_events(odd) == 340

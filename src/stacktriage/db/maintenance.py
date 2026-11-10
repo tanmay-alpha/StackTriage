@@ -11,12 +11,16 @@ class MaintenanceError(Exception):
     pass
 
 
+def _ro_uri(p: Path) -> str:
+    return p.resolve().as_uri() + "?mode=ro"  # as_uri percent-encodes '?', '#', '%' in paths
+
+
 def check(path: str | Path) -> list[str]:
     """Return integrity problems; an empty list means the database is sound."""
     p = Path(path)
     if not p.exists():
         raise MaintenanceError(f"{p} does not exist")
-    con = sqlite3.connect(f"file:{p.as_posix()}?mode=ro", uri=True)
+    con = sqlite3.connect(_ro_uri(p), uri=True)
     problems: list[str] = []
     try:
         problems = [r[0] for r in con.execute("PRAGMA integrity_check") if r[0] != "ok"]
@@ -32,7 +36,7 @@ def check(path: str | Path) -> list[str]:
 
 
 def _copy(src: Path, dst: Path) -> None:
-    s = sqlite3.connect(f"file:{src.as_posix()}?mode=ro", uri=True)
+    s = sqlite3.connect(_ro_uri(src), uri=True)
     d = sqlite3.connect(dst)
     try:
         s.backup(d)

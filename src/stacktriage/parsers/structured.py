@@ -8,7 +8,7 @@ from collections.abc import Iterator
 from typing import Any
 
 from ..models import Diagnostics, Level, Limits, LogEvent
-from ..redaction import REDACTED_VALUE, is_sensitive_key, redact
+from ..redaction import REDACTED_VALUE, is_sensitive_key, redact, scrub_structure
 from .common import normalize_level, parse_timestamp
 
 TS_KEYS = ("timestamp", "@timestamp", "time", "ts", "datetime", "asctime", "date", "t")
@@ -60,6 +60,16 @@ def _clip(s: str, n: int) -> str:
     return s if len(s) <= n else s[:n] + "… [truncated]"
 
 
+def _echo(v: object, n: int = 60) -> str:
+    """Safe rendering of an input value inside a diagnostic: redacted and short."""
+    return _clip(redact(str(v)), n)
+
+
+def _name(k: object, n: int = 64) -> str:
+    """Field / column names come from untrusted input: redact and bound them."""
+    return _clip(redact(str(k)), n)
+
+
 def _store_value(key: str, value: Any, limits: Limits) -> str:
     if is_sensitive_key(key):
         return REDACTED_VALUE
@@ -81,6 +91,7 @@ def parse_jsonl(
         if not isinstance(obj, dict):
             diag.add("NOT_AN_OBJECT", line_no, "JSON line is not an object; skipped")
             continue
+        obj = scrub_structure(obj)  # sensitive keys at ANY depth lose their values
         counts: dict[str, int] = {}
         used: set[str] = set()
 
@@ -113,7 +124,7 @@ def parse_jsonl(
         if ts is None:
             diag.events_without_timestamp += 1
             diag.add("MISSING_TIMESTAMP" if ts_val is None else "BAD_TIMESTAMP", line_no,
-                     "record has no timestamp" if ts_val is None else f"could not parse timestamp {ts_val!r}")
+                     "record has no timestamp" if ts_val is None else f"could not parse timestamp {_echo(ts_val)!r}")
         elif isinstance(ts_val, str) and not any(c in ts_val[10:] for c in "Z+-"):
             diag.add("TIMEZONE_ASSUMED_UTC", line_no, "timestamp has no timezone; interpreted as UTC")
 
@@ -121,7 +132,7 @@ def parse_jsonl(
         level = normalize_level(lvl_val, pino_scale=pino)
         if lvl_val is None or level is Level.UNKNOWN:
             diag.add("MISSING_LEVEL" if lvl_val is None else "UNKNOWN_LEVEL", line_no,
-                     "no level field" if lvl_val is None else f"unrecognized level {lvl_val!r}")
+                     "no level field" if lvl_val is None else f"unrecognized level {_echo(lvl_val)!r}")
 
         message = _text(msg_val) if msg_val is not None else ""
         if not message and err_msg:
@@ -145,19 +156,23 @@ def parse_jsonl(
                 continue
             if isinstance(v, bool) or v is None:
                 if isinstance(v, bool) and len(fields) < limits.max_fields:
-                    fields[k] = str(v).lower()
+                    fields[_name(k)] = str(v).lower()
             elif isinstance(v, (int, float)) and not is_sensitive_key(k):
-                if math.isfinite(v) and len(metrics) < limits.max_metrics:
-                    metrics[k] = float(v)
+                try:
+                    num = float(v)
+                except OverflowError:
+                    continue
+                if math.isfinite(num) and len(metrics) < limits.max_metrics:
+                    metrics[_name(k)] = num
             elif isinstance(v, (str, dict, list)) and len(fields) < limits.max_fields:
-                fields[k] = _store_value(k, v, limits)
+                fields[_name(k)] = _store_value(k, v, limits)
         diag.count_redactions(counts)
 
         service = _text(svc_val) if svc_val is not None else default_service
         yield LogEvent(
             event_id="", line_no=line_no, source_format="jsonl", timestamp=ts, level=level,
             service=_clip(redact(service), 100) if service else None,
-            logger=_clip(_text(lg_val), 200) if lg_val is not None else None,
+            logger=_clip(redact(_text(lg_val)), 200) if lg_val is not None else None,
             message=message, stack_trace=stack, fields=fields, metrics=metrics,
         )
 
@@ -199,12 +214,12 @@ def parse_csv(
             if ts is None:
                 diag.events_without_timestamp += 1
                 diag.add("MISSING_TIMESTAMP" if not ts_raw else "BAD_TIMESTAMP", line_no,
-                         "row has no timestamp" if not ts_raw else f"could not parse timestamp {ts_raw!r}")
+                         "row has no timestamp" if not ts_raw else f"could not parse timestamp {_echo(ts_raw)!r}")
             lvl_raw = cell("level")
             level = normalize_level(lvl_raw) if lvl_raw else Level.UNKNOWN
             if level is Level.UNKNOWN:
                 diag.add("MISSING_LEVEL" if not lvl_raw else "UNKNOWN_LEVEL", line_no,
-                         "row has no level" if not lvl_raw else f"unrecognized level {lvl_raw!r}")
+                         "row has no level" if not lvl_raw else f"unrecognized level {_echo(lvl_raw)!r}")
             message = _clip(redact(cell("msg"), counts), limits.max_message_chars)
             trace = cell("trace")
             stack = redact(_clip(trace, limits.max_stack_chars), counts) if trace else None
@@ -218,19 +233,19 @@ def parse_csv(
                 raw = row[i].strip()
                 try:
                     num = float(raw)
-                except ValueError:
+                except (ValueError, OverflowError):
                     num = None
                 if num is not None and math.isfinite(num) and not is_sensitive_key(name):
                     if len(metrics) < limits.max_metrics:
-                        metrics[name] = num
+                        metrics[_name(name)] = num
                 elif len(fields) < limits.max_fields:
-                    fields[name] = _store_value(name, raw, limits)
+                    fields[_name(name)] = _store_value(name, raw, limits)
             diag.count_redactions(counts)
             service = cell("service") or default_service
             yield LogEvent(
                 event_id="", line_no=line_no, source_format="csv", timestamp=ts, level=level,
                 service=_clip(redact(service), 100) if service else None,
-                logger=cell("logger") or None, message=message, stack_trace=stack,
+                logger=_clip(redact(cell("logger")), 200) or None, message=message, stack_trace=stack,
                 fields=fields, metrics=metrics,
             )
     except csv.Error as e:

@@ -11,10 +11,12 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Query, Request, Response
+from fastapi import Path as PathParam
 from fastapi.concurrency import run_in_threadpool
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
@@ -28,7 +30,10 @@ from . import export, schemas
 from .settings import Settings
 
 log = logging.getLogger("stacktriage")
+_SAFE_STATIC = re.compile(r"^[A-Za-z0-9_@.\-]+(?:/[A-Za-z0-9_@.\-]+)*$")
 _SERVICE_RE = re.compile(r"^[\w .:/@-]{1,100}$")
+ImportId = Annotated[int, PathParam(ge=1, le=2**31 - 1)]
+NoteId = Annotated[int, PathParam(ge=1, le=2**31 - 1)]
 LEVELS = {"debug": 10, "info": 20, "warning": 30, "error": 40, "critical": 50}
 
 
@@ -51,13 +56,17 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     factory = sessionmaker(engine, expire_on_commit=False)
     detector = _anomaly_detector()
 
-    app = FastAPI(title="StackTriage", version="0.1.0", docs_url="/api/docs" if cfg.env != "production" else None,
-                  redoc_url=None, openapi_url="/api/openapi.json" if cfg.env != "production" else None)
+    dev_docs = cfg.env == "development" and cfg.api_key is None
+    app = FastAPI(title="StackTriage", version="0.1.0", docs_url="/api/docs" if dev_docs else None,
+                  redoc_url=None, openapi_url="/api/openapi.json" if dev_docs else None)
     app.state.factory = factory
     app.state.engine = engine
     if cfg.api_key is None:
         log.warning("STACKTRIAGE_API_KEY not set: API is unauthenticated (local use only)")
 
+    hosts = cfg.effective_allowed_hosts()
+    if hosts:
+        app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(hosts))
     if cfg.cors_origins:
         app.add_middleware(CORSMiddleware, allow_origins=list(cfg.cors_origins), allow_methods=["GET", "POST", "PATCH", "DELETE"],
                            allow_headers=["Authorization", "X-API-Key", "Content-Type"])
@@ -126,7 +135,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             window_seconds=imp.window_seconds, truncated=bool(imp.diagnostics.get("truncated")), duplicate=duplicate,
         )
 
-    def get_import(s: Session, import_id: int) -> Import:
+    def get_import(s: Session, import_id: ImportId) -> Import:
         imp = s.get(Import, import_id)
         if imp is None:
             raise HTTPException(404, "import not found")
@@ -172,6 +181,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise HTTPException(422, f"format must be one of {list(FORMATS)}")
         if service is not None and not _SERVICE_RE.match(service):
             raise HTTPException(422, "service contains unsupported characters")
+        # Only application/octet-stream: browsers cannot send it cross-origin without a CORS preflight,
+        # so a malicious web page cannot upload to a local unauthenticated instance.
+        if request.headers.get("content-type", "").split(";")[0].strip().lower() != "application/octet-stream":
+            raise HTTPException(415, "Content-Type must be application/octet-stream")
         declared = request.headers.get("content-length")
         if declared is not None and declared.isdigit() and int(declared) > cfg.max_upload_bytes:
             raise HTTPException(413, f"file exceeds the {cfg.max_upload_bytes} byte upload limit")
@@ -207,7 +220,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return {"items": [summary(db, i) for i in rows], "total": total, "limit": limit, "offset": offset}
 
     @api.get("/imports/{import_id}", response_model=schemas.ImportDetail)
-    def import_detail(import_id: int, db: DB):
+    def import_detail(import_id: ImportId, db: DB):
         imp = get_import(db, import_id)
         d = summary(db, imp)
         d.update(level_counts=imp.level_counts, service_counts=imp.service_counts, diagnostics=imp.diagnostics,
@@ -215,7 +228,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return d
 
     @api.delete("/imports/{import_id}", status_code=204)
-    def remove_import(import_id: int, db: DB):
+    def remove_import(import_id: ImportId, db: DB):
         if not store.delete_import(db, import_id):
             raise HTTPException(404, "import not found")
         return Response(status_code=204)
@@ -223,7 +236,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     # ------------------------------------------------------------ incidents
     @api.get("/imports/{import_id}/incidents", response_model=schemas.Page[schemas.IncidentItem])
     def incidents(
-        import_id: int, db: DB, q: Annotated[str | None, Query(max_length=200)] = None, level: str | None = None,
+        import_id: ImportId, db: DB, q: Annotated[str | None, Query(max_length=200)] = None, level: str | None = None,
         service: Annotated[str | None, Query(max_length=100)] = None, status: schemas.Status | None = None,
         ongoing: bool | None = None, sort: Annotated[str, Query(pattern="^(count|first_seen|last_seen|level)$")] = "count",
         order: Annotated[str, Query(pattern="^(asc|desc)$")] = "desc", limit: Limit = 50, offset: Offset = 0,
@@ -234,7 +247,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return {"items": [incident_item(g, st) for g, st in rows], "total": total, "limit": limit, "offset": offset}
 
     @api.get("/imports/{import_id}/incidents/{fingerprint}", response_model=schemas.IncidentDetail)
-    def incident_detail(import_id: int, fingerprint: str, db: DB):
+    def incident_detail(import_id: ImportId, fingerprint: str, db: DB):
         row = store.get_group(db, import_id, fingerprint)
         if row is None:
             raise HTTPException(404, "incident not found")
@@ -253,7 +266,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             related=[incident_item(r, statuses.get(r.fingerprint, "open")) for r in related])
 
     @api.get("/imports/{import_id}/incidents/{fingerprint}/events", response_model=schemas.Page[schemas.EventOut])
-    def incident_events(import_id: int, fingerprint: str, db: DB, limit: Limit = 20, offset: Offset = 0):
+    def incident_events(import_id: ImportId, fingerprint: str, db: DB, limit: Limit = 20, offset: Offset = 0):
         if store.get_group(db, import_id, fingerprint) is None:
             raise HTTPException(404, "incident not found")
         rows, total = store.list_events(db, import_id, fingerprint=fingerprint, limit=limit, offset=offset)
@@ -261,7 +274,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @api.get("/imports/{import_id}/events", response_model=schemas.Page[schemas.EventOut])
     def events(
-        import_id: int, db: DB, q: Annotated[str | None, Query(max_length=200)] = None, level: str | None = None,
+        import_id: ImportId, db: DB, q: Annotated[str | None, Query(max_length=200)] = None, level: str | None = None,
         start: datetime | None = None, end: datetime | None = None, limit: Limit = 50, offset: Offset = 0,
     ):
         get_import(db, import_id)
@@ -288,7 +301,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return schemas.NoteOut(id=n.id, body=n.body, created_at=schemas.dt(n.created_ms))  # type: ignore[arg-type]
 
     @api.delete("/incidents/{fingerprint}/notes/{note_id}", status_code=204)
-    def remove_note(fingerprint: str, note_id: int, db: DB):
+    def remove_note(fingerprint: str, note_id: NoteId, db: DB):
         notes = {n.id for n in store.list_notes(db, fingerprint)}
         if note_id not in notes or not store.delete_note(db, note_id):
             raise HTTPException(404, "note not found")
@@ -296,7 +309,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     # --------------------------------------------------------------- export
     @api.get("/imports/{import_id}/export")
-    def export_import(import_id: int, db: DB, format: Annotated[str, Query(pattern="^(csv|json|md)$")] = "csv"):
+    def export_import(import_id: ImportId, db: DB, format: Annotated[str, Query(pattern="^(csv|json|md)$")] = "csv"):
         imp = get_import(db, import_id)
         rows, _ = store.list_incidents(db, import_id, limit=10_000, sort="count")
         name = export.safe_filename(f"stacktriage-{imp.id}-{imp.filename}")
@@ -363,9 +376,11 @@ def _mount_static(app: FastAPI, cfg: Settings) -> None:
     def spa(path: str):
         if path.startswith("api/"):
             raise HTTPException(404, "not found")
-        candidate = (root / path).resolve()
-        if path and candidate.is_file() and root in candidate.parents:
-            return FileResponse(candidate)
+        # only plain relative paths are looked up on disk (no backslashes, drive letters, NUL, "..")
+        if path and _SAFE_STATIC.match(path) and ".." not in path.split("/"):
+            candidate = (root / path).resolve()
+            if candidate.is_file() and root in candidate.parents:
+                return FileResponse(candidate)
         return FileResponse(index)
 
 

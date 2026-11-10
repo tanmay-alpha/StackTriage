@@ -15,11 +15,13 @@ class Settings:
     max_events: int = 200_000
     static_dir: str | None = None
     cors_origins: tuple[str, ...] = field(default_factory=tuple)
+    allowed_hosts: tuple[str, ...] = field(default_factory=tuple)  # Host header allow-list; () = automatic
 
     @classmethod
     def from_env(cls) -> Settings:
         e = os.environ
         origins = tuple(o.strip() for o in e.get("STACKTRIAGE_CORS_ORIGINS", "").split(",") if o.strip())
+        hosts = tuple(h.strip() for h in e.get("STACKTRIAGE_ALLOWED_HOSTS", "").split(",") if h.strip())
         static = e.get("STACKTRIAGE_STATIC_DIR")
         if static is None and Path("frontend/dist/index.html").exists():
             static = "frontend/dist"
@@ -31,9 +33,20 @@ class Settings:
             max_events=int(e.get("STACKTRIAGE_MAX_EVENTS", "200000")),
             static_dir=static,
             cors_origins=origins,
+            allowed_hosts=hosts,
         )
 
+    def effective_allowed_hosts(self) -> tuple[str, ...]:
+        """Without an API key the app trusts only loopback Host headers (blocks DNS rebinding)."""
+        if self.allowed_hosts:
+            return self.allowed_hosts
+        if self.api_key is None:
+            return ("localhost", "127.0.0.1", "testserver")
+        return ()
+
     def validate(self) -> None:
+        if self.env not in ("development", "production"):
+            raise RuntimeError("STACKTRIAGE_ENV must be 'development' or 'production'")
         if self.env == "production" and not self.api_key:
             raise RuntimeError("STACKTRIAGE_ENV=production requires STACKTRIAGE_API_KEY to be set")
         if self.api_key is not None and len(self.api_key) < 16:

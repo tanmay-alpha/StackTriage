@@ -61,7 +61,7 @@ HEADERS: list[HeaderPattern] = [
 
 _PY_SIGNAL = re.compile(r'^Traceback \(most recent call last\):|^\s+File "[^"]+", line \d+')
 _JAVA_SIGNAL = re.compile(r"^\s+at [\w.$<>]+\([^)]*\.(?:java|kt|scala|groovy)(?::\d+)?\)|^Caused by: ")
-_NODE_SIGNAL = re.compile(r"^\s+at .+[:(][^:]+:\d+:\d+\)?$|node:internal")
+_NODE_TAIL = re.compile(r":\d+:\d+\)?$")
 _HEADERLESS = re.compile(
     r'^(?:Traceback \(most recent call last\):|Exception in thread "[^"]*" \S+)'
 )
@@ -91,7 +91,7 @@ def detect_family(sample: Iterable[str]) -> tuple[str | None, int]:
             votes["python"] += 1
         elif _JAVA_SIGNAL.match(line):
             votes["java"] += 1
-        elif _NODE_SIGNAL.match(line):
+        elif line[:1] in (" ", "\t") and line.lstrip().startswith("at ") and _NODE_TAIL.search(line.rstrip()[-80:]):
             votes["node"] += 1
     if not votes:
         return None, headers
@@ -185,7 +185,7 @@ def parse_text(
             msg = stack.splitlines()[0].strip()
         ts: datetime | None = parse_timestamp(p.ts_raw) if p.ts_raw else None
         if p.ts_raw and ts is None:
-            diag.add("BAD_TIMESTAMP", p.line_no, f"could not parse timestamp {p.ts_raw!r}")
+            diag.add("BAD_TIMESTAMP", p.line_no, f"could not parse timestamp {redact(p.ts_raw[:60])!r}")
         elif p.ts_raw and not _HAS_TZ.search(p.ts_raw):
             diag.add("TIMEZONE_ASSUMED_UTC", p.line_no, "timestamp has no timezone; interpreted as UTC")
         if ts is None:
@@ -195,7 +195,8 @@ def parse_text(
         fields = {k: redact(v, None)[: limits.max_field_chars] for k, v in p.fields.items() if v}
         return LogEvent(
             event_id="", line_no=p.line_no, source_format=fmt, timestamp=ts, level=p.level,
-            service=p.service or default_service, logger=p.logger, message=msg,
+            service=redact(p.service[:100]) if p.service else default_service,
+            logger=redact(p.logger[:200]) if p.logger else None, message=msg,
             stack_trace=stack, fields=fields,
         )
 

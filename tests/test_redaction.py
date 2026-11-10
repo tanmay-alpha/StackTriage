@@ -16,6 +16,21 @@ from stacktriage import redact
     ("Cookie: session=abc; theme=dark", "session=abc"),
     ("-----BEGIN RSA PRIVATE KEY-----\nMIIEow\n-----END RSA PRIVATE KEY-----", "MIIEow"),
     ("client_secret: 'shh-very-secret'", "shh-very-secret"),
+    ("{'Authorization': 'Bearer 7f3a9c1e5d'}", "7f3a9c1e5d"),
+    ('{"cookie":"sid=abc123; csrf=def456"}', "sid=abc123"),
+    ('login failed password="hunter 2"', "hunter 2"),
+    ('{"password":"a,b;c"}', "a,b;c"),
+    ("'secret': 'p;ss w0rd'", "p;ss w0rd"),
+    ("redis://:hunter2@redis:6379/0", "hunter2"),
+    ("Authorization: Negotiate YIIBabc123xyz", "YIIBabc123xyz"),
+    ("Authorization: NTLM TlRMTVNTUAAB", "TlRMTVNTUAAB"),
+    ("key sk_live_" + "4eC39HqLyjWDarjtT1zdp7dc", "4eC39HqLyjWDarjtT1zdp7dc"),
+    ("token glpat-" + "abcdefghijklmnopqrstu", "abcdefghijklmnopqrstu"),
+    ("AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==", "Eby8vdM02xNOcqFlqUwJPLlm"),
+    ("post https://hooks.slack.com/services/T0ABCDEFG/B0ABCDEFG/Xyz123Secret", "Xyz123Secret"),
+    ("passphrase=correcthorsebatterystaple", "correcthorse"),
+    ("userPassword=Sup3rS3cret", "Sup3rS3cret"),
+    ("db_password: opensesame", "opensesame"),
 ])
 def test_secrets_removed(text, secret):
     out = redact(text)
@@ -26,6 +41,19 @@ def test_secrets_removed(text, secret):
 def test_non_secrets_untouched():
     msg = "Order 8841 failed: user not found at 10.0.3.12:5432 after 3000ms"
     assert redact(msg) == msg
+
+
+@pytest.mark.parametrize("text", [
+    "at hashPassword (/srv/lib/password.js:22:11)",
+    "Invalid token: expired",
+    "max_tokens=100 used",
+    "bypass=true compass=north",
+    "token.js:17 failed",
+    'File "/srv/auth/secret.py", line 9, in load',
+    "at com.shop.auth.Credentials.load(Credentials.java:12)",
+])
+def test_debugging_text_not_over_redacted(text):
+    assert redact(text) == text
 
 
 def test_non_luhn_digit_runs_kept():

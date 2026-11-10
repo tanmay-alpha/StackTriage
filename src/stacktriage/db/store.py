@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import dataclasses
 import hashlib
+import json
+import tempfile
 import time
 from collections import Counter
 from datetime import datetime
@@ -97,37 +99,48 @@ def ingest(
 
     session = parse(stream, filename=filename, format=format, default_service=default_service, limits=limits)
 
-    try:
-        with factory.begin() as s:
-            imp = Import(
-                content_key=key, filename=filename[:255], format=session.format, default_service=default_service,
-                size_bytes=size_bytes, created_ms=now_ms(), event_count=0, window_seconds=60,
-                level_counts={}, service_counts={}, diagnostics={}, timeline=[], anomaly=None, notes=[],
-            )
-            s.add(imp)
-            s.flush()
-            import_id = imp.id
-            buf: list[dict] = []
+    # Phase 1: parse + analyze with NO database lock, spooling event rows to a temp file.
+    # (Holding SQLite's single write lock across a long parse would block status/note edits.)
+    with tempfile.SpooledTemporaryFile(max_size=16 * 1024 * 1024, mode="w+", encoding="utf-8") as spool:
 
-            def observe(ev: LogEvent, fp: str | None) -> None:
-                buf.append(_event_row(import_id, ev, fp))
-                if len(buf) >= _CHUNK:
+        def observe(ev: LogEvent, fp: str | None) -> None:
+            spool.write(json.dumps(_event_row(0, ev, fp), separators=(",", ":")) + "\n")
+
+        result = analyze(session, observer=observe)
+        diagnostics = session.diagnostics.to_dict()
+
+        # Phase 2: one short transaction that writes everything or nothing.
+        try:
+            with factory.begin() as s:
+                imp = Import(
+                    content_key=key, filename=filename[:255], format=session.format, default_service=default_service,
+                    size_bytes=size_bytes, created_ms=now_ms(), event_count=0, window_seconds=60,
+                    level_counts={}, service_counts={}, diagnostics={}, timeline=[], anomaly=None, notes=[],
+                )
+                s.add(imp)
+                s.flush()
+                import_id = imp.id
+                spool.seek(0)
+                buf: list[dict] = []
+                for line in spool:
+                    row = json.loads(line)
+                    row["import_id"] = import_id
+                    buf.append(row)
+                    if len(buf) >= _CHUNK:
+                        s.execute(insert(Event), buf)
+                        buf.clear()
+                if buf:
                     s.execute(insert(Event), buf)
-                    buf.clear()
-
-            result = analyze(session, observer=observe)
-            if buf:
-                s.execute(insert(Event), buf)
-            _fill_import(s, imp, result, session.diagnostics.to_dict(), detector)
-            s.execute(insert(Group), _group_rows(import_id, result))
-            return IngestResult(import_id, False)
-    except IntegrityError:
-        # a concurrent request stored the same run first
-        with factory() as s:
-            existing = s.scalar(select(Import.id).where(Import.content_key == key))
-        if existing is None:
-            raise
-        return IngestResult(existing, True)
+                _fill_import(s, imp, result, diagnostics, detector)
+                s.execute(insert(Group), _group_rows(import_id, result))
+                return IngestResult(import_id, False)
+        except IntegrityError:
+            # a concurrent request stored the same run first
+            with factory() as s:
+                existing = s.scalar(select(Import.id).where(Import.content_key == key))
+            if existing is None:
+                raise
+            return IngestResult(existing, True)
 
 
 def _fill_import(s: Session, imp: Import, res: Analysis, diagnostics: dict, detector) -> None:

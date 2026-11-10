@@ -116,8 +116,22 @@ def parse(
     else:
         raw = parse_text(rest, family=family, default_service=default_service, limits=limits, diag=diag)
 
+    metric_names: set[str] = set()
+
     def bounded() -> Iterator[LogEvent]:
         for ev in finalize(raw):
+            if ev.metrics:
+                kept = {}
+                for k, v in ev.metrics.items():
+                    if k in metric_names or len(metric_names) < limits.max_metric_names:
+                        metric_names.add(k)
+                        kept[k] = v
+                    elif "METRIC_NAMES_CAPPED" not in diag.code_counts:
+                        diag.add("METRIC_NAMES_CAPPED", ev.line_no,
+                                 f"more than {limits.max_metric_names} distinct metric names; extra names ignored")
+                    else:
+                        diag.code_counts["METRIC_NAMES_CAPPED"] += 1
+                ev.metrics = kept
             if diag.events_parsed >= limits.max_events:
                 diag.truncated = True
                 diag.truncated_reason = f"event limit of {limits.max_events} reached"

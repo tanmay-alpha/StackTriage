@@ -36,6 +36,23 @@ def test_pathological_line_is_fast(name, where):
     assert res.total_events >= 1
 
 
+def test_node_frame_whitespace_is_linear():
+    for w in (2000, 30000):
+        t = time.perf_counter()
+        analyze(parse(io.BytesIO(("2026-01-01T00:00:00Z ERROR boom\n  at" + " " * w + "x\n").encode())))
+        assert time.perf_counter() - t < 2
+
+
+def test_python_frame_and_exception_message_runs_are_linear():
+    py = HEADER + "x\nTraceback (most recent call last):\n  File \"a\", line 1, in f" + " " * 30000 + "x\nValueError: boom\n"
+    alnum = HEADER + "x\nTraceback (most recent call last):\nValueError: " + "a-" * 15000 + "\n"
+    parens = HEADER + "x\n" + ("  at " + "(" * 60000 + "\n") * 200
+    for body in (py, alnum, parens):
+        t = time.perf_counter()
+        analyze(parse(io.BytesIO(body.encode())))
+        assert time.perf_counter() - t < 3
+
+
 def test_huge_traceback_and_deep_json():
     text = HEADER + "x\nTraceback (most recent call last):\n" + '  File "a", line 1, in f\n' * 5000 + "ValueError: x\n"
     t = time.perf_counter()

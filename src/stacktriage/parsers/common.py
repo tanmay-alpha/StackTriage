@@ -142,9 +142,12 @@ def normalize_level(value: object, pino_scale: bool = False) -> Level:
     if isinstance(value, bool) or value is None:
         return Level.UNKNOWN
     if isinstance(value, (int, float)):
-        return (_PINO if pino_scale else _PYNUM).get(int(value), Level.UNKNOWN)
+        try:
+            return (_PINO if pino_scale else _PYNUM).get(int(value), Level.UNKNOWN)
+        except (ValueError, OverflowError):  # NaN, inf
+            return Level.UNKNOWN
     s = str(value).strip().lower()
-    if s.isdigit():
+    if s.isascii() and s.isdigit() and len(s) <= 6:
         return normalize_level(int(s), pino_scale)
     return _LEVEL_WORDS.get(s, Level.UNKNOWN)
 

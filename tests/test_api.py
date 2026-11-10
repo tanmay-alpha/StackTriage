@@ -11,7 +11,16 @@ KEY = "k" * 24
 
 
 def make_client(**kw) -> TestClient:
-    return TestClient(create_app(Settings(db_path=":memory:", **kw)), raise_server_exceptions=False)
+    c = TestClient(create_app(Settings(db_path=":memory:", **kw)), raise_server_exceptions=False)
+    orig = c.request
+
+    def request(method, url, **k):  # uploads are raw bodies: always declare the one accepted content type
+        if k.get("content") is not None:
+            k["headers"] = {"Content-Type": "application/octet-stream", **(k.get("headers") or {})}
+        return orig(method, url, **k)
+
+    c.request = request  # type: ignore[method-assign]
+    return c
 
 
 @pytest.fixture()
@@ -236,3 +245,55 @@ def test_unhandled_error_does_not_leak_details(client, monkeypatch):
     iid = upload(client).json()["id"]
     r = client.get(f"/api/imports/{iid}/incidents")
     assert r.status_code == 500 and r.json() == {"detail": "internal server error"}
+
+
+# ----------------------------------------------------- review-driven hardening
+def test_upload_requires_octet_stream_content_type():
+    c = TestClient(create_app(Settings(db_path=":memory:")), raise_server_exceptions=False)
+    body = (FIX / "python_app.log").read_bytes()
+    for ct in ("text/plain", "multipart/form-data", "application/x-www-form-urlencoded", "application/json"):
+        r = c.post("/api/imports", params={"filename": "a.log"}, content=body, headers={"Content-Type": ct})
+        assert r.status_code == 415, ct
+    assert c.post("/api/imports", params={"filename": "a.log"}, content=body).status_code == 415  # none at all
+
+
+def test_unauthenticated_local_mode_rejects_foreign_host_header():
+    c = make_client()
+    assert c.get("/api/health", headers={"Host": "evil.example.com"}).status_code == 400
+    assert c.get("/api/health", headers={"Host": "localhost:8000"}).status_code == 200
+
+
+def test_allowed_hosts_configurable_and_open_when_key_set():
+    assert make_client(allowed_hosts=("tri.example.com",)).get("/api/health", headers={"Host": "tri.example.com"}).status_code == 200
+    assert make_client(api_key=KEY).get("/api/health", headers={"Host": "anything.example"}).status_code == 200
+
+
+def test_unknown_env_value_is_rejected_not_treated_as_dev():
+    with pytest.raises(RuntimeError):
+        create_app(Settings(db_path=":memory:", env="prod"))
+
+
+def test_docs_hidden_when_key_configured():
+    c = make_client(api_key=KEY)
+    assert c.get("/api/docs").status_code in (401, 404) and c.get("/api/openapi.json").status_code in (401, 404)
+    assert make_client().get("/api/openapi.json").status_code == 200
+
+
+def test_huge_ids_are_client_errors_not_500s(client):
+    assert client.get("/api/imports/99999999999999999999").status_code == 422
+    assert client.delete("/api/incidents/aaaaaaaaaaaaaaaa/notes/99999999999999999999").status_code == 422
+
+
+def test_static_serving_traversal_and_special_paths(tmp_path):
+    (tmp_path / "index.html").write_text("<html>app</html>")
+    (tmp_path / "assets").mkdir()
+    (tmp_path / "assets" / "a.js").write_text("console.log(1)")
+    (tmp_path.parent / "secret.txt").write_text("TOP SECRET")
+    c = make_client(static_dir=str(tmp_path))
+    assert "console.log" in c.get("/assets/a.js").text
+    assert "app" in c.get("/some/client/route").text
+    for p in ("/..%2fsecret.txt", "/%2e%2e/secret.txt", "/assets/..%2f..%2fsecret.txt", "/%5C%5Cattacker%5Cshare%5Cx",
+              "/C:/Windows/win.ini", "/%00", "//etc/passwd", "/assets/%2e%2e/%2e%2e/secret.txt"):
+        r = c.get(p)
+        assert "TOP SECRET" not in r.text and r.status_code in (200, 404), p
+    assert c.get("/api/nope").status_code == 404

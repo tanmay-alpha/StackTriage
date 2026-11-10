@@ -93,7 +93,8 @@ class Limits:
     max_stack_chars: int = 32_000
     max_fields: int = 20
     max_field_chars: int = 500
-    max_metrics: int = 32
+    max_metrics: int = 32  # per event
+    max_metric_names: int = 64  # distinct names per file
     max_csv_columns: int = 200
 
 
