@@ -297,3 +297,23 @@ def test_static_serving_traversal_and_special_paths(tmp_path):
         r = c.get(p)
         assert "TOP SECRET" not in r.text and r.status_code in (200, 404), p
     assert c.get("/api/nope").status_code == 404
+
+
+def test_anomaly_report_stored_and_exported(client):
+    iid = upload(client, "telemetry.csv").json()["id"]
+    a = client.get(f"/api/imports/{iid}").json()["anomaly"]
+    assert a["method_used"] == "statistical" and len(a["windows"]) == len(client.get(f"/api/imports/{iid}").json()["timeline"])
+    assert len(a["episodes"]) >= 1
+    ep = a["episodes"][0]
+    assert ep["severity"] in ("low", "medium", "high", "critical") and ep["classification"] != "normal"
+    assert a["windows"][0].keys() >= {"score", "is_anomalous", "classification", "severity", "contributions"}
+    md = client.get(f"/api/imports/{iid}/export", params={"format": "md"}).text
+    assert "Unusual periods" in md and "not causes" in md
+    j = client.get(f"/api/imports/{iid}/export", params={"format": "json"}).json()
+    assert j["anomaly"]["episodes"]
+
+
+def test_short_log_has_no_anomaly_episodes_and_a_note(client):
+    iid = upload(client, "pino_payments.jsonl").json()["id"]
+    a = client.get(f"/api/imports/{iid}").json()["anomaly"]
+    assert a is not None and "episodes" in a

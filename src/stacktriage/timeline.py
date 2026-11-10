@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+from math import isfinite
 
 from .models import Level, LogEvent
 
@@ -32,6 +33,9 @@ class Bucket:
     unknown: int = 0
     distinct_groups: int = 0  # distinct error fingerprints active in this window
     new_groups: int = 0  # fingerprints whose first occurrence falls in this window
+    # Mean of each numeric metric over the events in this window that carried it. A metric
+    # that no event in the window carried is absent (never 0.0).
+    metrics: dict[str, float] = field(default_factory=dict)
 
     @property
     def errors(self) -> int:
@@ -68,6 +72,8 @@ class TimelineBuilder:
         # sec -> [total, debug, info, warning, error, critical, unknown]
         self._sec: dict[int, list[int]] = {}
         self.untimed = 0
+        # sec -> metric name -> [sum, count]; only seconds with a finite metric value appear
+        self._metric_sec: dict[int, dict[str, list[float]]] = {}
 
     def add(self, ev: LogEvent) -> None:
         if ev.timestamp is None:
@@ -79,6 +85,12 @@ class TimelineBuilder:
             row = self._sec[sec] = [0] * 7
         row[0] += 1
         row[_LEVEL_IDX.get(ev.level, 6)] += 1
+        for name, value in ev.metrics.items():
+            if not isfinite(value):
+                continue
+            acc = self._metric_sec.setdefault(sec, {}).setdefault(name, [0.0, 0])
+            acc[0] += value
+            acc[1] += 1
 
     @property
     def bounds(self) -> tuple[int, int] | None:
@@ -113,5 +125,14 @@ class TimelineBuilder:
             for i in idx:
                 buckets[i].distinct_groups += 1
             buckets[(min(series) - first) // w].new_groups += 1
+        msums: dict[int, dict[str, list[float]]] = {}
+        for sec, per_name in self._metric_sec.items():
+            acc_b = msums.setdefault((sec - first) // w, {})
+            for name, (s, c) in per_name.items():
+                acc = acc_b.setdefault(name, [0.0, 0])
+                acc[0] += s
+                acc[1] += c
+        for i, per_name in msums.items():
+            buckets[i].metrics = {name: s / c for name, (s, c) in sorted(per_name.items())}
         return Timeline(w, datetime.fromtimestamp(lo, tz=UTC), datetime.fromtimestamp(hi, tz=UTC),
                         buckets, self.untimed)
