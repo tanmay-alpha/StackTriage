@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -38,7 +38,17 @@ class Analysis:
     notes: list[str] = field(default_factory=list)
 
 
-def analyze(events: Iterable[LogEvent], window_seconds: int | None = None, max_groups: int = 10_000) -> Analysis:
+def analyze(
+    events: Iterable[LogEvent],
+    window_seconds: int | None = None,
+    max_groups: int = 10_000,
+    observer: Callable[[LogEvent, str | None], None] | None = None,
+) -> Analysis:
+    """Analyze a stream of events in one pass.
+
+    `observer(event, group_fingerprint_or_None)` is called per event, e.g. so a
+    storage layer can persist rows while the stream is consumed once.
+    """
     grouper = Grouper(max_groups=max_groups)
     tl = TimelineBuilder()
     levels: Counter[str] = Counter()
@@ -49,7 +59,9 @@ def analyze(events: Iterable[LogEvent], window_seconds: int | None = None, max_g
         levels[ev.level.name] += 1
         services[ev.service or "unknown"] += 1
         tl.add(ev)
-        grouper.add(ev)
+        g = grouper.add(ev)
+        if observer is not None:
+            observer(ev, g.fingerprint if g else None)
 
     groups = sorted(grouper.groups.values(), key=lambda g: (-g.count, g.fingerprint))
     timeline = tl.build(window_seconds, {g.fingerprint: g.series for g in groups if g.series})

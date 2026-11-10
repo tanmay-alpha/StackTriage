@@ -36,6 +36,37 @@ def _summary(path: str, fmt: str, diag: dict, a) -> dict:
     }
 
 
+def _run_ops(args) -> int:
+    import os
+
+    db = getattr(args, "db", None) or os.environ.get("STACKTRIAGE_DB", "data/stacktriage.db")
+    if args.cmd == "serve":
+        try:
+            import uvicorn
+        except ImportError:
+            print("error: serving needs the api extra: pip install 'stacktriage[api]'", file=sys.stderr)
+            return 2
+        uvicorn.run("stacktriage.api.app:app_factory", factory=True, host=args.host, port=args.port)
+        return 0
+    from .db import maintenance as m
+
+    try:
+        if args.cmd == "backup":
+            m.backup(db, args.out, overwrite=args.force)
+            print(f"backup written and verified: {args.out}")
+        elif args.cmd == "restore":
+            safety = m.restore(args.backup, db)
+            print(f"restored {db} from {args.backup}" + (f" (previous copy: {safety})" if safety else ""))
+        else:
+            problems = m.check(db)
+            print("ok" if not problems else "\n".join(problems))
+            return 0 if not problems else 1
+    except m.MaintenanceError as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 1
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="stacktriage")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -45,7 +76,22 @@ def main(argv: list[str] | None = None) -> int:
     an.add_argument("--service", help="service name for records that carry none")
     an.add_argument("--window", type=int, help="timeline window in seconds (default: automatic)")
     an.add_argument("--json", action="store_true", help="machine-readable output")
+    sv = sub.add_parser("serve", help="run the API (and the built web UI, if present)")
+    sv.add_argument("--host", default="127.0.0.1")
+    sv.add_argument("--port", type=int, default=8000)
+    bk = sub.add_parser("backup", help="write a verified copy of the database")
+    bk.add_argument("out")
+    bk.add_argument("--db", default=None)
+    bk.add_argument("--force", action="store_true")
+    rs = sub.add_parser("restore", help="restore the database from a backup (stop the server first)")
+    rs.add_argument("backup")
+    rs.add_argument("--db", default=None)
+    ck = sub.add_parser("check", help="run integrity checks on the database")
+    ck.add_argument("--db", default=None)
     args = ap.parse_args(argv)
+
+    if args.cmd in ("serve", "backup", "restore", "check"):
+        return _run_ops(args)
 
     try:
         session, fh = parse_file(args.path, format=args.format, default_service=args.service)
