@@ -169,6 +169,26 @@ References: [Render Blueprint fields](https://render.com/docs/blueprint-spec),
 [Render persistent disks and limitations](https://render.com/docs/disks),
 [Render Docker services](https://render.com/docs/docker).
 
+## Repeatable container verification
+
+`scripts/docker_verify.py` (also the `docker` job in CI) runs the production image against a
+fresh named volume at `/data` with a generated API key and the synthetic fixtures. It checks:
+startup refusal without a key and with a short key; non-root uid 10001; `/api/health`; 401 on
+data routes without or with a wrong key; fixture imports against the ground-truth counts and
+duplicate reuse; redaction of a canary secret; status and note persistence; identical records
+after `docker restart` and after container recreation on the same volume; online `backup` and
+`check`; deleting an import and restoring the backup with the server stopped; and absence of the
+API key and canary secret from container logs and the backup file. The CI job also runs
+`pip-audit` inside the image.
+
+```sh
+docker build -t stacktriage:verify .
+python scripts/docker_verify.py --image stacktriage:verify   # exit 0 = all checks passed
+```
+
+The first run of `pip-audit` inside the image found `pip 25.0.1` from the base image with
+advisories fixed in 26.2; the Dockerfile now upgrades pip before installing the app.
+
 ## Local container verification (2026-11-10)
 
 These are observed local results, not hosted results. The daemon was Docker

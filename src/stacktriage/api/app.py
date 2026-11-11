@@ -116,7 +116,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 s.rollback()
                 raise
 
-    DB = Annotated[Session, Depends(get_db)]
+    # scope="function": run the commit in get_db BEFORE the response is sent. With the default (request scope)
+    # the commit happens after the 2xx is on the wire, so a client could read stale data right after a write.
+    DB = Annotated[Session, Depends(get_db, scope="function")]
     api = APIRouter(prefix="/api", dependencies=[Depends(require_auth)])
 
     @app.get("/api/health", include_in_schema=False)
