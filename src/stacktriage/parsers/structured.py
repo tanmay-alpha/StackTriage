@@ -1,4 +1,10 @@
-"""Structured inputs: JSON Lines and CSV telemetry exports."""
+"""Structured inputs: JSON Lines and CSV telemetry exports.
+
+CSV preserves quoted multiline content and reports physical record-start lines.
+Malformed CSV quoting stops parsing with a diagnostic; excess columns are capped
+without discarding otherwise valid records. Nested JSON error objects contribute
+their stack text, not a serialized metadata object.
+"""
 from __future__ import annotations
 
 import csv
@@ -101,6 +107,8 @@ def parse_jsonl(
         svc_key, svc_val = _pick(obj, SERVICE_KEYS)
         lg_key, lg_val = _pick(obj, LOGGER_KEYS)
         tr_key, tr_val = _pick(obj, TRACE_KEYS)
+        if isinstance(tr_val, dict) and tr_key in ERR_OBJ_KEYS:
+            tr_val = None  # unwrap error objects below, rather than serializing their metadata
         used.update(k.split(".")[0] for k in (ts_key, lvl_key, msg_key, svc_key, lg_key, tr_key) if k)
 
         # nested error objects: {"err": {"type":..., "message":..., "stack":...}}
@@ -110,7 +118,9 @@ def parse_jsonl(
             if isinstance(ev, dict):
                 used.add(ek)
                 err_msg = ev.get("message") or err_msg
-                err_type = ev.get("type") or ev.get("name") or err_type
+                candidate_type = ev.get("type") or ev.get("name")
+                if isinstance(candidate_type, str):
+                    err_type = candidate_type
                 if tr_val is None:
                     tr_val = ev.get("stack") or ev.get("stack_trace") or ev.get("stacktrace")
             elif isinstance(ev, str) and tr_val is None and "\n" in ev:
@@ -180,15 +190,31 @@ def parse_jsonl(
 def parse_csv(
     lines: Iterator[tuple[int, str]], *, default_service: str | None, limits: Limits, diag: Diagnostics,
 ) -> Iterator[LogEvent]:
-    reader = csv.reader((text + "\n" for _, text in lines), strict=False)
+    physical_line = record_start = 0
+
+    def csv_lines() -> Iterator[str]:
+        nonlocal physical_line, record_start
+        for source_line, text in lines:
+            if not record_start:
+                record_start = source_line
+            physical_line = source_line
+            yield text + "\n"
+
+    reader = csv.reader(csv_lines(), strict=True)
     header: list[str] | None = None
+    header_width = 0
     cols: dict[str, int] = {}
     try:
         for row in reader:
-            line_no = reader.line_num
+            line_no = record_start
+            record_start = 0
             if header is None:
                 if not any(c.strip() for c in row):
                     continue
+                header_width = len(row)
+                if header_width > limits.max_csv_columns:
+                    diag.add("CSV_COLUMNS_CAPPED", line_no,
+                             f"only the first {limits.max_csv_columns} of {header_width} columns are retained")
                 header = [c.strip() for c in row][: limits.max_csv_columns]
                 lowered = [h.lower() for h in header]
                 for role, keys in (("ts", TS_KEYS), ("level", LEVEL_KEYS), ("msg", MSG_KEYS),
@@ -200,8 +226,8 @@ def parse_csv(
                 continue
             if not row or not any(c.strip() for c in row):
                 continue
-            if len(row) != len(header):
-                diag.add("BAD_ROW_WIDTH", line_no, f"row has {len(row)} fields, header has {len(header)}")
+            if len(row) != header_width:
+                diag.add("BAD_ROW_WIDTH", line_no, f"row has {len(row)} fields, header has {header_width}")
                 continue
             counts: dict[str, int] = {}
 
@@ -249,4 +275,4 @@ def parse_csv(
                 fields=fields, metrics=metrics,
             )
     except csv.Error as e:
-        diag.add("CSV_ERROR", reader.line_num, f"CSV parsing stopped: {e}")
+        diag.add("CSV_ERROR", physical_line, f"CSV parsing stopped: {e}")

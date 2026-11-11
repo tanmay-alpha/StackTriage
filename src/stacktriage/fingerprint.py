@@ -8,6 +8,8 @@ are masked; words are never fuzzy-matched, so "connection refused" and
 
 No ML or similarity thresholds are involved: the same input always yields the
 same key, which keeps grouping reproducible across re-imports.
+Java module/class-loader prefixes are ignored in frame identity so module-version
+changes do not split otherwise identical exceptions.
 """
 from __future__ import annotations
 
@@ -82,7 +84,10 @@ _JAVA_EXC = re.compile(
     r"(?P<type>(?:[A-Za-z_$][\w$]*\.)+[A-Za-z_$][\w$]*)(?::\s?(?P<msg>.*))?$"
 )
 _JAVA_CAUSED = re.compile(r"^\s*Caused by:\s")
-_JAVA_FRAME = re.compile(r"^\s+at\s+(?P<sym>[\w.$<>]+)\((?P<src>[^)]*)\)")
+_JAVA_FRAME = re.compile(
+    r"^\s+at\s+(?:[\w.$@+-]*/)?(?:[\w.$@+-]+/)?"
+    r"(?P<sym>[\w.$<>]+)\((?P<src>[^)]*)\)"
+)
 _JAVA_INFRA = (
     "java.", "javax.", "jdk.", "sun.", "com.sun.", "org.springframework.", "org.apache.",
     "org.hibernate.", "io.netty.", "reactor.", "org.eclipse.", "org.junit.", "jakarta.",

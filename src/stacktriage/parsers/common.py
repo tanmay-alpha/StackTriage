@@ -31,7 +31,7 @@ def read_lines(
     first = True
     chunk_limit = limits.max_line_chars * 4 + 1  # worst case UTF-8 bytes per char
     while True:
-        raw = stream.readline(chunk_limit)
+        raw = stream.readline(min(chunk_limit, limits.max_bytes - diag.bytes_read + 1))
         if not raw:
             return
         diag.bytes_read += len(raw)
@@ -46,8 +46,13 @@ def read_lines(
         if overlong:
             # discard the rest of this physical line without buffering it
             while True:
-                rest = stream.readline(65536)
+                rest = stream.readline(min(65536, limits.max_bytes - diag.bytes_read + 1))
                 diag.bytes_read += len(rest)
+                if diag.bytes_read > limits.max_bytes:
+                    diag.truncated = True
+                    diag.truncated_reason = f"file exceeds {limits.max_bytes} bytes"
+                    diag.add("FILE_TOO_LARGE", line_no, diag.truncated_reason)
+                    break
                 if not rest or rest.endswith(b"\n"):
                     break
         text = raw.decode("utf-8", errors="replace")
@@ -62,6 +67,8 @@ def read_lines(
             diag.add("LINE_TOO_LONG", line_no, f"line truncated to {limits.max_line_chars} characters")
         text = _CTRL_RE.sub("", ANSI_RE.sub("", text))
         yield line_no, text
+        if diag.truncated:
+            return
 
 
 # ---------------------------------------------------------------- timestamps
@@ -76,7 +83,10 @@ def parse_timestamp(value: str | int | float | None) -> datetime | None:
     if value is None or isinstance(value, bool):
         return None
     if isinstance(value, (int, float)):
-        return _from_epoch(float(value))
+        try:
+            return _from_epoch(float(value))
+        except OverflowError:
+            return None
     s = value.strip().strip("[]")
     if not s:
         return None
@@ -142,10 +152,7 @@ def normalize_level(value: object, pino_scale: bool = False) -> Level:
     if isinstance(value, bool) or value is None:
         return Level.UNKNOWN
     if isinstance(value, (int, float)):
-        try:
-            return (_PINO if pino_scale else _PYNUM).get(int(value), Level.UNKNOWN)
-        except (ValueError, OverflowError):  # NaN, inf
-            return Level.UNKNOWN
+        return (_PINO if pino_scale else _PYNUM).get(value, Level.UNKNOWN)
     s = str(value).strip().lower()
     if s.isascii() and s.isdigit() and len(s) <= 6:
         return normalize_level(int(s), pino_scale)
