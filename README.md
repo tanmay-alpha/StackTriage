@@ -104,6 +104,11 @@ it does not clear the database or reset review state. If authentication is enabl
 set `STACKTRIAGE_API_KEY` in the demo process environment. Use `--url` for a different
 server address. See the [resume case study and five-minute walkthrough](docs/RESUME_CASE_STUDY.md).
 
+To verify the production container end to end (persistence across restart/recreation,
+backup/restore, auth, log-leak checks), run `python scripts/docker_verify.py` after
+`docker build -t stacktriage:verify .`; see [deployment](docs/deployment.md#repeatable-container-verification).
+No public deployment exists; the supported demo is local Docker or `stacktriage serve`.
+
 ## Screenshots
 
 | Overview | Import result |
