@@ -72,7 +72,7 @@ _KEYWORDS = (
     r"|private[_-]?key|client[_-]?secret|credentials?|session[_-]?id|sessionid"
 )
 _VALUE = (
-    r"(?P<v>\"(?:[^\"\\\r\n]|\\.){0,500}\"|'(?:[^'\\\r\n]|\\.){0,500}'|[^\s\"',;&}\])]{1,500})"
+    r"(?P<v>\"(?:[^\"\\\r\n]|\\.)*\"|'(?:[^'\\\r\n]|\\.)*'|[^\s\"',;&}\])]+)"
 )
 # key=value / "key": "value". The keyword must END the key (so `password.js:22` is not a key)
 # and be delimited from preceding text (so `bypass=1` is not a key).
@@ -90,7 +90,7 @@ _LOWER_WORD = re.compile(r"[a-z]+")
 # Key names whose values are always redacted in structured (JSON/CSV) records.
 _SENSITIVE_KEY = re.compile(
     r"(?i)(password|passwd|passphrase|pwd|secret|token|api[_-]?key|apikey|authorization|cookie"
-    r"|credential|private[_-]?key|session[_-]?id|sessionid|account[_-]?key|ssn)"
+    r"|credential|private[_-]?key|access[_-]?key|session[_-]?id|sessionid|account[_-]?key|ssn)"
 )
 
 

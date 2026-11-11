@@ -328,3 +328,23 @@ def test_log_without_any_error_groups_imports_cleanly(client):
     assert client.get(f"/api/imports/{iid}/incidents").json() == {"items": [], "total": 0, "limit": 50, "offset": 0}
     assert client.get(f"/api/imports/{iid}/export", params={"format": "csv"}).status_code == 200
     assert client.get(f"/api/imports/{iid}/export", params={"format": "md"}).status_code == 200
+
+
+def test_cors_allows_incident_status_updates():
+    c = make_client(cors_origins=("https://triage.example",))
+    r = c.options("/api/incidents/0123456789abcdef/status", headers={
+        "Origin": "https://triage.example",
+        "Access-Control-Request-Method": "PUT",
+        "Access-Control-Request-Headers": "authorization,content-type",
+    })
+    assert r.status_code == 200
+    assert r.headers["access-control-allow-origin"] == "https://triage.example"
+
+
+def test_sensitive_access_key_is_not_persisted(client):
+    secret = "example-access-credential"
+    payload = '{"level":"error","message":"failed","access_key":"' + secret + '"}\n'
+    r = client.post("/api/imports", params={"filename": "access.jsonl"}, content=payload.encode())
+    assert r.status_code == 201
+    iid = r.json()["id"]
+    assert secret not in client.get(f"/api/imports/{iid}/events").text

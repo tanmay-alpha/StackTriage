@@ -73,3 +73,14 @@ def test_no_catastrophic_backtracking():
     redact("password" + "=" * 20000 + "x" * 20000)
     redact("a" * 60000 + "@")
     assert time.perf_counter() - t < 2
+
+
+@pytest.mark.parametrize("quote", ["", "'", '"'])
+@pytest.mark.parametrize("size", [501, 2000])
+def test_long_secret_is_removed_completely(quote, size):
+    secret = "Q" * size + "SENSITIVE_TAIL"
+    out = redact(f"password={quote}{secret}{quote} next=ok")
+    assert "SENSITIVE_TAIL" not in out
+    assert "Q" not in out
+    assert "[REDACTED:secret]" in out
+    assert "next=ok" in out
