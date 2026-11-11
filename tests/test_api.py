@@ -348,3 +348,31 @@ def test_sensitive_access_key_is_not_persisted(client):
     assert r.status_code == 201
     iid = r.json()["id"]
     assert secret not in client.get(f"/api/imports/{iid}/events").text
+
+
+def test_writes_are_committed_before_the_response_is_sent(tmp_path):
+    """Regression: with request-scoped DB dependencies the commit ran after the 2xx was sent,
+    so a client could list a just-deleted import. Check committed state at response start."""
+    import asyncio
+    import sqlite3
+
+    db = tmp_path / "t.db"
+    app = create_app(Settings(db_path=str(db)))
+    c = TestClient(app)
+    imp_id = upload(c).json()["id"]
+    seen: list[int] = []
+
+    async def send(message):
+        if message["type"] == "http.response.start":
+            with sqlite3.connect(db) as other:
+                seen.append(other.execute("SELECT COUNT(*) FROM imports").fetchone()[0])
+
+    async def receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+
+    scope = {"type": "http", "asgi": {"version": "3.0"}, "http_version": "1.1", "method": "DELETE",
+             "scheme": "http", "path": f"/api/imports/{imp_id}", "raw_path": f"/api/imports/{imp_id}".encode(),
+             "query_string": b"", "headers": [(b"host", b"localhost")], "client": ("127.0.0.1", 1),
+             "server": ("localhost", 80), "root_path": ""}
+    asyncio.run(app(scope, receive, send))
+    assert seen == [0], "DELETE response was sent before the deletion was committed"
