@@ -119,3 +119,24 @@ def test_known_limitation_unquoted_free_text_values_split():
 def test_deterministic_and_stable_key_format():
     k = fp("Order 5 failed")
     assert k == fp("Order 5 failed") and len(k) == 16 and int(k, 16) >= 0
+
+
+def test_java_module_qualified_frames_retain_root_and_application_location():
+    trace = (
+        "java.lang.RuntimeException: wrapper\n"
+        "\tat java.base/java.lang.Thread.run(Thread.java:840)\n"
+        "Caused by: java.io.IOException: root\n"
+        "\tat shop.module/com.shop.Worker.run(Worker.java:42)\n"
+    )
+    f = fingerprint(ev("failed", trace))
+    assert f.exc_type == "java.io.IOException"
+    assert f.frame == "com.shop.Worker.run:42"
+
+
+def test_java_module_versions_do_not_change_fingerprint():
+    trace = (
+        "java.lang.IllegalStateException: boom\n"
+        "\tat shop.module@{version}/com.shop.Worker.run(Worker.java:42)\n"
+    )
+    assert fingerprint(ev("failed", trace.format(version="1.0"))).frame == "com.shop.Worker.run:42"
+    assert fp("failed", trace.format(version="1.0")) == fp("failed", trace.format(version="2.0"))

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import sqlite3
+import tempfile
 from pathlib import Path
 
 from .engine import MIGRATIONS
@@ -50,17 +51,18 @@ def backup(db_path: str | Path, out_path: str | Path, *, overwrite: bool = False
     src, out = Path(db_path), Path(out_path)
     if not src.exists():
         raise MaintenanceError(f"{src} does not exist")
+    if out.exists() and src.samefile(out):
+        raise MaintenanceError("backup destination must differ from the source database")
     if out.exists() and not overwrite:
         raise MaintenanceError(f"{out} already exists (use --force to overwrite)")
     out.parent.mkdir(parents=True, exist_ok=True)
-    tmp = out.with_suffix(out.suffix + ".partial")
-    tmp.unlink(missing_ok=True)
-    _copy(src, tmp)
-    problems = check(tmp)
-    if problems:
-        tmp.unlink(missing_ok=True)
-        raise MaintenanceError("backup failed verification: " + "; ".join(problems[:3]))
-    tmp.replace(out)
+    with tempfile.TemporaryDirectory(prefix="stacktriage-backup-", dir=out.parent) as staging:
+        tmp = Path(staging) / "backup.db"
+        _copy(src, tmp)
+        problems = check(tmp)
+        if problems:
+            raise MaintenanceError("backup failed verification: " + "; ".join(problems[:3]))
+        tmp.replace(out)
 
 
 def restore(backup_path: str | Path, db_path: str | Path) -> Path | None:
@@ -73,15 +75,17 @@ def restore(backup_path: str | Path, db_path: str | Path) -> Path | None:
     problems = check(bak)
     if problems:
         raise MaintenanceError("backup is not restorable: " + "; ".join(problems[:3]))
-    safety: Path | None = None
-    if dst.exists():
-        safety = dst.with_name(dst.name + ".before-restore")
-        _copy(dst, safety)
     dst.parent.mkdir(parents=True, exist_ok=True)
-    for suffix in ("-wal", "-shm"):
-        dst.with_name(dst.name + suffix).unlink(missing_ok=True)
-    tmp = dst.with_suffix(dst.suffix + ".restoring")
-    tmp.unlink(missing_ok=True)
-    _copy(bak, tmp)
-    tmp.replace(dst)
+    with tempfile.TemporaryDirectory(prefix="stacktriage-restore-", dir=dst.parent) as staging:
+        tmp = Path(staging) / "restore.db"
+        # Consume the backup before writing the safety copy: the backup itself
+        # may be the previous .before-restore file.
+        _copy(bak, tmp)
+        safety: Path | None = None
+        if dst.exists():
+            safety = dst.with_name(dst.name + ".before-restore")
+            _copy(dst, safety)
+        for suffix in ("-wal", "-shm"):
+            dst.with_name(dst.name + suffix).unlink(missing_ok=True)
+        tmp.replace(dst)
     return safety

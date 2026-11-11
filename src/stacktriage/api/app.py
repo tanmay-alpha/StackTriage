@@ -68,7 +68,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     if hosts:
         app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(hosts))
     if cfg.cors_origins:
-        app.add_middleware(CORSMiddleware, allow_origins=list(cfg.cors_origins), allow_methods=["GET", "POST", "PATCH", "DELETE"],
+        app.add_middleware(CORSMiddleware, allow_origins=list(cfg.cors_origins), allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
                            allow_headers=["Authorization", "X-API-Key", "Content-Type"])
 
     @app.middleware("http")

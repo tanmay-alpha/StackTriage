@@ -4,6 +4,9 @@ StackTriage is a single-user application with one SQLite database and one backen
 instance. The Docker image serves both the API and the built React application.
 Do not scale it across hosts or use an ephemeral filesystem for the database.
 
+**Do not upload confidential logs.** Demonstrate with the synthetic fixtures only;
+redaction is best-effort, and raw uploads may spill to host temporary storage.
+
 ## Local Docker deployment
 
 Prerequisites: Docker with a running Linux-container daemon. Run these commands
@@ -44,6 +47,12 @@ by that UID. Keep the entire `/data` directory, including SQLite WAL/SHM files;
 removing and recreating a container with the same volume preserves its data.
 `docker rm` does not delete a named volume; `docker volume rm` does.
 
+Static review: the Dockerfile creates `/data`, assigns it to UID 10001 and switches
+to `USER app` before startup. SQLite needs write access to the directory, not just
+the `.db` file, to create WAL/SHM files. Mounted directory permissions override image
+permissions; the image does not automatically repair an existing mount. No Docker
+build or runtime check was performed as part of this documentation review.
+
 ## Environment variables
 
 | Variable | Image default | Meaning |
@@ -69,6 +78,9 @@ triage state and notes; treat them as sensitive and keep encrypted off-host copi
 Choose a new filename for every backup (the command refuses to overwrite unless
 `--force` is supplied).
 
+The backup destination must differ from the source database, even with `--force`;
+same-file aliases are rejected too. Backup staging uses a unique temporary directory.
+
 ```sh
 # Safe while the server runs; verifies the resulting database.
 docker exec stacktriage stacktriage backup /data/backups/stacktriage-20261110.db
@@ -78,6 +90,11 @@ docker cp stacktriage:/data/backups/stacktriage-20261110.db ./stacktriage-202611
 Restore only with the server stopped. Use the same application image/version as
 the backup or a version known to support its schema. The restore command verifies
 the backup and retains the previous database as `stacktriage.db.before-restore`.
+
+Only one `.before-restore` safety copy is retained: a later restore replaces it.
+Restore stages the verified input before writing that safety copy, so a prior
+`.before-restore` file can itself be the restore input. Staging failure leaves the
+existing WAL/SHM files untouched. Keep independent off-host backup generations.
 
 ```sh
 docker stop stacktriage
@@ -97,20 +114,15 @@ restores locally before relying on a backup policy.
 
 ## Hosted deployment status
 
-**Nothing was deployed. No hosted backend or public application URL was created,
-and no money was spent.** Local Docker validation is not a hosted deployment.
+The repository includes deployment configuration, not proof of a currently running
+hosted service. No public deployment URL or current host/account status can be
+established from these files. The local container observations below are historical,
+not a fresh deployment validation.
 
-The Vercel CLI is authenticated to the `tanmay-alpha` account on its Hobby plan.
-Vercel Functions have ephemeral filesystems: this SQLite database cannot live
-there durably. Vercel could host only the static frontend, with `/api/*` rewrites
-to a separately hosted persistent backend. That split has not been configured or
-deployed. Never put the backend API key into a public frontend build or a rewrite.
-
-The `render` command on this machine is an unrelated templating tool, not the
-Render hosting CLI. There is no Render CLI or `RENDER_API_KEY` available. Render
-persistent disks require a paid service instance. The committed `render.yaml` is
-a deployment configuration, not evidence that a service exists, and has not been
-applied or validated against a Render account.
+The Dockerfile requires a persistent writable `/data` directory. The committed
+`render.yaml` declares one paid service instance and a persistent disk; do not
+apply it without the owner's approval. Credentials, account authentication and
+current provider pricing must be checked by the owner, not inferred from this repo.
 
 ### Owner steps for Render (paid-plan approval required)
 

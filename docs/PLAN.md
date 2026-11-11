@@ -1,7 +1,7 @@
-# Implementation plan (authoritative)
+# Implementation milestones
 
-Single source of truth for scope and order. Changes to scope are recorded here
-before code changes.
+Historical scope and implementation order. See `README.md` and
+`docs/architecture.md` for the current behavior; this list is not a live task queue.
 
 ## Principles
 - Core engine is stdlib-only Python and testable without a server or database.
@@ -16,7 +16,7 @@ before code changes.
 1. Repository, license, `docs/foundation-audit.md`.
 2. Parsers (Python, Node, Java, JSONL, CSV), schemas, redaction, diagnostics, limits.
 3. Fingerprint grouping, timeline, group activity. Acceptance: ground-truth fixtures.
-4. SQLite persistence (idempotent imports). [next]
+4. SQLite persistence (idempotent imports).
 5. Anomaly detection over time windows: statistical baseline vs Isolation Forest,
    evaluation script, measured results.
 6. FastAPI backend: ingestion, incidents, filters, detail, review status, notes,

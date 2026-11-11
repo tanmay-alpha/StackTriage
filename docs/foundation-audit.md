@@ -1,10 +1,10 @@
 # Foundation audit: swagatblog/AIML_LogAnalyser
 
 Reference: <https://github.com/swagatblog/AIML_LogAnalyser>, single commit `fa072e2`, MIT.
-Cloned to a separate directory outside this repo. Everything below was run, not
-copied from the earlier audit, except where marked *by inspection*.
-`scripts/audit_upstream.py` reproduces the numbers (Python 3.11, upstream's pinned
-`scikit-learn==1.4.2`, `numpy==1.26.4`).
+This is a historical audit of a separate upstream checkout, not a fresh run against
+the current StackTriage code. Recorded observations below were made against that
+reference commit. `scripts/audit_upstream.py` contains reproduction steps (Python
+3.11, upstream's pinned `scikit-learn==1.4.2`, `numpy==1.26.4`).
 
 ## What upstream is
 
@@ -55,7 +55,7 @@ row per request.
 | `data/generate_data.py` | **Rejected** | Disjoint-range anomalies make evaluation meaningless. Replaced by fixtures where the anomalous period overlaps normal ranges on any single metric and log level alone cannot separate it. |
 | Severity thresholds in `api/app.py` | **Rejected** | Replaced by separate score / classification / severity (see ML docs). |
 | `/predict`, `/predict_batch`, `/metrics` | **Rejected** | Different product (incident triage, not per-record scoring). |
-| `docker/` | **Rejected** | Depends on untracked artifacts; to be rewritten once artifacts are reproducible. |
+| `docker/` | **Rejected** | Upstream requires untracked artifacts. StackTriage's root `Dockerfile` instead builds the frontend and installs `api,ml` without serialized model artifacts. |
 | `sample_logs/` | **Rejected** | Same telemetry schema; not ordinary application logs. |
 | `tests/test_pipeline.py` | **Rejected** | Skips silently; asserts on trivially separable data. |
 | `LICENSE` (MIT) | **Retained as attribution** | Reproduced in `NOTICE.md`. |

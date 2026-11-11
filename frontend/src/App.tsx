@@ -115,7 +115,7 @@ function ApiKeyDialog() {
   return (
     <Dialog open={auth.dialogOpen} onClose={auth.closeDialog} title="API key required">
       <form onSubmit={submit} className="stack-md" noValidate>
-        <p className="muted">This StackTriage server requires an API key. It is kept in this browser tab&rsquo;s session storage only and sent as a bearer token.</p>
+        <p className="muted">This StackTriage server requires an API key. It is kept in this browser tab&rsquo;s session storage only and sent as a bearer token. If storage is blocked, it stays in memory until you reload the page.</p>
         <div className="field">
           <label className="field-label" htmlFor="api-key-input">
             API key

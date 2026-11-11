@@ -50,8 +50,10 @@ export function ImportView() {
     if (detail.data && resultRef.current && result) resultRef.current.focus({ preventScroll: false });
   }, [detail.data, result]);
 
+  const busy = phase.name === "uploading" || phase.name === "processing";
+
   const pick = (f: File | null | undefined) => {
-    if (!f) return;
+    if (!f || busy) return;
     setResult(null);
     setPhase({ name: "idle" });
     setFile(f);
@@ -65,8 +67,6 @@ export function ImportView() {
     if (files.length > 1) push("Only one file can be imported at a time. Using the first.", "info");
     pick(files[0]);
   };
-
-  const busy = phase.name === "uploading" || phase.name === "processing";
 
   const submit = (e: FormEvent) => {
     e.preventDefault();

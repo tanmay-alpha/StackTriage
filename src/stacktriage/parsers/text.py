@@ -151,6 +151,7 @@ class _Pending:
     fields: dict[str, str]
     cont: _Cont
     headerless: bool = False
+    chained_trace: bool = False
 
 
 def parse_text(
@@ -174,6 +175,9 @@ def parse_text(
             if p.cont.dropped:
                 diag.add("STACK_TRUNCATED", p.line_no, f"{p.cont.dropped} continuation lines omitted from the middle")
             if len(text) > limits.max_stack_chars:
+                if not p.cont.dropped:
+                    diag.add("STACK_TRUNCATED", p.line_no,
+                             f"stack truncated to {limits.max_stack_chars} characters")
                 text = text[: limits.max_stack_chars] + "\n... [truncated]"
             stack = redact(text, counts)
         if p.headerless:
@@ -229,6 +233,15 @@ def parse_text(
             elif gd.get("thread"):
                 fields["thread"] = gd["thread"]
             cur = _Pending(line_no, gd.get("ts"), level, service, gd.get("logger"), msg.strip(), fields, _Cont(limits.max_stack_lines))
+            continue
+        if cur is not None and line.startswith((
+            "During handling of the above exception",
+            "The above exception was the direct cause",
+        )):
+            cur.chained_trace = True
+        if cur is not None and cur.chained_trace and line.startswith("Traceback (most recent call last):"):
+            cur.chained_trace = False
+            cur.cont.add(line)
             continue
         if cur is None or (cur.headerless and _HEADERLESS.match(line)):
             if _HEADERLESS.match(line):

@@ -9,7 +9,7 @@ test.beforeEach(async ({ request }) => {
 });
 
 async function noHorizontalOverflow(page: import("@playwright/test").Page) {
-  const { sw, iw } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
+  const { sw, iw } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: document.documentElement.clientWidth }));
   expect(sw, `page must not scroll horizontally (scrollWidth ${sw} > ${iw})`).toBeLessThanOrEqual(iw);
 }
 
@@ -53,4 +53,41 @@ test("(g) all four views work at 390x844 without horizontal scrolling", async ({
   // the stack trace scrolls inside its own box instead of widening the page
   const trace = page.locator(".trace-body").first();
   expect(await trace.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+});
+
+test("long service names, filenames and messages remain readable on mobile", async ({ page, request }) => {
+  const service = `checkout-${"x".repeat(80)}`;
+  const message = `UpstreamFailure: ${"long-message-".repeat(80)}`;
+  const stack = `Error: ${message}\n    at checkout (/srv/${"path/".repeat(80)}handler.js:12:3)`;
+  const imp = await seed(request, {
+    name: `${"long-filename-".repeat(12)}.jsonl`,
+    content: Buffer.from(JSON.stringify({ timestamp: "2026-03-05T10:00:00Z", level: "error", service, message, stack }) + "\n"),
+  });
+  await page.goto(`/?import=${imp.id}`);
+  await expect(page.getByRole("heading", { name: "Events by level and service" })).toBeVisible();
+  await noHorizontalOverflow(page);
+  await expect(page.locator(".kv-list").getByText(service, { exact: true })).toBeVisible();
+  await page.goto("/import");
+  await expect(page.getByTestId("imports-table")).toBeVisible();
+  await noHorizontalOverflow(page);
+  await page.goto(`/imports/${imp.id}/incidents`);
+  await expect(page.locator(".title-link")).toBeVisible();
+  await noHorizontalOverflow(page);
+  await page.locator(".title-link").click();
+  await expect(page.locator(".message-block")).toHaveText(message);
+  await expect(page.locator(".trace-body")).toContainText("handler.js:12:3");
+  await noHorizontalOverflow(page);
+});
+
+test("contribution tables fit mobile width with wider fallback fonts", async ({ page, request }) => {
+  const imp = await seed(request, "spring_boot.log");
+  await page.goto(`/?import=${imp.id}`);
+  await page.locator(".contrib").first().waitFor();
+  // Exercise different platform font metrics instead of relying on the host's system font.
+  await page.addStyleTag({ content: ':root { --font-sans: Arial, sans-serif; --font-mono: "Courier New", monospace; }' });
+  await noHorizontalOverflow(page);
+  for (const table of await page.locator(".contrib").all()) {
+    expect(await table.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+    expect(await table.evaluate((el) => el.getBoundingClientRect().right <= el.closest(".episode")!.getBoundingClientRect().right)).toBe(true);
+  }
 });

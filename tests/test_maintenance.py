@@ -72,3 +72,47 @@ def test_paths_with_uri_special_characters(populated, tmp_path):
     odd = tmp_path / "we ird #name%41.db"
     m.backup(db, odd)
     assert m.check(odd) == [] and count_events(odd) == 340
+
+
+def test_restore_backup_at_safety_path_uses_original_backup(populated):
+    db, c = populated
+    out = db.with_name(db.name + ".before-restore")
+    m.backup(db, out)
+    assert c.delete("/api/imports/1").status_code == 204
+    c.close()
+    c.app.state.engine.dispose()
+    assert count_events(db) == 0
+    m.restore(out, db)
+    assert count_events(db) == 340
+    assert count_events(out) == 0
+
+
+def test_backup_refuses_to_replace_live_source(populated):
+    db, _ = populated
+    with pytest.raises(m.MaintenanceError):
+        m.backup(db, db, overwrite=True)
+    assert count_events(db) == 340
+
+
+def test_failed_restore_preserves_live_sidecars(populated, tmp_path, monkeypatch):
+    db, c = populated
+    out = tmp_path / "backup.db"
+    m.backup(db, out)
+    c.close()
+    c.app.state.engine.dispose()
+    wal = db.with_name(db.name + "-wal")
+    shm = db.with_name(db.name + "-shm")
+    wal.write_bytes(b"original wal")
+    shm.write_bytes(b"original shm")
+    original_copy = m._copy
+
+    def fail_backup_copy(src, dst):
+        if src == out:
+            raise OSError("copy failed")
+        original_copy(src, dst)
+
+    monkeypatch.setattr(m, "_copy", fail_backup_copy)
+    with pytest.raises(OSError, match="copy failed"):
+        m.restore(out, db)
+    assert wal.read_bytes() == b"original wal"
+    assert shm.read_bytes() == b"original shm"

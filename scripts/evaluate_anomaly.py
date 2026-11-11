@@ -21,8 +21,8 @@ mean +- std are over seeds (sample std).
 Sanity gates (exit status 1 if any fails): the ERROR-count rule and every single feature must
 not be perfect; no training window may lie in the evaluated period and the baseline must not
 change when the later period is replaced; reruns must be identical; severity must not be a
-monotone function of score and must use more than one level; the AUTO_METHOD constant must
-equal the decision this script measures.
+monotone function of score and must use more than one level. Only --dev measures model
+selection; evaluation reports the frozen AUTO_METHOD without selecting on held-out labels.
 """
 from __future__ import annotations
 
@@ -229,10 +229,20 @@ def leakage_checks(gates: Gates, sc: Scenario, method: str, rep, replace_later: 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--dev", action="store_true", help="use the tuning seeds instead of the reported ones")
-    ap.add_argument("--seeds", help="comma separated seeds")
+    ap.add_argument("--dev", action="store_true", help="use development scenario instances and check model selection")
+    ap.add_argument("--seeds", help="comma separated seeds (must not overlap the opposite partition)")
     args = ap.parse_args()
-    seeds = tuple(int(s) for s in args.seeds.split(",")) if args.seeds else (DEV_SEEDS if args.dev else EVAL_SEEDS)
+    try:
+        seeds = tuple(int(s) for s in args.seeds.split(",")) if args.seeds is not None else (
+            DEV_SEEDS if args.dev else EVAL_SEEDS
+        )
+    except ValueError:
+        ap.error("--seeds must be a nonempty comma separated list of integers")
+    if not seeds or len(set(seeds)) != len(seeds):
+        ap.error("--seeds must be nonempty and contain no duplicates")
+    opposite = EVAL_SEEDS if args.dev else DEV_SEEDS
+    if set(seeds).intersection(opposite):
+        ap.error("--seeds overlaps the evaluation partition" if args.dev else "--seeds overlaps the development partition")
     t0 = time.time()
     gates = Gates()
 
@@ -262,7 +272,8 @@ def main() -> int:
             gates.check(rep2.to_dict() == reports[(m, name, seeds[0])].to_dict(), f"[{name} {m}] rerun identical")
 
     # ---- table 1: main scenarios, pooled per seed -------------------------------------------
-    print(f"\nseeds: {list(seeds)}   scenarios (main): {', '.join(MAIN_NAMES)}")
+    partition = "development" if args.dev else "evaluation"
+    print(f"\n{partition} scenario instances; seeds: {list(seeds)}   scenarios (main): {', '.join(MAIN_NAMES)}")
     per_seed = {c: [pooled([runs[(c, n, s)] for n in MAIN_NAMES]) for s in seeds] for c in ALL_CANDIDATES}
     cols = [("precision", "precision"), ("recall", "recall"), ("f1", "F1"), ("fpr", "FPR/window"),
             ("inc_recall", "incident recall"), ("delay", "delay (win)"), ("fa_per_inc", "FA/incident"),
@@ -308,9 +319,9 @@ def main() -> int:
     gates.check(statistics.fmean(d["f1"] for d in rule) < 0.9, "single-feature ERROR-count rule mean F1 < 0.9")
 
     # ---- table 2: per scenario -----------------------------------------------------------------
-    print("\n### Per scenario (mean over seeds; later period unless noted)\n")
-    print("| scenario | candidate | incidents detected | window recall | delay (win) | FP windows/seed | FP episodes/seed | ROC-AUC | PR-AUC |")
-    print("|---|---|---|---|---|---|---|---|---|")
+    print("\n### Per scenario (mean ± std over seeds; later period unless noted)\n")
+    print("| scenario | candidate | incidents detected | precision | recall | F1 | FPR/window | delay (win) | FP windows/seed | FP episodes/seed | ROC-AUC | PR-AUC |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|")
     for n in SCENARIO_NAMES:
         for c in ALL_CANDIDATES:
             rs = [runs[(c, n, s)] for s in seeds]
@@ -319,9 +330,9 @@ def main() -> int:
             au = [_auc(r.labels, r.scores) for r in rs]
             det, tot = sum(x["detected"] for x in st), sum(x["incidents"] for x in st)
             det_s = f"{det}/{tot}" if tot else "-"
-            rec = _ms([p["recall"] for p in pr], 2) if tot else "-"
+            quality = " | ".join(_ms([p[k] for p in pr]) for k in ("precision", "recall", "f1", "fpr"))
             print(
-                f"| {n} | {c} | {det_s} | {rec} | {_ms([x['delay'] for x in st], 1)} | "
+                f"| {n} | {c} | {det_s} | {quality} | {_ms([x['delay'] for x in st], 1)} | "
                 f"{statistics.fmean(p['fp'] for p in pr):.2f} | {statistics.fmean(x['false_eps'] for x in st):.2f} | "
                 f"{_ms([a[0] for a in au], 2)} | {_ms([a[1] for a in au], 2)} |"
             )
@@ -386,19 +397,22 @@ def main() -> int:
     print("top contributing feature: " + ", ".join(f"{k} {v}" for k, v in sorted(by_feature.items(), key=lambda kv: -kv[1])))
     print("classification:           " + ", ".join(f"{k} {v}" for k, v in sorted(by_class.items(), key=lambda kv: -kv[1])))
 
-    # ---- decision ------------------------------------------------------------------------------------
-    f1_stat = [d["f1"] for d in per_seed["statistical"]]
-    f1_if = [d["f1"] for d in per_seed["isolation_forest"]]
-    margin = max(statistics.stdev(f1_stat), statistics.stdev(f1_if)) if len(seeds) > 1 else 0.0
-    gain = statistics.fmean(f1_if) - statistics.fmean(f1_stat)
-    decision = "isolation_forest" if gain > margin else "statistical"
-    print(
-        f"\nDecision rule: isolation_forest becomes the default only if its mean pooled F1 exceeds the "
-        f"statistical baseline's by more than the larger std over seeds.\n"
-        f"  F1 isolation_forest {statistics.fmean(f1_if):.3f} - statistical {statistics.fmean(f1_stat):.3f} = "
-        f"{gain:+.3f} (margin {margin:.3f})  ->  default = {decision}   (AUTO_METHOD = {AUTO_METHOD})"
-    )
-    gates.check(AUTO_METHOD == decision, f"AUTO_METHOD ({AUTO_METHOD}) equals the measured decision ({decision})")
+    # ---- development-only selection; evaluation never chooses a default ---------------------------
+    if args.dev:
+        f1_stat = [d["f1"] for d in per_seed["statistical"]]
+        f1_if = [d["f1"] for d in per_seed["isolation_forest"]]
+        margin = max(statistics.stdev(f1_stat), statistics.stdev(f1_if)) if len(seeds) > 1 else 0.0
+        gain = statistics.fmean(f1_if) - statistics.fmean(f1_stat)
+        decision = "isolation_forest" if gain > margin else "statistical"
+        print(
+            f"\nDevelopment-only decision rule: isolation_forest becomes the default only if its mean pooled F1 "
+            f"exceeds the statistical baseline's by more than the larger std over development seeds.\n"
+            f"  F1 isolation_forest {statistics.fmean(f1_if):.3f} - statistical {statistics.fmean(f1_stat):.3f} = "
+            f"{gain:+.3f} (margin {margin:.3f})  ->  default = {decision}   (AUTO_METHOD = {AUTO_METHOD})"
+        )
+        gates.check(AUTO_METHOD == decision, f"AUTO_METHOD ({AUTO_METHOD}) equals the development decision ({decision})")
+    else:
+        print(f"\nFrozen default: AUTO_METHOD = {AUTO_METHOD}; evaluation labels are not used for model selection.")
 
     print(f"\nGates: {len(gates.passed)} passed, {len(gates.failures)} failed   ({time.time() - t0:.0f}s)")
     for f in gates.failures:

@@ -82,12 +82,13 @@ def parse(
 
     diag = Diagnostics()
     lines = read_lines(stream, limits, diag)
-    sample_pairs = list(itertools.islice((p for p in lines if p[1].strip()), _SAMPLE_LINES))
-    if not sample_pairs:
+    # Skip only leading whitespace; blank lines inside CSV fields are data.
+    first = next((p for p in lines if p[1].strip()), None)
+    if first is None:
         raise UnsupportedFormatError("input is empty")
-    sample = [t for _, t in sample_pairs]
+    sample_pairs = [first, *itertools.islice(lines, _SAMPLE_LINES - 1)]
+    sample = [t for _, t in sample_pairs if t.strip()]
     rest = itertools.chain(sample_pairs, lines)
-    # NOTE: blank lines inside the sample were dropped; parsers ignore blank lines anyway.
 
     family: str | None = None
     fmt = format

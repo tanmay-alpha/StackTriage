@@ -35,8 +35,10 @@ flowchart LR
 
 `LogEvent`: `event_id, line_no, source_format, timestamp (UTC or None), level, service,
 logger, message, stack_trace, fields, metrics`. `event_id` is a hash of the
-**redacted** content plus an occurrence index, so re-importing a file (or an export
-that overlaps and shifts line numbers) produces identical ids.
+**redacted** format, timestamp, level, service, message and trace plus an occurrence
+index. Re-importing the same file produces identical ids; line numbers are not
+part of the hash. An overlapping export can change occurrence indices for repeated
+identical records, so ids are not a cross-import deduplication guarantee.
 
 ## Error grouping
 
@@ -46,7 +48,7 @@ A fingerprint is `sha1(service | kind | exception type | normalized message | fr
   first exception line for Node. Wrapper exceptions are not the identity.
 * **Frame**: the innermost *application* frame (skipping `site-packages`,
   `node_modules`, `java.*`, `org.springframework.*`, ...), including the line number.
-  Same code location => same bug.
+  The frame contributes to identity; a shared location alone does not prove a shared bug.
 * **Normalization** masks UUIDs, hex ids, IPs (keeping well-known ports),
   timestamps, numbers, alphanumeric ids, query strings, and (only when a frame
   pins the location) quoted literals. HTTP status codes are kept.
@@ -59,9 +61,10 @@ that shifts lines splits a group across the deploy boundary.
 ## Time windows
 
 Events are counted per epoch-second (sparse, so memory is bounded by distinct
-seconds seen), then re-binned. Windows with no events are zero-filled: the data
-says nothing happened there. Events without timestamps are counted but excluded
-from the timeline and reported in diagnostics.
+seconds seen), then re-binned. Windows with no timestamped records are zero-filled.
+This reflects the imported data, not proof that the application had no traffic.
+Events without timestamps are counted but excluded from the timeline and reported
+in diagnostics.
 
 ## Database design (SQLite, SQLAlchemy 2)
 
@@ -77,8 +80,10 @@ from the timeline and reported in diagnostics.
   is UNIQUE. A repeat returns the existing run (HTTP 200, `duplicate: true`)
   before parsing. A concurrent duplicate loses on the UNIQUE constraint and is
   mapped to the same response.
-* **Atomic**: parse, analysis and all writes happen in one transaction; a parse
-  failure or crash leaves no partial import. Events are bulk-inserted in chunks of 2000.
+* **Atomic persistence**: parsing and analysis happen first without a database write
+  lock, spooling redacted event rows to temporary storage. One transaction then
+  writes the import, events, groups and report; failure leaves no partial import.
+  Events are bulk-inserted in chunks of 2000.
 * WAL mode, foreign keys on, `busy_timeout` 10 s. Schema versioned with
   `PRAGMA user_version` and an ordered migration list (Alembic would be heavier
   than one SQLite file warrants).
@@ -87,10 +92,11 @@ from the timeline and reported in diagnostics.
 ## API
 
 `POST /api/imports` takes the file as the raw request body (streamed to a spooled
-temp file with a hard size cap; no multipart parsing). Everything else is JSON
-with `{items,total,limit,offset}` pagination (limit <= 200). Auth is a single API
-key (Bearer or `X-API-Key`), mandatory when `STACKTRIAGE_ENV=production`.
-`docs/openapi.json` is the generated contract.
+temp file with a hard size cap; no multipart parsing). List endpoints return JSON
+with `{items,total,limit,offset}` pagination (limit <= 200); detail and mutation
+responses have their own schemas, deletes return 204, and exports support CSV,
+JSON and Markdown. Auth is a single API key (Bearer or `X-API-Key`), mandatory
+when `STACKTRIAGE_ENV=production`. `docs/openapi.json` is the generated contract.
 
 ## What is deliberately not here
 
