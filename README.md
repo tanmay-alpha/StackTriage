@@ -2,6 +2,8 @@
 
 StackTriage turns an application log file into error groups, a timeline and a persistent triage workspace. It helps answer: which errors repeat, when did they start, and were they still occurring at the end of the file? It does not identify root causes.
 
+**Do not upload confidential logs, credentials or personal data.** Use synthetic fixtures for demonstrations. Pattern-based redaction is not a confidentiality guarantee.
+
 For example, a Spring Boot export contains 340 records, but only four distinct warning/error groups. The largest is a recurring database connection timeout, separate from two different null-pointer failures.
 
 ## CLI example
@@ -95,6 +97,13 @@ After setup, use the synthetic files in `tests/fixtures/`:
 
 `python_app.log`, `node_express.log` and `pino_payments.jsonl` exercise the other parser families. All fixtures are generated data, not real incidents.
 
+For a repeatable API demo, start the server above, then run `python scripts/demo.py`.
+It imports only the checked-in Spring Boot and telemetry fixtures, checks their
+expected counts and verifies duplicate detection. Re-running reuses those imports;
+it does not clear the database or reset review state. If authentication is enabled,
+set `STACKTRIAGE_API_KEY` in the demo process environment. Use `--url` for a different
+server address. See the [resume case study and five-minute walkthrough](docs/RESUME_CASE_STUDY.md).
+
 ## Screenshots
 
 | Overview | Import result |
@@ -142,12 +151,22 @@ Important failures: statistical slow-ramp window recall is 0.34; an incident occ
 - No pickle/joblib model loading: detectors are fitted in memory; saved report parameters are JSON-safe data, not executable model artifacts.
 - The CLI exposes `stacktriage backup OUT`, `stacktriage check` and `stacktriage restore BACKUP`, using `STACKTRIAGE_DB` or `--db`. Backup uses SQLite's online backup API and verifies the copy. **Stop the server before restore**; restore retains the previous database as a safety copy. Treat backups as sensitive data.
 
+Recent security/maintenance repairs include CORS support for status-update `PUT`
+requests, masking structured access keys and long credential values, rejecting
+backups to the source database (including same-file aliases), and staging restore
+input before replacing safety copies or removing SQLite sidecars. Redaction
+remains best-effort.
+The browser normally stores the entered API key in session storage. If browser
+policy blocks storage writes, it uses page memory instead: re-enter the key after
+reload. The key is never stored in local storage or included in a URL.
+
 ## Tests and reproduction
 
-The requested Windows virtual-environment test run completed with **265 passed in 59.96s**:
+Run the Python tests from the repository root (results depend on the current checkout and environment):
 
 ```bash
 .venv/Scripts/python.exe -m pytest -q
+.venv/Scripts/python.exe -m pytest scripts/demo_test.py -q
 ```
 
 With the virtual environment active, reproduce parser acceptance checks and the anomaly evaluation from the repository root:
