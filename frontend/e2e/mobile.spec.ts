@@ -78,3 +78,16 @@ test("long service names, filenames and messages remain readable on mobile", asy
   await expect(page.locator(".trace-body")).toContainText("handler.js:12:3");
   await noHorizontalOverflow(page);
 });
+
+test("contribution tables fit mobile width with wider fallback fonts", async ({ page, request }) => {
+  const imp = await seed(request, "spring_boot.log");
+  await page.goto(`/?import=${imp.id}`);
+  await page.locator(".contrib").first().waitFor();
+  // Exercise different platform font metrics instead of relying on the host's system font.
+  await page.addStyleTag({ content: ':root { --font-sans: Arial, sans-serif; --font-mono: "Courier New", monospace; }' });
+  await noHorizontalOverflow(page);
+  for (const table of await page.locator(".contrib").all()) {
+    expect(await table.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+    expect(await table.evaluate((el) => el.getBoundingClientRect().right <= el.closest(".episode")!.getBoundingClientRect().right)).toBe(true);
+  }
+});

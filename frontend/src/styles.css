@@ -2241,6 +2241,15 @@ th[aria-sort="descending"] {
   .bar-list li {
     grid-template-columns: 6.5rem 1fr auto;
   }
+  .contrib {
+    table-layout: fixed;
+  }
+  .contrib th,
+  .contrib td {
+    padding-inline: var(--sp-1);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 
   .table-stack thead {
     position: absolute;
