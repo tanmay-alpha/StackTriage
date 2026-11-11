@@ -76,6 +76,10 @@ def detect_anomalies(
         method_used=resolved, requested_method=method,
         windows=[_idle_finding(b) for b in buckets], train_range=None,
     )
+    if timeline.untimed_events:
+        report.notes.append(
+            f"{timeline.untimed_events} event(s) without timestamps were excluded from anomaly detection"
+        )
     if resolved == "isolation_forest" and not sklearn_available():
         report.method_used = resolved = "statistical"
         report.notes.append("scikit-learn is not installed; used the statistical baseline instead")

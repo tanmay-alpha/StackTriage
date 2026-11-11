@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import math
-import statistics
+import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
 
@@ -55,7 +55,10 @@ class FeatureStat:
         """Signed robust z-score; a missing value (NaN) counts as typical."""
         if math.isnan(value):
             return 0.0
-        return max(-Z_CLIP, min(Z_CLIP, (value - self.median) / self.scale))
+        delta = value - self.median
+        # Opposite-sign finite values can overflow their difference even when z is modest.
+        z = delta / self.scale if math.isfinite(delta) else value / self.scale - self.median / self.scale
+        return max(-Z_CLIP, min(Z_CLIP, z))
 
     def excess(self, z: float) -> float:
         """Deviation in the unusual direction only (>= 0)."""
@@ -78,13 +81,26 @@ def _scale_floor(name: str, median: float) -> float:
     return max(METRIC_RELATIVE_SCALE * abs(median), 1e-9)
 
 
+def _median(values: Sequence[float]) -> float:
+    ordered = sorted(values)
+    mid = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[mid]
+    lo, hi = ordered[mid - 1], ordered[mid]
+    total = lo + hi
+    return total / 2 if math.isfinite(total) else lo / 2 + hi / 2
+
+
 def fit_stat(name: str, values: Sequence[float]) -> FeatureStat:
     vals = [v for v in values if not math.isnan(v)]
     if not vals:
         return FeatureStat(name, 0.0, _scale_floor(name, 0.0), direction(name))
-    med = statistics.median(vals)
-    mad = statistics.median(abs(v - med) for v in vals)
-    return FeatureStat(name, med, max(MAD_TO_SIGMA * mad, _scale_floor(name, med)), direction(name))
+    med = _median(vals)
+    # Saturate unrepresentable distances/scales rather than producing an infinite baseline.
+    limit = sys.float_info.max
+    mad = _median([min(abs(v - med), limit) for v in vals])
+    scale = max(min(MAD_TO_SIGMA * mad, limit), _scale_floor(name, med))
+    return FeatureStat(name, med, scale, direction(name))
 
 
 def quantile(sorted_vals: Sequence[float], q: float) -> float:
