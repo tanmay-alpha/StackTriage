@@ -83,3 +83,28 @@ test("a rejected key mid-session reopens the gate", async ({ page }) => {
   await page.reload();
   await expect(page.getByRole("dialog", { name: "API key required" })).toBeVisible();
 });
+
+test("API key unlock works when session storage is unavailable", async ({ page, request }) => {
+  await seed(request, "spring_boot.log", { headers: authHeader });
+  await page.addInitScript(() => {
+    for (const method of ["getItem", "setItem", "removeItem"] as const) {
+      const original = Storage.prototype[method];
+      Object.defineProperty(Storage.prototype, method, {
+        value(this: Storage, ...args: string[]) {
+          if (this === window.sessionStorage) throw new DOMException("Storage blocked", "SecurityError");
+          return Reflect.apply(original, this, args);
+        },
+      });
+    }
+  });
+  await page.goto("/");
+  const dialog = page.getByRole("dialog", { name: "API key required" });
+  await dialog.getByLabel("API key").fill(API_KEY);
+  await dialog.getByRole("button", { name: "Unlock" }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.getByRole("heading", { name: "Log volume over time" })).toBeVisible();
+  await page.getByRole("button", { name: "API key", exact: true }).click();
+  await dialog.getByRole("button", { name: "Forget stored key" }).click();
+  await expect(dialog.getByRole("button", { name: "Forget stored key" })).toHaveCount(0);
+  await expect(dialog).toBeVisible();
+});

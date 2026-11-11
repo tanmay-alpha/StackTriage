@@ -1281,6 +1281,15 @@ th[aria-sort="descending"] {
   border-bottom: 0;
 }
 
+.kv-list li > :first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.kv-list li > :last-child {
+  flex-shrink: 0;
+}
+
 .bar-list li {
   display: grid;
   grid-template-columns: 7.5rem 1fr auto;

@@ -11,11 +11,13 @@ export class ApiError extends Error {
   }
 }
 
-/* ---- API key: sessionStorage only, never in URLs ---- */
+/* ---- API key: sessionStorage (or page memory if blocked), never in URLs ---- */
 type Listener = () => void;
 const listeners = new Set<Listener>();
+let memoryKey: string | null | undefined;
 
 export function getApiKey(): string | null {
+  if (memoryKey !== undefined) return memoryKey;
   try {
     return sessionStorage.getItem(KEY_STORAGE);
   } catch {
@@ -27,8 +29,9 @@ export function setApiKey(key: string | null): void {
   try {
     if (key) sessionStorage.setItem(KEY_STORAGE, key);
     else sessionStorage.removeItem(KEY_STORAGE);
+    memoryKey = undefined;
   } catch {
-    /* storage unavailable: key lives only for this call chain */
+    memoryKey = key;
   }
   listeners.forEach((l) => l());
 }

@@ -223,6 +223,28 @@ test("upload shows real progress, then a processing state", async ({ page, conte
   await expect(page.getByRole("region", { name: "Ingestion summary" })).toBeVisible({ timeout: 40_000 });
 });
 
+test("dropping another file cannot replace an import while it is in progress", async ({ page }) => {
+  const { promise: pending, resolve: release } = Promise.withResolvers<void>();
+  await page.route("**/api/imports?*", async (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    await pending;
+    await route.continue();
+  });
+  await page.goto("/import");
+  await chooseFile(page, "spring_boot.log");
+  await page.getByRole("button", { name: "Upload and analyse" }).click();
+  await expect(page.getByRole("progressbar", { name: "Upload progress" })).toBeVisible();
+  try {
+    await dropFile(page, "replacement.log", readFileSync(fixture("node_express.log")));
+    await expect(page.getByTestId("dropzone")).toContainText("spring_boot.log");
+    await expect(page.getByRole("button", { name: "Importing" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Choose a different file" })).toBeDisabled();
+  } finally {
+    release();
+  }
+  await expect(page.getByRole("region", { name: "Ingestion summary" })).toContainText("spring_boot.log");
+});
+
 test("imports can be deleted after confirmation and the overview returns to its empty state", async ({ page, request }) => {
   await seed(request, "node_express.log");
   await page.goto("/import");
@@ -300,4 +322,22 @@ test("a log with no errors imports cleanly and every view shows an empty-inciden
   await page.goto("/");
   await expect(page.getByText("No error groups in this import.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Unusual periods" })).toBeVisible();
+});
+
+test("opening a related incident resets log record pagination", async ({ page, request }) => {
+  const repeated = { timestamp: "2026-03-05T10:00:00Z", level: "error", service: "checkout", message: "repeated upstream failure" };
+  const lines = [...Array.from({ length: 12 }, () => repeated), { ...repeated, message: "single database failure" }];
+  const imp = await seed(request, {
+    name: "related-records.jsonl",
+    content: Buffer.from(lines.map((line) => JSON.stringify(line)).join("\n") + "\n"),
+  });
+  await page.goto(`/imports/${imp.id}/incidents`);
+  await page.locator(".title-link").filter({ hasText: "repeated upstream failure" }).click();
+  await expect(page.locator(".event")).toHaveCount(10);
+  await page.getByRole("navigation", { name: "Records pagination" }).getByRole("button", { name: "Next" }).click();
+  await expect(page.locator(".event")).toHaveCount(2);
+  await page.locator(".related-title").filter({ hasText: "single database failure" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("single database failure");
+  await expect(page.locator(".event")).toHaveCount(1);
+  await expect(page.locator(".event-msg")).toHaveText("single database failure");
 });
