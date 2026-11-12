@@ -189,6 +189,16 @@ python scripts/docker_verify.py --image stacktriage:verify   # exit 0 = all chec
 The first run of `pip-audit` inside the image found `pip 25.0.1` from the base image with
 advisories fixed in 26.2; the Dockerfile now upgrades pip before installing the app.
 
+`pip-audit` only covers installed Python distributions it can resolve. A Trivy 0.76.2 scan of
+the same image (2026-11-12) additionally found two HIGH `zlib1g` CVEs with Debian fixes
+available and HIGH CVE-2025-47273 in the base image's bundled `setuptools 70.3.0`. The
+Dockerfile now runs `apt-get upgrade` and upgrades setuptools, and the CI `docker` job fails
+on any HIGH/CRITICAL vulnerability that has a published fix (`--ignore-unfixed`). Unfixed
+upstream CVEs are not gated and should be reviewed periodically. One finding is ignored, scoped
+to a single purl in [`.trivyignore.yaml`](../.trivyignore.yaml): CVE-2025-47273 reported for
+`setuptools@70.3.0` from pip's vendor manifest. pip vendors only `pkg_resources`; the vulnerable
+`setuptools/package_index.py` is absent from the image.
+
 ## Local container verification (2026-11-10)
 
 These are observed local results, not hosted results. The daemon was Docker
