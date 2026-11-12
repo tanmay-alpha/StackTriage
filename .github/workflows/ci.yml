@@ -59,5 +59,11 @@ jobs:
         run: >
           docker run --rm --entrypoint sh stacktriage:verify -c
           "pip install -q --user pip-audit && python -m pip_audit --skip-editable"
+      - name: Scan the production image for fixable HIGH/CRITICAL OS and Python CVEs
+        run: >
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
+          -v "$PWD/.trivyignore.yaml:/trivyignore.yaml:ro" aquasec/trivy:0.76.2
+          image --quiet --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1
+          --ignorefile /trivyignore.yaml stacktriage:verify
       - name: Start, authenticate, import, restart, recreate, backup and restore on a named volume
         run: python scripts/docker_verify.py --image stacktriage:verify
