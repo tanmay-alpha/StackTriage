@@ -102,3 +102,30 @@ test("mobile incidents (390x844)", async ({ browser, request }) => {
   await page.screenshot({ path: shot("mobile-incidents") });
   await ctx.close();
 });
+
+test("compare: desktop 1440x900 and mobile 390x844", async ({ page, browser, request }) => {
+  const before = await seed(request, "deploy_before.log");
+  const after = await seed(request, "deploy_after.log");
+  // one group marked resolved earlier, so the "Marked resolved, observed in target" flag is visible
+  const res = await request.get(`/api/imports/${before.id}/compare/${after.id}?limit=200`);
+  const body: { items: { fingerprint: string; title: string }[] } = await res.json();
+  const inventory = body.items.find((i) => i.title.includes("warehouse API refused connection"));
+  if (inventory) await request.put(`/api/incidents/${inventory.fingerprint}/status`, { data: { status: "resolved" } });
+  const url = `/compare?baseline=${before.id}&target=${after.id}`;
+
+  await page.goto(url);
+  await expect(page.locator("[data-testid=compare-table] tbody tr").first()).toBeVisible();
+  await page.screenshot({ path: shot("compare") });
+
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, baseURL: "http://127.0.0.1:8765" });
+  const mobile = await ctx.newPage();
+  await mobile.goto(url);
+  await expect(mobile.locator("[data-testid=compare-table] tbody tr").first()).toBeVisible();
+  // the capture summary is in the desktop shot; show the findings and the first result cards here
+  await mobile.evaluate(() => {
+    const chips = document.querySelector(".cmp-chips");
+    if (chips) window.scrollTo(0, chips.getBoundingClientRect().top + window.scrollY - 16);
+  });
+  await mobile.screenshot({ path: shot("compare-mobile") });
+  await ctx.close();
+});

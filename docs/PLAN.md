@@ -24,19 +24,19 @@ Historical scope and implementation order. See `README.md` and
 7. React + TypeScript + Vite frontend: Overview, Import, Incidents, Investigation.
 8. Playwright end-to-end, security review and repairs.
 9. Deployment and documentation.
+10. Import comparison (before/after deployment): `GET /api/imports/{baseline}/compare/{target}`,
+    export, Compare page, paired synthetic fixtures with declared ground truth. Rate-change
+    verdicts use traffic-normalized rates, an exact binomial test, Benjamini-Hochberg and a
+    1.5x minimum ratio; "resolved but observed" is a flag, not a regression verdict.
 
-All nine milestones above are delivered and covered by CI (backend, frontend, docker).
+All ten milestones above are delivered and covered by CI (backend, frontend, docker).
 
 ## Next milestones (proposed, not implemented)
 Ordered by interview value per unit of risk. Each must ship with tests and measured,
 reproducible evidence; none is claimed as delivered.
 
-1. **Import comparison and regression detection.** Groups are stored per import
-   (`groups` PK `(import_id, fingerprint)`) while triage is global per fingerprint, so a
-   diff of two imports is a set join: *new*, *gone*, *recurring* with rate change, and
-   *regressed* (fingerprint marked `resolved` that reappears). API
-   `GET /api/imports/{a}/compare/{b}`, an Incidents-view comparison mode, and fixture
-   pairs with expected diffs. Low risk: read-only over existing tables.
+1. **Release-aware triage.** Record a fix version/date when a group is resolved so the
+   comparison can call a reappearance after that point a regression rather than a flag.
 2. **Trend detector for slow ramps.** The statistical detector's documented weakness is
    slow ramps (window recall 0.34, first flag after 14.7 windows). Add an EWMA/CUSUM
    candidate on the same features and evaluate it in `scripts/evaluate_anomaly.py`

@@ -17,7 +17,7 @@ This case study describes repository capabilities and recorded synthetic results
 It does not claim real users, production traffic, business impact, deployment
 success or real-world detection accuracy.
 
-## Three truthful resume bullets
+## Four truthful resume bullets
 
 - Built a FastAPI, SQLite and React/TypeScript log-triage application supporting
   five input families, deterministic error grouping, incident timelines and
@@ -25,6 +25,11 @@ success or real-world detection accuracy.
 - Implemented bounded ingestion, best-effort credential redaction, shared-key API
   authentication, atomic SQLite imports and content-based duplicate detection;
   added synthetic fixtures and automated regression coverage.
+- Built before/after-deployment import comparison: traffic-normalized error rates,
+  an exact binomial test with Benjamini-Hochberg correction and a minimum effect size
+  to separate real increases from larger captures, with compatibility warnings and
+  links into the investigation workflow; verified against a synthetic pair with
+  declared ground truth.
 - Evaluated a median/MAD statistical detector against Isolation Forest on labelled
   synthetic time-window scenarios; documented the statistical baseline's reported
   F1 of 0.909 versus 0.719 for Isolation Forest, along with false alarms,
@@ -104,6 +109,34 @@ This is deterministic grouping, not semantic similarity or proof of one root
 cause. Unquoted changing words can split groups; shifted frame line numbers can
 split a group after deployment; normalization and truncated hashes can merge
 unrelated records. SHA-1 here is an identity heuristic, not a security primitive.
+
+## Before/after comparison
+
+[`compare.py`](../src/stacktriage/compare.py) answers "what changed after this
+deployment?" from two persisted imports without re-reading raw logs. It is a pure
+function over aggregate group rows; the API adds one bounded column select per import and
+performs no writes (a test asserts no INSERT/UPDATE/DELETE statement runs).
+
+- **Normalization first.** The default rate is occurrences per 1,000 events of the same
+  import, so doubling traffic or capture length does not read as a regression. Per-minute
+  rates are offered only when both captures have usable timestamp coverage, and rows
+  where the two bases disagree are flagged instead of silently choosing one.
+- **Evidence before verdicts.** Conditional on the total, the target count is binomial
+  under equal rates; an exact two-sided test, Benjamini-Hochberg adjustment across all
+  groups and a 1.5x minimum ratio are all required for `increased`/`decreased`. With
+  large counts a 1.2x change is significant but not reported; with tiny counts nothing is.
+- **Careful wording.** "Disappeared" means absent from the target capture. A group marked
+  resolved that appears in the target is flagged for review, not called a regression,
+  because review status carries no fix timestamp.
+- **Known limit, demonstrated.** Exact fingerprint matching means a deploy that moves a
+  frame's line number splits a group into disappeared + new; the fixture pair includes
+  that case on purpose, and no fuzzy merging is attempted.
+
+Evidence: `tests/test_compare.py` (statistics against known values and SciPy, BH,
+zero/missing timestamps, unequal volumes and durations, low counts, auth, validation,
+export injection safety, read-only behaviour) and the fixture pair whose expected
+categories are declared in `scripts/make_compare_fixtures.py`. These are synthetic
+results; no performance figures are claimed.
 
 ## Statistical versus Isolation Forest
 
@@ -191,7 +224,7 @@ See [settings](../src/stacktriage/api/settings.py),
 [browser API client](../frontend/src/api/client.ts) and
 [deployment instructions](deployment.md).
 
-## Ten interview questions and answer anchors
+## Twelve interview questions and answer anchors
 
 1. **What problem does this solve?** Repeated-log grouping and investigation of a
    finite imported file; not automatic diagnosis, tracing or live monitoring.
@@ -216,31 +249,41 @@ See [settings](../src/stacktriage/api/settings.py),
 10. **What would block a production/team claim?** Shared-key-only authorization,
     single-instance SQLite, no live collection, synthetic-only evaluation and
     unvalidated operational capacity; document those gaps rather than imply scale.
+11. **How do you know an error got worse after a deploy and not just a bigger log?**
+    Compare per-1,000-event rates; test the counts with an exact conditional binomial
+    test, correct across groups (Benjamini-Hochberg) and require a 1.5x ratio. Show the
+    pool-exhaustion fixture: count doubles, rate does not.
+12. **Why not call a resolved error that reappears a regression?** Global review status
+    has no fix timestamp or release link, and a capture can predate the fix; flag it for
+    review instead. Recording fix versions would be the prerequisite for a stronger claim.
 
 ## Five-minute synthetic demo
 
 Prepare using the [README setup](../README.md#install-and-run): install extras,
-build the frontend and start `stacktriage serve` from the repository root. In a
-second shell with the virtual environment active, run:
+build the frontend and start `stacktriage serve` from the repository root (or use the
+README Docker quick start). In a second shell with the virtual environment active, run:
 
 ```sh
 python scripts/demo.py
+python scripts/demo.py --compare
 ```
 
-The script sends only `spring_boot.log` and `telemetry.csv` from the checked-in
+The first command sends only `spring_boot.log` and `telemetry.csv` from the checked-in
 fixtures, compares format/event/group counts with their expected JSON files and
 re-uploads each to check duplicate detection. A rerun reuses imports and preserves
-review state. It writes to the running server's database; it does not erase data,
-start a server or generate fixtures. Set `STACKTRIAGE_API_KEY` in its environment
-if the server requires authentication; `--url` selects another backend. Do not
-send an API key to an untrusted server or use public plain HTTP.
+review state. `--compare` imports `deploy_before.log` and `deploy_after.log`, marks the
+warehouse `ConnectionError` group resolved if it is still open (simulating an earlier
+fix) and checks the comparison against the declared ground truth. The scripts write to
+the running server's database; they do not erase data, start a server or generate
+fixtures. Set `STACKTRIAGE_API_KEY` in their environment if the server requires
+authentication; `--url` selects another backend. Do not send an API key to an
+untrusted server or use public plain HTTP.
 
 | Time | Action and truthful narration |
 |---|---|
 | 0:00-0:40 | Open the app and select the Spring Boot import. Show 340 synthetic events and four groups; this is a fixture, not customer data. |
 | 0:40-1:20 | Inspect diagnostics/redactions and Overview. Point out the timeout group beginning near 11:10 UTC; missing timestamps cannot appear in the timeline. |
-| 1:20-2:10 | Open Incidents and search `NullPointer`. Show the two separate groups, then clear the search and filter ongoing activity. Explain that ongoing is relative to the end of this file, not a live health check. |
-| 2:10-3:00 | Open the connection timeout group (67 expected occurrences), inspect its trace and occurrence timeline, set investigating and add a synthetic note. Reload; show persisted state. Existing demo state may already be investigating. |
-| 3:00-3:45 | Export CSV or Markdown. Re-run the script to show duplicate reuse rather than a new import; no status or note reset occurs. |
-| 3:45-4:30 | Select telemetry: 550 expected events and two groups. Show numeric metric windows and unusual-period evidence. Explain baseline fitting and separate score/classification/severity. |
-| 4:30-5:00 | Open the evaluation table above. State synthetic-only results, slow-ramp and contaminated-baseline failures, and the shared-key/single-instance security limits. Do not claim a public deployment. |
+| 1:20-2:00 | Open Incidents and search `NullPointer`. Show the two separate groups. Explain that ongoing is relative to the end of this file, not a live health check. |
+| 2:00-2:40 | Open the connection timeout group (67 expected occurrences), inspect its trace and timeline, set investigating and add a synthetic note. Reload; show persisted state. |
+| 2:40-4:10 | Open the URL printed by `demo.py --compare`. Baseline is before, target after the synthetic deployment; traffic doubled. Show the new `AttributeError`, the payment `TimeoutError` increase per 1,000 events, the pool error whose count doubled but whose rate did not (and the per-minute disagreement note), the warehouse error flagged as marked resolved but observed, and the tax `LookupError` split by a moved line number. Open the payment row's investigation page; export Markdown. |
+| 4:10-5:00 | Open the evaluation table above. State synthetic-only results, slow-ramp and contaminated-baseline failures, comparison limits (exact matching, even-spread rate assumption) and the shared-key/single-instance security limits. Do not claim a public deployment. |

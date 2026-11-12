@@ -2412,3 +2412,202 @@ th[aria-sort="descending"] {
 .tabpanel > p + .kv-list {
   margin-top: var(--sp-2);
 }
+
+/* --------------------------------------------------------- comparison */
+/* Neutral on purpose: change direction is shown by glyph and text, never by red/green. */
+.cmp-controls .select {
+  min-width: 14rem;
+  max-width: 24rem;
+}
+
+.cmp-sides {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--sp-3);
+}
+
+.cmp-arrow {
+  align-self: center;
+  color: var(--muted);
+  font-size: var(--fs-xl);
+}
+
+.cmp-facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--sp-1) var(--sp-4);
+  font-size: var(--fs-sm);
+}
+
+.cmp-facts dt {
+  color: var(--muted);
+}
+
+.cmp-facts dd {
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.cmp-warnings {
+  list-style: disc;
+  padding-left: 1.2em;
+}
+
+.cmp-warnings li + li {
+  margin-top: var(--sp-1);
+}
+
+.cmp-help {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-sm);
+}
+
+.cmp-help summary {
+  cursor: pointer;
+  font-weight: 650;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-lg);
+}
+
+.cmp-help-body {
+  list-style: disc;
+  padding: 0 var(--sp-4) var(--sp-3) calc(var(--sp-4) + 1.2em);
+  max-width: 90ch;
+}
+
+.cmp-help-body li + li {
+  margin-top: var(--sp-2);
+}
+
+.cmp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.cmp-chip-n {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-xs);
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.th-unit {
+  display: block;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.cmp-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+td.num .cmp-cell {
+  align-items: flex-end;
+}
+
+.cmp-sub {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.cmp-kind {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.cmp-no_clear_change,
+.cmp-insufficient_data {
+  border-color: var(--border);
+  font-weight: 500;
+}
+
+.cmp-disappeared {
+  border-style: dashed;
+}
+
+.cmp-ev-weak,
+.cmp-ev-low_sample {
+  font-weight: 500;
+  background: transparent;
+}
+
+.cmp-ev-low_sample {
+  border-style: dashed;
+}
+
+.cmp-flag {
+  white-space: normal;
+  border-radius: var(--radius);
+  border-style: dashed;
+  border-color: var(--border-strong);
+  font-weight: 500;
+}
+
+.cmp-table .cmp-col-change {
+  min-width: 10rem;
+}
+
+.cmp-table .cmp-col-status {
+  min-width: 11.5rem;
+}
+
+.cmp-note {
+  display: block;
+  max-width: 14rem;
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--text);
+  text-decoration: underline dotted var(--border-strong);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.cmp-note .glyph {
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.segmented button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.segmented button:disabled:hover {
+  background: var(--surface);
+  color: var(--muted);
+}
+
+@media (max-width: 860px) {
+  .cmp-sides {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cmp-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+    line-height: 1;
+  }
+  .cmp-controls .cmp-pick,
+  .cmp-controls .cmp-basis {
+    grid-column: 1 / -1;
+  }
+  .cmp-controls .select {
+    min-width: 0;
+    max-width: none;
+  }
+  .table-stack .cmp-cell {
+    align-items: flex-end;
+    text-align: right;
+  }
+}

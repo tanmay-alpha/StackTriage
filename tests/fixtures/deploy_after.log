@@ -1,0 +1,2860 @@
+2026-03-05 12:00:00,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 12:00:05,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 12:00:07,000 - app.http - INFO - GET /api/orders 200 89ms
+2026-03-05 12:00:09,466 - app.payments - ERROR - Charge for order 7097 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:00:10,000 - app.http - INFO - GET /api/cart 200 9ms
+2026-03-05 12:00:13,058 - app.payments - ERROR - Charge for order 1419 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:00:14,000 - app.http - INFO - GET /api/products 200 42ms
+2026-03-05 12:00:17,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 12:00:20,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 12:00:23,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:00:24,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 12:00:27,000 - app.http - INFO - GET /api/cart 200 19ms
+2026-03-05 12:00:32,000 - app.http - INFO - GET /api/products 200 60ms
+2026-03-05 12:00:32,242 - app.db - ERROR - Checkout 7241 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:00:33,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:00:37,000 - app.http - INFO - GET /api/cart 200 75ms
+2026-03-05 12:00:40,000 - app.http - INFO - GET /api/products 200 35ms
+2026-03-05 12:00:43,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:00:47,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:00:50,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 12:00:52,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:00:54,000 - app.http - INFO - GET /api/cart 200 30ms
+2026-03-05 12:00:59,000 - app.http - INFO - GET /api/products 200 11ms
+2026-03-05 12:01:02,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 12:01:03,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:01:06,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 12:01:09,000 - app.http - INFO - GET /api/orders 200 82ms
+2026-03-05 12:01:13,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 12:01:13,053 - app.pricing - ERROR - Pricing failed for cart 1123
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:01:17,000 - app.http - INFO - GET /api/products 200 61ms
+2026-03-05 12:01:20,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:01:21,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 12:01:22,966 - app.inventory - ERROR - Stock sync for SKU 15471 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:01:24,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 12:01:24,674 - app.inventory - ERROR - Stock sync for SKU 41062 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:01:29,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 12:01:29,697 - app.tax - ERROR - Tax lookup failed for region 80
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:01:32,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:01:35,000 - app.http - INFO - GET /api/products 200 35ms
+2026-03-05 12:01:38,000 - app.http - INFO - GET /api/orders 200 23ms
+2026-03-05 12:01:39,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:01:43,000 - app.http - INFO - GET /api/products 200 10ms
+2026-03-05 12:01:47,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 12:01:50,000 - app.http - INFO - GET /api/cart 200 72ms
+2026-03-05 12:01:52,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 12:01:55,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 12:01:55,234 - app.payments - ERROR - Charge for order 2652 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:01:59,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 12:02:00,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 12:02:04,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:02:06,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:02:07,296 - app.db - ERROR - Checkout 2967 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:02:08,600 - app.payments - ERROR - Charge for order 3647 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:02:11,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:02:14,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 12:02:15,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 12:02:19,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 12:02:22,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:02:25,648 - app.db - ERROR - Checkout 7276 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:02:26,000 - app.http - INFO - GET /api/cart 200 10ms
+2026-03-05 12:02:27,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:02:29,164 - app.payments - ERROR - Charge for order 9708 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:02:29,957 - app.db - ERROR - Checkout 6241 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:02:31,131 - app.payments - ERROR - Charge for order 2526 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:02:32,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:02:33,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 12:02:38,000 - app.http - INFO - GET /api/products 200 10ms
+2026-03-05 12:02:39,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 12:02:43,000 - app.http - INFO - GET /api/cart 200 72ms
+2026-03-05 12:02:45,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 12:02:49,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:02:52,000 - app.http - INFO - GET /api/cart 200 65ms
+2026-03-05 12:02:52,717 - app.payments - ERROR - Charge for order 6642 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:02:55,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:02:57,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:03:00,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:03:04,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:03:04,505 - app.db - ERROR - Checkout 1115 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:03:05,102 - app.cache - WARNING - Cache entry for product 912 could not be decoded; refetching
+2026-03-05 12:03:08,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 12:03:10,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 12:03:10,303 - app.pricing - ERROR - Pricing failed for cart 5882
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:03:12,000 - app.http - INFO - GET /api/products 200 34ms
+2026-03-05 12:03:16,000 - app.http - INFO - GET /api/orders 200 44ms
+2026-03-05 12:03:19,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:03:21,000 - app.http - INFO - GET /api/products 200 10ms
+2026-03-05 12:03:24,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 12:03:29,000 - app.http - INFO - GET /api/cart 200 88ms
+2026-03-05 12:03:30,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 12:03:33,160 - app.pricing - ERROR - Pricing failed for cart 2882
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:03:35,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:03:36,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 12:03:40,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:03:43,000 - app.http - INFO - GET /api/orders 200 53ms
+2026-03-05 12:03:45,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 12:03:46,932 - app.tax - ERROR - Tax lookup failed for region 16
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:03:49,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 12:03:51,000 - app.http - INFO - GET /api/orders 200 28ms
+2026-03-05 12:03:56,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 12:03:58,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 12:03:59,060 - app.db - ERROR - Checkout 7723 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:04:01,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:04:03,381 - app.payments - ERROR - Charge for order 7084 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:04:05,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 12:04:07,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:04:10,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:04:14,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:04:16,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 12:04:19,567 - app.payments - ERROR - Charge for order 4945 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:04:20,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 12:04:22,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 12:04:23,243 - app.pricing - ERROR - Pricing failed for cart 1483
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:04:24,000 - app.http - INFO - GET /api/products 200 40ms
+2026-03-05 12:04:28,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:04:32,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:04:32,693 - app.payments - ERROR - Charge for order 9840 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:04:34,503 - app.db - ERROR - Checkout 7292 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:04:35,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:04:38,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:04:41,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 12:04:44,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:04:47,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:04:49,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 12:04:52,000 - app.http - INFO - GET /api/products 200 12ms
+2026-03-05 12:04:54,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 12:04:57,000 - app.http - INFO - GET /api/cart 200 35ms
+2026-03-05 12:04:57,683 - app.tax - ERROR - Tax lookup failed for region 69
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:04:57,823 - app.pricing - ERROR - Pricing failed for cart 8875
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:05:02,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:05:03,000 - app.http - INFO - GET /api/orders 200 46ms
+2026-03-05 12:05:07,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 12:05:09,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 12:05:13,000 - app.http - INFO - GET /api/orders 200 37ms
+2026-03-05 12:05:17,000 - app.http - INFO - GET /api/cart 200 90ms
+2026-03-05 12:05:18,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 12:05:20,609 - app.pricing - ERROR - Pricing failed for cart 1320
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:05:22,000 - app.http - INFO - GET /api/orders 200 82ms
+2026-03-05 12:05:24,000 - app.http - INFO - GET /api/cart 200 67ms
+2026-03-05 12:05:27,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 12:05:30,000 - app.http - INFO - GET /api/orders 200 70ms
+2026-03-05 12:05:35,000 - app.http - INFO - GET /api/cart 200 21ms
+2026-03-05 12:05:36,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 12:05:40,000 - app.http - INFO - GET /api/orders 200 57ms
+2026-03-05 12:05:43,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 12:05:44,124 - app.db - ERROR - Checkout 9699 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:05:45,620 - app.tax - ERROR - Tax lookup failed for region 72
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:05:46,991 - app.cache - WARNING - Cache entry for product 368 could not be decoded; refetching
+2026-03-05 12:05:47,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 12:05:50,000 - app.http - INFO - GET /api/orders 200 75ms
+2026-03-05 12:05:52,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 12:05:56,000 - app.http - INFO - GET /api/products 200 62ms
+2026-03-05 12:05:59,000 - app.http - INFO - GET /api/orders 200 53ms
+2026-03-05 12:06:00,000 - app.http - INFO - GET /api/cart 200 31ms
+2026-03-05 12:06:04,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:06:08,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 12:06:09,956 - app.cache - WARNING - Cache entry for product 929 could not be decoded; refetching
+2026-03-05 12:06:10,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 12:06:13,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:06:13,293 - app.payments - ERROR - Charge for order 8275 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:06:16,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:06:16,065 - app.cache - WARNING - Cache entry for product 405 could not be decoded; refetching
+2026-03-05 12:06:16,102 - app.inventory - ERROR - Stock sync for SKU 41768 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:06:18,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:06:22,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 12:06:24,751 - app.pricing - ERROR - Pricing failed for cart 1467
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:06:26,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:06:27,000 - app.http - INFO - GET /api/cart 200 10ms
+2026-03-05 12:06:30,000 - app.http - INFO - GET /api/products 200 85ms
+2026-03-05 12:06:34,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 12:06:36,000 - app.http - INFO - GET /api/cart 200 43ms
+2026-03-05 12:06:41,000 - app.http - INFO - GET /api/products 200 90ms
+2026-03-05 12:06:42,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:06:47,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:06:47,648 - app.payments - ERROR - Charge for order 7949 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:06:50,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:06:51,216 - app.payments - ERROR - Charge for order 1176 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:06:52,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 12:06:56,000 - app.http - INFO - GET /api/cart 200 38ms
+2026-03-05 12:06:57,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 12:07:00,000 - app.http - INFO - GET /api/orders 200 55ms
+2026-03-05 12:07:04,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:07:07,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 12:07:10,000 - app.http - INFO - GET /api/orders 200 41ms
+2026-03-05 12:07:13,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 12:07:15,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 12:07:19,000 - app.http - INFO - GET /api/orders 200 30ms
+2026-03-05 12:07:22,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 12:07:25,000 - app.http - INFO - GET /api/products 200 90ms
+2026-03-05 12:07:29,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 12:07:32,000 - app.http - INFO - GET /api/cart 200 16ms
+2026-03-05 12:07:34,121 - app.inventory - ERROR - Stock sync for SKU 20624 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:07:35,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 12:07:37,000 - app.http - INFO - GET /api/orders 200 24ms
+2026-03-05 12:07:40,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:07:43,000 - app.http - INFO - GET /api/products 200 75ms
+2026-03-05 12:07:46,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 12:07:46,487 - app.payments - ERROR - Charge for order 5315 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:07:49,000 - app.http - INFO - GET /api/cart 200 20ms
+2026-03-05 12:07:52,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:07:55,000 - app.http - INFO - GET /api/orders 200 39ms
+2026-03-05 12:07:56,259 - app.db - ERROR - Checkout 1798 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:07:56,615 - app.payments - ERROR - Charge for order 9346 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:07:57,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:08:01,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 12:08:04,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 12:08:08,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:08:10,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:08:12,000 - app.http - INFO - GET /api/orders 200 9ms
+2026-03-05 12:08:16,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:08:19,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 12:08:19,522 - app.payments - ERROR - Charge for order 5361 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:08:22,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:08:26,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:08:29,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:08:31,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:08:34,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 12:08:36,000 - app.http - INFO - GET /api/products 200 78ms
+2026-03-05 12:08:39,551 - app.payments - ERROR - Charge for order 3155 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:08:41,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:08:42,000 - app.http - INFO - GET /api/cart 200 85ms
+2026-03-05 12:08:45,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 12:08:50,000 - app.http - INFO - GET /api/orders 200 57ms
+2026-03-05 12:08:53,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 12:08:54,000 - app.http - INFO - GET /api/products 200 40ms
+2026-03-05 12:08:55,919 - app.inventory - ERROR - Stock sync for SKU 44514 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:08:57,000 - app.http - INFO - GET /api/orders 200 64ms
+2026-03-05 12:09:01,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:09:04,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 12:09:04,621 - app.payments - ERROR - Charge for order 6986 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:09:06,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:09:10,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:09:10,561 - app.inventory - ERROR - Stock sync for SKU 23419 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:09:13,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 12:09:13,827 - app.tax - ERROR - Tax lookup failed for region 19
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:09:16,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 12:09:18,000 - app.http - INFO - GET /api/cart 200 82ms
+2026-03-05 12:09:21,000 - app.http - INFO - GET /api/products 200 39ms
+2026-03-05 12:09:24,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:09:26,982 - app.tax - ERROR - Tax lookup failed for region 69
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:09:29,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:09:30,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:09:33,000 - app.http - INFO - GET /api/orders 200 74ms
+2026-03-05 12:09:34,099 - app.payments - ERROR - Charge for order 5752 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:09:37,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 12:09:39,000 - app.http - INFO - GET /api/products 200 75ms
+2026-03-05 12:09:40,119 - app.db - ERROR - Checkout 1457 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:09:43,000 - app.http - INFO - GET /api/orders 200 88ms
+2026-03-05 12:09:47,000 - app.http - INFO - GET /api/cart 200 15ms
+2026-03-05 12:09:50,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:09:53,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:09:53,466 - app.payments - ERROR - Charge for order 9285 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:09:55,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 12:09:57,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 12:10:01,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:10:05,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 12:10:08,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 12:10:09,000 - app.http - INFO - GET /api/orders 200 25ms
+2026-03-05 12:10:12,000 - app.http - INFO - GET /api/cart 200 47ms
+2026-03-05 12:10:17,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:10:20,000 - app.http - INFO - GET /api/orders 200 42ms
+2026-03-05 12:10:22,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 12:10:25,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 12:10:27,823 - app.payments - ERROR - Charge for order 5579 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:10:29,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:10:32,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:10:33,000 - app.http - INFO - GET /api/products 200 87ms
+2026-03-05 12:10:36,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 12:10:40,000 - app.http - INFO - GET /api/cart 200 27ms
+2026-03-05 12:10:44,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 12:10:45,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:10:48,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:10:51,000 - app.http - INFO - GET /api/products 200 62ms
+2026-03-05 12:10:56,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:10:57,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 12:11:02,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 12:11:04,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 12:11:07,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:11:08,983 - app.payments - ERROR - Charge for order 8929 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:11:10,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 12:11:14,000 - app.http - INFO - GET /api/orders 200 55ms
+2026-03-05 12:11:14,368 - app.db - ERROR - Checkout 7082 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:11:16,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:11:19,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 12:11:22,570 - app.db - ERROR - Checkout 6407 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:11:23,000 - app.http - INFO - GET /api/orders 200 46ms
+2026-03-05 12:11:24,000 - app.http - INFO - GET /api/cart 200 47ms
+2026-03-05 12:11:27,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 12:11:30,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 12:11:34,000 - app.http - INFO - GET /api/cart 200 87ms
+2026-03-05 12:11:38,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 12:11:41,000 - app.http - INFO - GET /api/orders 200 39ms
+2026-03-05 12:11:42,000 - app.http - INFO - GET /api/cart 200 21ms
+2026-03-05 12:11:45,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 12:11:50,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:11:52,000 - app.http - INFO - GET /api/cart 200 34ms
+2026-03-05 12:11:55,470 - app.tax - ERROR - Tax lookup failed for region 11
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:11:56,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:11:57,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 12:12:02,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 12:12:02,615 - app.tax - ERROR - Tax lookup failed for region 88
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:12:04,000 - app.http - INFO - GET /api/products 200 39ms
+2026-03-05 12:12:07,000 - app.http - INFO - GET /api/orders 200 37ms
+2026-03-05 12:12:11,000 - app.http - INFO - GET /api/cart 200 90ms
+2026-03-05 12:12:13,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 12:12:13,698 - app.payments - ERROR - Charge for order 8860 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:12:17,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:12:18,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 12:12:23,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:12:24,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 12:12:28,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:12:30,455 - app.inventory - ERROR - Stock sync for SKU 46444 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:12:32,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:12:33,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 12:12:35,082 - app.payments - ERROR - Charge for order 2928 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:12:37,000 - app.http - INFO - GET /api/cart 200 8ms
+2026-03-05 12:12:40,398 - app.db - ERROR - Checkout 3430 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:12:41,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:12:42,000 - app.http - INFO - GET /api/orders 200 52ms
+2026-03-05 12:12:43,965 - app.db - ERROR - Checkout 3955 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:12:45,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:12:45,718 - app.payments - ERROR - Charge for order 7547 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:12:48,208 - app.db - ERROR - Checkout 9195 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:12:49,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:12:51,081 - app.payments - ERROR - Charge for order 3468 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:12:52,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:12:55,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 12:12:58,000 - app.http - INFO - GET /api/products 200 23ms
+2026-03-05 12:12:58,615 - app.cache - WARNING - Cache entry for product 451 could not be decoded; refetching
+2026-03-05 12:13:02,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 12:13:02,152 - app.payments - ERROR - Charge for order 7936 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:13:05,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 12:13:08,000 - app.http - INFO - GET /api/products 200 41ms
+2026-03-05 12:13:09,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 12:13:09,616 - app.payments - ERROR - Charge for order 4772 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:13:12,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 12:13:17,000 - app.http - INFO - GET /api/products 200 37ms
+2026-03-05 12:13:19,000 - app.http - INFO - GET /api/orders 200 60ms
+2026-03-05 12:13:21,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:13:22,455 - app.payments - ERROR - Charge for order 5834 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:13:25,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 12:13:28,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 12:13:32,000 - app.http - INFO - GET /api/cart 200 23ms
+2026-03-05 12:13:34,000 - app.http - INFO - GET /api/products 200 85ms
+2026-03-05 12:13:36,994 - app.inventory - ERROR - Stock sync for SKU 86093 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:13:37,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:13:38,376 - app.payments - ERROR - Charge for order 7288 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:13:40,000 - app.http - INFO - GET /api/cart 200 34ms
+2026-03-05 12:13:42,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:13:43,982 - app.cache - WARNING - Cache entry for product 643 could not be decoded; refetching
+2026-03-05 12:13:44,011 - app.db - ERROR - Checkout 9187 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:13:45,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 12:13:50,000 - app.http - INFO - GET /api/cart 200 38ms
+2026-03-05 12:13:51,673 - app.db - ERROR - Checkout 4913 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:13:53,000 - app.http - INFO - GET /api/products 200 11ms
+2026-03-05 12:13:54,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:13:56,745 - app.payments - ERROR - Charge for order 1186 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:13:57,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:14:02,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:14:03,000 - app.http - INFO - GET /api/orders 200 28ms
+2026-03-05 12:14:07,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 12:14:09,000 - app.http - INFO - GET /api/products 200 30ms
+2026-03-05 12:14:13,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:14:15,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 12:14:19,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:14:19,907 - app.payments - ERROR - Charge for order 3765 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:14:22,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:14:22,483 - app.inventory - ERROR - Stock sync for SKU 26776 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:14:24,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 12:14:29,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 12:14:32,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:14:34,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 12:14:36,000 - app.http - INFO - GET /api/products 200 42ms
+2026-03-05 12:14:39,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 12:14:44,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 12:14:45,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 12:14:48,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 12:14:51,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 12:14:55,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 12:14:57,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:15:01,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 12:15:05,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 12:15:06,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:15:09,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 12:15:12,000 - app.http - INFO - GET /api/products 200 72ms
+2026-03-05 12:15:12,616 - app.tax - ERROR - Tax lookup failed for region 91
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:15:16,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:15:20,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:15:21,459 - app.db - ERROR - Checkout 4107 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:15:22,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 12:15:26,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:15:27,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 12:15:31,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 12:15:33,174 - app.tax - ERROR - Tax lookup failed for region 88
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:15:34,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:15:36,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:15:36,368 - app.pricing - ERROR - Pricing failed for cart 1123
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:15:40,764 - app.inventory - ERROR - Stock sync for SKU 56032 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:15:41,000 - app.http - INFO - GET /api/products 200 23ms
+2026-03-05 12:15:42,000 - app.http - INFO - GET /api/orders 200 46ms
+2026-03-05 12:15:46,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:15:50,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:15:52,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 12:15:56,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:15:57,145 - app.payments - ERROR - Charge for order 3167 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:15:58,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 12:16:01,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:16:03,000 - app.http - INFO - GET /api/cart 200 88ms
+2026-03-05 12:16:04,139 - app.payments - ERROR - Charge for order 2857 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:16:07,000 - app.http - INFO - GET /api/products 200 81ms
+2026-03-05 12:16:09,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:16:13,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 12:16:17,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:16:18,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 12:16:23,000 - app.http - INFO - GET /api/cart 200 21ms
+2026-03-05 12:16:26,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 12:16:27,496 - app.db - ERROR - Checkout 1702 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:16:29,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:16:30,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 12:16:33,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 12:16:33,751 - app.payments - ERROR - Charge for order 2055 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:16:36,000 - app.http - INFO - GET /api/orders 200 52ms
+2026-03-05 12:16:40,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:16:43,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 12:16:45,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 12:16:46,691 - app.payments - ERROR - Charge for order 3535 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:16:46,785 - app.inventory - ERROR - Stock sync for SKU 76759 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:16:50,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 12:16:50,454 - app.pricing - ERROR - Pricing failed for cart 9781
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:16:52,000 - app.http - INFO - GET /api/products 200 17ms
+2026-03-05 12:16:55,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 12:16:57,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:17:00,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 12:17:03,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:17:06,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:17:10,000 - app.http - INFO - GET /api/products 200 60ms
+2026-03-05 12:17:13,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:17:16,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 12:17:16,079 - app.db - ERROR - Checkout 9890 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:17:16,340 - app.payments - ERROR - Charge for order 8305 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:17:18,885 - app.db - ERROR - Checkout 1548 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:17:20,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 12:17:22,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:17:26,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 12:17:28,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:17:31,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 12:17:32,619 - app.payments - ERROR - Charge for order 1834 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:17:33,000 - app.http - INFO - GET /api/cart 200 23ms
+2026-03-05 12:17:34,957 - app.payments - ERROR - Charge for order 1796 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:17:38,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 12:17:41,000 - app.http - INFO - GET /api/orders 200 53ms
+2026-03-05 12:17:44,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:17:45,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 12:17:47,133 - app.db - ERROR - Checkout 4104 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:17:48,722 - app.payments - ERROR - Charge for order 3357 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:17:50,000 - app.http - INFO - GET /api/orders 200 49ms
+2026-03-05 12:17:52,000 - app.http - INFO - GET /api/cart 200 85ms
+2026-03-05 12:17:55,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 12:17:59,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 12:18:00,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 12:18:00,798 - app.payments - ERROR - Charge for order 2231 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:18:01,566 - app.payments - ERROR - Charge for order 1609 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:18:04,000 - app.http - INFO - GET /api/products 200 90ms
+2026-03-05 12:18:05,340 - app.payments - ERROR - Charge for order 8701 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:18:07,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:18:10,000 - app.http - INFO - GET /api/cart 200 69ms
+2026-03-05 12:18:12,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 12:18:17,000 - app.http - INFO - GET /api/orders 200 74ms
+2026-03-05 12:18:20,000 - app.http - INFO - GET /api/cart 200 10ms
+2026-03-05 12:18:22,922 - app.payments - ERROR - Charge for order 4383 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:18:23,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 12:18:23,933 - app.payments - ERROR - Charge for order 3924 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:18:26,000 - app.http - INFO - GET /api/orders 200 85ms
+2026-03-05 12:18:28,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 12:18:29,506 - app.payments - ERROR - Charge for order 5933 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:18:30,538 - app.pricing - ERROR - Pricing failed for cart 3662
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:18:31,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 12:18:32,024 - app.pricing - ERROR - Pricing failed for cart 7867
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:18:32,392 - app.db - ERROR - Checkout 8664 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:18:33,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 12:18:36,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:18:39,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:18:43,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:18:46,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 12:18:49,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 12:18:52,938 - app.payments - ERROR - Charge for order 7846 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:18:53,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 12:18:56,000 - app.http - INFO - GET /api/cart 200 56ms
+2026-03-05 12:18:57,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 12:19:01,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 12:19:01,793 - app.payments - ERROR - Charge for order 2204 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:19:03,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:19:07,230 - app.db - ERROR - Checkout 8140 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:19:08,000 - app.http - INFO - GET /api/products 200 23ms
+2026-03-05 12:19:09,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 12:19:10,945 - app.payments - ERROR - Charge for order 3576 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:19:14,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:19:16,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:19:18,000 - app.http - INFO - GET /api/orders 200 9ms
+2026-03-05 12:19:23,000 - app.http - INFO - GET /api/cart 200 48ms
+2026-03-05 12:19:25,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:19:28,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 12:19:30,000 - app.http - INFO - GET /api/cart 200 73ms
+2026-03-05 12:19:30,632 - app.payments - ERROR - Charge for order 3959 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:19:33,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 12:19:35,103 - app.pricing - ERROR - Pricing failed for cart 7583
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:19:36,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:19:40,000 - app.http - INFO - GET /api/cart 200 87ms
+2026-03-05 12:19:42,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:19:45,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:19:49,000 - app.http - INFO - GET /api/cart 200 67ms
+2026-03-05 12:19:51,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:19:55,000 - app.http - INFO - GET /api/orders 200 12ms
+2026-03-05 12:19:56,804 - app.pricing - ERROR - Pricing failed for cart 9081
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:19:59,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 12:20:00,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 12:20:00,099 - app.pricing - ERROR - Pricing failed for cart 6632
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:20:02,395 - app.pricing - ERROR - Pricing failed for cart 5417
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:20:03,000 - app.http - INFO - GET /api/orders 200 17ms
+2026-03-05 12:20:04,061 - app.payments - ERROR - Charge for order 7827 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:20:07,000 - app.http - INFO - GET /api/cart 200 9ms
+2026-03-05 12:20:10,000 - app.http - INFO - GET /api/products 200 33ms
+2026-03-05 12:20:11,781 - app.inventory - ERROR - Stock sync for SKU 45559 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:20:13,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:20:16,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:20:20,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 12:20:21,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:20:21,836 - app.payments - ERROR - Charge for order 9258 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:20:25,000 - app.http - INFO - GET /api/cart 200 67ms
+2026-03-05 12:20:27,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 12:20:32,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:20:35,000 - app.http - INFO - GET /api/cart 200 85ms
+2026-03-05 12:20:37,000 - app.http - INFO - GET /api/products 200 30ms
+2026-03-05 12:20:41,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:20:43,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:20:45,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 12:20:45,960 - app.cache - WARNING - Cache entry for product 197 could not be decoded; refetching
+2026-03-05 12:20:50,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 12:20:50,634 - app.db - ERROR - Checkout 7155 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:20:53,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 12:20:56,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 12:20:57,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:21:00,000 - app.http - INFO - GET /api/cart 200 21ms
+2026-03-05 12:21:01,374 - app.tax - ERROR - Tax lookup failed for region 56
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:21:03,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 12:21:03,515 - app.pricing - ERROR - Pricing failed for cart 7396
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:21:07,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 12:21:09,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 12:21:12,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 12:21:16,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:21:20,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:21:20,978 - app.inventory - ERROR - Stock sync for SKU 78831 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:21:22,000 - app.http - INFO - GET /api/products 200 30ms
+2026-03-05 12:21:24,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:21:24,617 - app.inventory - ERROR - Stock sync for SKU 96804 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:21:25,143 - app.payments - ERROR - Charge for order 9951 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:21:29,000 - app.http - INFO - GET /api/cart 200 31ms
+2026-03-05 12:21:32,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 12:21:34,000 - app.http - INFO - GET /api/orders 200 57ms
+2026-03-05 12:21:36,000 - app.http - INFO - GET /api/cart 200 23ms
+2026-03-05 12:21:36,175 - app.cache - WARNING - Cache entry for product 972 could not be decoded; refetching
+2026-03-05 12:21:39,000 - app.http - INFO - GET /api/products 200 85ms
+2026-03-05 12:21:43,000 - app.http - INFO - GET /api/orders 200 59ms
+2026-03-05 12:21:46,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:21:46,972 - app.payments - ERROR - Charge for order 9954 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:21:49,000 - app.http - INFO - GET /api/products 200 40ms
+2026-03-05 12:21:52,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:21:53,763 - app.db - ERROR - Checkout 3673 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:21:56,000 - app.http - INFO - GET /api/cart 200 20ms
+2026-03-05 12:21:57,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 12:22:01,779 - app.db - ERROR - Checkout 6963 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:22:02,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:22:03,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:22:07,254 - app.payments - ERROR - Charge for order 3807 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:22:08,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:22:10,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:22:13,000 - app.http - INFO - GET /api/cart 200 15ms
+2026-03-05 12:22:17,000 - app.http - INFO - GET /api/products 200 87ms
+2026-03-05 12:22:19,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:22:22,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 12:22:24,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 12:22:29,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:22:29,529 - app.payments - ERROR - Charge for order 6200 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:22:31,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:22:33,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 12:22:37,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:22:40,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:22:43,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:22:46,000 - app.http - INFO - GET /api/orders 200 42ms
+2026-03-05 12:22:50,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:22:51,717 - app.inventory - ERROR - Stock sync for SKU 52506 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:22:53,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 12:22:54,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 12:22:58,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:23:00,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 12:23:00,811 - app.pricing - ERROR - Pricing failed for cart 3321
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:23:04,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 12:23:07,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 12:23:10,000 - app.http - INFO - GET /api/products 200 18ms
+2026-03-05 12:23:14,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 12:23:14,063 - app.tax - ERROR - Tax lookup failed for region 10
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:23:15,609 - app.payments - ERROR - Charge for order 5301 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:23:17,000 - app.http - INFO - GET /api/cart 200 89ms
+2026-03-05 12:23:18,000 - app.http - INFO - GET /api/products 200 63ms
+2026-03-05 12:23:19,690 - app.pricing - ERROR - Pricing failed for cart 5927
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:23:21,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 12:23:24,344 - app.payments - ERROR - Charge for order 7884 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:23:25,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:23:28,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 12:23:32,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:23:33,739 - app.db - ERROR - Checkout 1845 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:23:35,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 12:23:36,000 - app.http - INFO - GET /api/products 200 90ms
+2026-03-05 12:23:41,000 - app.http - INFO - GET /api/orders 200 24ms
+2026-03-05 12:23:43,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 12:23:46,000 - app.http - INFO - GET /api/products 200 26ms
+2026-03-05 12:23:49,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:23:52,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 12:23:53,660 - app.tax - ERROR - Tax lookup failed for region 51
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:23:56,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:23:56,759 - app.inventory - ERROR - Stock sync for SKU 93793 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:23:59,000 - app.http - INFO - GET /api/orders 200 12ms
+2026-03-05 12:24:00,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:24:04,000 - app.http - INFO - GET /api/products 200 60ms
+2026-03-05 12:24:06,000 - app.http - INFO - GET /api/orders 200 88ms
+2026-03-05 12:24:11,000 - app.http - INFO - GET /api/cart 200 19ms
+2026-03-05 12:24:12,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:24:16,000 - app.http - INFO - GET /api/orders 200 88ms
+2026-03-05 12:24:16,639 - app.tax - ERROR - Tax lookup failed for region 72
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:24:19,000 - app.http - INFO - GET /api/cart 200 88ms
+2026-03-05 12:24:19,336 - app.cache - WARNING - Cache entry for product 305 could not be decoded; refetching
+2026-03-05 12:24:21,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:24:26,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:24:28,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:24:30,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 12:24:34,000 - app.http - INFO - GET /api/orders 200 17ms
+2026-03-05 12:24:34,959 - app.payments - ERROR - Charge for order 4668 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:24:38,000 - app.http - INFO - GET /api/cart 200 15ms
+2026-03-05 12:24:39,000 - app.http - INFO - GET /api/products 200 26ms
+2026-03-05 12:24:44,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:24:47,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:24:48,064 - app.payments - ERROR - Charge for order 2937 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:24:50,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:24:51,000 - app.http - INFO - GET /api/orders 200 60ms
+2026-03-05 12:24:55,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:24:57,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 12:25:01,000 - app.http - INFO - GET /api/orders 200 8ms
+2026-03-05 12:25:02,097 - app.payments - ERROR - Charge for order 4786 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:25:03,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 12:25:07,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:25:11,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 12:25:12,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 12:25:16,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 12:25:16,472 - app.pricing - ERROR - Pricing failed for cart 9739
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:25:17,249 - app.payments - ERROR - Charge for order 7899 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:25:20,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:25:21,000 - app.http - INFO - GET /api/cart 200 77ms
+2026-03-05 12:25:24,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 12:25:29,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 12:25:32,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 12:25:34,000 - app.http - INFO - GET /api/products 200 42ms
+2026-03-05 12:25:37,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:25:39,000 - app.http - INFO - GET /api/cart 200 80ms
+2026-03-05 12:25:43,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 12:25:45,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:25:50,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 12:25:51,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:25:52,918 - app.pricing - ERROR - Pricing failed for cart 9605
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:25:54,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 12:25:54,952 - app.cache - WARNING - Cache entry for product 923 could not be decoded; refetching
+2026-03-05 12:25:57,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 12:26:02,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 12:26:02,866 - app.payments - ERROR - Charge for order 8960 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:26:03,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 12:26:08,000 - app.http - INFO - GET /api/cart 200 27ms
+2026-03-05 12:26:10,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 12:26:13,359 - app.db - ERROR - Checkout 2099 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:26:14,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:26:16,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:26:18,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 12:26:19,139 - app.inventory - ERROR - Stock sync for SKU 29232 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:26:21,000 - app.http - INFO - GET /api/orders 200 53ms
+2026-03-05 12:26:24,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:26:29,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 12:26:30,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 12:26:32,151 - app.db - ERROR - Checkout 5534 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:26:33,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:26:37,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:26:39,203 - app.payments - ERROR - Charge for order 7044 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:26:41,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 12:26:43,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 12:26:46,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:26:48,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:26:53,000 - app.http - INFO - GET /api/cart 200 19ms
+2026-03-05 12:26:56,000 - app.http - INFO - GET /api/products 200 58ms
+2026-03-05 12:26:56,180 - app.payments - ERROR - Charge for order 4691 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:26:58,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:27:00,000 - app.http - INFO - GET /api/cart 200 88ms
+2026-03-05 12:27:05,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 12:27:08,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:27:09,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 12:27:13,620 - app.payments - ERROR - Charge for order 5060 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:27:14,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 12:27:16,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 12:27:17,528 - app.pricing - ERROR - Pricing failed for cart 1853
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:27:19,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:27:22,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:27:22,853 - app.pricing - ERROR - Pricing failed for cart 9798
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:27:25,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:27:28,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:27:32,000 - app.http - INFO - GET /api/products 200 60ms
+2026-03-05 12:27:34,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 12:27:36,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 12:27:38,092 - app.payments - ERROR - Charge for order 9283 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:27:38,612 - app.pricing - ERROR - Pricing failed for cart 1812
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:27:40,000 - app.http - INFO - GET /api/products 200 72ms
+2026-03-05 12:27:42,000 - app.http - INFO - GET /api/orders 200 25ms
+2026-03-05 12:27:47,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:27:50,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 12:27:52,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:27:56,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 12:27:59,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 12:28:00,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 12:28:04,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 12:28:05,263 - app.inventory - ERROR - Stock sync for SKU 37708 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:28:06,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:28:11,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 12:28:11,613 - app.pricing - ERROR - Pricing failed for cart 8783
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:28:13,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:28:13,135 - app.pricing - ERROR - Pricing failed for cart 7150
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:28:16,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 12:28:20,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 12:28:20,531 - app.payments - ERROR - Charge for order 8082 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:28:21,000 - app.http - INFO - GET /api/cart 200 80ms
+2026-03-05 12:28:25,000 - app.http - INFO - GET /api/products 200 36ms
+2026-03-05 12:28:25,242 - app.payments - ERROR - Charge for order 7133 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:28:26,166 - app.db - ERROR - Checkout 1615 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:28:27,007 - app.pricing - ERROR - Pricing failed for cart 3697
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:28:27,496 - app.tax - ERROR - Tax lookup failed for region 85
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:28:28,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 12:28:32,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:28:34,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 12:28:38,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:28:39,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 12:28:40,919 - app.pricing - ERROR - Pricing failed for cart 5422
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:28:42,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:28:45,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 12:28:49,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 12:28:49,800 - app.payments - ERROR - Charge for order 6998 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:28:51,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:28:52,662 - app.payments - ERROR - Charge for order 5100 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:28:55,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:28:58,000 - app.http - INFO - GET /api/cart 200 59ms
+2026-03-05 12:29:02,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 12:29:04,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 12:29:07,000 - app.http - INFO - GET /api/cart 200 78ms
+2026-03-05 12:29:11,000 - app.http - INFO - GET /api/products 200 17ms
+2026-03-05 12:29:12,000 - app.http - INFO - GET /api/orders 200 55ms
+2026-03-05 12:29:15,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:29:19,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 12:29:22,000 - app.http - INFO - GET /api/orders 200 24ms
+2026-03-05 12:29:24,000 - app.http - INFO - GET /api/cart 200 41ms
+2026-03-05 12:29:29,000 - app.http - INFO - GET /api/products 200 41ms
+2026-03-05 12:29:30,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:29:31,476 - app.payments - ERROR - Charge for order 6766 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:29:33,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 12:29:38,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:29:41,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:29:43,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:29:43,867 - app.payments - ERROR - Charge for order 5396 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:29:47,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 12:29:47,178 - app.inventory - ERROR - Stock sync for SKU 39662 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:29:50,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:29:53,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 12:29:54,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:29:57,147 - app.pricing - ERROR - Pricing failed for cart 9013
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:29:58,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:30:02,000 - app.http - INFO - GET /api/cart 200 85ms
+2026-03-05 12:30:03,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 12:30:06,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 12:30:11,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 12:30:13,000 - app.http - INFO - GET /api/products 200 62ms
+2026-03-05 12:30:16,561 - app.checkout - ERROR - Coupon check failed for order 2780
+Traceback (most recent call last):
+  File "/srv/shop/app/coupons.py", line 33, in apply
+    rule = RULES[code]
+KeyError: 'SPRING26'
+2026-03-05 12:30:17,000 - app.http - INFO - GET /api/orders 200 60ms
+2026-03-05 12:30:18,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 12:30:22,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:30:24,000 - app.http - INFO - GET /api/orders 200 50ms
+2026-03-05 12:30:29,000 - app.http - INFO - GET /api/cart 200 75ms
+2026-03-05 12:30:32,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 12:30:35,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:30:37,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:30:38,692 - app.payments - ERROR - Charge for order 3521 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:30:41,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:30:44,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 12:30:45,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 12:30:49,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 12:30:53,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:30:54,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:30:56,228 - app.cache - WARNING - Cache entry for product 224 could not be decoded; refetching
+2026-03-05 12:30:58,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:31:01,000 - app.http - INFO - GET /api/orders 200 9ms
+2026-03-05 12:31:04,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:31:06,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:31:10,000 - app.http - INFO - GET /api/orders 200 60ms
+2026-03-05 12:31:13,115 - app.pricing - ERROR - Pricing failed for cart 6030
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:31:14,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 12:31:17,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:31:18,000 - app.http - INFO - GET /api/orders 200 75ms
+2026-03-05 12:31:23,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 12:31:26,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 12:31:26,395 - app.payments - ERROR - Charge for order 1731 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:31:27,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 12:31:28,761 - app.inventory - ERROR - Stock sync for SKU 25168 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:31:31,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 12:31:35,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 12:31:37,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:31:41,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 12:31:41,393 - app.payments - ERROR - Charge for order 6167 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:31:43,000 - app.http - INFO - GET /api/products 200 78ms
+2026-03-05 12:31:47,000 - app.http - INFO - GET /api/orders 200 64ms
+2026-03-05 12:31:49,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:31:51,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:31:56,000 - app.http - INFO - GET /api/orders 200 55ms
+2026-03-05 12:31:58,000 - app.http - INFO - GET /api/cart 200 16ms
+2026-03-05 12:32:02,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:32:03,000 - app.http - INFO - GET /api/orders 200 85ms
+2026-03-05 12:32:06,103 - app.payments - ERROR - Charge for order 3846 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:32:07,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 12:32:10,469 - app.cache - WARNING - Cache entry for product 409 could not be decoded; refetching
+2026-03-05 12:32:11,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 12:32:14,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 12:32:16,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 12:32:17,925 - app.cache - WARNING - Cache entry for product 552 could not be decoded; refetching
+2026-03-05 12:32:19,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 12:32:21,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:32:21,972 - app.inventory - ERROR - Stock sync for SKU 14892 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:32:24,917 - app.db - ERROR - Checkout 1465 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:32:25,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 12:32:27,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:32:27,605 - app.payments - ERROR - Charge for order 7198 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:32:30,000 - app.http - INFO - GET /api/orders 200 57ms
+2026-03-05 12:32:35,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 12:32:37,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:32:39,000 - app.http - INFO - GET /api/orders 200 34ms
+2026-03-05 12:32:42,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 12:32:45,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 12:32:50,000 - app.http - INFO - GET /api/orders 200 24ms
+2026-03-05 12:32:51,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:32:56,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 12:32:57,119 - app.payments - ERROR - Charge for order 3329 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:32:59,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:33:00,947 - app.inventory - ERROR - Stock sync for SKU 63740 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:33:01,000 - app.http - INFO - GET /api/cart 200 67ms
+2026-03-05 12:33:03,000 - app.http - INFO - GET /api/products 200 62ms
+2026-03-05 12:33:04,543 - app.payments - ERROR - Charge for order 2375 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:33:07,000 - app.http - INFO - GET /api/orders 200 43ms
+2026-03-05 12:33:09,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 12:33:12,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:33:15,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 12:33:20,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:33:22,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:33:24,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 12:33:28,077 - app.cache - WARNING - Cache entry for product 959 could not be decoded; refetching
+2026-03-05 12:33:29,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 12:33:31,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 12:33:34,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 12:33:37,839 - app.pricing - ERROR - Pricing failed for cart 8068
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:33:38,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:33:41,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 12:33:42,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:33:46,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:33:48,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:33:52,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:33:52,247 - app.db - ERROR - Checkout 7241 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:33:55,000 - app.http - INFO - GET /api/cart 200 41ms
+2026-03-05 12:33:58,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:33:59,260 - app.payments - ERROR - Charge for order 9022 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:34:00,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:34:04,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 12:34:07,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 12:34:10,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:34:12,007 - app.pricing - ERROR - Pricing failed for cart 6377
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:34:14,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:34:16,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 12:34:18,868 - app.inventory - ERROR - Stock sync for SKU 95931 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:34:20,000 - app.http - INFO - GET /api/orders 200 21ms
+2026-03-05 12:34:23,000 - app.http - INFO - GET /api/cart 200 16ms
+2026-03-05 12:34:26,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 12:34:29,000 - app.http - INFO - GET /api/orders 200 89ms
+2026-03-05 12:34:32,000 - app.http - INFO - GET /api/cart 200 80ms
+2026-03-05 12:34:35,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 12:34:37,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 12:34:38,096 - app.payments - ERROR - Charge for order 2103 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:34:40,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 12:34:41,716 - app.payments - ERROR - Charge for order 8756 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:34:44,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:34:45,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:34:49,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:34:52,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:34:56,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:34:58,000 - app.http - INFO - GET /api/cart 200 77ms
+2026-03-05 12:35:02,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 12:35:03,000 - app.http - INFO - GET /api/orders 200 14ms
+2026-03-05 12:35:08,000 - app.http - INFO - GET /api/cart 200 19ms
+2026-03-05 12:35:11,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:35:14,000 - app.http - INFO - GET /api/orders 200 14ms
+2026-03-05 12:35:14,840 - app.inventory - ERROR - Stock sync for SKU 53809 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:35:16,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 12:35:18,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 12:35:21,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 12:35:25,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:35:28,000 - app.http - INFO - GET /api/products 200 23ms
+2026-03-05 12:35:30,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:35:35,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 12:35:36,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 12:35:40,000 - app.http - INFO - GET /api/orders 200 78ms
+2026-03-05 12:35:42,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 12:35:47,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:35:49,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 12:35:53,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:35:54,000 - app.http - INFO - GET /api/products 200 72ms
+2026-03-05 12:35:54,580 - app.inventory - ERROR - Stock sync for SKU 99200 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:35:59,000 - app.http - INFO - GET /api/orders 200 50ms
+2026-03-05 12:36:02,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:36:03,000 - app.http - INFO - GET /api/products 200 18ms
+2026-03-05 12:36:07,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:36:10,000 - app.http - INFO - GET /api/cart 200 29ms
+2026-03-05 12:36:12,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:36:15,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:36:15,076 - app.inventory - ERROR - Stock sync for SKU 17723 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:36:20,000 - app.http - INFO - GET /api/cart 200 16ms
+2026-03-05 12:36:21,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 12:36:25,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:36:27,000 - app.http - INFO - GET /api/cart 200 39ms
+2026-03-05 12:36:30,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:36:33,000 - app.http - INFO - GET /api/orders 200 59ms
+2026-03-05 12:36:36,000 - app.http - INFO - GET /api/cart 200 82ms
+2026-03-05 12:36:40,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 12:36:44,000 - app.http - INFO - GET /api/orders 200 78ms
+2026-03-05 12:36:47,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:36:49,000 - app.http - INFO - GET /api/products 200 26ms
+2026-03-05 12:36:50,230 - app.pricing - ERROR - Pricing failed for cart 7203
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:36:50,819 - app.payments - ERROR - Charge for order 5763 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:36:51,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 12:36:54,000 - app.http - INFO - GET /api/cart 200 9ms
+2026-03-05 12:36:57,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 12:37:01,000 - app.http - INFO - GET /api/orders 200 43ms
+2026-03-05 12:37:03,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 12:37:06,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 12:37:06,825 - app.payments - ERROR - Charge for order 5558 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:37:09,000 - app.http - INFO - GET /api/orders 200 82ms
+2026-03-05 12:37:14,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:37:17,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:37:18,000 - app.http - INFO - GET /api/orders 200 52ms
+2026-03-05 12:37:19,746 - app.payments - ERROR - Charge for order 8858 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:37:21,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 12:37:22,899 - app.pricing - ERROR - Pricing failed for cart 5507
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:37:25,000 - app.http - INFO - GET /api/products 200 34ms
+2026-03-05 12:37:28,000 - app.http - INFO - GET /api/orders 200 49ms
+2026-03-05 12:37:28,214 - app.payments - ERROR - Charge for order 6343 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:37:31,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:37:34,000 - app.http - INFO - GET /api/products 200 55ms
+2026-03-05 12:37:36,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 12:37:40,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 12:37:44,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 12:37:47,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:37:48,044 - app.inventory - ERROR - Stock sync for SKU 61542 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:37:50,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:37:52,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:37:54,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:37:57,000 - app.http - INFO - GET /api/cart 200 30ms
+2026-03-05 12:38:00,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:38:04,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 12:38:05,196 - app.payments - ERROR - Charge for order 1194 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:38:07,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:38:08,429 - app.payments - ERROR - Charge for order 2268 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:38:10,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:38:12,000 - app.http - INFO - GET /api/orders 200 88ms
+2026-03-05 12:38:17,000 - app.http - INFO - GET /api/cart 200 38ms
+2026-03-05 12:38:20,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:38:23,000 - app.http - INFO - GET /api/orders 200 37ms
+2026-03-05 12:38:26,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:38:26,811 - app.payments - ERROR - Charge for order 1247 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:38:27,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 12:38:30,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:38:31,148 - app.db - ERROR - Checkout 2417 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:38:34,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 12:38:35,464 - app.payments - ERROR - Charge for order 8657 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:38:37,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 12:38:39,983 - app.pricing - ERROR - Pricing failed for cart 2326
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:38:41,000 - app.http - INFO - GET /api/orders 200 9ms
+2026-03-05 12:38:42,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 12:38:45,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:38:50,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:38:51,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 12:38:54,000 - app.http - INFO - GET /api/products 200 10ms
+2026-03-05 12:38:58,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:39:00,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:39:05,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 12:39:06,000 - app.http - INFO - GET /api/orders 200 14ms
+2026-03-05 12:39:07,499 - app.payments - ERROR - Charge for order 6232 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:39:09,035 - app.payments - ERROR - Charge for order 9457 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:39:10,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 12:39:13,000 - app.http - INFO - GET /api/products 200 90ms
+2026-03-05 12:39:15,000 - app.http - INFO - GET /api/orders 200 48ms
+2026-03-05 12:39:18,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:39:22,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:39:26,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:39:28,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:39:28,448 - app.payments - ERROR - Charge for order 6793 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:39:30,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:39:33,000 - app.http - INFO - GET /api/orders 200 53ms
+2026-03-05 12:39:35,995 - app.payments - ERROR - Charge for order 3183 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:39:36,000 - app.http - INFO - GET /api/cart 200 59ms
+2026-03-05 12:39:39,000 - app.http - INFO - GET /api/products 200 23ms
+2026-03-05 12:39:42,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:39:45,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:39:47,419 - app.pricing - ERROR - Pricing failed for cart 8563
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:39:48,000 - app.http - INFO - GET /api/products 200 45ms
+2026-03-05 12:39:52,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 12:39:54,000 - app.http - INFO - GET /api/cart 200 23ms
+2026-03-05 12:39:59,000 - app.http - INFO - GET /api/products 200 45ms
+2026-03-05 12:40:00,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 12:40:03,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 12:40:08,000 - app.http - INFO - GET /api/products 200 35ms
+2026-03-05 12:40:11,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:40:13,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 12:40:16,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 12:40:19,000 - app.http - INFO - GET /api/orders 200 23ms
+2026-03-05 12:40:21,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:40:24,637 - app.payments - ERROR - Charge for order 3022 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:40:25,202 - app.tax - ERROR - Tax lookup failed for region 14
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:40:25,730 - app.db - ERROR - Checkout 1764 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:40:26,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 12:40:29,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 12:40:30,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 12:40:34,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:40:38,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:40:40,000 - app.http - INFO - GET /api/cart 200 72ms
+2026-03-05 12:40:42,749 - app.pricing - ERROR - Pricing failed for cart 1992
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:40:44,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:40:46,062 - app.inventory - ERROR - Stock sync for SKU 77095 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:40:47,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 12:40:50,000 - app.http - INFO - GET /api/cart 200 38ms
+2026-03-05 12:40:51,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 12:40:53,602 - app.pricing - ERROR - Pricing failed for cart 9648
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:40:56,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:40:57,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 12:40:58,349 - app.payments - ERROR - Charge for order 2477 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:41:01,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 12:41:03,000 - app.http - INFO - GET /api/orders 200 25ms
+2026-03-05 12:41:07,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:41:11,000 - app.http - INFO - GET /api/products 200 18ms
+2026-03-05 12:41:13,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:41:17,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 12:41:19,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 12:41:22,000 - app.http - INFO - GET /api/orders 200 64ms
+2026-03-05 12:41:24,000 - app.http - INFO - GET /api/cart 200 29ms
+2026-03-05 12:41:24,570 - app.payments - ERROR - Charge for order 2593 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:41:25,094 - app.payments - ERROR - Charge for order 3928 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:41:27,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:41:28,748 - app.inventory - ERROR - Stock sync for SKU 73953 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:41:30,631 - app.payments - ERROR - Charge for order 3560 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:41:32,000 - app.http - INFO - GET /api/orders 200 8ms
+2026-03-05 12:41:34,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:41:34,324 - app.payments - ERROR - Charge for order 5849 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:41:37,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:41:39,000 - app.http - INFO - GET /api/orders 200 41ms
+2026-03-05 12:41:39,790 - app.tax - ERROR - Tax lookup failed for region 86
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:41:42,000 - app.http - INFO - GET /api/cart 200 10ms
+2026-03-05 12:41:45,000 - app.http - INFO - GET /api/products 200 56ms
+2026-03-05 12:41:50,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 12:41:51,000 - app.http - INFO - GET /api/cart 200 8ms
+2026-03-05 12:41:54,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 12:41:58,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:41:58,214 - app.tax - ERROR - Tax lookup failed for region 69
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:42:02,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 12:42:04,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 12:42:04,142 - app.db - ERROR - Checkout 6606 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:42:06,000 - app.http - INFO - GET /api/orders 200 48ms
+2026-03-05 12:42:09,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 12:42:10,979 - app.payments - ERROR - Charge for order 2282 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:42:13,000 - app.http - INFO - GET /api/products 200 10ms
+2026-03-05 12:42:16,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:42:19,661 - app.payments - ERROR - Charge for order 1586 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:42:20,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 12:42:22,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:42:25,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:42:29,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 12:42:30,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 12:42:33,000 - app.http - INFO - GET /api/orders 200 79ms
+2026-03-05 12:42:35,078 - app.pricing - ERROR - Pricing failed for cart 1549
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:42:38,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:42:40,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 12:42:44,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:42:46,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:42:49,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:42:51,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:42:54,135 - app.payments - ERROR - Charge for order 6122 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:42:56,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 12:42:57,122 - app.payments - ERROR - Charge for order 3588 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:42:58,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 12:43:00,542 - app.payments - ERROR - Charge for order 7775 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:43:02,000 - app.http - INFO - GET /api/orders 200 41ms
+2026-03-05 12:43:03,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 12:43:06,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 12:43:11,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 12:43:12,000 - app.http - INFO - GET /api/cart 200 48ms
+2026-03-05 12:43:16,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 12:43:18,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 12:43:23,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 12:43:23,616 - app.db - ERROR - Checkout 1612 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:43:25,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:43:26,606 - app.db - ERROR - Checkout 2844 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:43:29,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 12:43:31,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 12:43:35,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 12:43:36,762 - app.payments - ERROR - Charge for order 8288 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:43:38,000 - app.http - INFO - GET /api/orders 200 5ms
+2026-03-05 12:43:41,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:43:43,000 - app.http - INFO - GET /api/products 200 39ms
+2026-03-05 12:43:43,921 - app.tax - ERROR - Tax lookup failed for region 91
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:43:46,000 - app.http - INFO - GET /api/orders 200 78ms
+2026-03-05 12:43:50,000 - app.http - INFO - GET /api/cart 200 77ms
+2026-03-05 12:43:51,837 - app.payments - ERROR - Charge for order 3376 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:43:52,000 - app.http - INFO - GET /api/products 200 12ms
+2026-03-05 12:43:54,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 12:43:58,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:43:58,048 - app.payments - ERROR - Charge for order 3628 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:44:00,048 - app.inventory - ERROR - Stock sync for SKU 86668 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:44:01,000 - app.http - INFO - GET /api/products 200 12ms
+2026-03-05 12:44:05,000 - app.http - INFO - GET /api/orders 200 23ms
+2026-03-05 12:44:06,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 12:44:06,235 - app.db - ERROR - Checkout 5696 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:44:11,000 - app.http - INFO - GET /api/products 200 61ms
+2026-03-05 12:44:12,000 - app.http - INFO - GET /api/orders 200 15ms
+2026-03-05 12:44:12,116 - app.payments - ERROR - Charge for order 8192 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:44:16,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 12:44:18,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 12:44:18,184 - app.db - ERROR - Checkout 4129 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:44:22,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 12:44:25,000 - app.http - INFO - GET /api/cart 200 29ms
+2026-03-05 12:44:29,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 12:44:30,000 - app.http - INFO - GET /api/orders 200 59ms
+2026-03-05 12:44:34,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 12:44:36,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:44:39,476 - app.payments - ERROR - Charge for order 3767 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:44:39,703 - app.inventory - ERROR - Stock sync for SKU 68582 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:44:40,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:44:42,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:44:46,000 - app.http - INFO - GET /api/products 200 90ms
+2026-03-05 12:44:47,461 - app.db - ERROR - Checkout 2837 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:44:49,587 - app.payments - ERROR - Charge for order 5578 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:44:50,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:44:51,797 - app.payments - ERROR - Charge for order 6434 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:44:52,000 - app.http - INFO - GET /api/cart 200 30ms
+2026-03-05 12:44:53,875 - app.inventory - ERROR - Stock sync for SKU 98540 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:44:54,447 - app.db - ERROR - Checkout 4285 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:44:56,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:44:59,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 12:45:01,000 - app.http - INFO - GET /api/cart 200 90ms
+2026-03-05 12:45:03,000 - app.http - INFO - GET /api/products 200 36ms
+2026-03-05 12:45:08,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:45:10,000 - app.http - INFO - GET /api/cart 200 27ms
+2026-03-05 12:45:12,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:45:16,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:45:18,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:45:23,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:45:24,406 - app.tax - ERROR - Tax lookup failed for region 11
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:45:25,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 12:45:29,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:45:32,000 - app.http - INFO - GET /api/products 200 56ms
+2026-03-05 12:45:35,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 12:45:38,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 12:45:39,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 12:45:40,865 - app.payments - ERROR - Charge for order 6477 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:45:43,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 12:45:46,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:45:48,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 12:45:49,567 - app.tax - ERROR - Tax lookup failed for region 51
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:45:53,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:45:56,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 12:45:58,001 - app.payments - ERROR - Charge for order 9066 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:45:58,204 - app.inventory - ERROR - Stock sync for SKU 97175 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:45:59,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 12:46:02,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:46:02,387 - app.payments - ERROR - Charge for order 2525 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:46:03,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 12:46:07,000 - app.http - INFO - GET /api/products 200 55ms
+2026-03-05 12:46:07,071 - app.payments - ERROR - Charge for order 6701 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:46:07,075 - app.db - ERROR - Checkout 9558 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:46:07,452 - app.pricing - ERROR - Pricing failed for cart 8856
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:46:09,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 12:46:13,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:46:15,663 - app.payments - ERROR - Charge for order 3979 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:46:16,336 - app.payments - ERROR - Charge for order 9528 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:46:16,939 - app.tax - ERROR - Tax lookup failed for region 54
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:46:17,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:46:18,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 12:46:23,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:46:24,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 12:46:27,000 - app.http - INFO - GET /api/orders 200 68ms
+2026-03-05 12:46:30,000 - app.http - INFO - GET /api/cart 200 34ms
+2026-03-05 12:46:32,160 - app.checkout - ERROR - Coupon check failed for order 1061
+Traceback (most recent call last):
+  File "/srv/shop/app/coupons.py", line 33, in apply
+    rule = RULES[code]
+KeyError: 'SPRING26'
+2026-03-05 12:46:35,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 12:46:36,000 - app.http - INFO - GET /api/orders 200 24ms
+2026-03-05 12:46:41,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 12:46:43,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 12:46:45,208 - app.payments - ERROR - Charge for order 8012 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:46:46,000 - app.http - INFO - GET /api/orders 200 28ms
+2026-03-05 12:46:46,042 - app.payments - ERROR - Charge for order 5215 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:46:47,172 - app.db - ERROR - Checkout 2157 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:46:48,000 - app.http - INFO - GET /api/cart 200 87ms
+2026-03-05 12:46:52,000 - app.http - INFO - GET /api/products 200 18ms
+2026-03-05 12:46:52,691 - app.payments - ERROR - Charge for order 8631 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:46:55,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 12:46:57,000 - app.http - INFO - GET /api/cart 200 8ms
+2026-03-05 12:47:01,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 12:47:01,560 - app.payments - ERROR - Charge for order 3253 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:47:05,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:47:07,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 12:47:09,000 - app.http - INFO - GET /api/products 200 47ms
+2026-03-05 12:47:12,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:47:15,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 12:47:19,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:47:21,000 - app.http - INFO - GET /api/orders 200 17ms
+2026-03-05 12:47:26,000 - app.http - INFO - GET /api/cart 200 73ms
+2026-03-05 12:47:26,202 - app.payments - ERROR - Charge for order 9731 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:47:27,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:47:31,172 - app.db - ERROR - Checkout 9774 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:47:32,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 12:47:32,062 - app.tax - ERROR - Tax lookup failed for region 82
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:47:33,000 - app.http - INFO - GET /api/cart 200 41ms
+2026-03-05 12:47:36,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 12:47:40,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 12:47:43,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:47:46,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:47:49,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 12:47:50,595 - app.payments - ERROR - Charge for order 9023 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:47:52,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:47:56,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 12:47:59,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:48:00,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 12:48:03,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 12:48:06,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:48:06,324 - app.inventory - ERROR - Stock sync for SKU 67030 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:48:10,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 12:48:13,000 - app.http - INFO - GET /api/products 200 58ms
+2026-03-05 12:48:17,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:48:17,404 - app.tax - ERROR - Tax lookup failed for region 50
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:48:20,000 - app.http - INFO - GET /api/cart 200 69ms
+2026-03-05 12:48:22,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 12:48:23,376 - app.inventory - ERROR - Stock sync for SKU 17737 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:48:26,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:48:27,000 - app.http - INFO - GET /api/cart 200 72ms
+2026-03-05 12:48:30,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 12:48:33,000 - app.http - INFO - GET /api/orders 200 12ms
+2026-03-05 12:48:38,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:48:39,000 - app.http - INFO - GET /api/products 200 75ms
+2026-03-05 12:48:43,000 - app.http - INFO - GET /api/orders 200 79ms
+2026-03-05 12:48:47,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 12:48:49,000 - app.http - INFO - GET /api/products 200 87ms
+2026-03-05 12:48:51,000 - app.http - INFO - GET /api/orders 200 12ms
+2026-03-05 12:48:53,810 - app.db - ERROR - Checkout 7152 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:48:55,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:48:56,419 - app.db - ERROR - Checkout 3451 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:48:57,984 - app.payments - ERROR - Charge for order 4500 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:48:58,000 - app.http - INFO - GET /api/products 200 18ms
+2026-03-05 12:49:01,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 12:49:04,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:49:08,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 12:49:09,000 - app.http - INFO - GET /api/orders 200 39ms
+2026-03-05 12:49:13,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:49:16,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 12:49:19,000 - app.http - INFO - GET /api/orders 200 68ms
+2026-03-05 12:49:23,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 12:49:24,388 - app.payments - ERROR - Charge for order 3602 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:49:25,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:49:27,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:49:28,845 - app.payments - ERROR - Charge for order 8211 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:49:30,601 - app.cache - WARNING - Cache entry for product 797 could not be decoded; refetching
+2026-03-05 12:49:31,000 - app.http - INFO - GET /api/cart 200 10ms
+2026-03-05 12:49:31,387 - app.db - ERROR - Checkout 9322 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:49:33,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 12:49:36,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:49:39,000 - app.http - INFO - GET /api/cart 200 78ms
+2026-03-05 12:49:39,098 - app.db - ERROR - Checkout 7357 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:49:43,000 - app.http - INFO - GET /api/products 200 56ms
+2026-03-05 12:49:45,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 12:49:48,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 12:49:53,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 12:49:56,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 12:49:57,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 12:49:57,719 - app.payments - ERROR - Charge for order 9102 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:49:58,654 - app.inventory - ERROR - Stock sync for SKU 18888 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:50:00,254 - app.pricing - ERROR - Pricing failed for cart 6540
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:50:02,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:50:02,281 - app.tax - ERROR - Tax lookup failed for region 18
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:50:05,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 12:50:08,000 - app.http - INFO - GET /api/cart 200 20ms
+2026-03-05 12:50:09,213 - app.payments - ERROR - Charge for order 2973 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:50:10,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 12:50:12,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 12:50:17,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 12:50:18,779 - app.inventory - ERROR - Stock sync for SKU 59647 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:50:20,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 12:50:23,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 12:50:23,326 - app.cache - WARNING - Cache entry for product 308 could not be decoded; refetching
+2026-03-05 12:50:24,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 12:50:27,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 12:50:32,000 - app.http - INFO - GET /api/orders 200 39ms
+2026-03-05 12:50:34,000 - app.http - INFO - GET /api/cart 200 31ms
+2026-03-05 12:50:36,005 - app.db - ERROR - Checkout 8770 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:50:37,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:50:38,168 - app.payments - ERROR - Charge for order 8005 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:50:40,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 12:50:42,932 - app.payments - ERROR - Charge for order 2488 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:50:43,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 12:50:44,314 - app.db - ERROR - Checkout 1651 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:50:46,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:50:50,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 12:50:52,000 - app.http - INFO - GET /api/cart 200 43ms
+2026-03-05 12:50:56,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 12:50:58,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 12:51:02,000 - app.http - INFO - GET /api/cart 200 75ms
+2026-03-05 12:51:04,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:51:07,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:51:10,000 - app.http - INFO - GET /api/cart 200 90ms
+2026-03-05 12:51:12,000 - app.http - INFO - GET /api/products 200 34ms
+2026-03-05 12:51:16,000 - app.http - INFO - GET /api/orders 200 34ms
+2026-03-05 12:51:17,485 - app.payments - ERROR - Charge for order 3088 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:51:20,000 - app.http - INFO - GET /api/cart 200 82ms
+2026-03-05 12:51:23,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 12:51:26,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 12:51:28,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 12:51:32,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 12:51:33,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 12:51:36,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 12:51:41,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 12:51:44,000 - app.http - INFO - GET /api/orders 200 55ms
+2026-03-05 12:51:45,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 12:51:49,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 12:51:51,629 - app.db - ERROR - Checkout 1460 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:51:52,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 12:51:56,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:51:57,000 - app.http - INFO - GET /api/products 200 55ms
+2026-03-05 12:52:01,000 - app.http - INFO - GET /api/orders 200 30ms
+2026-03-05 12:52:05,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 12:52:06,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:52:11,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 12:52:12,000 - app.http - INFO - GET /api/cart 200 88ms
+2026-03-05 12:52:16,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:52:20,000 - app.http - INFO - GET /api/orders 200 48ms
+2026-03-05 12:52:20,092 - app.payments - ERROR - Charge for order 4951 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:52:23,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 12:52:26,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 12:52:28,000 - app.http - INFO - GET /api/orders 200 37ms
+2026-03-05 12:52:32,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 12:52:34,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:52:34,089 - app.cache - WARNING - Cache entry for product 525 could not be decoded; refetching
+2026-03-05 12:52:36,000 - app.http - INFO - GET /api/orders 200 8ms
+2026-03-05 12:52:39,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 12:52:43,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 12:52:45,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 12:52:50,000 - app.http - INFO - GET /api/cart 200 48ms
+2026-03-05 12:52:53,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:52:55,000 - app.http - INFO - GET /api/orders 200 26ms
+2026-03-05 12:52:59,000 - app.http - INFO - GET /api/cart 200 68ms
+2026-03-05 12:52:59,174 - app.pricing - ERROR - Pricing failed for cart 2709
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:53:02,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 12:53:04,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:53:07,663 - app.payments - ERROR - Charge for order 9808 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:53:08,000 - app.http - INFO - GET /api/cart 200 23ms
+2026-03-05 12:53:09,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 12:53:12,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 12:53:16,000 - app.http - INFO - GET /api/cart 200 72ms
+2026-03-05 12:53:20,000 - app.http - INFO - GET /api/products 200 61ms
+2026-03-05 12:53:22,447 - app.payments - ERROR - Charge for order 8485 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:53:23,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 12:53:25,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 12:53:25,479 - app.payments - ERROR - Charge for order 7065 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:53:28,000 - app.http - INFO - GET /api/products 200 11ms
+2026-03-05 12:53:30,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 12:53:31,517 - app.payments - ERROR - Charge for order 6347 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 12:53:34,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 12:53:37,714 - app.payments - ERROR - Charge for order 3376 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:53:38,000 - app.http - INFO - GET /api/products 200 26ms
+2026-03-05 12:53:41,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 12:53:42,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 12:53:47,000 - app.http - INFO - GET /api/products 200 40ms
+2026-03-05 12:53:48,000 - app.http - INFO - GET /api/orders 200 50ms
+2026-03-05 12:53:53,000 - app.http - INFO - GET /api/cart 200 73ms
+2026-03-05 12:53:56,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 12:53:59,000 - app.http - INFO - GET /api/orders 200 52ms
+2026-03-05 12:54:01,000 - app.http - INFO - GET /api/cart 200 89ms
+2026-03-05 12:54:03,886 - app.cache - WARNING - Cache entry for product 929 could not be decoded; refetching
+2026-03-05 12:54:04,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 12:54:04,198 - app.db - ERROR - Checkout 6501 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:54:07,000 - app.http - INFO - GET /api/orders 200 85ms
+2026-03-05 12:54:11,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 12:54:12,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 12:54:15,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 12:54:18,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 12:54:21,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 12:54:25,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 12:54:27,593 - app.pricing - ERROR - Pricing failed for cart 7250
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:54:27,957 - app.db - ERROR - Checkout 1152 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:54:28,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:54:32,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 12:54:33,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:54:33,432 - app.db - ERROR - Checkout 7425 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:54:37,000 - app.http - INFO - GET /api/cart 200 47ms
+2026-03-05 12:54:39,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 12:54:44,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 12:54:47,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:54:47,046 - app.payments - ERROR - Charge for order 9614 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:54:49,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 12:54:52,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 12:54:54,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 12:54:59,000 - app.http - INFO - GET /api/products 200 41ms
+2026-03-05 12:55:02,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 12:55:02,296 - app.db - ERROR - Checkout 9877 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:55:02,707 - app.tax - ERROR - Tax lookup failed for region 22
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:55:04,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:55:08,000 - app.http - INFO - GET /api/products 200 33ms
+2026-03-05 12:55:08,957 - app.pricing - ERROR - Pricing failed for cart 8577
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:55:11,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:55:13,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:55:17,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 12:55:19,000 - app.http - INFO - GET /api/orders 200 60ms
+2026-03-05 12:55:21,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 12:55:26,000 - app.http - INFO - GET /api/products 200 26ms
+2026-03-05 12:55:28,000 - app.http - INFO - GET /api/orders 200 50ms
+2026-03-05 12:55:32,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 12:55:33,000 - app.http - INFO - GET /api/products 200 45ms
+2026-03-05 12:55:36,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 12:55:40,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:55:40,292 - app.db - ERROR - Checkout 3163 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:55:42,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:55:47,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 12:55:48,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 12:55:53,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 12:55:54,522 - app.cache - WARNING - Cache entry for product 134 could not be decoded; refetching
+2026-03-05 12:55:56,000 - app.http - INFO - GET /api/orders 200 8ms
+2026-03-05 12:55:57,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 12:56:00,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 12:56:02,127 - app.pricing - ERROR - Pricing failed for cart 8301
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:56:04,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 12:56:04,589 - app.tax - ERROR - Tax lookup failed for region 49
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:56:08,000 - app.http - INFO - GET /api/cart 200 73ms
+2026-03-05 12:56:10,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 12:56:12,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 12:56:12,407 - app.checkout - ERROR - Coupon check failed for order 5011
+Traceback (most recent call last):
+  File "/srv/shop/app/coupons.py", line 33, in apply
+    rule = RULES[code]
+KeyError: 'SPRING26'
+2026-03-05 12:56:15,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 12:56:18,000 - app.http - INFO - GET /api/products 200 75ms
+2026-03-05 12:56:18,164 - app.db - ERROR - Checkout 7282 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:56:22,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 12:56:22,576 - app.payments - ERROR - Charge for order 6886 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:56:26,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 12:56:29,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 12:56:30,000 - app.http - INFO - GET /api/orders 200 64ms
+2026-03-05 12:56:34,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 12:56:36,819 - app.db - ERROR - Checkout 7096 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:56:38,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 12:56:40,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 12:56:40,740 - app.inventory - ERROR - Stock sync for SKU 63101 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:56:43,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 12:56:45,000 - app.http - INFO - GET /api/products 200 42ms
+2026-03-05 12:56:49,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 12:56:51,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 12:56:55,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 12:56:58,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 12:57:00,000 - app.http - INFO - GET /api/cart 200 39ms
+2026-03-05 12:57:03,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 12:57:06,000 - app.http - INFO - GET /api/orders 200 17ms
+2026-03-05 12:57:06,762 - app.tax - ERROR - Tax lookup failed for region 60
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:57:10,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 12:57:12,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 12:57:17,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 12:57:20,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 12:57:22,563 - app.payments - ERROR - Charge for order 2302 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:57:23,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 12:57:24,000 - app.http - INFO - GET /api/orders 200 57ms
+2026-03-05 12:57:28,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 12:57:28,473 - app.inventory - ERROR - Stock sync for SKU 36885 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:57:31,051 - app.cache - WARNING - Cache entry for product 402 could not be decoded; refetching
+2026-03-05 12:57:32,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 12:57:34,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 12:57:38,000 - app.http - INFO - GET /api/cart 200 78ms
+2026-03-05 12:57:41,000 - app.http - INFO - GET /api/products 200 33ms
+2026-03-05 12:57:43,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 12:57:44,684 - app.payments - ERROR - Charge for order 4677 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:57:46,000 - app.http - INFO - GET /api/cart 200 43ms
+2026-03-05 12:57:49,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 12:57:53,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 12:57:56,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 12:57:58,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 12:58:00,000 - app.http - INFO - GET /api/orders 200 52ms
+2026-03-05 12:58:02,030 - app.payments - ERROR - Charge for order 2339 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:58:04,761 - app.tax - ERROR - Tax lookup failed for region 25
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:58:05,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 12:58:08,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 12:58:11,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 12:58:12,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 12:58:17,000 - app.http - INFO - GET /api/products 200 75ms
+2026-03-05 12:58:18,000 - app.http - INFO - GET /api/orders 200 79ms
+2026-03-05 12:58:18,229 - app.payments - ERROR - Charge for order 7040 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:58:23,000 - app.http - INFO - GET /api/cart 200 29ms
+2026-03-05 12:58:24,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 12:58:27,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 12:58:31,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 12:58:31,128 - app.pricing - ERROR - Pricing failed for cart 5479
+Traceback (most recent call last):
+  File "/srv/shop/app/pricing.py", line 58, in total
+    return cart.currency.round(amount)
+AttributeError: 'NoneType' object has no attribute 'round'
+2026-03-05 12:58:33,318 - app.payments - ERROR - Charge for order 3245 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:58:34,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 12:58:36,153 - app.inventory - ERROR - Stock sync for SKU 69137 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 12:58:36,604 - app.payments - ERROR - Charge for order 7253 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:58:38,000 - app.http - INFO - GET /api/orders 200 44ms
+2026-03-05 12:58:39,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 12:58:44,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 12:58:45,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 12:58:48,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:58:51,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 12:58:56,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 12:58:57,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 12:58:57,180 - app.payments - ERROR - Charge for order 4019 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:59:02,000 - app.http - INFO - GET /api/products 200 60ms
+2026-03-05 12:59:05,000 - app.http - INFO - GET /api/orders 200 74ms
+2026-03-05 12:59:08,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 12:59:08,349 - app.payments - ERROR - Charge for order 1248 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 12:59:11,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 12:59:11,783 - app.payments - ERROR - Charge for order 4781 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 12:59:11,946 - app.db - ERROR - Checkout 2764 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 12:59:12,000 - app.http - INFO - GET /api/orders 200 64ms
+2026-03-05 12:59:17,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 12:59:18,093 - app.tax - ERROR - Tax lookup failed for region 86
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 91, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 12:59:20,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 12:59:21,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 12:59:26,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 12:59:28,000 - app.http - INFO - GET /api/products 200 78ms
+2026-03-05 12:59:32,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 12:59:33,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 12:59:36,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 12:59:39,000 - app.http - INFO - GET /api/orders 200 82ms
+2026-03-05 12:59:42,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 12:59:46,000 - app.http - INFO - GET /api/products 200 47ms
+2026-03-05 12:59:48,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 12:59:53,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 12:59:56,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 12:59:58,000 - app.http - INFO - GET /api/orders 200 29ms

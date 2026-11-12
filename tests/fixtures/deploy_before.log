@@ -1,0 +1,1030 @@
+2026-03-05 10:00:03,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 10:00:09,000 - app.http - INFO - GET /api/products 200 62ms
+2026-03-05 10:00:16,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 10:00:19,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 10:00:20,421 - app.cache - WARNING - Cache entry for product 579 could not be decoded; refetching
+2026-03-05 10:00:28,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 10:00:33,291 - app.tax - ERROR - Tax lookup failed for region 78
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:00:35,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 10:00:37,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 10:00:45,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 10:00:47,818 - app.db - ERROR - Checkout 4387 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:00:49,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:00:55,923 - app.db - ERROR - Checkout 3492 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:00:58,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 10:01:00,000 - app.http - INFO - GET /api/products 200 81ms
+2026-03-05 10:01:08,627 - app.payments - ERROR - Charge for order 6205 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 10:01:09,000 - app.http - INFO - GET /api/orders 200 62ms
+2026-03-05 10:01:10,108 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:01:11,033 - app.cache - WARNING - Cache entry for product 246 could not be decoded; refetching
+2026-03-05 10:01:17,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 10:01:23,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 10:01:28,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 10:01:34,000 - app.http - INFO - GET /api/cart 200 13ms
+2026-03-05 10:01:36,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 10:01:43,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 10:01:52,000 - app.http - INFO - GET /api/cart 200 8ms
+2026-03-05 10:01:54,540 - app.cache - WARNING - Cache entry for product 495 could not be decoded; refetching
+2026-03-05 10:01:57,000 - app.http - INFO - GET /api/products 200 46ms
+2026-03-05 10:02:03,000 - app.http - INFO - GET /api/orders 200 80ms
+2026-03-05 10:02:07,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:02:13,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:02:16,121 - app.cache - WARNING - Cache entry for product 683 could not be decoded; refetching
+2026-03-05 10:02:20,000 - app.http - INFO - GET /api/orders 200 68ms
+2026-03-05 10:02:24,000 - app.http - INFO - GET /api/cart 200 89ms
+2026-03-05 10:02:30,000 - app.http - INFO - GET /api/products 200 63ms
+2026-03-05 10:02:41,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 10:02:45,000 - app.http - INFO - GET /api/cart 200 75ms
+2026-03-05 10:02:48,000 - app.http - INFO - GET /api/products 200 37ms
+2026-03-05 10:02:56,000 - app.http - INFO - GET /api/orders 200 34ms
+2026-03-05 10:03:04,000 - app.http - INFO - GET /api/cart 200 41ms
+2026-03-05 10:03:06,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 10:03:10,256 - app.tax - ERROR - Tax lookup failed for region 64
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:03:16,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 10:03:21,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 10:03:26,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 10:03:29,313 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:03:30,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 10:03:41,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 10:03:43,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 10:03:48,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 10:03:57,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 10:04:03,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 10:04:06,743 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:04:10,000 - app.http - INFO - GET /api/orders 200 85ms
+2026-03-05 10:04:13,000 - app.http - INFO - GET /api/cart 200 39ms
+2026-03-05 10:04:20,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 10:04:25,415 - app.cache - WARNING - Cache entry for product 277 could not be decoded; refetching
+2026-03-05 10:04:26,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 10:04:30,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 10:04:36,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 10:04:43,000 - app.http - INFO - GET /api/orders 200 17ms
+2026-03-05 10:04:48,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 10:04:57,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 10:05:01,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 10:05:07,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 10:05:07,822 - app.tax - ERROR - Tax lookup failed for region 82
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:05:09,297 - app.db - ERROR - Checkout 7160 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:05:16,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 10:05:17,089 - app.tax - ERROR - Tax lookup failed for region 31
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:05:17,344 - app.cache - WARNING - Cache entry for product 632 could not be decoded; refetching
+2026-03-05 10:05:23,000 - app.http - INFO - GET /api/orders 200 21ms
+2026-03-05 10:05:27,000 - app.http - INFO - GET /api/cart 200 87ms
+2026-03-05 10:05:33,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 10:05:39,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 10:05:43,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 10:05:45,134 - app.cache - WARNING - Cache entry for product 369 could not be decoded; refetching
+2026-03-05 10:05:50,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 10:05:56,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 10:06:01,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 10:06:09,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 10:06:13,291 - app.tax - ERROR - Tax lookup failed for region 34
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:06:17,000 - app.http - INFO - GET /api/orders 200 78ms
+2026-03-05 10:06:18,000 - app.http - INFO - GET /api/cart 200 10ms
+2026-03-05 10:06:20,249 - app.cache - WARNING - Cache entry for product 681 could not be decoded; refetching
+2026-03-05 10:06:25,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 10:06:33,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 10:06:36,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 10:06:44,000 - app.http - INFO - GET /api/products 200 42ms
+2026-03-05 10:06:51,000 - app.http - INFO - GET /api/orders 200 14ms
+2026-03-05 10:06:54,000 - app.http - INFO - GET /api/cart 200 16ms
+2026-03-05 10:07:01,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 10:07:11,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 10:07:12,000 - app.http - INFO - GET /api/cart 200 81ms
+2026-03-05 10:07:18,959 - app.db - ERROR - Checkout 9843 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:07:20,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 10:07:28,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 10:07:31,000 - app.http - INFO - GET /api/cart 200 80ms
+2026-03-05 10:07:39,000 - app.http - INFO - GET /api/products 200 78ms
+2026-03-05 10:07:43,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 10:07:49,000 - app.http - INFO - GET /api/cart 200 85ms
+2026-03-05 10:07:49,767 - app.db - ERROR - Checkout 5885 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:07:55,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 10:08:01,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 10:08:07,000 - app.http - INFO - GET /api/cart 200 29ms
+2026-03-05 10:08:13,000 - app.http - INFO - GET /api/products 200 85ms
+2026-03-05 10:08:19,737 - app.inventory - ERROR - Stock sync for SKU 40860 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 10:08:22,000 - app.http - INFO - GET /api/orders 200 30ms
+2026-03-05 10:08:24,976 - app.db - ERROR - Checkout 6527 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:08:27,954 - app.cache - WARNING - Cache entry for product 440 could not be decoded; refetching
+2026-03-05 10:08:29,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 10:08:33,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 10:08:33,054 - app.cache - WARNING - Cache entry for product 757 could not be decoded; refetching
+2026-03-05 10:08:36,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 10:08:42,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 10:08:48,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 10:08:58,000 - app.http - INFO - GET /api/orders 200 37ms
+2026-03-05 10:09:01,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 10:09:07,251 - app.tax - ERROR - Tax lookup failed for region 32
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:09:08,000 - app.http - INFO - GET /api/products 200 58ms
+2026-03-05 10:09:16,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 10:09:20,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:09:20,802 - app.cache - WARNING - Cache entry for product 138 could not be decoded; refetching
+2026-03-05 10:09:23,738 - app.cache - WARNING - Cache entry for product 787 could not be decoded; refetching
+2026-03-05 10:09:25,000 - app.http - INFO - GET /api/products 200 13ms
+2026-03-05 10:09:31,000 - app.http - INFO - GET /api/orders 200 34ms
+2026-03-05 10:09:31,806 - app.cache - WARNING - Cache entry for product 248 could not be decoded; refetching
+2026-03-05 10:09:39,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 10:09:40,773 - app.db - ERROR - Checkout 7425 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:09:47,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 10:09:52,000 - app.http - INFO - GET /api/orders 200 14ms
+2026-03-05 10:09:56,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 10:10:01,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 10:10:01,412 - app.cache - WARNING - Cache entry for product 609 could not be decoded; refetching
+2026-03-05 10:10:06,000 - app.http - INFO - GET /api/orders 200 39ms
+2026-03-05 10:10:11,676 - app.payments - ERROR - Charge for order 9681 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 10:10:15,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 10:10:19,000 - app.http - INFO - GET /api/products 200 12ms
+2026-03-05 10:10:24,000 - app.http - INFO - GET /api/orders 200 27ms
+2026-03-05 10:10:32,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 10:10:40,000 - app.http - INFO - GET /api/products 200 78ms
+2026-03-05 10:10:43,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:10:50,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:10:54,614 - app.cache - WARNING - Cache entry for product 204 could not be decoded; refetching
+2026-03-05 10:10:57,000 - app.http - INFO - GET /api/products 200 47ms
+2026-03-05 10:11:05,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 10:11:10,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:11:16,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 10:11:18,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 10:11:24,481 - app.cache - WARNING - Cache entry for product 453 could not be decoded; refetching
+2026-03-05 10:11:26,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 10:11:30,000 - app.http - INFO - GET /api/products 200 7ms
+2026-03-05 10:11:35,421 - app.cache - WARNING - Cache entry for product 738 could not be decoded; refetching
+2026-03-05 10:11:40,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 10:11:42,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 10:11:48,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 10:11:49,837 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:11:56,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 10:12:00,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 10:12:09,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 10:12:14,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 10:12:22,934 - app.cache - WARNING - Cache entry for product 805 could not be decoded; refetching
+2026-03-05 10:12:23,000 - app.http - INFO - GET /api/cart 200 21ms
+2026-03-05 10:12:26,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 10:12:26,513 - app.inventory - ERROR - Stock sync for SKU 97109 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 10:12:30,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 10:12:36,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 10:12:42,000 - app.http - INFO - GET /api/products 200 68ms
+2026-03-05 10:12:45,578 - app.cache - WARNING - Cache entry for product 876 could not be decoded; refetching
+2026-03-05 10:12:52,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 10:12:58,000 - app.http - INFO - GET /api/cart 200 89ms
+2026-03-05 10:13:03,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 10:13:09,320 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:13:10,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 10:13:16,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 10:13:18,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 10:13:25,984 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:13:29,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 10:13:29,302 - app.inventory - ERROR - Stock sync for SKU 45821 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 10:13:32,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 10:13:32,416 - app.cache - WARNING - Cache entry for product 869 could not be decoded; refetching
+2026-03-05 10:13:35,288 - app.cache - WARNING - Cache entry for product 597 could not be decoded; refetching
+2026-03-05 10:13:41,000 - app.http - INFO - GET /api/products 200 47ms
+2026-03-05 10:13:42,910 - app.cache - WARNING - Cache entry for product 574 could not be decoded; refetching
+2026-03-05 10:13:45,000 - app.http - INFO - GET /api/orders 200 79ms
+2026-03-05 10:13:51,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 10:13:52,921 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:13:55,280 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:13:57,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 10:14:00,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 10:14:10,000 - app.http - INFO - GET /api/cart 200 8ms
+2026-03-05 10:14:10,890 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:14:14,000 - app.http - INFO - GET /api/products 200 81ms
+2026-03-05 10:14:18,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 10:14:24,000 - app.http - INFO - GET /api/cart 200 34ms
+2026-03-05 10:14:35,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 10:14:39,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 10:14:47,000 - app.http - INFO - GET /api/cart 200 67ms
+2026-03-05 10:14:50,000 - app.http - INFO - GET /api/products 200 6ms
+2026-03-05 10:14:56,000 - app.http - INFO - GET /api/orders 200 43ms
+2026-03-05 10:15:01,000 - app.http - INFO - GET /api/cart 200 83ms
+2026-03-05 10:15:07,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 10:15:13,000 - app.http - INFO - GET /api/orders 200 48ms
+2026-03-05 10:15:23,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 10:15:27,000 - app.http - INFO - GET /api/products 200 35ms
+2026-03-05 10:15:32,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 10:15:41,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 10:15:42,916 - app.checkout - ERROR - Coupon check failed for order 3958
+Traceback (most recent call last):
+  File "/srv/shop/app/coupons.py", line 33, in apply
+    rule = RULES[code]
+KeyError: 'SPRING26'
+2026-03-05 10:15:43,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:15:51,000 - app.http - INFO - GET /api/orders 200 30ms
+2026-03-05 10:15:55,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 10:16:01,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 10:16:08,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 10:16:12,430 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:16:13,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:16:17,568 - app.db - ERROR - Checkout 2424 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:16:21,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 10:16:22,858 - app.cache - WARNING - Cache entry for product 975 could not be decoded; refetching
+2026-03-05 10:16:24,000 - app.http - INFO - GET /api/orders 200 13ms
+2026-03-05 10:16:31,706 - app.cache - WARNING - Cache entry for product 518 could not be decoded; refetching
+2026-03-05 10:16:32,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 10:16:36,000 - app.http - INFO - GET /api/products 200 62ms
+2026-03-05 10:16:45,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 10:16:46,844 - app.cache - WARNING - Cache entry for product 544 could not be decoded; refetching
+2026-03-05 10:16:49,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 10:16:57,000 - app.http - INFO - GET /api/products 200 85ms
+2026-03-05 10:17:04,000 - app.http - INFO - GET /api/orders 200 68ms
+2026-03-05 10:17:11,000 - app.http - INFO - GET /api/cart 200 45ms
+2026-03-05 10:17:17,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 10:17:21,000 - app.http - INFO - GET /api/orders 200 46ms
+2026-03-05 10:17:24,000 - app.http - INFO - GET /api/cart 200 9ms
+2026-03-05 10:17:32,000 - app.http - INFO - GET /api/products 200 82ms
+2026-03-05 10:17:36,000 - app.http - INFO - GET /api/orders 200 40ms
+2026-03-05 10:17:46,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 10:17:50,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 10:17:58,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 10:18:05,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:18:07,120 - app.cache - WARNING - Cache entry for product 679 could not be decoded; refetching
+2026-03-05 10:18:09,000 - app.http - INFO - GET /api/products 200 63ms
+2026-03-05 10:18:13,000 - app.http - INFO - GET /api/orders 200 8ms
+2026-03-05 10:18:15,117 - app.cache - WARNING - Cache entry for product 638 could not be decoded; refetching
+2026-03-05 10:18:20,000 - app.http - INFO - GET /api/cart 200 35ms
+2026-03-05 10:18:25,000 - app.http - INFO - GET /api/products 200 11ms
+2026-03-05 10:18:26,381 - app.inventory - ERROR - Stock sync for SKU 96770 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 10:18:35,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 10:18:39,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 10:18:47,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 10:18:53,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 10:18:56,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 10:18:58,285 - app.tax - ERROR - Tax lookup failed for region 80
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:19:05,000 - app.http - INFO - GET /api/products 200 30ms
+2026-03-05 10:19:07,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 10:19:14,000 - app.http - INFO - GET /api/cart 200 27ms
+2026-03-05 10:19:23,000 - app.http - INFO - GET /api/products 200 6ms
+2026-03-05 10:19:27,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 10:19:35,000 - app.http - INFO - GET /api/cart 200 9ms
+2026-03-05 10:19:37,000 - app.http - INFO - GET /api/products 200 33ms
+2026-03-05 10:19:44,000 - app.http - INFO - GET /api/orders 200 49ms
+2026-03-05 10:19:47,338 - app.cache - WARNING - Cache entry for product 637 could not be decoded; refetching
+2026-03-05 10:19:52,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:19:58,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 10:20:01,000 - app.http - INFO - GET /api/orders 200 55ms
+2026-03-05 10:20:07,262 - app.db - ERROR - Checkout 4090 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:20:11,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 10:20:12,000 - app.http - INFO - GET /api/products 200 57ms
+2026-03-05 10:20:14,730 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:20:23,000 - app.http - INFO - GET /api/orders 200 54ms
+2026-03-05 10:20:25,000 - app.http - INFO - GET /api/cart 200 62ms
+2026-03-05 10:20:33,000 - app.http - INFO - GET /api/products 200 30ms
+2026-03-05 10:20:37,683 - app.checkout - ERROR - Coupon check failed for order 4701
+Traceback (most recent call last):
+  File "/srv/shop/app/coupons.py", line 33, in apply
+    rule = RULES[code]
+KeyError: 'SPRING26'
+2026-03-05 10:20:41,000 - app.http - INFO - GET /api/orders 200 5ms
+2026-03-05 10:20:45,000 - app.http - INFO - GET /api/cart 200 75ms
+2026-03-05 10:20:52,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 10:20:58,000 - app.http - INFO - GET /api/orders 200 48ms
+2026-03-05 10:21:03,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 10:21:05,533 - app.cache - WARNING - Cache entry for product 542 could not be decoded; refetching
+2026-03-05 10:21:11,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 10:21:12,000 - app.http - INFO - GET /api/orders 200 87ms
+2026-03-05 10:21:23,000 - app.http - INFO - GET /api/cart 200 20ms
+2026-03-05 10:21:25,000 - app.http - INFO - GET /api/products 200 36ms
+2026-03-05 10:21:33,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:21:38,000 - app.http - INFO - GET /api/cart 200 73ms
+2026-03-05 10:21:38,900 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:21:44,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 10:21:53,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 10:21:56,000 - app.http - INFO - GET /api/cart 200 69ms
+2026-03-05 10:22:00,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 10:22:09,000 - app.http - INFO - GET /api/orders 200 48ms
+2026-03-05 10:22:16,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 10:22:20,000 - app.http - INFO - GET /api/products 200 67ms
+2026-03-05 10:22:24,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 10:22:30,000 - app.http - INFO - GET /api/cart 200 59ms
+2026-03-05 10:22:33,430 - app.cache - WARNING - Cache entry for product 124 could not be decoded; refetching
+2026-03-05 10:22:36,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 10:22:42,266 - app.payments - ERROR - Charge for order 6423 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 10:22:46,000 - app.http - INFO - GET /api/orders 200 47ms
+2026-03-05 10:22:51,328 - app.cache - WARNING - Cache entry for product 155 could not be decoded; refetching
+2026-03-05 10:22:53,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:22:55,303 - app.cache - WARNING - Cache entry for product 842 could not be decoded; refetching
+2026-03-05 10:22:57,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 10:23:04,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 10:23:11,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 10:23:15,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 10:23:23,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:23:25,000 - app.http - INFO - GET /api/cart 200 61ms
+2026-03-05 10:23:34,000 - app.http - INFO - GET /api/products 200 76ms
+2026-03-05 10:23:38,000 - app.http - INFO - GET /api/orders 200 76ms
+2026-03-05 10:23:47,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 10:23:52,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 10:23:58,000 - app.http - INFO - GET /api/orders 200 37ms
+2026-03-05 10:24:02,000 - app.http - INFO - GET /api/cart 200 90ms
+2026-03-05 10:24:09,000 - app.http - INFO - GET /api/products 200 83ms
+2026-03-05 10:24:13,000 - app.http - INFO - GET /api/orders 200 43ms
+2026-03-05 10:24:15,138 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:24:19,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 10:24:28,000 - app.http - INFO - GET /api/products 200 39ms
+2026-03-05 10:24:34,000 - app.http - INFO - GET /api/orders 200 68ms
+2026-03-05 10:24:37,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 10:24:38,204 - app.db - ERROR - Checkout 7169 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:24:44,630 - app.cache - WARNING - Cache entry for product 543 could not be decoded; refetching
+2026-03-05 10:24:46,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 10:24:52,000 - app.http - INFO - GET /api/orders 200 5ms
+2026-03-05 10:24:52,749 - app.cache - WARNING - Cache entry for product 485 could not be decoded; refetching
+2026-03-05 10:24:54,611 - app.cache - WARNING - Cache entry for product 429 could not be decoded; refetching
+2026-03-05 10:24:58,000 - app.http - INFO - GET /api/cart 200 53ms
+2026-03-05 10:25:00,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 10:25:06,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 10:25:15,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 10:25:22,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 10:25:27,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:25:35,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 10:25:36,000 - app.http - INFO - GET /api/products 200 73ms
+2026-03-05 10:25:45,000 - app.http - INFO - GET /api/orders 200 57ms
+2026-03-05 10:25:49,748 - app.db - ERROR - Checkout 2795 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:25:51,000 - app.http - INFO - GET /api/cart 200 39ms
+2026-03-05 10:25:55,000 - app.http - INFO - GET /api/products 200 65ms
+2026-03-05 10:26:03,000 - app.http - INFO - GET /api/orders 200 21ms
+2026-03-05 10:26:08,000 - app.http - INFO - GET /api/cart 200 60ms
+2026-03-05 10:26:08,769 - app.cache - WARNING - Cache entry for product 908 could not be decoded; refetching
+2026-03-05 10:26:15,000 - app.http - INFO - GET /api/products 200 72ms
+2026-03-05 10:26:20,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 10:26:25,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 10:26:25,350 - app.payments - ERROR - Charge for order 6026 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 10:26:34,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 10:26:38,000 - app.http - INFO - GET /api/orders 200 21ms
+2026-03-05 10:26:47,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 10:26:48,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 10:26:55,000 - app.http - INFO - GET /api/orders 200 34ms
+2026-03-05 10:26:59,337 - app.db - ERROR - Checkout 6074 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:27:00,000 - app.http - INFO - GET /api/cart 200 41ms
+2026-03-05 10:27:08,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 10:27:13,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 10:27:21,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 10:27:26,451 - app.payments - ERROR - Charge for order 2741 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 10:27:27,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 10:27:30,000 - app.http - INFO - GET /api/orders 200 70ms
+2026-03-05 10:27:37,312 - app.cache - WARNING - Cache entry for product 707 could not be decoded; refetching
+2026-03-05 10:27:40,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 10:27:47,000 - app.http - INFO - GET /api/products 200 30ms
+2026-03-05 10:27:53,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 10:27:57,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 10:28:03,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:28:09,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 10:28:13,386 - app.payments - ERROR - Charge for order 4356 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 10:28:16,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 10:28:22,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 10:28:29,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 10:28:35,000 - app.http - INFO - GET /api/cart 200 32ms
+2026-03-05 10:28:35,898 - app.cache - WARNING - Cache entry for product 171 could not be decoded; refetching
+2026-03-05 10:28:40,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 10:28:46,000 - app.http - INFO - GET /api/orders 200 83ms
+2026-03-05 10:28:52,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:28:55,000 - app.http - INFO - GET /api/products 200 85ms
+2026-03-05 10:29:02,000 - app.http - INFO - GET /api/orders 200 28ms
+2026-03-05 10:29:08,000 - app.http - INFO - GET /api/cart 200 82ms
+2026-03-05 10:29:14,000 - app.http - INFO - GET /api/products 200 29ms
+2026-03-05 10:29:19,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 10:29:24,000 - app.http - INFO - GET /api/cart 200 22ms
+2026-03-05 10:29:31,000 - app.http - INFO - GET /api/products 200 21ms
+2026-03-05 10:29:41,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:29:44,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 10:29:48,000 - app.http - INFO - GET /api/products 200 60ms
+2026-03-05 10:29:57,000 - app.http - INFO - GET /api/orders 200 74ms
+2026-03-05 10:30:05,000 - app.http - INFO - GET /api/cart 200 21ms
+2026-03-05 10:30:07,000 - app.http - INFO - GET /api/products 200 56ms
+2026-03-05 10:30:08,029 - app.tax - ERROR - Tax lookup failed for region 33
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:30:17,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 10:30:18,000 - app.http - INFO - GET /api/cart 200 30ms
+2026-03-05 10:30:28,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 10:30:28,967 - app.db - ERROR - Checkout 5486 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:30:32,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 10:30:41,000 - app.http - INFO - GET /api/cart 200 69ms
+2026-03-05 10:30:47,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 10:30:52,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 10:30:54,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 10:30:57,250 - app.cache - WARNING - Cache entry for product 227 could not be decoded; refetching
+2026-03-05 10:31:00,000 - app.http - INFO - GET /api/products 200 8ms
+2026-03-05 10:31:06,000 - app.http - INFO - GET /api/orders 200 75ms
+2026-03-05 10:31:06,864 - app.cache - WARNING - Cache entry for product 557 could not be decoded; refetching
+2026-03-05 10:31:16,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 10:31:21,576 - app.db - ERROR - Checkout 8697 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:31:22,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 10:31:25,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 10:31:31,000 - app.http - INFO - GET /api/cart 200 19ms
+2026-03-05 10:31:36,741 - app.db - ERROR - Checkout 6433 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:31:37,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 10:31:40,809 - app.tax - ERROR - Tax lookup failed for region 29
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:31:41,248 - app.cache - WARNING - Cache entry for product 614 could not be decoded; refetching
+2026-03-05 10:31:43,000 - app.http - INFO - GET /api/orders 200 41ms
+2026-03-05 10:31:53,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 10:31:58,000 - app.http - INFO - GET /api/products 200 12ms
+2026-03-05 10:32:01,000 - app.http - INFO - GET /api/orders 200 64ms
+2026-03-05 10:32:06,000 - app.http - INFO - GET /api/cart 200 17ms
+2026-03-05 10:32:14,000 - app.http - INFO - GET /api/products 200 55ms
+2026-03-05 10:32:20,342 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:32:21,000 - app.http - INFO - GET /api/orders 200 59ms
+2026-03-05 10:32:28,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 10:32:31,457 - app.db - ERROR - Checkout 7265 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:32:33,000 - app.http - INFO - GET /api/products 200 31ms
+2026-03-05 10:32:40,000 - app.http - INFO - GET /api/orders 200 52ms
+2026-03-05 10:32:42,000 - app.http - INFO - GET /api/cart 200 86ms
+2026-03-05 10:32:42,894 - app.cache - WARNING - Cache entry for product 506 could not be decoded; refetching
+2026-03-05 10:32:53,000 - app.http - INFO - GET /api/products 200 10ms
+2026-03-05 10:32:55,000 - app.http - INFO - GET /api/orders 200 28ms
+2026-03-05 10:33:02,340 - app.payments - ERROR - Charge for order 5808 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3000 ms
+2026-03-05 10:33:03,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 10:33:08,000 - app.http - INFO - GET /api/products 200 52ms
+2026-03-05 10:33:15,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 10:33:22,000 - app.http - INFO - GET /api/cart 200 26ms
+2026-03-05 10:33:24,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 10:33:30,000 - app.http - INFO - GET /api/orders 200 46ms
+2026-03-05 10:33:36,000 - app.http - INFO - GET /api/cart 200 85ms
+2026-03-05 10:33:45,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 10:33:52,000 - app.http - INFO - GET /api/orders 200 29ms
+2026-03-05 10:33:58,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 10:34:02,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 10:34:08,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 10:34:17,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 10:34:21,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 10:34:26,000 - app.http - INFO - GET /api/orders 200 73ms
+2026-03-05 10:34:35,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 10:34:39,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 10:34:45,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 10:34:53,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 10:34:54,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 10:35:02,000 - app.http - INFO - GET /api/orders 200 65ms
+2026-03-05 10:35:06,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 10:35:14,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:35:22,000 - app.http - INFO - GET /api/orders 200 11ms
+2026-03-05 10:35:25,000 - app.http - INFO - GET /api/cart 200 39ms
+2026-03-05 10:35:35,000 - app.http - INFO - GET /api/products 200 43ms
+2026-03-05 10:35:38,000 - app.http - INFO - GET /api/orders 200 32ms
+2026-03-05 10:35:47,000 - app.http - INFO - GET /api/cart 200 56ms
+2026-03-05 10:35:52,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 10:35:58,000 - app.http - INFO - GET /api/orders 200 14ms
+2026-03-05 10:36:03,000 - app.http - INFO - GET /api/cart 200 70ms
+2026-03-05 10:36:08,919 - app.tax - ERROR - Tax lookup failed for region 14
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:36:09,000 - app.http - INFO - GET /api/products 200 87ms
+2026-03-05 10:36:13,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 10:36:19,636 - app.tax - ERROR - Tax lookup failed for region 69
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:36:21,000 - app.http - INFO - GET /api/cart 200 78ms
+2026-03-05 10:36:24,000 - app.http - INFO - GET /api/products 200 19ms
+2026-03-05 10:36:28,712 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:36:34,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 10:36:41,000 - app.http - INFO - GET /api/cart 200 35ms
+2026-03-05 10:36:44,000 - app.http - INFO - GET /api/products 200 61ms
+2026-03-05 10:36:51,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 10:36:54,000 - app.http - INFO - GET /api/cart 200 30ms
+2026-03-05 10:37:05,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 10:37:06,000 - app.http - INFO - GET /api/orders 200 17ms
+2026-03-05 10:37:10,995 - app.cache - WARNING - Cache entry for product 153 could not be decoded; refetching
+2026-03-05 10:37:14,000 - app.http - INFO - GET /api/cart 200 37ms
+2026-03-05 10:37:20,000 - app.http - INFO - GET /api/products 200 48ms
+2026-03-05 10:37:22,487 - app.cache - WARNING - Cache entry for product 811 could not be decoded; refetching
+2026-03-05 10:37:28,000 - app.http - INFO - GET /api/orders 200 74ms
+2026-03-05 10:37:29,107 - app.cache - WARNING - Cache entry for product 638 could not be decoded; refetching
+2026-03-05 10:37:34,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 10:37:40,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 10:37:42,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 10:37:51,000 - app.http - INFO - GET /api/cart 200 87ms
+2026-03-05 10:37:54,000 - app.http - INFO - GET /api/products 200 75ms
+2026-03-05 10:38:04,000 - app.http - INFO - GET /api/orders 200 90ms
+2026-03-05 10:38:06,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 10:38:13,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 10:38:18,979 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:38:20,931 - app.cache - WARNING - Cache entry for product 344 could not be decoded; refetching
+2026-03-05 10:38:21,000 - app.http - INFO - GET /api/orders 200 26ms
+2026-03-05 10:38:21,558 - app.cache - WARNING - Cache entry for product 413 could not be decoded; refetching
+2026-03-05 10:38:27,000 - app.http - INFO - GET /api/cart 200 74ms
+2026-03-05 10:38:34,000 - app.http - INFO - GET /api/products 200 81ms
+2026-03-05 10:38:35,094 - app.db - ERROR - Checkout 2668 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:38:36,000 - app.http - INFO - GET /api/orders 200 59ms
+2026-03-05 10:38:45,000 - app.http - INFO - GET /api/cart 200 58ms
+2026-03-05 10:38:48,672 - app.cache - WARNING - Cache entry for product 505 could not be decoded; refetching
+2026-03-05 10:38:50,000 - app.http - INFO - GET /api/products 200 72ms
+2026-03-05 10:38:56,962 - app.cache - WARNING - Cache entry for product 341 could not be decoded; refetching
+2026-03-05 10:38:57,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 10:39:02,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 10:39:10,000 - app.http - INFO - GET /api/products 200 41ms
+2026-03-05 10:39:14,900 - app.cache - WARNING - Cache entry for product 170 could not be decoded; refetching
+2026-03-05 10:39:15,000 - app.http - INFO - GET /api/orders 200 88ms
+2026-03-05 10:39:20,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 10:39:26,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 10:39:26,933 - app.cache - WARNING - Cache entry for product 848 could not be decoded; refetching
+2026-03-05 10:39:35,000 - app.http - INFO - GET /api/orders 200 42ms
+2026-03-05 10:39:36,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 10:39:43,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 10:39:48,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 10:39:55,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 10:40:05,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 10:40:06,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 10:40:07,938 - app.tax - ERROR - Tax lookup failed for region 84
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:40:17,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 10:40:18,000 - app.http - INFO - GET /api/products 200 79ms
+2026-03-05 10:40:29,000 - app.http - INFO - GET /api/orders 200 45ms
+2026-03-05 10:40:29,989 - app.cache - WARNING - Cache entry for product 992 could not be decoded; refetching
+2026-03-05 10:40:30,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 10:40:39,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 10:40:44,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 10:40:48,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:40:52,681 - app.cache - WARNING - Cache entry for product 477 could not be decoded; refetching
+2026-03-05 10:40:54,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 10:41:01,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 10:41:01,393 - app.tax - ERROR - Tax lookup failed for region 10
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:41:08,887 - app.cache - WARNING - Cache entry for product 659 could not be decoded; refetching
+2026-03-05 10:41:10,000 - app.http - INFO - GET /api/cart 200 19ms
+2026-03-05 10:41:12,000 - app.http - INFO - GET /api/products 200 84ms
+2026-03-05 10:41:21,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 10:41:24,000 - app.http - INFO - GET /api/cart 200 31ms
+2026-03-05 10:41:30,000 - app.http - INFO - GET /api/products 200 50ms
+2026-03-05 10:41:40,000 - app.http - INFO - GET /api/orders 200 24ms
+2026-03-05 10:41:42,000 - app.http - INFO - GET /api/cart 200 51ms
+2026-03-05 10:41:51,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 10:41:59,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 10:42:03,000 - app.http - INFO - GET /api/cart 200 81ms
+2026-03-05 10:42:04,431 - app.cache - WARNING - Cache entry for product 677 could not be decoded; refetching
+2026-03-05 10:42:08,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:42:16,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 10:42:20,000 - app.http - INFO - GET /api/cart 200 72ms
+2026-03-05 10:42:25,000 - app.http - INFO - GET /api/products 200 42ms
+2026-03-05 10:42:35,000 - app.http - INFO - GET /api/orders 200 21ms
+2026-03-05 10:42:36,626 - app.payments - ERROR - Charge for order 3594 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 10:42:37,000 - app.http - INFO - GET /api/cart 200 66ms
+2026-03-05 10:42:42,000 - app.http - INFO - GET /api/products 200 69ms
+2026-03-05 10:42:50,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 10:42:53,824 - app.cache - WARNING - Cache entry for product 268 could not be decoded; refetching
+2026-03-05 10:42:58,000 - app.http - INFO - GET /api/cart 200 50ms
+2026-03-05 10:43:02,000 - app.http - INFO - GET /api/products 200 39ms
+2026-03-05 10:43:10,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 10:43:15,960 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:43:17,000 - app.http - INFO - GET /api/cart 200 80ms
+2026-03-05 10:43:19,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:43:26,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 10:43:27,797 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:43:31,000 - app.http - INFO - GET /api/cart 200 36ms
+2026-03-05 10:43:40,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 10:43:43,000 - app.http - INFO - GET /api/orders 200 10ms
+2026-03-05 10:43:46,951 - app.tax - ERROR - Tax lookup failed for region 73
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:43:47,227 - app.cache - WARNING - Cache entry for product 765 could not be decoded; refetching
+2026-03-05 10:43:53,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 10:43:54,000 - app.http - INFO - GET /api/products 200 39ms
+2026-03-05 10:44:02,000 - app.http - INFO - GET /api/orders 200 59ms
+2026-03-05 10:44:06,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 10:44:12,000 - app.http - INFO - GET /api/products 200 18ms
+2026-03-05 10:44:19,000 - app.http - INFO - GET /api/orders 200 74ms
+2026-03-05 10:44:26,000 - app.http - INFO - GET /api/cart 200 14ms
+2026-03-05 10:44:27,455 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:44:30,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 10:44:40,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 10:44:43,144 - app.db - ERROR - Checkout 2546 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:44:47,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 10:44:51,000 - app.http - INFO - GET /api/products 200 66ms
+2026-03-05 10:44:56,000 - app.http - INFO - GET /api/orders 200 31ms
+2026-03-05 10:45:01,764 - app.cache - WARNING - Cache entry for product 531 could not be decoded; refetching
+2026-03-05 10:45:02,000 - app.http - INFO - GET /api/cart 200 48ms
+2026-03-05 10:45:06,580 - app.cache - WARNING - Cache entry for product 225 could not be decoded; refetching
+2026-03-05 10:45:09,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 10:45:12,000 - app.http - INFO - GET /api/orders 200 20ms
+2026-03-05 10:45:21,000 - app.http - INFO - GET /api/cart 200 84ms
+2026-03-05 10:45:25,000 - app.http - INFO - GET /api/products 200 61ms
+2026-03-05 10:45:33,000 - app.http - INFO - GET /api/orders 200 38ms
+2026-03-05 10:45:39,000 - app.http - INFO - GET /api/cart 200 24ms
+2026-03-05 10:45:39,134 - app.db - ERROR - Checkout 3936 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:45:40,061 - app.tax - ERROR - Tax lookup failed for region 33
+Traceback (most recent call last):
+  File "/srv/shop/app/tax.py", line 88, in rate_for
+    return TABLE[region]
+LookupError: no tax table loaded
+2026-03-05 10:45:44,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 10:45:53,000 - app.http - INFO - GET /api/orders 200 81ms
+2026-03-05 10:45:54,925 - app.cache - WARNING - Cache entry for product 173 could not be decoded; refetching
+2026-03-05 10:45:56,000 - app.http - INFO - GET /api/cart 200 42ms
+2026-03-05 10:46:04,000 - app.http - INFO - GET /api/products 200 28ms
+2026-03-05 10:46:09,000 - app.http - INFO - GET /api/orders 200 88ms
+2026-03-05 10:46:13,184 - app.db - ERROR - Checkout 4164 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:46:14,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 10:46:18,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 10:46:26,000 - app.http - INFO - GET /api/orders 200 15ms
+2026-03-05 10:46:34,000 - app.http - INFO - GET /api/cart 200 15ms
+2026-03-05 10:46:39,000 - app.http - INFO - GET /api/products 200 77ms
+2026-03-05 10:46:46,000 - app.http - INFO - GET /api/orders 200 67ms
+2026-03-05 10:46:51,100 - app.cache - WARNING - Cache entry for product 632 could not be decoded; refetching
+2026-03-05 10:46:53,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 10:46:56,000 - app.http - INFO - GET /api/products 200 6ms
+2026-03-05 10:46:59,411 - app.db - ERROR - Checkout 1597 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:47:00,000 - app.http - INFO - GET /api/orders 200 44ms
+2026-03-05 10:47:07,000 - app.http - INFO - GET /api/cart 200 89ms
+2026-03-05 10:47:15,536 - app.inventory - ERROR - Stock sync for SKU 25172 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 10:47:16,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 10:47:16,784 - app.payments - ERROR - Charge for order 9828 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 10:47:21,425 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:47:23,000 - app.http - INFO - GET /api/orders 200 43ms
+2026-03-05 10:47:27,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 10:47:32,000 - app.http - INFO - GET /api/products 200 23ms
+2026-03-05 10:47:37,000 - app.http - INFO - GET /api/orders 200 50ms
+2026-03-05 10:47:40,811 - app.cache - WARNING - Cache entry for product 233 could not be decoded; refetching
+2026-03-05 10:47:43,080 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:47:47,000 - app.http - INFO - GET /api/cart 200 46ms
+2026-03-05 10:47:50,000 - app.http - INFO - GET /api/products 200 20ms
+2026-03-05 10:47:56,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 10:48:04,000 - app.http - INFO - GET /api/cart 200 81ms
+2026-03-05 10:48:11,000 - app.http - INFO - GET /api/products 200 40ms
+2026-03-05 10:48:15,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 10:48:20,000 - app.http - INFO - GET /api/cart 200 63ms
+2026-03-05 10:48:20,126 - app.cache - WARNING - Cache entry for product 650 could not be decoded; refetching
+2026-03-05 10:48:26,000 - app.http - INFO - GET /api/products 200 33ms
+2026-03-05 10:48:33,000 - app.http - INFO - GET /api/orders 200 71ms
+2026-03-05 10:48:33,857 - app.db - ERROR - Checkout 8588 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:48:35,604 - app.inventory - ERROR - Stock sync for SKU 77621 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/inventory.py", line 120, in sync
+    warehouse.reserve(sku, qty)
+ConnectionError: warehouse API refused connection
+2026-03-05 10:48:37,000 - app.http - INFO - GET /api/cart 200 15ms
+2026-03-05 10:48:40,606 - app.db - ERROR - Checkout 2476 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:48:44,000 - app.http - INFO - GET /api/products 200 51ms
+2026-03-05 10:48:48,000 - app.http - INFO - GET /api/orders 200 51ms
+2026-03-05 10:48:55,589 - app.cache - WARNING - Cache entry for product 564 could not be decoded; refetching
+2026-03-05 10:48:59,000 - app.http - INFO - GET /api/cart 200 55ms
+2026-03-05 10:49:04,000 - app.http - INFO - GET /api/products 200 54ms
+2026-03-05 10:49:07,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 10:49:14,000 - app.http - INFO - GET /api/cart 200 54ms
+2026-03-05 10:49:22,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 10:49:28,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 10:49:31,000 - app.http - INFO - GET /api/cart 200 27ms
+2026-03-05 10:49:36,000 - app.http - INFO - GET /api/products 200 63ms
+2026-03-05 10:49:42,561 - app.payments - ERROR - Charge for order 4832 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 3001 ms
+2026-03-05 10:49:44,000 - app.http - INFO - GET /api/orders 200 7ms
+2026-03-05 10:49:49,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:49:54,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 10:49:54,000 - app.cache - WARNING - Cache entry for product 403 could not be decoded; refetching
+2026-03-05 10:50:01,000 - app.http - INFO - GET /api/orders 200 77ms
+2026-03-05 10:50:08,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 10:50:17,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 10:50:18,000 - app.http - INFO - GET /api/orders 200 79ms
+2026-03-05 10:50:26,249 - app.cache - WARNING - Cache entry for product 845 could not be decoded; refetching
+2026-03-05 10:50:28,000 - app.http - INFO - GET /api/cart 200 44ms
+2026-03-05 10:50:34,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 10:50:38,000 - app.http - INFO - GET /api/orders 200 15ms
+2026-03-05 10:50:44,000 - app.http - INFO - GET /api/cart 200 18ms
+2026-03-05 10:50:50,000 - app.http - INFO - GET /api/products 200 15ms
+2026-03-05 10:50:54,000 - app.http - INFO - GET /api/orders 200 86ms
+2026-03-05 10:50:59,306 - app.cache - WARNING - Cache entry for product 124 could not be decoded; refetching
+2026-03-05 10:51:03,102 - app.db - ERROR - Checkout 4712 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:51:05,000 - app.http - INFO - GET /api/cart 200 23ms
+2026-03-05 10:51:06,000 - app.http - INFO - GET /api/products 200 88ms
+2026-03-05 10:51:15,000 - app.http - INFO - GET /api/orders 200 36ms
+2026-03-05 10:51:23,000 - app.http - INFO - GET /api/cart 200 33ms
+2026-03-05 10:51:27,000 - app.http - INFO - GET /api/products 200 71ms
+2026-03-05 10:51:32,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 10:51:39,000 - app.http - INFO - GET /api/cart 200 49ms
+2026-03-05 10:51:42,332 - app.cache - WARNING - Cache entry for product 276 could not be decoded; refetching
+2026-03-05 10:51:44,000 - app.http - INFO - GET /api/products 200 47ms
+2026-03-05 10:51:51,064 - app.cache - WARNING - Cache entry for product 551 could not be decoded; refetching
+2026-03-05 10:51:53,000 - app.http - INFO - GET /api/orders 200 22ms
+2026-03-05 10:51:57,000 - app.http - INFO - GET /api/cart 200 67ms
+2026-03-05 10:52:04,000 - app.http - INFO - GET /api/products 200 14ms
+2026-03-05 10:52:11,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 10:52:11,916 - app.cache - WARNING - Cache entry for product 560 could not be decoded; refetching
+2026-03-05 10:52:12,000 - app.http - INFO - GET /api/cart 200 57ms
+2026-03-05 10:52:23,000 - app.http - INFO - GET /api/products 200 49ms
+2026-03-05 10:52:24,000 - app.http - INFO - GET /api/orders 200 53ms
+2026-03-05 10:52:26,626 - app.payments - ERROR - Charge for order 9198 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 10:52:30,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 10:52:40,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:52:42,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 10:52:46,033 - app.db - ERROR - Checkout 3573 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:52:50,000 - app.http - INFO - GET /api/cart 200 6ms
+2026-03-05 10:52:54,000 - app.http - INFO - GET /api/products 200 58ms
+2026-03-05 10:53:03,000 - app.http - INFO - GET /api/orders 200 23ms
+2026-03-05 10:53:05,173 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:53:06,835 - app.cache - WARNING - Cache entry for product 643 could not be decoded; refetching
+2026-03-05 10:53:07,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 10:53:17,000 - app.http - INFO - GET /api/products 200 53ms
+2026-03-05 10:53:23,000 - app.http - INFO - GET /api/orders 200 26ms
+2026-03-05 10:53:26,000 - app.http - INFO - GET /api/cart 200 31ms
+2026-03-05 10:53:31,406 - app.cache - WARNING - Cache entry for product 244 could not be decoded; refetching
+2026-03-05 10:53:33,000 - app.http - INFO - GET /api/products 200 59ms
+2026-03-05 10:53:37,127 - app.db - ERROR - Checkout 8107 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:53:40,000 - app.http - INFO - GET /api/orders 200 42ms
+2026-03-05 10:53:44,000 - app.http - INFO - GET /api/cart 200 12ms
+2026-03-05 10:53:51,000 - app.http - INFO - GET /api/products 200 44ms
+2026-03-05 10:53:59,000 - app.http - INFO - GET /api/orders 200 19ms
+2026-03-05 10:54:02,000 - app.http - INFO - GET /api/cart 200 87ms
+2026-03-05 10:54:07,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 10:54:12,000 - app.http - INFO - GET /api/orders 200 63ms
+2026-03-05 10:54:18,000 - app.http - INFO - GET /api/cart 200 79ms
+2026-03-05 10:54:27,000 - app.http - INFO - GET /api/products 200 9ms
+2026-03-05 10:54:32,000 - app.http - INFO - GET /api/orders 200 18ms
+2026-03-05 10:54:37,000 - app.http - INFO - GET /api/cart 200 28ms
+2026-03-05 10:54:44,000 - app.http - INFO - GET /api/products 200 32ms
+2026-03-05 10:54:52,000 - app.http - INFO - GET /api/orders 200 35ms
+2026-03-05 10:54:57,365 - app.cache - WARNING - Cache entry for product 808 could not be decoded; refetching
+2026-03-05 10:54:58,000 - app.http - INFO - GET /api/cart 200 65ms
+2026-03-05 10:55:04,000 - app.http - INFO - GET /api/products 200 70ms
+2026-03-05 10:55:07,000 - app.http - INFO - GET /api/orders 200 61ms
+2026-03-05 10:55:13,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 10:55:21,000 - app.http - INFO - GET /api/products 200 27ms
+2026-03-05 10:55:26,000 - app.http - INFO - GET /api/orders 200 85ms
+2026-03-05 10:55:27,599 - app.cache - WARNING - Cache entry for product 336 could not be decoded; refetching
+2026-03-05 10:55:34,000 - app.http - INFO - GET /api/cart 200 75ms
+2026-03-05 10:55:39,000 - app.http - INFO - GET /api/products 200 38ms
+2026-03-05 10:55:45,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 10:55:50,000 - app.http - INFO - GET /api/cart 200 89ms
+2026-03-05 10:55:53,046 - app.cache - WARNING - Cache entry for product 413 could not be decoded; refetching
+2026-03-05 10:55:58,000 - app.http - INFO - GET /api/products 200 16ms
+2026-03-05 10:56:03,000 - app.http - INFO - GET /api/orders 200 33ms
+2026-03-05 10:56:08,145 - app.payments - ERROR - Charge for order 4246 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/payments.py", line 77, in charge
+    resp = client.post(url, json=body, timeout=3)
+TimeoutError: payment gateway did not respond within 2999 ms
+2026-03-05 10:56:09,000 - app.http - INFO - GET /api/cart 200 11ms
+2026-03-05 10:56:13,000 - app.http - INFO - GET /api/products 200 22ms
+2026-03-05 10:56:21,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 10:56:22,031 - app.cache - WARNING - Cache entry for product 565 could not be decoded; refetching
+2026-03-05 10:56:28,000 - app.http - INFO - GET /api/cart 200 40ms
+2026-03-05 10:56:30,000 - app.http - INFO - GET /api/products 200 89ms
+2026-03-05 10:56:37,000 - app.http - INFO - GET /api/orders 200 6ms
+2026-03-05 10:56:43,416 - app.db - ERROR - Checkout 2190 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:56:45,000 - app.http - INFO - GET /api/cart 200 52ms
+2026-03-05 10:56:47,920 - app.cache - WARNING - Cache entry for product 421 could not be decoded; refetching
+2026-03-05 10:56:51,000 - app.http - INFO - GET /api/products 200 36ms
+2026-03-05 10:56:59,000 - app.http - INFO - GET /api/orders 200 58ms
+2026-03-05 10:57:04,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 10:57:07,315 - app.cache - WARNING - Cache entry for product 432 could not be decoded; refetching
+2026-03-05 10:57:09,000 - app.http - INFO - GET /api/products 200 25ms
+2026-03-05 10:57:14,000 - app.http - INFO - GET /api/orders 200 23ms
+2026-03-05 10:57:17,228 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:57:20,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:57:25,000 - app.http - INFO - GET /api/products 200 86ms
+2026-03-05 10:57:35,000 - app.http - INFO - GET /api/orders 200 84ms
+2026-03-05 10:57:38,000 - app.http - INFO - GET /api/cart 200 71ms
+2026-03-05 10:57:44,349 - app.db - ERROR - Checkout 7996 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:57:46,000 - app.http - INFO - GET /api/products 200 11ms
+2026-03-05 10:57:49,000 - app.http - INFO - GET /api/orders 200 78ms
+2026-03-05 10:57:55,000 - app.http - INFO - GET /api/cart 200 5ms
+2026-03-05 10:57:55,510 - app.cache - WARNING - Cache entry for product 246 could not be decoded; refetching
+2026-03-05 10:58:01,000 - app.http - INFO - GET /api/products 200 24ms
+2026-03-05 10:58:07,000 - app.http - INFO - GET /api/orders 200 15ms
+2026-03-05 10:58:14,000 - app.http - INFO - GET /api/cart 200 39ms
+2026-03-05 10:58:22,000 - app.http - INFO - GET /api/products 200 72ms
+2026-03-05 10:58:24,000 - app.http - INFO - GET /api/orders 200 66ms
+2026-03-05 10:58:31,949 - app.db - ERROR - Checkout 9381 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:58:35,000 - app.http - INFO - GET /api/cart 200 64ms
+2026-03-05 10:58:36,000 - app.http - INFO - GET /api/products 200 80ms
+2026-03-05 10:58:43,882 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:58:44,314 - app.api - WARNING - Deprecated endpoint /v1/cart called; scheduled for removal
+2026-03-05 10:58:46,000 - app.http - INFO - GET /api/orders 200 69ms
+2026-03-05 10:58:50,000 - app.http - INFO - GET /api/cart 200 7ms
+2026-03-05 10:58:55,000 - app.http - INFO - GET /api/products 200 58ms
+2026-03-05 10:59:01,000 - app.http - INFO - GET /api/orders 200 16ms
+2026-03-05 10:59:02,142 - app.db - ERROR - Checkout 4366 failed
+Traceback (most recent call last):
+  File "/srv/shop/app/db.py", line 41, in acquire
+    conn = self.pool.get(timeout=2)
+queue.Empty: connection pool exhausted (size=20)
+2026-03-05 10:59:09,000 - app.http - INFO - GET /api/cart 200 31ms
+2026-03-05 10:59:12,000 - app.http - INFO - GET /api/products 200 74ms
+2026-03-05 10:59:21,000 - app.http - INFO - GET /api/orders 200 72ms
+2026-03-05 10:59:27,000 - app.http - INFO - GET /api/cart 200 25ms
+2026-03-05 10:59:32,000 - app.http - INFO - GET /api/products 200 45ms
+2026-03-05 10:59:38,000 - app.http - INFO - GET /api/orders 200 56ms
+2026-03-05 10:59:38,956 - app.cache - WARNING - Cache entry for product 895 could not be decoded; refetching
+2026-03-05 10:59:42,000 - app.http - INFO - GET /api/cart 200 76ms
+2026-03-05 10:59:50,000 - app.http - INFO - GET /api/products 200 64ms
+2026-03-05 10:59:59,000 - app.http - INFO - GET /api/orders 200 13ms

@@ -108,7 +108,7 @@ After setup, use the synthetic files in `tests/fixtures/`:
 2. **0:25 — Overview:** open the import's Overview. Compare the volume timeline and top groups; the connection timeout group begins around 11:10 UTC.
 3. **0:50 — Incidents:** open **View incidents**. Search for `NullPointer` to see two separate groups, then clear the search and filter activity to ongoing to isolate the timeout group.
 4. **1:10 — Investigation:** open `SQLTransientConnectionException`, inspect the exception chain and occurrence timeline, set status to investigating and add a note. Reload to see the saved status and note; export CSV or Markdown.
-5. **1:40 — Compare:** import `telemetry.csv` to inspect numeric metrics and unusual periods. Re-upload `spring_boot.log` to see the duplicate-import response rather than another run.
+5. **1:40 — Other inputs:** import `telemetry.csv` to inspect numeric metrics and unusual periods. Re-upload `spring_boot.log` to see the duplicate-import response rather than another run.
 
 `python_app.log`, `node_express.log` and `pino_payments.jsonl` exercise the other parser families. All fixtures are generated data, not real incidents.
 
@@ -124,6 +124,28 @@ backup/restore, auth, log-leak checks), run `python scripts/docker_verify.py` af
 `docker build -t stacktriage:verify .`; see [deployment](docs/deployment.md#repeatable-container-verification).
 No public deployment exists; the supported demo is local Docker or `stacktriage serve`.
 
+## Compare before and after a deployment
+
+Choose a **baseline** import (logs before a change) and a **target** import (logs after it) on the **Compare** page, or call `GET /api/imports/{baseline}/compare/{target}`. Every error group is classified as **new** (only in the target), **disappeared** (absent from the target capture, which is not proof it was fixed) or **recurring**, with an increase/decrease verdict only when the evidence supports one:
+
+- Rates are **per 1,000 parsed events** by default, so a longer or busier capture is not an increase by itself; **per minute** is available when both captures have usable timestamps, and rows where the two bases disagree are flagged.
+- An exact binomial test on the two counts, corrected across groups with Benjamini-Hochberg, plus a minimum 1.5x rate ratio decide `increased`/`decreased`; small counts are `insufficient_data`.
+- Groups currently marked **resolved** that appear in the target are flagged for a second look; the review status has no fix date, so this is not called a confirmed regression.
+- Warnings cover different formats or services, overlapping or reversed captures, missing timestamps, truncation and very different capture lengths. Results export as CSV, Markdown or JSON, and each row links to the existing investigation page.
+
+Reproducible demo with a synthetic pair (traffic doubles after the "deployment"); this is actual output against a local server:
+
+```text
+$ python scripts/demo.py --compare
+baseline: deploy_before.log -> import 1 (770 events)
+target: deploy_after.log -> import 2 (1548 events)
+Simulated an earlier fix: marked the warehouse ConnectionError group as resolved.
+Comparison: 2 new, 2 increased, 1 decreased, 2 absent from target, 1 marked resolved but observed; matches the declared ground truth
+Open http://127.0.0.1:8000/compare?baseline=1&target=2 in the browser.
+```
+
+The connection-pool error doubles in absolute count but not per 1,000 events, so it is reported as no clear change (with a note that the per-minute view differs). The tax `LookupError` appears as one disappeared and one new group because the deployment moved its line number: matching is exact on fingerprints and nothing is merged fuzzily. Ground truth is declared in [`scripts/make_compare_fixtures.py`](scripts/make_compare_fixtures.py); design and limits are in [architecture](docs/architecture.md#import-comparison).
+
 ## Screenshots
 
 | Overview | Import result |
@@ -137,6 +159,10 @@ No public deployment exists; the supported demo is local Docker or `stacktriage 
 | Mobile incidents | Dark overview |
 |---|---|
 | ![Mobile incidents](docs/screenshots/mobile-incidents.png) | ![Dark overview](docs/screenshots/dark-overview.png) |
+
+| Compare (before vs after a deployment) | Compare on mobile |
+|---|---|
+| ![Compare imports](docs/screenshots/compare.png) | ![Compare on mobile](docs/screenshots/compare-mobile.png) |
 
 ## Architecture and persistence
 

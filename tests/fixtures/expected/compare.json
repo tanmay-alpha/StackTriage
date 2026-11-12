@@ -1,0 +1,84 @@
+{
+  "baseline": {
+    "file": "deploy_before.log",
+    "total_events": 770
+  },
+  "target": {
+    "file": "deploy_after.log",
+    "total_events": 1548
+  },
+  "groups": [
+    {
+      "id": "pool_exhausted",
+      "baseline_count": 30,
+      "target_count": 60,
+      "category": "recurring",
+      "change": "no_clear_change",
+      "why": "Count doubles with traffic; rate per 1,000 events is unchanged."
+    },
+    {
+      "id": "payment_timeout",
+      "baseline_count": 12,
+      "target_count": 150,
+      "category": "recurring",
+      "change": "increased",
+      "why": "Regression introduced by the deployment."
+    },
+    {
+      "id": "cache_decode",
+      "baseline_count": 80,
+      "target_count": 20,
+      "category": "recurring",
+      "change": "decreased",
+      "why": "Improved after the deployment."
+    },
+    {
+      "id": "currency_none",
+      "baseline_count": 0,
+      "target_count": 45,
+      "category": "new",
+      "change": null,
+      "why": "New error type after the deployment."
+    },
+    {
+      "id": "legacy_endpoint",
+      "baseline_count": 25,
+      "target_count": 0,
+      "category": "disappeared",
+      "change": null,
+      "why": "Absent from the target capture."
+    },
+    {
+      "id": "inventory_sync",
+      "baseline_count": 6,
+      "target_count": 40,
+      "category": "recurring",
+      "change": "increased",
+      "why": "Marked resolved in the demo before comparing: resolved but observed again."
+    },
+    {
+      "id": "coupon_missing",
+      "baseline_count": 2,
+      "target_count": 3,
+      "category": "recurring",
+      "change": "insufficient_data",
+      "why": "Too few occurrences to judge."
+    },
+    {
+      "id": "tax_before_shift",
+      "baseline_count": 15,
+      "target_count": 0,
+      "category": "disappeared",
+      "change": null,
+      "why": "Fingerprint split by a shifted line number."
+    },
+    {
+      "id": "tax_after_shift",
+      "baseline_count": 0,
+      "target_count": 30,
+      "category": "new",
+      "change": null,
+      "why": "Fingerprint split by a shifted line number."
+    }
+  ]
+}

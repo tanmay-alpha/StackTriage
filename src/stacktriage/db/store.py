@@ -15,6 +15,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
 from ..analysis import Analysis, analyze
+from ..compare import GroupStats, ImportStats
+from ..grouping import OVERFLOW_KEY
 from ..models import DEFAULT_LIMITS, Limits, LogEvent
 from ..parsers import parse
 from .models import STATUSES, Event, Group, Import, Note, Triage
@@ -313,3 +315,31 @@ def overview_totals(s: Session) -> dict:
         "groups": s.scalar(select(func.count()).select_from(Group)) or 0,
     }
 
+
+# --------------------------------------------------------------- comparison
+def comparison_inputs(s: Session, imp: Import) -> tuple[ImportStats, list[GroupStats]]:
+    """Aggregates one side of a comparison needs: only the group columns used (no samples, traces or
+    per-window series), one primary-key range scan bounded by the per-import group cap. The synthetic
+    overflow group pools unrelated error types once the cap is hit, so it is excluded and reported."""
+    cols = (Group.fingerprint, Group.title, Group.service, Group.exc_type, Group.frame, Group.max_level,
+            Group.count, Group.untimed_count, Group.first_seen_ms, Group.last_seen_ms)
+    groups = [GroupStats(*row) for row in s.execute(select(*cols).where(Group.import_id == imp.id)).all()]
+    capped = any(g.fingerprint == OVERFLOW_KEY for g in groups)
+    # Persisted timeline buckets count exactly the stored timestamped events (parser diagnostics can count a
+    # record that the event limit then discarded).
+    timed = sum(int(b.get("total", 0)) for b in imp.timeline)
+    stats = ImportStats(
+        id=imp.id, format=imp.format, event_count=imp.event_count, untimed_events=max(0, imp.event_count - timed),
+        first_ms=imp.first_event_ms, last_ms=imp.last_event_ms, services=dict(imp.service_counts),
+        truncated=bool(imp.diagnostics.get("truncated")), groups_capped=capped)
+    return stats, [g for g in groups if g.fingerprint != OVERFLOW_KEY]
+
+
+def triage_for(s: Session, fingerprints: list[str]) -> dict[str, tuple[str, int]]:
+    """{fingerprint: (status, updated_ms)} for fingerprints with a stored review status (chunked IN lists)."""
+    out: dict[str, tuple[str, int]] = {}
+    for i in range(0, len(fingerprints), 500):
+        chunk = fingerprints[i:i + 500]
+        rows = s.execute(select(Triage.fingerprint, Triage.status, Triage.updated_ms).where(Triage.fingerprint.in_(chunk)))
+        out.update({fp: (st, ms) for fp, st, ms in rows})
+    return out
