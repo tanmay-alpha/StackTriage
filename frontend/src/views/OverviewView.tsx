@@ -85,7 +85,12 @@ export function OverviewView() {
           </p>
         </div>
         <div className="page-tools">
-          {list.length > 1 ? <ImportPicker imports={list} value={selected.id} onChange={(v) => setParams({ import: String(v) }, { replace: true })} /> : null}
+          {list.length > 1 ? (
+            <>
+              <ImportPicker imports={list} value={selected.id} onChange={(v) => setParams({ import: String(v) }, { replace: true })} />
+              <LinkButton to={`/compare?target=${selected.id}`}>Compare with another import</LinkButton>
+            </>
+          ) : null}
           <LinkButton to={`/imports/${selected.id}/incidents`} variant="primary">
             View incidents
           </LinkButton>

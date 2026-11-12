@@ -175,4 +175,73 @@ export interface Overview {
   status_counts: Record<string, number>;
 }
 
+/* ---- import comparison (baseline = before a change, target = after) ---- */
+export type CompareBasis = "events" | "time";
+export type CompareCategory = "new" | "disappeared" | "recurring";
+export type CompareChange = "increased" | "decreased" | "no_clear_change" | "insufficient_data";
+export type CompareFilter = CompareCategory | CompareChange | "resolved_observed";
+export type CompareEvidence = "significant" | "weak" | "low_sample";
+
+export interface CompareSide extends ImportSummary {
+  duration_seconds: number | null;
+  timed_events: number;
+  untimed_events: number;
+  services: Record<string, number>;
+  time_valid: boolean;
+}
+
+export interface CompareRates {
+  count: number;
+  timed_count: number;
+  per_1k_events: number;
+  per_minute: number | null;
+  first_seen: string | null;
+  last_seen: string | null;
+  max_level: string;
+}
+
+export interface CompareItem {
+  fingerprint: string;
+  title: string;
+  service: string;
+  exc_type: string | null;
+  frame: string | null;
+  category: CompareCategory;
+  change: CompareChange | null;
+  status: Status;
+  status_updated_at: string | null;
+  resolved_observed: boolean;
+  baseline: CompareRates | null;
+  target: CompareRates | null;
+  rate_ratio: number | null;
+  percent_change: number | null;
+  p_value: number | null;
+  q_value: number | null;
+  evidence: CompareEvidence;
+  bases_disagree: boolean;
+  investigate_import_id: number;
+}
+
+export interface CompareWarning {
+  code: string;
+  message: string;
+}
+
+export interface CompareParameters {
+  alpha: number;
+  min_fold_change: number;
+  min_occurrences: number;
+  min_coverage_seconds: number;
+}
+
+export interface CompareResult extends Page<CompareItem> {
+  baseline: CompareSide;
+  target: CompareSide;
+  basis: CompareBasis;
+  time_comparable: boolean;
+  parameters: CompareParameters;
+  warnings: CompareWarning[];
+  totals: Record<CompareFilter, number>;
+}
+
 export const LOG_FORMATS = ["python", "node", "java", "jsonl", "csv", "text"] as const;

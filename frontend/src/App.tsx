@@ -8,6 +8,7 @@ import { Button, Dialog, EmptyState, ErrorState, LinkButton, LoadingBlock } from
 import { recallImport } from "./lib/lastImport";
 import { useAsync } from "./lib/useAsync";
 import { AppProviders, useAuth, useTheme, useTime, useToast } from "./state/app";
+import { CompareView } from "./views/CompareView";
 import { ImportView } from "./views/ImportView";
 import { IncidentsView } from "./views/IncidentsView";
 import { InvestigationView } from "./views/InvestigationView";
@@ -56,6 +57,9 @@ function Header() {
           </NavLink>
           <NavLink to="/incidents" className={`nav-link${onIncidents ? " active" : ""}`}>
             Incidents
+          </NavLink>
+          <NavLink to="/compare" className="nav-link">
+            Compare
           </NavLink>
         </nav>
         <div className="topbar-tools">
@@ -221,6 +225,7 @@ export function App() {
             <Route path="/incidents" element={<IncidentsRedirect />} />
             <Route path="/imports/:importId/incidents" element={<IncidentsView />} />
             <Route path="/imports/:importId/incidents/:fingerprint" element={<InvestigationView />} />
+            <Route path="/compare" element={<CompareView />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

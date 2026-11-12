@@ -146,7 +146,12 @@ export function IncidentsView() {
           </p>
         </div>
         <div className="page-tools">
-          {imports.data && imports.data.items.length > 1 ? <ImportPicker imports={imports.data.items} value={importId} onChange={(id) => navigate(`/imports/${id}/incidents`)} /> : null}
+          {imports.data && imports.data.items.length > 1 ? (
+            <>
+              <ImportPicker imports={imports.data.items} value={importId} onChange={(id) => navigate(`/imports/${id}/incidents`)} />
+              <LinkButton to={`/compare?target=${importId}`}>Compare with another import</LinkButton>
+            </>
+          ) : null}
           <ExportButtons importId={importId} />
         </div>
       </div>

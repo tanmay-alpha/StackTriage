@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api, downloadExport } from "../api/client";
+import type { ExportFormat } from "../api/client";
 import type { Status } from "../api/types";
 import { STATUSES } from "../api/types";
 import { useToast } from "../state/app";
@@ -34,19 +35,23 @@ export function StatusSelect({ fingerprint, value, label, onChanged, size = "sm"
   );
 }
 
-const FORMATS: { id: "csv" | "json" | "md"; label: string }[] = [
+const FORMATS: { id: ExportFormat; label: string }[] = [
   { id: "csv", label: "CSV" },
   { id: "md", label: "Markdown" },
   { id: "json", label: "JSON" },
 ];
 
 export function ExportButtons({ importId }: { importId: number }) {
+  return <DownloadButtons groupLabel="Export incident report for this import" noun="report" download={(f) => downloadExport(importId, f)} />;
+}
+
+export function DownloadButtons({ groupLabel, noun, download }: { groupLabel: string; noun: string; download: (format: ExportFormat) => Promise<string> }) {
   const { push } = useToast();
   const [busy, setBusy] = useState<string | null>(null);
-  const go = async (f: "csv" | "json" | "md") => {
+  const go = async (f: ExportFormat) => {
     setBusy(f);
     try {
-      const name = await downloadExport(importId, f);
+      const name = await download(f);
       push(`Downloaded ${name}.`);
     } catch (e) {
       push(e instanceof Error ? `Export failed: ${e.message}` : "Export failed.", "error");
@@ -55,10 +60,10 @@ export function ExportButtons({ importId }: { importId: number }) {
     }
   };
   return (
-    <div className="btn-group" role="group" aria-label="Export incident report for this import">
+    <div className="btn-group" role="group" aria-label={groupLabel}>
       <span className="btn-group-label">Export</span>
       {FORMATS.map((f) => (
-        <Button key={f.id} size="sm" busy={busy === f.id} onClick={() => void go(f.id)} aria-label={`Export report as ${f.label}`}>
+        <Button key={f.id} size="sm" busy={busy === f.id} onClick={() => void go(f.id)} aria-label={`Export ${noun} as ${f.label}`}>
           {f.label}
         </Button>
       ))}

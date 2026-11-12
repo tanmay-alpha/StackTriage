@@ -1,4 +1,4 @@
-import type { ImportSummary } from "./types";
+import type { CompareBasis, ImportSummary } from "./types";
 
 const KEY_STORAGE = "stacktriage.apiKey";
 
@@ -195,10 +195,12 @@ export function uploadLog(
 }
 
 /* ---- authenticated download (fetch -> Blob) ---- */
-export async function downloadExport(importId: number, format: "csv" | "json" | "md"): Promise<string> {
+export type ExportFormat = "csv" | "json" | "md";
+
+async function download(path: string, fallbackName: string): Promise<string> {
   let res: Response;
   try {
-    res = await fetch(`/api/imports/${importId}/export?format=${format}`, { headers: authHeaders() });
+    res = await fetch(`/api${path}`, { headers: authHeaders() });
   } catch {
     throw new ApiError(0, "Cannot reach the StackTriage server.");
   }
@@ -209,7 +211,7 @@ export async function downloadExport(importId: number, format: "csv" | "json" | 
   const blob = await res.blob();
   const cd = res.headers.get("Content-Disposition") ?? "";
   const m = /filename="?([^";]+)"?/i.exec(cd);
-  const name = m?.[1] ?? `stacktriage-${importId}.${format}`;
+  const name = m?.[1] ?? fallbackName;
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -219,4 +221,12 @@ export async function downloadExport(importId: number, format: "csv" | "json" | 
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
   return name;
+}
+
+export function downloadExport(importId: number, format: ExportFormat): Promise<string> {
+  return download(`/imports/${importId}/export${qs({ format })}`, `stacktriage-${importId}.${format}`);
+}
+
+export function downloadComparison(baselineId: number, targetId: number, format: ExportFormat, basis: CompareBasis): Promise<string> {
+  return download(`/imports/${baselineId}/compare/${targetId}/export${qs({ format, basis })}`, `stacktriage-compare-${baselineId}-vs-${targetId}.${format}`);
 }
