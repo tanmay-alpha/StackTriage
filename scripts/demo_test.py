@@ -53,6 +53,22 @@ def test_demo_reports_missing_key_without_uploading(client, monkeypatch, capsys)
     assert client.get("/api/imports", headers={"X-API-Key": "synthetic-demo-key-1234"}).json()["total"] == 0
 
 
+def test_compare_demo_verifies_ground_truth_and_is_repeatable(client, capsys):
+    headers = {"X-API-Key": "synthetic-demo-key-1234"}
+    assert demo.main(["--url", "http://testserver", "--compare"]) == 0
+    out = capsys.readouterr().out
+    assert "2 new, 2 increased, 1 decreased, 2 absent from target, 1 marked resolved but observed" in out
+    assert "Simulated an earlier fix" in out
+    fp = next(i["fingerprint"] for i in client.get("/api/imports/1/compare/2?limit=200", headers=headers).json()["items"]
+              if i["title"].startswith("ConnectionError"))
+    client.put(f"/api/incidents/{fp}/status", json={"status": "investigating"}, headers=headers)
+    assert demo.main(["--url", "http://testserver", "--compare"]) == 0  # rerun reuses imports, keeps the user's status
+    out = capsys.readouterr().out
+    assert "Simulated an earlier fix" not in out and "0 marked resolved but observed" in out
+    assert client.get("/api/imports", headers=headers).json()["total"] == 2
+    assert client.get(f"/api/imports/2/incidents/{fp}", headers=headers).json()["status"] == "investigating"
+
+
 def test_demo_rejects_fixture_count_mismatch(monkeypatch):
     monkeypatch.setattr(demo, "request_json", lambda *args: {
         "id": 1, "format": "java", "event_count": 0, "incident_count": 4, "duplicate": False,
