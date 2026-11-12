@@ -55,6 +55,37 @@ test("(g) all four views work at 390x844 without horizontal scrolling", async ({
   expect(await trace.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
 });
 
+test("every card label sits flush left in the stacked incident table", async ({ page, request }) => {
+  const imp = await seed(request, "node_express.log");
+  await page.goto(`/imports/${imp.id}/incidents`);
+  const card = page.locator("[data-testid=incidents-table] tbody tr").first();
+  await expect(card).toBeVisible();
+  const cells = card.locator("td[data-label]");
+  for (let i = 0; i < (await cells.count()); i++) {
+    const cell = cells.nth(i);
+    const label = await cell.getAttribute("data-label");
+    if ((await cell.evaluate((td) => getComputedStyle(td, "::before").display)) === "none") continue;
+    // The label is a ::before pseudo-element (not measurable via the DOM), so check pixels:
+    // the leftmost 16 CSS px of the cell must contain ink, i.e. the label starts at the left edge.
+    const png = (await cell.screenshot()).toString("base64");
+    const inked = await page.evaluate(async (b64) => {
+      const img = new Image();
+      img.src = `data:image/png;base64,${b64}`;
+      await img.decode();
+      const c = document.createElement("canvas");
+      [c.width, c.height] = [img.width, img.height];
+      const ctx = c.getContext("2d")!;
+      ctx.drawImage(img, 0, 0);
+      const strip = Math.round(16 * devicePixelRatio);
+      const px = ctx.getImageData(0, 0, strip, img.height).data;
+      const [r, g, b] = [px[0], px[1], px[2]];
+      for (let p = 0; p < px.length; p += 4) if (Math.abs(px[p] - r) + Math.abs(px[p + 1] - g) + Math.abs(px[p + 2] - b) > 120) return true;
+      return false;
+    }, png);
+    expect(inked, `"${label}" label is not flush left in its card row`).toBe(true);
+  }
+});
+
 test("long service names, filenames and messages remain readable on mobile", async ({ page, request }) => {
   const service = `checkout-${"x".repeat(80)}`;
   const message = `UpstreamFailure: ${"long-message-".repeat(80)}`;
