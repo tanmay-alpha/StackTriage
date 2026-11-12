@@ -39,7 +39,7 @@ export function RedactionList({ d }: { d: Diagnostics }) {
   return (
     <>
       <p className="muted">Sensitive values are masked when the log is parsed, before anything is stored.</p>
-      <ul className="kv-list">
+      <ul className="kv-list kv-list-compact">
         {entries.map(([k, v]) => (
           <li key={k}>
             <span className="mono">{k}</span>

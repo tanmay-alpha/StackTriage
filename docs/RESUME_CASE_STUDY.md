@@ -180,7 +180,10 @@ memory measurement is claimed here.
 - The Dockerfile runs as UID 10001 and owns `/data` in the image. Existing mounts
   must separately permit that UID to create SQLite DB/WAL/SHM files. Protect the
   host and database; use online backups and stop the server before restoring.
-  Container build/runtime and hosted deployment were not exercised for this study.
+  The production image is built and exercised by `scripts/docker_verify.py` in CI
+  and locally (restart, recreation on the same named volume, backup/restore, auth,
+  log-leak checks; see [deployment](deployment.md#repeatable-container-verification)).
+  No hosted deployment exists.
 
 See [settings](../src/stacktriage/api/settings.py),
 [redaction](../src/stacktriage/redaction.py),

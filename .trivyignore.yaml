@@ -1,0 +1,9 @@
+vulnerabilities:
+  - id: CVE-2025-47273
+    purls:
+      - "pkg:pypi/setuptools@70.3.0"
+    statement: >-
+      Reported from pip 26.3's vendor manifest (pip/_vendor/vendor.txt, bom.cdx.json): pip vendors only
+      pkg_resources from setuptools 70.3.0. The CVE is a path traversal in setuptools/package_index.py,
+      which does not exist anywhere in the image; the installed setuptools is 84.2.1. Re-check when
+      upgrading pip. Verified 2026-11-12.

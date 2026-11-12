@@ -12,10 +12,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
     STACKTRIAGE_DB=/data/stacktriage.db \
     STACKTRIAGE_STATIC_DIR=/app/frontend/dist
 WORKDIR /app
+RUN apt-get update && apt-get upgrade -y --no-install-recommends && rm -rf /var/lib/apt/lists/*
 COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
-# python:3.12-slim bundles a pip release with known advisories (found by pip-audit in the built image); upgrade it first.
-RUN pip install --no-cache-dir --upgrade "pip>=26.2" && pip install --no-cache-dir ".[api,ml]"
+# python:3.12-slim bundles pip and setuptools releases with known advisories (pip-audit and Trivy
+# found them in the built image); upgrade both before installing the app.
+RUN pip install --no-cache-dir --upgrade "pip>=26.2" "setuptools>=84.1.0" && pip install --no-cache-dir ".[api,ml]"
 COPY --from=web /web/dist ./frontend/dist
 RUN useradd --create-home --uid 10001 app && mkdir /data && chown app /data
 USER app

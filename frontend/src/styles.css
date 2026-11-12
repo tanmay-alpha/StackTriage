@@ -534,9 +534,11 @@ code {
 }
 
 /* --------------------------------------------------------- stat strip */
+/* Flex rather than an auto-fit grid: items in a partly filled last row grow to fill it, so the
+   1px separator background never shows through as an empty grey cell (e.g. 5 stats at 768px). */
 .stat-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -544,8 +546,12 @@ code {
   overflow: hidden;
 }
 
-.stat-strip .stat-wide {
-  grid-column: span 2;
+.stat-strip > .stat {
+  flex: 1 1 150px;
+}
+
+.stat-strip > .stat-wide {
+  flex: 2 1 301px;
 }
 
 .stat {
@@ -1288,6 +1294,11 @@ th[aria-sort="descending"] {
 
 .kv-list li > :last-child {
   flex-shrink: 0;
+}
+
+/* Short key/count lists inside full-width panels: keep each count near its label. */
+.kv-list-compact {
+  max-width: 32rem;
 }
 
 .bar-list li {
@@ -2229,8 +2240,8 @@ th[aria-sort="descending"] {
   .nav-link.active {
     border-radius: var(--radius);
   }
-  .stat-strip .stat-wide {
-    grid-column: auto;
+  .stat-strip > .stat-wide {
+    flex: 1 1 150px;
   }
   .page-title {
     font-size: var(--fs-xl);
@@ -2334,6 +2345,9 @@ th[aria-sort="descending"] {
     min-width: 0;
     flex-wrap: wrap;
     justify-content: flex-end;
+  }
+  .table-stack .freq::before {
+    margin-right: auto;
   }
   .table-stack .freq > div {
     display: inline;

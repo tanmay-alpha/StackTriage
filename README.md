@@ -70,6 +70,21 @@ stacktriage serve
 
 Open <http://127.0.0.1:8000>. The server binds to loopback by default and discovers `frontend/dist` when launched from the repository root. The CLI/core does not require the API or ML dependencies; the statistical detector does not require scikit-learn.
 
+### Or run the production container
+
+With Docker running, from the repository root (bash; see [deployment](docs/deployment.md#local-docker-deployment) for PowerShell and secure key entry):
+
+```bash
+docker build -t stacktriage:local .
+export STACKTRIAGE_API_KEY="$(openssl rand -hex 32)"
+docker run -d --name stacktriage -p 127.0.0.1:8000:8000 --env STACKTRIAGE_API_KEY \
+  --mount source=stacktriage-data,target=/data stacktriage:local
+curl -sf --retry 30 --retry-delay 1 --retry-all-errors http://127.0.0.1:8000/api/health   # wait for startup
+python scripts/demo.py   # imports the synthetic fixtures using the same key
+```
+
+Open <http://127.0.0.1:8000>, enter the key, and follow the demo below. Data lives in the `stacktriage-data` volume and survives `docker restart` and container recreation; the image refuses to start without a key of at least 16 characters.
+
 ### Configuration
 
 Set these in the process environment before starting the server; the backend does not automatically load `.env` files. Defaults come from [`settings.py`](src/stacktriage/api/settings.py).
