@@ -133,3 +133,70 @@ class OverviewOut(BaseModel):
     groups: int
     latest_import: ImportSummary | None
     status_counts: dict[str, int] = Field(default_factory=dict)
+
+
+# ------------------------------------------------------------- comparison
+class CompareSide(ImportSummary):
+    duration_seconds: float | None = Field(description="last_event - first_event; None without timestamps")
+    timed_events: int
+    untimed_events: int
+    services: dict[str, int]
+    time_valid: bool = Field(description="usable for per-minute rates")
+
+
+class CompareRates(BaseModel):
+    count: int
+    timed_count: int
+    per_1k_events: float
+    per_minute: float | None
+    first_seen: datetime | None
+    last_seen: datetime | None
+    max_level: str
+
+
+class CompareItem(BaseModel):
+    fingerprint: str
+    title: str
+    service: str
+    exc_type: str | None
+    frame: str | None
+    category: Literal["new", "disappeared", "recurring"]
+    change: Literal["increased", "decreased", "no_clear_change", "insufficient_data"] | None
+    status: Status
+    status_updated_at: datetime | None
+    resolved_observed: bool = Field(description="marked resolved and present in the target capture")
+    baseline: CompareRates | None
+    target: CompareRates | None
+    rate_ratio: float | None = Field(description="target rate / baseline rate on the chosen basis")
+    percent_change: float | None
+    p_value: float | None
+    q_value: float | None = Field(description="Benjamini-Hochberg adjusted p-value")
+    evidence: Literal["significant", "weak", "low_sample"]
+    bases_disagree: bool
+    investigate_import_id: int = Field(description="import whose investigation page shows this group")
+
+
+class CompareWarning(BaseModel):
+    code: str
+    message: str
+
+
+class CompareParameters(BaseModel):
+    alpha: float
+    min_fold_change: float
+    min_occurrences: int
+    min_coverage_seconds: int
+
+
+class CompareOut(BaseModel):
+    baseline: CompareSide
+    target: CompareSide
+    basis: Literal["events", "time"]
+    time_comparable: bool
+    parameters: CompareParameters
+    warnings: list[CompareWarning]
+    totals: dict[str, int]
+    items: list[CompareItem]
+    total: int
+    limit: int
+    offset: int

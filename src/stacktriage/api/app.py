@@ -21,6 +21,7 @@ from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
+from .. import compare as cmp
 from ..db import make_engine, migrate
 from ..db import store
 from ..db.models import Group, Import
@@ -331,6 +332,113 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             return PlainTextResponse(export.to_csv(header, data), media_type="text/csv; charset=utf-8", headers=hdr)
         return PlainTextResponse(_markdown_report(imp, rows), media_type="text/markdown; charset=utf-8", headers=hdr)
 
+    # ----------------------------------------------------------- comparison
+    CompareCategory = Annotated[str | None, Query(
+        pattern="^(new|disappeared|recurring|increased|decreased|no_clear_change|insufficient_data|resolved_observed)$")]
+    Basis = Annotated[str, Query(pattern="^(events|time)$")]
+
+    def build_comparison(db: Session, baseline_id: int, target_id: int, basis: str):
+        if baseline_id == target_id:
+            raise HTTPException(422, "baseline and target must be different imports")
+        b, t = get_import(db, baseline_id), get_import(db, target_id)
+        (bs, bg), (ts, tg) = store.comparison_inputs(db, b), store.comparison_inputs(db, t)
+        try:
+            result = cmp.compare(bs, ts, bg, tg, basis=basis)  # type: ignore[arg-type]
+        except cmp.BasisUnavailable as e:
+            raise HTTPException(422, str(e)) from e
+        triage = store.triage_for(db, [it.fingerprint for it in result.items])
+        return b, t, (compare_side(db, b, bs), compare_side(db, t, ts)), result, triage
+
+    def compare_side(db: Session, imp: Import, st: cmp.ImportStats) -> schemas.CompareSide:
+        return schemas.CompareSide(**summary(db, imp), duration_seconds=st.duration_s, timed_events=st.timed_events,
+                                   untimed_events=st.untimed_events, services=st.services, time_valid=st.time_valid)
+
+    def rates_out(r: cmp.SideRates | None) -> schemas.CompareRates | None:
+        if r is None:
+            return None
+        return schemas.CompareRates(count=r.count, timed_count=r.timed_count, per_1k_events=r.per_1k_events,
+                                    per_minute=r.per_minute, first_seen=schemas.dt(r.first_ms),
+                                    last_seen=schemas.dt(r.last_ms), max_level=schemas.level_name(r.max_level))
+
+    def compare_item(it: cmp.Item, triage: dict, b: Import, t: Import) -> schemas.CompareItem:
+        status, updated = triage.get(it.fingerprint, ("open", None))
+        return schemas.CompareItem(
+            fingerprint=it.fingerprint, title=it.title, service=it.service, exc_type=it.exc_type, frame=it.frame,
+            category=it.category, change=it.change, status=status, status_updated_at=schemas.dt(updated),
+            resolved_observed=status == "resolved" and it.target is not None,
+            baseline=rates_out(it.baseline), target=rates_out(it.target), rate_ratio=it.rate_ratio,
+            percent_change=it.percent_change, p_value=it.p_value, q_value=it.q_value, evidence=it.evidence,
+            bases_disagree=it.bases_disagree, investigate_import_id=t.id if it.target is not None else b.id)
+
+    def filter_sort(items: list[cmp.Item], triage: dict, category: str | None, sort: str) -> list[cmp.Item]:
+        if category == "resolved_observed":
+            items = [i for i in items if i.target is not None and triage.get(i.fingerprint, ("open",))[0] == "resolved"]
+        elif category in ("new", "disappeared", "recurring"):
+            items = [i for i in items if i.category == category]
+        elif category:
+            items = [i for i in items if i.change == category]
+        cnt = lambda s: s.count if s else 0  # noqa: E731
+        keys = {
+            # significant changes first, worsening (new / increased) before improvements; then by size of change
+            "priority": lambda i: (i.evidence != "significant", -i.log2_change, -cnt(i.target) - cnt(i.baseline), i.fingerprint),
+            "target_count": lambda i: (-cnt(i.target), i.fingerprint),
+            "baseline_count": lambda i: (-cnt(i.baseline), i.fingerprint),
+            "title": lambda i: (i.title.lower(), i.fingerprint),
+        }
+        return sorted(items, key=keys[sort])
+
+    def compare_parameters() -> schemas.CompareParameters:
+        return schemas.CompareParameters(alpha=cmp.ALPHA, min_fold_change=cmp.MIN_FOLD,
+                                         min_occurrences=cmp.MIN_OCCURRENCES, min_coverage_seconds=cmp.MIN_COVERAGE_S)
+
+    @api.get("/imports/{baseline_id}/compare/{target_id}", response_model=schemas.CompareOut)
+    def compare_imports(
+        baseline_id: ImportId, target_id: ImportId, db: DB, basis: Basis = "events", category: CompareCategory = None,
+        sort: Annotated[str, Query(pattern="^(priority|target_count|baseline_count|title)$")] = "priority",
+        limit: Limit = 50, offset: Offset = 0,
+    ):
+        """Read-only comparison of the error groups of two imports (baseline = before, target = after)."""
+        b, t, sides, result, triage = build_comparison(db, baseline_id, target_id, basis)
+        rows = filter_sort(result.items, triage, category, sort)
+        resolved = {fp for fp, (st, _) in triage.items() if st == "resolved"}
+        return schemas.CompareOut(
+            baseline=sides[0], target=sides[1], basis=result.basis,
+            time_comparable=result.time_comparable, parameters=compare_parameters(),
+            warnings=[schemas.CompareWarning(code=w.code, message=w.message) for w in result.warnings],
+            totals=result.totals(resolved), items=[compare_item(i, triage, b, t) for i in rows[offset:offset + limit]],
+            total=len(rows), limit=limit, offset=offset)
+
+    @api.get("/imports/{baseline_id}/compare/{target_id}/export")
+    def export_comparison(
+        baseline_id: ImportId, target_id: ImportId, db: DB, basis: Basis = "events",
+        format: Annotated[str, Query(pattern="^(csv|json|md)$")] = "csv",
+    ):
+        b, t, sides, result, triage = build_comparison(db, baseline_id, target_id, basis)
+        items = [compare_item(i, triage, b, t) for i in filter_sort(result.items, triage, None, "priority")]
+        name = export.safe_filename(f"stacktriage-compare-{b.id}-vs-{t.id}")
+        hdr = {"Content-Disposition": f'attachment; filename="{name}.{format}"'}
+        resolved = {fp for fp, (st, _) in triage.items() if st == "resolved"}
+        if format == "json":
+            payload = {"baseline": sides[0], "target": sides[1], "basis": result.basis,
+                       "time_comparable": result.time_comparable, "parameters": compare_parameters(),
+                       "warnings": [schemas.CompareWarning(code=w.code, message=w.message) for w in result.warnings],
+                       "totals": result.totals(resolved), "items": items}
+            return JSONResponse(jsonable_encoder(payload), headers=hdr)
+        if format == "csv":
+            header = ["category", "change", "evidence", "status", "resolved_observed", "service", "title",
+                      "baseline_count", "target_count", "baseline_per_1k_events", "target_per_1k_events",
+                      "baseline_per_minute", "target_per_minute", "rate_ratio", "percent_change", "p_value", "q_value",
+                      "bases_disagree", "fingerprint"]
+            g = lambda r, k: None if r is None else getattr(r, k)  # noqa: E731
+            data = [[i.category, i.change or "", i.evidence, i.status, i.resolved_observed, i.service, i.title,
+                     g(i.baseline, "count") or 0, g(i.target, "count") or 0, _r(g(i.baseline, "per_1k_events")),
+                     _r(g(i.target, "per_1k_events")), _r(g(i.baseline, "per_minute")), _r(g(i.target, "per_minute")),
+                     _r(i.rate_ratio), _r(i.percent_change), _r(i.p_value, 6), _r(i.q_value, 6), i.bases_disagree,
+                     i.fingerprint] for i in items]
+            return PlainTextResponse(export.to_csv(header, data), media_type="text/csv; charset=utf-8", headers=hdr)
+        return PlainTextResponse(_compare_markdown(b, t, result, items), media_type="text/markdown; charset=utf-8",
+                                 headers=hdr)
+
     @api.get("/overview", response_model=schemas.OverviewOut)
     def overview(db: DB):
         totals = store.overview_totals(db)
@@ -363,6 +471,40 @@ def _markdown_report(imp: Import, rows: list) -> str:
     for g, st in rows:
         out.append(f"| {st} | {schemas.level_name(g.max_level)} | {g.count} | {fmt(g.first_seen_ms)} | {fmt(g.last_seen_ms)} | "
                    f"{g.activity.get('status', '-')} | {md(g.title)} |")
+    return "\n".join(out) + "\n"
+
+
+def _r(v: float | None, digits: int = 3) -> float | str:
+    return "" if v is None else round(v, digits)
+
+
+def _compare_markdown(b: Import, t: Import, result, items: list) -> str:  # noqa: ANN001
+    md = export.md_escape
+    fmt = lambda ms: "-" if ms is None else datetime.fromtimestamp(ms / 1000, tz=UTC).strftime("%Y-%m-%d %H:%M:%S UTC")  # noqa: E731
+    basis = "occurrences per 1,000 events" if result.basis == "events" else "occurrences per minute"
+    out = ["# StackTriage comparison", "",
+           f"- Baseline (before): {md(b.filename)} (import {b.id}), {b.event_count} events, "
+           f"{fmt(b.first_event_ms)} to {fmt(b.last_event_ms)}",
+           f"- Target (after): {md(t.filename)} (import {t.id}), {t.event_count} events, "
+           f"{fmt(t.first_event_ms)} to {fmt(t.last_event_ms)}",
+           f"- Rate basis: {basis}. A change needs a Benjamini-Hochberg adjusted p < {cmp.ALPHA} and a ratio of at "
+           f"least {cmp.MIN_FOLD}x.",
+           "- \"Disappeared\" means absent from the target capture, not proven fixed. \"Resolved but observed\" uses "
+           "the current review status, which does not record when an error was fixed.", ""]
+    if result.warnings:
+        out += ["## Warnings", ""] + [f"- {md(w.message, 500)}" for w in result.warnings] + [""]
+    key = "per_1k_events" if result.basis == "events" else "per_minute"
+    rate = lambda r: "-" if r is None or getattr(r, key) is None else f"{getattr(r, key):.3g}"  # noqa: E731
+    out += ["## Error groups", "",
+            "| Category | Change | Evidence | Status | Baseline count | Target count | Baseline rate | Target rate | Title |",
+            "|---|---|---|---|---|---|---|---|---|"]
+    for i in items:
+        status = f"{i.status} (observed again)" if i.resolved_observed else i.status
+        other = "per-minute" if result.basis == "events" else "per-1,000-event"
+        change = (i.change or "-") + (f" ({other} basis differs)" if i.bases_disagree else "")
+        out.append(f"| {i.category} | {change} | {i.evidence} | {status} | "
+                   f"{i.baseline.count if i.baseline else 0} | {i.target.count if i.target else 0} | "
+                   f"{rate(i.baseline)} | {rate(i.target)} | {md(i.title)} |")
     return "\n".join(out) + "\n"
 
 

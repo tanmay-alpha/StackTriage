@@ -143,6 +143,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
       }
      }
@@ -180,6 +182,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
       }
      }
@@ -212,6 +216,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
       }
      },
@@ -385,6 +391,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
       }
      },
@@ -433,6 +441,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
       }
      },
@@ -505,6 +515,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
       }
      },
@@ -742,6 +754,8 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Note Id"
       }
      }
@@ -774,7 +788,197 @@
       "required": true,
       "schema": {
        "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
        "title": "Import Id"
+      }
+     },
+     {
+      "name": "format",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(csv|json|md)$",
+       "default": "csv",
+       "title": "Format"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{baseline_id}/compare/{target_id}": {
+   "get": {
+    "summary": "Compare Imports",
+    "description": "Read-only comparison of the error groups of two imports (baseline = before, target = after).",
+    "operationId": "compare_imports_api_imports__baseline_id__compare__target_id__get",
+    "parameters": [
+     {
+      "name": "baseline_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
+       "title": "Baseline Id"
+      }
+     },
+     {
+      "name": "target_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
+       "title": "Target Id"
+      }
+     },
+     {
+      "name": "basis",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(events|time)$",
+       "default": "events",
+       "title": "Basis"
+      }
+     },
+     {
+      "name": "category",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^(new|disappeared|recurring|increased|decreased|no_clear_change|insufficient_data|resolved_observed)$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Category"
+      }
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(priority|target_count|baseline_count|title)$",
+       "default": "priority",
+       "title": "Sort"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 1000000,
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CompareOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/imports/{baseline_id}/compare/{target_id}/export": {
+   "get": {
+    "summary": "Export Comparison",
+    "operationId": "export_comparison_api_imports__baseline_id__compare__target_id__export_get",
+    "parameters": [
+     {
+      "name": "baseline_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
+       "title": "Baseline Id"
+      }
+     },
+     {
+      "name": "target_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "maximum": 2147483647,
+       "minimum": 1,
+       "title": "Target Id"
+      }
+     },
+     {
+      "name": "basis",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(events|time)$",
+       "default": "events",
+       "title": "Basis"
       }
      },
      {
@@ -901,6 +1105,523 @@
      "peak_window_count"
     ],
     "title": "Activity"
+   },
+   "CompareItem": {
+    "properties": {
+     "fingerprint": {
+      "type": "string",
+      "title": "Fingerprint"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "service": {
+      "type": "string",
+      "title": "Service"
+     },
+     "exc_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Exc Type"
+     },
+     "frame": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Frame"
+     },
+     "category": {
+      "type": "string",
+      "enum": [
+       "new",
+       "disappeared",
+       "recurring"
+      ],
+      "title": "Category"
+     },
+     "change": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "increased",
+         "decreased",
+         "no_clear_change",
+         "insufficient_data"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Change"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "investigating",
+       "resolved",
+       "ignored"
+      ],
+      "title": "Status"
+     },
+     "status_updated_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Updated At"
+     },
+     "resolved_observed": {
+      "type": "boolean",
+      "title": "Resolved Observed",
+      "description": "marked resolved and present in the target capture"
+     },
+     "baseline": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/CompareRates"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "target": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/CompareRates"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "rate_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rate Ratio",
+      "description": "target rate / baseline rate on the chosen basis"
+     },
+     "percent_change": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Percent Change"
+     },
+     "p_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "P Value"
+     },
+     "q_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Q Value",
+      "description": "Benjamini-Hochberg adjusted p-value"
+     },
+     "evidence": {
+      "type": "string",
+      "enum": [
+       "significant",
+       "weak",
+       "low_sample"
+      ],
+      "title": "Evidence"
+     },
+     "bases_disagree": {
+      "type": "boolean",
+      "title": "Bases Disagree"
+     },
+     "investigate_import_id": {
+      "type": "integer",
+      "title": "Investigate Import Id",
+      "description": "import whose investigation page shows this group"
+     }
+    },
+    "type": "object",
+    "required": [
+     "fingerprint",
+     "title",
+     "service",
+     "exc_type",
+     "frame",
+     "category",
+     "change",
+     "status",
+     "status_updated_at",
+     "resolved_observed",
+     "baseline",
+     "target",
+     "rate_ratio",
+     "percent_change",
+     "p_value",
+     "q_value",
+     "evidence",
+     "bases_disagree",
+     "investigate_import_id"
+    ],
+    "title": "CompareItem"
+   },
+   "CompareOut": {
+    "properties": {
+     "baseline": {
+      "$ref": "#/components/schemas/CompareSide"
+     },
+     "target": {
+      "$ref": "#/components/schemas/CompareSide"
+     },
+     "basis": {
+      "type": "string",
+      "enum": [
+       "events",
+       "time"
+      ],
+      "title": "Basis"
+     },
+     "time_comparable": {
+      "type": "boolean",
+      "title": "Time Comparable"
+     },
+     "parameters": {
+      "$ref": "#/components/schemas/CompareParameters"
+     },
+     "warnings": {
+      "items": {
+       "$ref": "#/components/schemas/CompareWarning"
+      },
+      "type": "array",
+      "title": "Warnings"
+     },
+     "totals": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Totals"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/CompareItem"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "limit": {
+      "type": "integer",
+      "title": "Limit"
+     },
+     "offset": {
+      "type": "integer",
+      "title": "Offset"
+     }
+    },
+    "type": "object",
+    "required": [
+     "baseline",
+     "target",
+     "basis",
+     "time_comparable",
+     "parameters",
+     "warnings",
+     "totals",
+     "items",
+     "total",
+     "limit",
+     "offset"
+    ],
+    "title": "CompareOut"
+   },
+   "CompareParameters": {
+    "properties": {
+     "alpha": {
+      "type": "number",
+      "title": "Alpha"
+     },
+     "min_fold_change": {
+      "type": "number",
+      "title": "Min Fold Change"
+     },
+     "min_occurrences": {
+      "type": "integer",
+      "title": "Min Occurrences"
+     },
+     "min_coverage_seconds": {
+      "type": "integer",
+      "title": "Min Coverage Seconds"
+     }
+    },
+    "type": "object",
+    "required": [
+     "alpha",
+     "min_fold_change",
+     "min_occurrences",
+     "min_coverage_seconds"
+    ],
+    "title": "CompareParameters"
+   },
+   "CompareRates": {
+    "properties": {
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "timed_count": {
+      "type": "integer",
+      "title": "Timed Count"
+     },
+     "per_1k_events": {
+      "type": "number",
+      "title": "Per 1K Events"
+     },
+     "per_minute": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Per Minute"
+     },
+     "first_seen": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Seen"
+     },
+     "last_seen": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Seen"
+     },
+     "max_level": {
+      "type": "string",
+      "title": "Max Level"
+     }
+    },
+    "type": "object",
+    "required": [
+     "count",
+     "timed_count",
+     "per_1k_events",
+     "per_minute",
+     "first_seen",
+     "last_seen",
+     "max_level"
+    ],
+    "title": "CompareRates"
+   },
+   "CompareSide": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "filename": {
+      "type": "string",
+      "title": "Filename"
+     },
+     "format": {
+      "type": "string",
+      "title": "Format"
+     },
+     "default_service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Service"
+     },
+     "size_bytes": {
+      "type": "integer",
+      "title": "Size Bytes"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "event_count": {
+      "type": "integer",
+      "title": "Event Count"
+     },
+     "incident_count": {
+      "type": "integer",
+      "title": "Incident Count"
+     },
+     "first_event": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Event"
+     },
+     "last_event": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Event"
+     },
+     "window_seconds": {
+      "type": "integer",
+      "title": "Window Seconds"
+     },
+     "truncated": {
+      "type": "boolean",
+      "title": "Truncated"
+     },
+     "duplicate": {
+      "type": "boolean",
+      "title": "Duplicate",
+      "default": false
+     },
+     "duration_seconds": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration Seconds",
+      "description": "last_event - first_event; None without timestamps"
+     },
+     "timed_events": {
+      "type": "integer",
+      "title": "Timed Events"
+     },
+     "untimed_events": {
+      "type": "integer",
+      "title": "Untimed Events"
+     },
+     "services": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Services"
+     },
+     "time_valid": {
+      "type": "boolean",
+      "title": "Time Valid",
+      "description": "usable for per-minute rates"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "filename",
+     "format",
+     "default_service",
+     "size_bytes",
+     "created_at",
+     "event_count",
+     "incident_count",
+     "first_event",
+     "last_event",
+     "window_seconds",
+     "truncated",
+     "duration_seconds",
+     "timed_events",
+     "untimed_events",
+     "services",
+     "time_valid"
+    ],
+    "title": "CompareSide"
+   },
+   "CompareWarning": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "message"
+    ],
+    "title": "CompareWarning"
    },
    "EventOut": {
     "properties": {
