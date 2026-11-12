@@ -79,6 +79,7 @@ docker build -t stacktriage:local .
 export STACKTRIAGE_API_KEY="$(openssl rand -hex 32)"
 docker run -d --name stacktriage -p 127.0.0.1:8000:8000 --env STACKTRIAGE_API_KEY \
   --mount source=stacktriage-data,target=/data stacktriage:local
+curl -sf --retry 30 --retry-delay 1 --retry-all-errors http://127.0.0.1:8000/api/health   # wait for startup
 python scripts/demo.py   # imports the synthetic fixtures using the same key
 ```
 
