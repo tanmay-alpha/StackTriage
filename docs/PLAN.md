@@ -31,9 +31,10 @@ Historical scope and implementation order. See `README.md` and
 11. Release-aware triage: resolving a group can record when the fix shipped and in which
     release (schema v2). A comparison then calls a resolved group *regressed* only when the
     target has occurrences timestamped after that fix time, with their count.
-12. Slow-ramp trend detector: `statistical_trend` (median/MAD detector plus a training-
-    calibrated one-sided CUSUM) became the default under a pre-registered rule; slow-ramp
-    window recall 0.34 -> 0.61, pooled F1 0.909 -> 0.906 (see `docs/ml-evaluation.md`).
+12. Slow-ramp trend detector (`statistical_trend`, selectable, not default): a one-sided
+    CUSUM calibrated on training windows. It passed a pre-registered adoption rule, then
+    review found false alarms on sparse-error logs; after the post-hoc fix the default stays
+    `statistical` pending an untouched seed set (see `docs/ml-evaluation.md` 5b-5c).
 
 All twelve milestones above are delivered and covered by CI (backend, frontend, docker).
 
@@ -55,9 +56,9 @@ reproducible evidence; none is claimed as delivered.
    or academic work with a repository reference and citation, and that logs are not
    sanitized: download at evaluation time, never commit them. Block labels do not map
    directly to time windows; document that mismatch before publishing any number.
-5. **Earlier slow-ramp detection.** The trend detector improved recall but its first flag
-   (12.4 windows) is still far behind Isolation Forest (4.4); a regression-slope or
-   seasonal baseline candidate would be the next experiment, under the same protocol.
+5. **Confirm or reject the trend detector on fresh seeds.** Generate a new, untouched seed
+   set (and a sparse-error healthy scenario family), re-run the pre-registered rule, and only
+   then decide the default; slow-ramp first flag (13.5 windows) still trails Isolation Forest.
 6. **Hosted demo.** `render.yaml` is ready but requires a paid instance and disk; needs
    the owner's approval.
 
