@@ -261,8 +261,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         statuses = dict(db.execute(select(store.Triage.fingerprint, store.Triage.status)
                                    .where(store.Triage.fingerprint.in_([r.fingerprint for r in related] or [""]))).all())
         base = incident_item(g, st).model_dump()
+        fixed_ms, fixed_version = store.fix_record(db, fingerprint)
         return schemas.IncidentDetail(
-            **base, kind=g.kind, untimed_count=g.untimed_count, sample_event_id=g.sample_event_id,
+            **base, kind=g.kind, fixed_at=schemas.dt(fixed_ms), fixed_version=fixed_version,
+            untimed_count=g.untimed_count, sample_event_id=g.sample_event_id,
             sample_message=g.sample_message, sample_stack_trace=g.sample_stack_trace, level_counts=g.level_counts,
             window_seconds=imp.window_seconds,
             windows=[schemas.WindowCount(start=schemas.dt(ms), count=n) for ms, n in g.windows],  # type: ignore[arg-type]
@@ -292,11 +294,20 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if not store.fingerprint_exists(db, fingerprint):
             raise HTTPException(404, "unknown incident fingerprint")
 
-    @api.put("/incidents/{fingerprint}/status", response_model=schemas.StatusIn)
+    @api.put("/incidents/{fingerprint}/status", response_model=schemas.StatusOut)
     def put_status(fingerprint: str, body: schemas.StatusIn, db: DB):
         require_fingerprint(db, fingerprint)
-        store.set_status(db, fingerprint, body.status)
-        return body
+        fix: dict = {}
+        if "fixed_at" in body.model_fields_set:
+            fix["fixed_ms"] = store.to_ms(body.fixed_at)
+        if "fixed_version" in body.model_fields_set:
+            fix["fixed_version"] = body.fixed_version or None
+        try:
+            store.set_status(db, fingerprint, body.status, **fix)
+        except ValueError as e:
+            raise HTTPException(422, str(e)) from e
+        fixed_ms, version = store.fix_record(db, fingerprint)
+        return schemas.StatusOut(status=body.status, fixed_at=schemas.dt(fixed_ms), fixed_version=version)
 
     @api.post("/incidents/{fingerprint}/notes", response_model=schemas.NoteOut, status_code=201)
     def post_note(fingerprint: str, body: schemas.NoteIn, db: DB):
@@ -335,7 +346,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     # ----------------------------------------------------------- comparison
     CompareCategory = Annotated[str | None, Query(
-        pattern="^(new|disappeared|recurring|increased|decreased|no_clear_change|insufficient_data|resolved_observed)$")]
+        pattern="^(new|disappeared|recurring|increased|decreased|no_clear_change|insufficient_data|resolved_observed"
+                "|regressed)$")]
     Basis = Annotated[str, Query(pattern="^(events|time)$")]
 
     def build_comparison(db: Session, baseline_id: int, target_id: int, basis: str):
@@ -348,7 +360,25 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         except cmp.BasisUnavailable as e:
             raise HTTPException(422, str(e)) from e
         triage = store.triage_for(db, [it.fingerprint for it in result.items])
-        return b, t, (compare_side(db, b, bs), compare_side(db, t, ts)), result, triage
+        return b, t, (compare_side(db, b, bs), compare_side(db, t, ts)), result, triage, fix_checks(db, t, result, triage)
+
+    def fix_checks(db: Session, t: Import, result: cmp.Comparison, triage: dict) -> dict[str, tuple[str, int | None]]:
+        """For resolved groups present in the target: did they occur after the recorded fix time?
+        One indexed COUNT per resolved group with a fix time; nothing for other groups."""
+        out: dict[str, tuple[str, int | None]] = {}
+        for it in result.items:
+            tr = triage.get(it.fingerprint, store.OPEN)
+            if tr.status != "resolved" or it.target is None:
+                continue
+            if tr.fixed_ms is None:
+                out[it.fingerprint] = ("no_fix_time", None)
+            elif it.target.timed_count == 0:
+                out[it.fingerprint] = ("untimed", None)
+            elif it.target.last_ms is not None and it.target.last_ms <= tr.fixed_ms:
+                out[it.fingerprint] = ("before_fix", 0)
+            else:
+                out[it.fingerprint] = ("regressed", store.count_after(db, t.id, it.fingerprint, tr.fixed_ms))
+        return out
 
     def compare_side(db: Session, imp: Import, st: cmp.ImportStats) -> schemas.CompareSide:
         return schemas.CompareSide(**summary(db, imp), duration_seconds=st.duration_s, timed_events=st.timed_events,
@@ -361,27 +391,38 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                                     per_minute=r.per_minute, first_seen=schemas.dt(r.first_ms),
                                     last_seen=schemas.dt(r.last_ms), max_level=schemas.level_name(r.max_level))
 
-    def compare_item(it: cmp.Item, triage: dict, b: Import, t: Import) -> schemas.CompareItem:
-        status, updated = triage.get(it.fingerprint, ("open", None))
+    def compare_item(it: cmp.Item, triage: dict, checks: dict, b: Import, t: Import) -> schemas.CompareItem:
+        tr = triage.get(it.fingerprint, store.OPEN)
+        check, after = checks.get(it.fingerprint, (None, None))
         return schemas.CompareItem(
             fingerprint=it.fingerprint, title=it.title, service=it.service, exc_type=it.exc_type, frame=it.frame,
-            category=it.category, change=it.change, status=status, status_updated_at=schemas.dt(updated),
-            resolved_observed=status == "resolved" and it.target is not None,
+            category=it.category, change=it.change, status=tr.status, status_updated_at=schemas.dt(tr.updated_ms),
+            resolved_observed=tr.status == "resolved" and it.target is not None,
+            fixed_at=schemas.dt(tr.fixed_ms), fixed_version=tr.fixed_version, fix_check=check,
+            occurrences_after_fix=after,
             baseline=rates_out(it.baseline), target=rates_out(it.target), rate_ratio=it.rate_ratio,
             percent_change=it.percent_change, p_value=it.p_value, q_value=it.q_value, evidence=it.evidence,
             bases_disagree=it.bases_disagree, investigate_import_id=t.id if it.target is not None else b.id)
 
-    def filter_sort(items: list[cmp.Item], triage: dict, category: str | None, sort: str) -> list[cmp.Item]:
+    def compare_totals(result: cmp.Comparison, triage: dict, checks: dict) -> dict[str, int]:
+        resolved = {fp for fp, tr in triage.items() if tr.status == "resolved"}
+        return {**result.totals(resolved), "regressed": sum(1 for c, _ in checks.values() if c == "regressed")}
+
+    def filter_sort(items: list[cmp.Item], triage: dict, checks: dict, category: str | None, sort: str) -> list[cmp.Item]:
         if category == "resolved_observed":
-            items = [i for i in items if i.target is not None and triage.get(i.fingerprint, ("open",))[0] == "resolved"]
+            items = [i for i in items if i.target is not None and triage.get(i.fingerprint, store.OPEN).status == "resolved"]
+        elif category == "regressed":
+            items = [i for i in items if checks.get(i.fingerprint, (None,))[0] == "regressed"]
         elif category in ("new", "disappeared", "recurring"):
             items = [i for i in items if i.category == category]
         elif category:
             items = [i for i in items if i.change == category]
         cnt = lambda s: s.count if s else 0  # noqa: E731
         keys = {
-            # significant changes first, worsening (new / increased) before improvements; then by size of change
-            "priority": lambda i: (i.evidence != "significant", -i.log2_change, -cnt(i.target) - cnt(i.baseline), i.fingerprint),
+            # regressions after a recorded fix first, then significant changes (worsening before improvements),
+            # then by size of change
+            "priority": lambda i: (checks.get(i.fingerprint, (None,))[0] != "regressed", i.evidence != "significant",
+                                   -i.log2_change, -cnt(i.target) - cnt(i.baseline), i.fingerprint),
             "target_count": lambda i: (-cnt(i.target), i.fingerprint),
             "baseline_count": lambda i: (-cnt(i.baseline), i.fingerprint),
             "title": lambda i: (i.title.lower(), i.fingerprint),
@@ -399,14 +440,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         limit: Limit = 50, offset: Offset = 0,
     ):
         """Read-only comparison of the error groups of two imports (baseline = before, target = after)."""
-        b, t, sides, result, triage = build_comparison(db, baseline_id, target_id, basis)
-        rows = filter_sort(result.items, triage, category, sort)
-        resolved = {fp for fp, (st, _) in triage.items() if st == "resolved"}
+        b, t, sides, result, triage, checks = build_comparison(db, baseline_id, target_id, basis)
+        rows = filter_sort(result.items, triage, checks, category, sort)
         return schemas.CompareOut(
             baseline=sides[0], target=sides[1], basis=result.basis,
             time_comparable=result.time_comparable, parameters=compare_parameters(),
             warnings=[schemas.CompareWarning(code=w.code, message=w.message) for w in result.warnings],
-            totals=result.totals(resolved), items=[compare_item(i, triage, b, t) for i in rows[offset:offset + limit]],
+            totals=compare_totals(result, triage, checks),
+            items=[compare_item(i, triage, checks, b, t) for i in rows[offset:offset + limit]],
             total=len(rows), limit=limit, offset=offset)
 
     @api.get("/imports/{baseline_id}/compare/{target_id}/export")
@@ -414,24 +455,26 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         baseline_id: ImportId, target_id: ImportId, db: DB, basis: Basis = "events",
         format: Annotated[str, Query(pattern="^(csv|json|md)$")] = "csv",
     ):
-        b, t, sides, result, triage = build_comparison(db, baseline_id, target_id, basis)
-        items = [compare_item(i, triage, b, t) for i in filter_sort(result.items, triage, None, "priority")]
+        b, t, sides, result, triage, checks = build_comparison(db, baseline_id, target_id, basis)
+        items = [compare_item(i, triage, checks, b, t) for i in filter_sort(result.items, triage, checks, None, "priority")]
         name = export.safe_filename(f"stacktriage-compare-{b.id}-vs-{t.id}")
         hdr = {"Content-Disposition": f'attachment; filename="{name}.{format}"'}
-        resolved = {fp for fp, (st, _) in triage.items() if st == "resolved"}
         if format == "json":
             payload = {"baseline": sides[0], "target": sides[1], "basis": result.basis,
                        "time_comparable": result.time_comparable, "parameters": compare_parameters(),
                        "warnings": [schemas.CompareWarning(code=w.code, message=w.message) for w in result.warnings],
-                       "totals": result.totals(resolved), "items": items}
+                       "totals": compare_totals(result, triage, checks), "items": items}
             return JSONResponse(jsonable_encoder(payload), headers=hdr)
         if format == "csv":
-            header = ["category", "change", "evidence", "status", "resolved_observed", "service", "title",
+            header = ["category", "change", "evidence", "status", "resolved_observed", "fix_check",
+                      "occurrences_after_fix", "fixed_at", "fixed_version", "service", "title",
                       "baseline_count", "target_count", "baseline_per_1k_events", "target_per_1k_events",
                       "baseline_per_minute", "target_per_minute", "rate_ratio", "percent_change", "p_value", "q_value",
                       "bases_disagree", "fingerprint"]
             g = lambda r, k: None if r is None else getattr(r, k)  # noqa: E731
-            data = [[i.category, i.change or "", i.evidence, i.status, i.resolved_observed, i.service, i.title,
+            data = [[i.category, i.change or "", i.evidence, i.status, i.resolved_observed, i.fix_check or "",
+                     "" if i.occurrences_after_fix is None else i.occurrences_after_fix, i.fixed_at or "",
+                     i.fixed_version or "", i.service, i.title,
                      g(i.baseline, "count") or 0, g(i.target, "count") or 0, _r(g(i.baseline, "per_1k_events")),
                      _r(g(i.target, "per_1k_events")), _r(g(i.baseline, "per_minute")), _r(g(i.target, "per_minute")),
                      _r(i.rate_ratio), _r(i.percent_change), _r(i.p_value, 6), _r(i.q_value, 6), i.bases_disagree,
@@ -490,8 +533,9 @@ def _compare_markdown(b: Import, t: Import, result, items: list) -> str:  # noqa
            f"{fmt(t.first_event_ms)} to {fmt(t.last_event_ms)}",
            f"- Rate basis: {basis}. A change needs a Benjamini-Hochberg adjusted p < {cmp.ALPHA} and a ratio of at "
            f"least {cmp.MIN_FOLD}x.",
-           "- \"Disappeared\" means absent from the target capture, not proven fixed. \"Resolved but observed\" uses "
-           "the current review status, which does not record when an error was fixed.", ""]
+           "- \"Disappeared\" means absent from the target capture, not proven fixed. A resolved group is called "
+           "\"regressed\" only when it has occurrences timestamped after its recorded fix time; without a fix time it "
+           "is only flagged as observed again.", ""]
     if result.warnings:
         out += ["## Warnings", ""] + [f"- {md(w.message, 500)}" for w in result.warnings] + [""]
     key = "per_1k_events" if result.basis == "events" else "per_minute"
@@ -500,7 +544,14 @@ def _compare_markdown(b: Import, t: Import, result, items: list) -> str:  # noqa
             "| Category | Change | Evidence | Status | Baseline count | Target count | Baseline rate | Target rate | Title |",
             "|---|---|---|---|---|---|---|---|---|"]
     for i in items:
-        status = f"{i.status} (observed again)" if i.resolved_observed else i.status
+        status = i.status
+        if i.fix_check == "regressed":
+            status += f" (regressed: {i.occurrences_after_fix} after fix" + (
+                f" {md(i.fixed_version, 64)}" if i.fixed_version else "") + ")"
+        elif i.fix_check == "before_fix":
+            status += " (observed only before the recorded fix)"
+        elif i.resolved_observed:
+            status += " (observed again; no fix time recorded)" if i.fix_check == "no_fix_time" else " (observed again)"
         other = "per-minute" if result.basis == "events" else "per-1,000-event"
         change = (i.change or "-") + (f" ({other} basis differs)" if i.bases_disagree else "")
         out.append(f"| {i.category} | {change} | {i.evidence} | {status} | "

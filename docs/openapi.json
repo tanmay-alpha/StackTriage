@@ -667,7 +667,7 @@
       "content": {
        "application/json": {
         "schema": {
-         "$ref": "#/components/schemas/StatusIn"
+         "$ref": "#/components/schemas/StatusOut"
         }
        }
       }
@@ -874,7 +874,7 @@
        "anyOf": [
         {
          "type": "string",
-         "pattern": "^(new|disappeared|recurring|increased|decreased|no_clear_change|insufficient_data|resolved_observed)$"
+         "pattern": "^(new|disappeared|recurring|increased|decreased|no_clear_change|insufficient_data|resolved_observed|regressed)$"
         },
         {
          "type": "null"
@@ -1195,6 +1195,58 @@
       "title": "Resolved Observed",
       "description": "marked resolved and present in the target capture"
      },
+     "fixed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed At"
+     },
+     "fixed_version": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed Version"
+     },
+     "fix_check": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "regressed",
+         "before_fix",
+         "no_fix_time",
+         "untimed"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fix Check",
+      "description": "resolved groups in the target: occurrences after the recorded fix time (regressed), only before it, no fix time recorded, or target occurrences without timestamps"
+     },
+     "occurrences_after_fix": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Occurrences After Fix"
+     },
      "baseline": {
       "anyOf": [
        {
@@ -1292,6 +1344,10 @@
      "status",
      "status_updated_at",
      "resolved_observed",
+     "fixed_at",
+     "fixed_version",
+     "fix_check",
+     "occurrences_after_fix",
      "baseline",
      "target",
      "rate_ratio",
@@ -2072,6 +2128,29 @@
       "type": "string",
       "title": "Kind"
      },
+     "fixed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed At"
+     },
+     "fixed_version": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed Version"
+     },
      "untimed_count": {
       "type": "integer",
       "title": "Untimed Count"
@@ -2142,6 +2221,8 @@
      "status",
      "activity",
      "kind",
+     "fixed_at",
+     "fixed_version",
      "untimed_count",
      "sample_event_id",
      "sample_message",
@@ -2437,6 +2518,32 @@
        "ignored"
       ],
       "title": "Status"
+     },
+     "fixed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed At",
+      "description": "when the fix shipped (status resolved only)"
+     },
+     "fixed_version": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 64
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed Version",
+      "description": "release that contains the fix (status resolved only)"
      }
     },
     "additionalProperties": false,
@@ -2445,6 +2552,50 @@
      "status"
     ],
     "title": "StatusIn"
+   },
+   "StatusOut": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "investigating",
+       "resolved",
+       "ignored"
+      ],
+      "title": "Status"
+     },
+     "fixed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed At"
+     },
+     "fixed_version": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fixed Version"
+     }
+    },
+    "type": "object",
+    "required": [
+     "status",
+     "fixed_at",
+     "fixed_version"
+    ],
+    "title": "StatusOut"
    },
    "ValidationError": {
     "properties": {

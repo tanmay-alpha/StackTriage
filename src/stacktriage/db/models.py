@@ -98,6 +98,10 @@ class Triage(Base):
     fingerprint: Mapped[str] = mapped_column(String(16), primary_key=True)
     status: Mapped[str] = mapped_column(String(16))  # open | investigating | resolved | ignored
     updated_ms: Mapped[int] = mapped_column(Integer)
+    # Recorded fix (only while status is resolved): when the fix shipped and in which release. Lets a later
+    # capture distinguish occurrences after the fix (a regression) from ones logged before it.
+    fixed_ms: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    fixed_version: Mapped[str | None] = mapped_column(String(64), nullable=True)
 
 
 class Note(Base):
