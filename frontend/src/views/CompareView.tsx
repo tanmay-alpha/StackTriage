@@ -123,7 +123,7 @@ export function CompareView() {
   const basis: CompareBasis = params.get("basis") === "time" ? "time" : "events";
   const rawCategory = params.get("category");
   const category = isFilter(rawCategory) ? rawCategory : "";
-  const page = Math.max(1, Number(params.get("page")) || 1);
+  const page = Math.max(1, Math.floor(Number(params.get("page"))) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
   const update = (patch: Record<string, string | null>, opts: { resetPage?: boolean; replace?: boolean } = {}) => {
@@ -155,6 +155,13 @@ export function CompareView() {
   const query = { basis, category: category || undefined, limit: PAGE_SIZE, offset };
   const key = ready && !same ? `compare:${baselineParam}:${targetParam}:${JSON.stringify(query)}` : null;
   const cmp = useAsync<CompareResult>(key, (s) => api.get<CompareResult>(`/imports/${baselineParam}/compare/${targetParam}`, query, s));
+
+  // a stale or hand-edited ?page= past the end: go to the last page instead of showing an empty list
+  const lastPage = cmp.data ? Math.max(1, Math.ceil(cmp.data.total / PAGE_SIZE)) : null;
+  useEffect(() => {
+    if (lastPage !== null && page > lastPage) update({ page: lastPage === 1 ? null : String(lastPage) }, { resetPage: false, replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastPage, page]);
 
   // Keep the last result of the same pair and basis on screen while a filter or page loads.
   const last = useRef<CompareResult | null>(null);
@@ -511,7 +518,7 @@ function Row({ it, basis, p }: { it: CompareItem; basis: CompareBasis; p: Compar
         </div>
       </td>
       <td data-label="Error" className="cell-title">
-        <Link to={`/imports/${it.investigate_import_id}/incidents/${it.fingerprint}`} className="title-link mono" title={it.title}>
+        <Link to={`/imports/${it.investigate_import_id}/incidents/${encodeURIComponent(it.fingerprint)}`} className="title-link mono" title={it.title}>
           {it.title}
         </Link>
       </td>

@@ -182,7 +182,11 @@ export function uploadLog(
         body = null;
       }
       if (xhr.status === 200 || xhr.status === 201) {
-        const summary = body as ImportSummary;
+        if (!isRecord(body)) {
+          reject(new ApiError(xhr.status, "The server returned an unexpected response to the upload."));
+          return;
+        }
+        const summary = body as unknown as ImportSummary;
         resolve({ summary, duplicate: xhr.status === 200 && summary.duplicate === true });
         return;
       }

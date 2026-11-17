@@ -40,7 +40,7 @@ Supported UTF-8 inputs:
 - JSON Lines, including pino/bunyan numeric levels and nested error objects.
 - CSV exports with recognized timestamp, level and message column aliases; numeric columns can supply metric features.
 
-Not supported: binary logs, compressed archives, arbitrary documents or JSON arrays, arbitrary vendor formats without matching headers/fields, live tailing, remote collectors, distributed tracing or multi-user/team workflows. Empty and unrecognized inputs are rejected. Malformed records and truncation are reported in parse diagnostics; records without timestamps do not enter the timeline.
+Not supported: binary logs, compressed archives, arbitrary documents or JSON arrays, arbitrary vendor formats without matching headers/fields, live tailing, remote collectors, distributed tracing or multi-user/team workflows. Empty and unrecognized inputs are rejected. Malformed records and truncation are reported in parse diagnostics; records without timestamps, or with timestamps outside 1970–2100, do not enter the timeline.
 
 ## Install and run
 
@@ -200,7 +200,11 @@ Important failures: statistical slow-ramp window recall is 0.34; an incident occ
 Recent security/maintenance repairs include CORS support for status-update `PUT`
 requests, masking structured access keys and long credential values, rejecting
 backups to the source database (including same-file aliases), and staging restore
-input before replacing safety copies or removing SQLite sidecars. Redaction
+input before replacing safety copies or removing SQLite sidecars. Later repairs mask
+`pass`/`DB_PASS` structured keys, `secret_key`-style keys and URL passwords containing `@`;
+strip control characters from uploaded file names; accept a Bearer token alongside an
+empty `X-API-Key` header; URL-encode fingerprints in browser API paths; and treat
+out-of-range timestamps as unparseable instead of failing the import. Redaction
 remains best-effort.
 The browser normally stores the entered API key in session storage. If browser
 policy blocks storage writes, it uses page memory instead: re-enter the key after

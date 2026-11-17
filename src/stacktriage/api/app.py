@@ -101,7 +101,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def require_auth(request: Request) -> None:
         if cfg.api_key is None:
             return
-        supplied = request.headers.get("x-api-key")
+        supplied = request.headers.get("x-api-key") or None  # an empty X-API-Key must not mask a Bearer token
         auth = request.headers.get("authorization", "")
         if supplied is None and auth[:7].lower() == "bearer ":
             supplied = auth[7:].strip()
@@ -191,7 +191,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         declared = request.headers.get("content-length")
         if declared is not None and declared.isdigit() and int(declared) > cfg.max_upload_bytes:
             raise HTTPException(413, f"file exceeds the {cfg.max_upload_bytes} byte upload limit")
-        safe_name = os.path.basename(filename.replace("\\", "/")) or "upload"
+        # basename only, without control characters (CR/LF etc. would forge lines wherever the name is shown)
+        safe_name = re.sub(r"[\x00-\x1f\x7f]", "", os.path.basename(filename.replace("\\", "/"))) or "upload"
         sha, size = hashlib.sha256(), 0
         with tempfile.SpooledTemporaryFile(max_size=8 * 1024 * 1024) as tmp:
             async for chunk in request.stream():
@@ -314,7 +315,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @api.get("/imports/{import_id}/export")
     def export_import(import_id: ImportId, db: DB, format: Annotated[str, Query(pattern="^(csv|json|md)$")] = "csv"):
         imp = get_import(db, import_id)
-        rows, _ = store.list_incidents(db, import_id, limit=10_000, sort="count")
+        rows, _ = store.list_incidents(db, import_id, limit=None, sort="count")
         name = export.safe_filename(f"stacktriage-{imp.id}-{imp.filename}")
         hdr = {"Content-Disposition": f'attachment; filename="{name}.{format}"'}
         if format == "json":
@@ -518,7 +519,7 @@ def _mount_static(app: FastAPI, cfg: Settings) -> None:
 
     @app.get("/{path:path}", include_in_schema=False)
     def spa(path: str):
-        if path.startswith("api/"):
+        if path == "api" or path.startswith("api/"):
             raise HTTPException(404, "not found")
         # only plain relative paths are looked up on disk (no backslashes, drive letters, NUL, "..")
         if path and _SAFE_STATIC.match(path) and ".." not in path.split("/"):

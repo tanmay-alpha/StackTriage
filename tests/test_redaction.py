@@ -31,6 +31,9 @@ from stacktriage import redact
     ("passphrase=correcthorsebatterystaple", "correcthorse"),
     ("userPassword=Sup3rS3cret", "Sup3rS3cret"),
     ("db_password: opensesame", "opensesame"),
+    ("SECRET_KEY='django-insecure-abc'", "django-insecure-abc"),
+    ("aws_secret_key: wJalrXUtnFEMI", "wJalrXUtnFEMI"),
+    ("postgres://app:p@ss!word@db:5432/x", "ss!word"),
 ])
 def test_secrets_removed(text, secret):
     out = redact(text)

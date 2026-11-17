@@ -201,7 +201,7 @@ def effective_status():
 def list_incidents(
     s: Session, import_id: int, *, q: str | None = None, min_level: int | None = None,
     service: str | None = None, status: str | None = None, ongoing: bool | None = None,
-    sort: str = "count", order: str = "desc", limit: int = 50, offset: int = 0,
+    sort: str = "count", order: str = "desc", limit: int | None = 50, offset: int = 0,
 ) -> tuple[list[tuple[Group, str]], int]:
     stmt = (
         select(Group, effective_status().label("status"))
@@ -309,10 +309,18 @@ def delete_import(s: Session, import_id: int) -> bool:
 
 
 def overview_totals(s: Session) -> dict:
+    fps = select(Group.fingerprint).distinct().subquery()
+    status = func.coalesce(Triage.status, "open")
+    by_status = s.execute(
+        select(status, func.count()).select_from(fps)
+        .outerjoin(Triage, Triage.fingerprint == fps.c.fingerprint).group_by(status)
+    ).all()
     return {
         "imports": s.scalar(select(func.count()).select_from(Import)) or 0,
         "events": s.scalar(select(func.coalesce(func.sum(Import.event_count), 0))) or 0,
         "groups": s.scalar(select(func.count()).select_from(Group)) or 0,
+        # review status of each distinct error fingerprint stored in any import
+        "status_counts": {st: n for st, n in by_status},
     }
 
 

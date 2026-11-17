@@ -28,7 +28,7 @@ export function InvestigationView() {
     if (Number.isFinite(importId)) rememberImport(importId);
   }, [importId]);
 
-  const detail = useAsync<IncidentDetail>(`inc:${importId}:${fingerprint}`, (s) => api.get<IncidentDetail>(`/imports/${importId}/incidents/${fingerprint}`, undefined, s));
+  const detail = useAsync<IncidentDetail>(`inc:${importId}:${fingerprint}`, (s) => api.get<IncidentDetail>(`/imports/${importId}/incidents/${encodeURIComponent(fingerprint)}`, undefined, s));
   const imp = useAsync<ImportDetail>(`import:${importId}`, (s) => api.get<ImportDetail>(`/imports/${importId}`, undefined, s));
   useDocTitle(detail.data ? `Investigate: ${detail.data.title.slice(0, 60)}` : "Investigate incident");
 
@@ -76,10 +76,10 @@ export function InvestigationView() {
         <div className="inv-main">
           <IncidentTimeline d={d} imp={imp.data} impLoading={imp.loading} />
           <Representative d={d} />
-          <Records importId={importId} fingerprint={fingerprint} total={d.count} />
+          <Records key={fingerprint} importId={importId} fingerprint={fingerprint} total={d.count} />
         </div>
         <aside className="inv-side" aria-label="Notes, related incidents and export">
-          <Notes d={d} onChange={(notes) => detail.setData((p) => (p ? { ...p, notes } : p))} />
+          <Notes key={d.fingerprint} d={d} onChange={(notes) => detail.setData((p) => (p ? { ...p, notes } : p))} />
           <Related d={d} importId={importId} />
           <Panel title="Export report">
             <p className="muted small">Exports every incident in this import, with status, counts and timing.</p>
@@ -168,6 +168,7 @@ function IncidentTimeline({ d, imp, impLoading }: { d: IncidentDetail; imp: Impo
       const ms = toMs(w.start);
       if (ms !== null) counts.set(ms, (counts.get(ms) ?? 0) + w.count);
     }
+    if (counts.size === 0) return null;
     const timeline = imp?.timeline ?? [];
     let lo = Math.min(...[...counts.keys(), ...(timeline.length ? [timeline[0]!.start_ms] : [])]);
     let hi = Math.max(...[...counts.keys(), ...(timeline.length ? [timeline[timeline.length - 1]!.start_ms] : [])]);
@@ -256,7 +257,7 @@ function Representative({ d }: { d: IncidentDetail }) {
 
 function Records({ importId, fingerprint, total }: { importId: number; fingerprint: string; total: number }) {
   const [offset, setOffset] = useState(0);
-  const state = useAsync<Page<EventOut>>(`events:${importId}:${fingerprint}:${offset}`, (s) => api.get<Page<EventOut>>(`/imports/${importId}/incidents/${fingerprint}/events`, { limit: EVENT_PAGE, offset }, s));
+  const state = useAsync<Page<EventOut>>(`events:${importId}:${fingerprint}:${offset}`, (s) => api.get<Page<EventOut>>(`/imports/${importId}/incidents/${encodeURIComponent(fingerprint)}/events`, { limit: EVENT_PAGE, offset }, s));
   return (
     <Panel title={`Log records (${fmtInt(total)})`}>
       {state.error ? (
@@ -358,7 +359,7 @@ function Notes({ d, onChange }: { d: IncidentDetail; onChange: (n: NoteOut[]) =>
     if (!text) return;
     setBusy(true);
     try {
-      const n = await api.post<NoteOut>(`/incidents/${d.fingerprint}/notes`, { body: text });
+      const n = await api.post<NoteOut>(`/incidents/${encodeURIComponent(d.fingerprint)}/notes`, { body: text });
       onChange([...d.notes, n]);
       setBody("");
       push("Note added.");
@@ -373,7 +374,7 @@ function Notes({ d, onChange }: { d: IncidentDetail; onChange: (n: NoteOut[]) =>
     if (!target) return;
     setBusy(true);
     try {
-      await api.del(`/incidents/${d.fingerprint}/notes/${target.id}`);
+      await api.del(`/incidents/${encodeURIComponent(d.fingerprint)}/notes/${target.id}`);
       onChange(d.notes.filter((n) => n.id !== target.id));
       setTarget(null);
       push("Note deleted.");
@@ -440,7 +441,7 @@ function Related({ d, importId }: { d: IncidentDetail; importId: number }) {
           <ul className="related">
             {d.related.map((g) => (
               <li key={g.fingerprint}>
-                <Link to={`/imports/${importId}/incidents/${g.fingerprint}`} className="mono related-title" title={g.title}>
+                <Link to={`/imports/${importId}/incidents/${encodeURIComponent(g.fingerprint)}`} className="mono related-title" title={g.title}>
                   {g.title}
                 </Link>
                 <div className="top-meta">

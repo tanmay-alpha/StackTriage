@@ -56,8 +56,9 @@ _RULES: list[tuple[str, re.Pattern[str], str]] = [
     ),
     (
         "url_credentials",
-        # scheme://user:pass@host and scheme://:pass@host (redis); user may be empty
-        re.compile(r"(?i)\b([a-z][a-z0-9+.-]{1,20}://)[^\s/:@\"']{0,100}:[^\s/@\"']{1,200}@"),
+        # scheme://user:pass@host and scheme://:pass@host (redis); user may be empty. An unencoded
+        # '@' inside the password is consumed up to the last '@' of the authority.
+        re.compile(r"(?i)\b([a-z][a-z0-9+.-]{1,20}://)[^\s/:@\"']{0,100}:[^\s/\"']{1,200}@"),
         r"\1[REDACTED:credentials]@",
     ),
     (
@@ -74,10 +75,11 @@ _KEYWORDS = (
 _VALUE = (
     r"(?P<v>\"(?:[^\"\\\r\n]|\\.)*\"|'(?:[^'\\\r\n]|\\.)*'|[^\s\"',;&}\])]+)"
 )
-# key=value / "key": "value". The keyword must END the key (so `password.js:22` is not a key)
-# and be delimited from preceding text (so `bypass=1` is not a key).
+# key=value / "key": "value". The keyword must END the key (so `password.js:22` is not a key), optionally
+# followed by a `key` suffix (secret_key, SECRET_KEY, secretKey), and be delimited from preceding text
+# (so `bypass=1` is not a key).
 _KV = re.compile(
-    rf"(?i)(?P<k>[\"']?(?:[\w.-]{{0,30}}[_.-])?(?<![A-Za-z0-9])(?P<kw>{_KEYWORDS})s?[\"']?\s*[:=]\s*){_VALUE}"
+    rf"(?i)(?P<k>[\"']?(?:[\w.-]{{0,30}}[_.-])?(?<![A-Za-z0-9])(?P<kw>{_KEYWORDS})s?(?:[_.-]?key)?[\"']?\s*[:=]\s*){_VALUE}"
 )
 # camelCase keys: userPassword, dbSecret, accessToken
 _KV_CAMEL = re.compile(
@@ -87,10 +89,12 @@ _KV_CAMEL = re.compile(
 _CARD = re.compile(r"\b(?:\d[ -]?){12,18}\d\b")
 _LOWER_WORD = re.compile(r"[a-z]+")
 
-# Key names whose values are always redacted in structured (JSON/CSV) records.
+# Key names whose values are always redacted in structured (JSON/CSV) records. A bare `pass` must be a
+# whole word or camelCase part (pass, db_pass, DB_PASS, dbPass) so bypass/passenger/compass are kept.
 _SENSITIVE_KEY = re.compile(
     r"(?i)(password|passwd|passphrase|pwd|secret|token|api[_-]?key|apikey|authorization|cookie"
-    r"|credential|private[_-]?key|access[_-]?key|session[_-]?id|sessionid|account[_-]?key|ssn)"
+    r"|credential|private[_-]?key|access[_-]?key|session[_-]?id|sessionid|account[_-]?key|ssn"
+    r"|(?<![a-z])pass(?![a-z])|(?-i:(?<=[a-z])Pass(?![a-z])))"
 )
 
 

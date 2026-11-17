@@ -295,9 +295,9 @@ function IngestionSummary({ d, duplicate }: { d: ImportDetail; duplicate: boolea
           <dd className="num small-val">
             {d.first_event ? (
               <>
-                {fmt.dateTime(d.first_event).replace(` ${fmt.label}`, "")}
+                {fmt.dateTimeBare(d.first_event)}
                 <span className="muted"> to </span>
-                {fmt.dateTime(d.last_event).replace(` ${fmt.label}`, "")}
+                {fmt.dateTimeBare(d.last_event)}
               </>
             ) : (
               "no timestamps found"

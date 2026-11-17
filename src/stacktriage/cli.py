@@ -102,7 +102,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {e}", file=sys.stderr)
         return 2
     with fh:
-        result = analyze(session, window_seconds=args.window)
+        try:
+            result = analyze(session, window_seconds=args.window)
+        except ValueError as e:  # e.g. a --window that would create too many buckets
+            print(f"error: {e}", file=sys.stderr)
+            return 2
     out = _summary(args.path, session.format, session.diagnostics.to_dict(), result)
     if args.json:
         json.dump(out, sys.stdout, indent=2)

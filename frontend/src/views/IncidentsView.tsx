@@ -46,7 +46,7 @@ export function IncidentsView() {
   const activity = params.get("activity") ?? "";
   const sort = (SORTS.some((s) => s.id === params.get("sort")) ? params.get("sort") : "count") as SortKey;
   const order = params.get("order") === "asc" ? "asc" : "desc";
-  const page = Math.max(1, Number(params.get("page")) || 1);
+  const page = Math.max(1, Math.floor(Number(params.get("page"))) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
   const update = (patch: Record<string, string | null>, resetPage = true) => {
@@ -89,6 +89,13 @@ export function IncidentsView() {
   const key = `incidents:${importId}:${JSON.stringify(query)}`;
   const list = useAsync<Page<IncidentItem>>(key, (s) => api.get<Page<IncidentItem>>(`/imports/${importId}/incidents`, query, s));
 
+  // a stale or hand-edited ?page= past the end: go to the last page instead of showing an empty list
+  const lastPage = list.data ? Math.max(1, Math.ceil(list.data.total / PAGE_SIZE)) : null;
+  useEffect(() => {
+    if (lastPage !== null && page > lastPage) update({ page: lastPage === 1 ? null : String(lastPage) }, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastPage, page]);
+
   const searchId = useId();
   const levelId = useId();
   const serviceId = useId();
@@ -110,7 +117,7 @@ export function IncidentsView() {
 
   const services = Object.keys(detail.data?.service_counts ?? {}).sort();
   const filtered = Boolean(q || level || service || status || activity);
-  const link = (fp: string) => `/imports/${importId}/incidents/${fp}`;
+  const link = (fp: string) => `/imports/${importId}/incidents/${encodeURIComponent(fp)}`;
 
   const toggleSort = (k: SortKey) => {
     if (sort === k) update({ order: order === "desc" ? "asc" : "desc" });

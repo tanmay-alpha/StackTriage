@@ -5,6 +5,8 @@ export function highlight(text: string, q: string | undefined | null): ReactNode
   const needle = (q ?? "").trim();
   if (!needle) return text;
   const lower = text.toLowerCase();
+  // lowercasing can change string length (e.g. "İ"), which would misalign the slices below
+  if (lower.length !== text.length) return text;
   const n = needle.toLowerCase();
   const out: ReactNode[] = [];
   let i = 0;
