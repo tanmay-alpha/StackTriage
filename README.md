@@ -204,8 +204,13 @@ input before replacing safety copies or removing SQLite sidecars. Later repairs 
 `pass`/`DB_PASS` structured keys, `secret_key`-style keys and URL passwords containing `@`;
 strip control characters from uploaded file names; accept a Bearer token alongside an
 empty `X-API-Key` header; URL-encode fingerprints in browser API paths; and treat
-out-of-range timestamps as unparseable instead of failing the import. Redaction
-remains best-effort.
+out-of-range timestamps as unparseable instead of failing the import. A later sweep keeps
+the start *and* end of oversized stack traces (the root cause is at the end), separates Node
+errors with codes (`TypeError [ERR_…]`) and more HTTP status phrasings, reads ECS-style
+`service.name`, matches sensitive structured keys only on key-part boundaries (so
+`processName`, `prompt_tokens` and `pass_rate` are kept), catches `PGPASSWORD=`-style
+variables, stops wiping ordinary text after `cookie`/`authorization`/`pass`, and makes
+`restore` refuse empty or non-StackTriage database files. Redaction remains best-effort.
 The browser normally stores the entered API key in session storage. If browser
 policy blocks storage writes, it uses page memory instead: re-enter the key after
 reload. The key is never stored in local storage or included in a URL.
