@@ -28,15 +28,16 @@ Historical scope and implementation order. See `README.md` and
     export, Compare page, paired synthetic fixtures with declared ground truth. Rate-change
     verdicts use traffic-normalized rates, an exact binomial test, Benjamini-Hochberg and a
     1.5x minimum ratio; "resolved but observed" is a flag, not a regression verdict.
+11. Release-aware triage: resolving a group can record when the fix shipped and in which
+    release (schema v2). A comparison then calls a resolved group *regressed* only when the
+    target has occurrences timestamped after that fix time, with the exact count.
 
-All ten milestones above are delivered and covered by CI (backend, frontend, docker).
+All eleven milestones above are delivered and covered by CI (backend, frontend, docker).
 
 ## Next milestones (proposed, not implemented)
 Ordered by interview value per unit of risk. Each must ship with tests and measured,
 reproducible evidence; none is claimed as delivered.
 
-1. **Release-aware triage.** Record a fix version/date when a group is resolved so the
-   comparison can call a reappearance after that point a regression rather than a flag.
 2. **Trend detector for slow ramps.** The statistical detector's documented weakness is
    slow ramps (window recall 0.34, first flag after 14.7 windows). Add an EWMA/CUSUM
    candidate on the same features and evaluate it in `scripts/evaluate_anomaly.py`

@@ -1,6 +1,9 @@
+import io
+
 import pytest
 
-from stacktriage import redact
+from stacktriage import parse, redact
+from stacktriage.redaction import is_sensitive_key
 
 
 @pytest.mark.parametrize("text,secret", [
@@ -31,6 +34,9 @@ from stacktriage import redact
     ("passphrase=correcthorsebatterystaple", "correcthorse"),
     ("userPassword=Sup3rS3cret", "Sup3rS3cret"),
     ("db_password: opensesame", "opensesame"),
+    ("SECRET_KEY='django-insecure-abc'", "django-insecure-abc"),
+    ("aws_secret_key: wJalrXUtnFEMI", "wJalrXUtnFEMI"),
+    ("postgres://app:p@ss!word@db:5432/x", "ss!word"),
 ])
 def test_secrets_removed(text, secret):
     out = redact(text)
@@ -84,3 +90,59 @@ def test_long_secret_is_removed_completely(quote, size):
     assert "Q" not in out
     assert "[REDACTED:secret]" in out
     assert "next=ok" in out
+
+
+@pytest.mark.parametrize("key", [
+    "processName", "className", "classname", "businessName", "isSnapshot", "prompt_tokens", "max_tokens",
+    "tokenizer", "pass_rate", "tests_pass", "allowPassThrough", "firstPass",
+])
+def test_ordinary_structured_keys_not_sensitive(key):
+    assert not is_sensitive_key(key)
+
+
+@pytest.mark.parametrize("key", [
+    "password", "passwd", "db_password", "DB_PASS", "pass", "dbPass", "userPassword", "secret", "client_secret",
+    "secretKey", "SECRET_KEY", "token", "access_token", "accessToken", "refresh_token", "api_key", "apiKey",
+    "x-api-key", "authorization", "cookie", "set-cookie", "credentials", "private_key", "access_key",
+    "session_id", "sessionid", "account_key", "ssn", "user_ssn", "pwd", "PGPASSWORD",
+])
+def test_sensitive_structured_keys(key):
+    assert is_sensitive_key(key)
+
+
+def test_structured_fields_and_metrics_kept():
+    line = ('{"asctime":"2026-11-18T10:00:00Z","levelname":"ERROR","message":"x","processName":"MainProcess",'
+            '"className":"OrderService","prompt_tokens":512,"pass_rate":0.97,"password":"hunter2"}\n')
+    [ev] = list(parse(io.BytesIO(line.encode())))
+    assert ev.fields["processName"] == "MainProcess"
+    assert ev.fields["className"] == "OrderService"
+    assert ev.metrics == {"prompt_tokens": 512.0, "pass_rate": 0.97}
+    assert "hunter2" not in repr(ev)
+
+
+@pytest.mark.parametrize("text,secret", [
+    ("PGPASSWORD=s3cr3t psql -h db", "s3cr3t"),
+    ("Cookie: session=abc123def456; theme=dark", "abc123def456"),
+    ("Set-Cookie: sid=xyz789abc; Path=/; HttpOnly", "xyz789abc"),
+    ("Authorization: Bearer abc123SECRETtokenvalue999", "abc123SECRETtokenvalue999"),
+    ("Authorization: Basic dXNlcjpwYXNz", "dXNlcjpwYXNz"),
+    ("authorization=Token 9f8e7d6c5b4a3f2e", "9f8e7d6c5b4a3f2e"),
+    ("password: hunter2", "hunter2"),
+    ("pass=S3cret!", "S3cret!"),
+])
+def test_regression_secrets_still_removed(text, secret):
+    out = redact(text)
+    assert secret not in out
+    assert "REDACTED" in out
+
+
+@pytest.mark.parametrize("text", [
+    "bypass=1",
+    "compass=north",
+    "password.js:22",
+    "Invalid cookie: expected 2 parts, got 3 (request id 1234 for /checkout)",
+    "authorization: denied for user 42",
+    "tests pass: 15 fail: 2",
+])
+def test_regression_prose_kept(text):
+    assert redact(text) == text

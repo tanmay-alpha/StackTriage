@@ -16,19 +16,31 @@ def _ro_uri(p: Path) -> str:
     return p.resolve().as_uri() + "?mode=ro"  # as_uri percent-encodes '?', '#', '%' in paths
 
 
+_REQUIRED_TABLES = {"imports", "groups", "events", "triage", "notes"}
+
+
 def check(path: str | Path) -> list[str]:
-    """Return integrity problems; an empty list means the database is sound."""
+    """Return integrity problems; an empty list means a sound StackTriage database."""
     p = Path(path)
     if not p.exists():
         raise MaintenanceError(f"{p} does not exist")
-    con = sqlite3.connect(_ro_uri(p), uri=True)
+    if not p.is_file():
+        raise MaintenanceError(f"{p} is not a file")
     problems: list[str] = []
+    try:
+        con = sqlite3.connect(_ro_uri(p), uri=True)
+    except sqlite3.Error as e:
+        raise MaintenanceError(f"cannot open {p}: {e}") from e
     try:
         problems = [r[0] for r in con.execute("PRAGMA integrity_check") if r[0] != "ok"]
         problems += [f"foreign key violation in {r[0]} (row {r[1]})" for r in con.execute("PRAGMA foreign_key_check")]
         version = con.execute("PRAGMA user_version").fetchone()[0]
+        tables = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
         if version > len(MIGRATIONS):
             problems.append(f"schema v{version} is newer than supported v{len(MIGRATIONS)}")
+        elif version < 1 or not _REQUIRED_TABLES <= tables:
+            # an empty file or another application's database passes the SQLite checks above
+            problems.append("not a StackTriage database (schema version or tables missing)")
     except sqlite3.DatabaseError as e:
         problems.append(f"not a readable SQLite database: {e}")
     finally:

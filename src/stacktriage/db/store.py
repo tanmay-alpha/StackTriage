@@ -8,7 +8,7 @@ import tempfile
 import time
 from collections import Counter
 from datetime import datetime
-from typing import Any, BinaryIO
+from typing import Any, BinaryIO, NamedTuple
 
 from sqlalchemy import case, delete, func, insert, or_, select, update
 from sqlalchemy.exc import IntegrityError
@@ -201,7 +201,7 @@ def effective_status():
 def list_incidents(
     s: Session, import_id: int, *, q: str | None = None, min_level: int | None = None,
     service: str | None = None, status: str | None = None, ongoing: bool | None = None,
-    sort: str = "count", order: str = "desc", limit: int = 50, offset: int = 0,
+    sort: str = "count", order: str = "desc", limit: int | None = 50, offset: int = 0,
 ) -> tuple[list[tuple[Group, str]], int]:
     stmt = (
         select(Group, effective_status().label("status"))
@@ -276,13 +276,43 @@ def list_events(
     return list(s.scalars(stmt)), total
 
 
-def set_status(s: Session, fingerprint: str, status: str) -> None:
+_KEEP = object()
+
+
+def set_status(s: Session, fingerprint: str, status: str, *, fixed_ms: int | None | object = _KEEP,
+               fixed_version: str | None | object = _KEEP) -> None:
+    """Set the review status. A fix record (time / version) only exists while the status is resolved: other
+    statuses clear it; re-resolving without new values keeps an existing record."""
     if status not in STATUSES:
         raise ValueError(f"status must be one of {STATUSES}")
+    if status != "resolved" and any(v not in (_KEEP, None) for v in (fixed_ms, fixed_version)):
+        raise ValueError("a fix time or version can only be recorded with status 'resolved'")
     ts = now_ms()
-    updated = s.execute(update(Triage).where(Triage.fingerprint == fingerprint).values(status=status, updated_ms=ts))
-    if updated.rowcount == 0:
-        s.add(Triage(fingerprint=fingerprint, status=status, updated_ms=ts))
+    row = s.get(Triage, fingerprint)
+    if row is None:
+        row = Triage(fingerprint=fingerprint, status=status, updated_ms=ts)
+        s.add(row)
+    keep = row.status == "resolved" and status == "resolved"
+    row.status, row.updated_ms = status, ts
+    row.fixed_ms = fixed_ms if fixed_ms is not _KEEP else (row.fixed_ms if keep else None)  # type: ignore[assignment]
+    row.fixed_version = fixed_version if fixed_version is not _KEEP else (row.fixed_version if keep else None)  # type: ignore[assignment]
+
+
+def fix_record(s: Session, fingerprint: str) -> tuple[int | None, str | None]:
+    row = s.execute(select(Triage.fixed_ms, Triage.fixed_version).where(Triage.fingerprint == fingerprint)).first()
+    return (row[0], row[1]) if row else (None, None)
+
+
+def counts_after_fix(s: Session, import_id: int) -> dict[str, int]:
+    """Per fingerprint: occurrences in an import timestamped strictly after that fingerprint's recorded fix time,
+    for every group currently resolved with a fix time. One grouped query (ix_events_import_fp_ts)."""
+    rows = s.execute(
+        select(Event.fingerprint, func.count())
+        .join(Triage, Triage.fingerprint == Event.fingerprint)
+        .where(Event.import_id == import_id, Triage.status == "resolved", Triage.fixed_ms.is_not(None),
+               Event.ts_ms > Triage.fixed_ms)
+        .group_by(Event.fingerprint))
+    return {fp: n for fp, n in rows}
 
 
 def fingerprint_exists(s: Session, fingerprint: str) -> bool:
@@ -309,10 +339,18 @@ def delete_import(s: Session, import_id: int) -> bool:
 
 
 def overview_totals(s: Session) -> dict:
+    fps = select(Group.fingerprint).distinct().subquery()
+    status = func.coalesce(Triage.status, "open")
+    by_status = s.execute(
+        select(status, func.count()).select_from(fps)
+        .outerjoin(Triage, Triage.fingerprint == fps.c.fingerprint).group_by(status)
+    ).all()
     return {
         "imports": s.scalar(select(func.count()).select_from(Import)) or 0,
         "events": s.scalar(select(func.coalesce(func.sum(Import.event_count), 0))) or 0,
         "groups": s.scalar(select(func.count()).select_from(Group)) or 0,
+        # review status of each distinct error fingerprint stored in any import
+        "status_counts": {st: n for st, n in by_status},
     }
 
 
@@ -335,11 +373,21 @@ def comparison_inputs(s: Session, imp: Import) -> tuple[ImportStats, list[GroupS
     return stats, [g for g in groups if g.fingerprint != OVERFLOW_KEY]
 
 
-def triage_for(s: Session, fingerprints: list[str]) -> dict[str, tuple[str, int]]:
-    """{fingerprint: (status, updated_ms)} for fingerprints with a stored review status (chunked IN lists)."""
-    out: dict[str, tuple[str, int]] = {}
+class TriageRow(NamedTuple):
+    status: str
+    updated_ms: int | None
+    fixed_ms: int | None
+    fixed_version: str | None
+
+
+OPEN = TriageRow("open", None, None, None)
+
+
+def triage_for(s: Session, fingerprints: list[str]) -> dict[str, TriageRow]:
+    """Stored review state for the fingerprints that have one (chunked IN lists); absent means open."""
+    out: dict[str, TriageRow] = {}
+    cols = (Triage.fingerprint, Triage.status, Triage.updated_ms, Triage.fixed_ms, Triage.fixed_version)
     for i in range(0, len(fingerprints), 500):
-        chunk = fingerprints[i:i + 500]
-        rows = s.execute(select(Triage.fingerprint, Triage.status, Triage.updated_ms).where(Triage.fingerprint.in_(chunk)))
-        out.update({fp: (st, ms) for fp, st, ms in rows})
+        rows = s.execute(select(*cols).where(Triage.fingerprint.in_(fingerprints[i:i + 500])))
+        out.update({fp: TriageRow(*rest) for fp, *rest in rows})
     return out

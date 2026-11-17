@@ -3,7 +3,7 @@ import io
 
 import pytest
 
-from helpers import run
+from helpers import run, run_analysis
 from stacktriage import Level, Limits, parse
 from stacktriage.fingerprint import extract_root
 from stacktriage.parsers.common import normalize_level
@@ -34,6 +34,16 @@ def test_huge_epoch_does_not_abort_following_records():
     assert len(events) == 2 and events[0].timestamp is None
     assert events[1].message == "ok"
     assert session.diagnostics.code_counts["BAD_TIMESTAMP"] == 1
+
+
+def test_out_of_range_calendar_years_are_bad_timestamps_not_a_failed_analysis():
+    # year 9000 next to 2026 made the timeline exceed its bucket cap; pre-1970 years crashed on Windows
+    text = ("2026-01-01 10:00:00,000 - ERROR - boom\n9000-01-01 10:00:00,000 - ERROR - boom\n"
+            "1960-01-01 10:00:00,000 - ERROR - boom\n0001-01-01 00:00:00,000 - ERROR - boom\n")
+    session, res = run_analysis(text)
+    assert res.total_events == 4 and res.timeline.untimed_events == 3
+    assert sum(b.total for b in res.timeline.buckets) == 1
+    assert session.diagnostics.code_counts["BAD_TIMESTAMP"] == 3
 
 
 def test_malformed_nested_error_type_does_not_abort_import():

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { api, downloadExport } from "../api/client";
 import type { ExportFormat } from "../api/client";
-import type { Status } from "../api/types";
+import type { Status, StatusOut } from "../api/types";
 import { STATUSES } from "../api/types";
 import { useToast } from "../state/app";
 import { Button, STATUS_LABEL } from "./ui";
 
-export function StatusSelect({ fingerprint, value, label, onChanged, size = "sm" }: { fingerprint: string; value: Status; label: string; onChanged: (s: Status) => void; size?: "sm" | "md" }) {
+/** `onChanged` is optimistic (and called again with the previous value on failure); `onSaved` gets the server's record after success. */
+export function StatusSelect({ fingerprint, value, label, onChanged, onSaved, size = "sm" }: { fingerprint: string; value: Status; label: string; onChanged: (s: Status) => void; onSaved?: (out: StatusOut) => void; size?: "sm" | "md" }) {
   const { push } = useToast();
   const [busy, setBusy] = useState(false);
   const change = async (next: Status) => {
@@ -15,7 +16,8 @@ export function StatusSelect({ fingerprint, value, label, onChanged, size = "sm"
     onChanged(next);
     setBusy(true);
     try {
-      await api.put(`/incidents/${fingerprint}/status`, { status: next });
+      const out = await api.put<StatusOut>(`/incidents/${encodeURIComponent(fingerprint)}/status`, { status: next });
+      onSaved?.(out);
       push(`Status set to ${STATUS_LABEL[next].toLowerCase()}.`);
     } catch (e) {
       onChanged(prev);

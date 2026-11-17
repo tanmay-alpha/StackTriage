@@ -211,6 +211,10 @@ def test_overview(client):
     upload(client)
     o = client.get("/api/overview").json()
     assert o["imports"] == 1 and o["events"] == 340 and o["latest_import"]["incident_count"] == 4
+    assert o["status_counts"] == {"open": 4}
+    fp = client.get("/api/imports/1/incidents").json()["items"][0]["fingerprint"]
+    client.put(f"/api/incidents/{fp}/status", json={"status": "resolved"})
+    assert client.get("/api/overview").json()["status_counts"] == {"open": 3, "resolved": 1}
 
 
 # ---------------------------------------------------------------- auth
@@ -225,6 +229,8 @@ def test_api_key_required_when_configured():
     assert c.delete("/api/imports/1").status_code == 401
     assert c.get("/api/imports/1/export").status_code == 401
     assert c.get("/api/overview").status_code == 401
+    # an empty X-API-Key header must not shadow a valid Bearer token
+    assert c.get("/api/imports", headers={"X-API-Key": "", "Authorization": f"Bearer {KEY}"}).status_code == 200
 
 
 def test_production_requires_key_and_hides_docs():
@@ -297,6 +303,7 @@ def test_static_serving_traversal_and_special_paths(tmp_path):
         r = c.get(p)
         assert "TOP SECRET" not in r.text and r.status_code in (200, 404), p
     assert c.get("/api/nope").status_code == 404
+    assert c.get("/api").status_code == 404
 
 
 def test_anomaly_report_stored_and_exported(client):
@@ -349,6 +356,16 @@ def test_sensitive_access_key_is_not_persisted(client):
     assert r.status_code == 201
     iid = r.json()["id"]
     assert secret not in client.get(f"/api/imports/{iid}/events").text
+    r = client.post("/api/imports", params={"filename": "pass.jsonl"},
+                    content=b'{"level":"error","message":"login failed","pass":"hunter2","DB_PASS":"opensesame"}\n')
+    blob = client.get(f"/api/imports/{r.json()['id']}/events").text
+    assert "hunter2" not in blob and "opensesame" not in blob
+
+
+def test_control_characters_are_removed_from_stored_filename(client):
+    r = client.post("/api/imports", params={"filename": "app\r\nInjected: x.log"},
+                    content=(FIX / "python_app.log").read_bytes())
+    assert r.status_code == 201 and r.json()["filename"] == "appInjected: x.log"
 
 
 def test_writes_are_committed_before_the_response_is_sent(tmp_path):

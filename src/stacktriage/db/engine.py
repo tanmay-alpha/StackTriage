@@ -20,8 +20,17 @@ def _v1_initial(conn: Connection) -> None:
     Base.metadata.create_all(conn)
 
 
+def _v2_triage_fix_record(conn: Connection) -> None:
+    # v1 creates tables from the current models, so a fresh database already has these columns;
+    # only databases created by an older release need them added.
+    have = {row[1] for row in conn.execute(text("PRAGMA table_info(triage)"))}
+    for name, ddl in (("fixed_ms", "INTEGER"), ("fixed_version", "VARCHAR(64)")):
+        if name not in have:
+            conn.execute(text(f"ALTER TABLE triage ADD COLUMN {name} {ddl}"))
+
+
 # Append new migrations; never edit a released one.
-MIGRATIONS: list[Callable[[Connection], None]] = [_v1_initial]
+MIGRATIONS: list[Callable[[Connection], None]] = [_v1_initial, _v2_triage_fix_record]
 
 
 def make_engine(path: str | Path) -> Engine:

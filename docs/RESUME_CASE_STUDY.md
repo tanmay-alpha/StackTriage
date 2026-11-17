@@ -127,8 +127,9 @@ performs no writes (a test asserts no INSERT/UPDATE/DELETE statement runs).
   groups and a 1.5x minimum ratio are all required for `increased`/`decreased`. With
   large counts a 1.2x change is significant but not reported; with tiny counts nothing is.
 - **Careful wording.** "Disappeared" means absent from the target capture. A group marked
-  resolved that appears in the target is flagged for review, not called a regression,
-  because review status carries no fix timestamp.
+  resolved is called *regressed* only when a fix time was recorded and the target has
+  occurrences timestamped after it (counted exactly from the events index); otherwise it
+  is only flagged, or reported as observed before the fix.
 - **Known limit, demonstrated.** Exact fingerprint matching means a deploy that moves a
   frame's line number splits a group into disappeared + new; the fixture pair includes
   that case on purpose, and no fuzzy merging is attempted.
@@ -262,9 +263,10 @@ See [settings](../src/stacktriage/api/settings.py),
     Compare per-1,000-event rates; test the counts with an exact conditional binomial
     test, correct across groups (Benjamini-Hochberg) and require a 1.5x ratio. Show the
     pool-exhaustion fixture: count doubles, rate does not.
-12. **Why not call a resolved error that reappears a regression?** Global review status
-    has no fix timestamp or release link, and a capture can predate the fix; flag it for
-    review instead. Recording fix versions would be the prerequisite for a stronger claim.
+12. **When do you call a resolved error that reappears a regression?** Only when the fix
+    time is recorded and the target has occurrences timestamped after it; the count comes
+    from an indexed query. Without a fix time it stays a flag, because a capture can
+    predate the fix. Clock skew between hosts remains a caveat.
 
 ## Five-minute synthetic demo
 
@@ -281,8 +283,9 @@ The first command sends only `spring_boot.log` and `telemetry.csv` from the chec
 fixtures, compares format/event/group counts with their expected JSON files and
 re-uploads each to check duplicate detection. A rerun reuses imports and preserves
 review state. `--compare` imports `deploy_before.log` and `deploy_after.log`, marks the
-warehouse `ConnectionError` group resolved if it is still open (simulating an earlier
-fix) and checks the comparison against the declared ground truth. The scripts write to
+warehouse `ConnectionError` group resolved with release `2026.03.05-1` at 11:30 UTC if it
+is still open (simulating an earlier fix) and checks the comparison against the declared
+ground truth. The scripts write to
 the running server's database; they do not erase data, start a server or generate
 fixtures. Set `STACKTRIAGE_API_KEY` in their environment if the server requires
 authentication; `--url` selects another backend. Do not send an API key to an
@@ -294,5 +297,5 @@ untrusted server or use public plain HTTP.
 | 0:40-1:20 | Inspect diagnostics/redactions and Overview. Point out the timeout group beginning near 11:10 UTC; missing timestamps cannot appear in the timeline. |
 | 1:20-2:00 | Open Incidents and search `NullPointer`. Show the two separate groups. Explain that ongoing is relative to the end of this file, not a live health check. |
 | 2:00-2:40 | Open the connection timeout group (67 expected occurrences), inspect its trace and timeline, set investigating and add a synthetic note. Reload; show persisted state. |
-| 2:40-4:10 | Open the URL printed by `demo.py --compare`. Baseline is before, target after the synthetic deployment; traffic doubled. Show the new `AttributeError`, the payment `TimeoutError` increase per 1,000 events, the pool error whose count doubled but whose rate did not (and the per-minute disagreement note), the warehouse error flagged as marked resolved but observed, and the tax `LookupError` split by a moved line number. Open the payment row's investigation page; export Markdown. |
+| 2:40-4:10 | Open the URL printed by `demo.py --compare`. Baseline is before, target after the synthetic deployment; traffic doubled. Show the warehouse error at the top as *regressed after fix* (40 occurrences after release `2026.03.05-1`), the new `AttributeError`, the payment `TimeoutError` increase per 1,000 events, the pool error whose count doubled but whose rate did not (and the per-minute disagreement note), and the tax `LookupError` split by a moved line number. Open the warehouse row's investigation page to show the fix record; export Markdown. |
 | 4:10-5:00 | Open the evaluation table above. State synthetic-only results, slow-ramp and contaminated-baseline failures, comparison limits (exact matching, even-spread rate assumption) and the shared-key/single-instance security limits. Do not claim a public deployment. |

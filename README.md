@@ -40,7 +40,7 @@ Supported UTF-8 inputs:
 - JSON Lines, including pino/bunyan numeric levels and nested error objects.
 - CSV exports with recognized timestamp, level and message column aliases; numeric columns can supply metric features.
 
-Not supported: binary logs, compressed archives, arbitrary documents or JSON arrays, arbitrary vendor formats without matching headers/fields, live tailing, remote collectors, distributed tracing or multi-user/team workflows. Empty and unrecognized inputs are rejected. Malformed records and truncation are reported in parse diagnostics; records without timestamps do not enter the timeline.
+Not supported: binary logs, compressed archives, arbitrary documents or JSON arrays, arbitrary vendor formats without matching headers/fields, live tailing, remote collectors, distributed tracing or multi-user/team workflows. Empty and unrecognized inputs are rejected. Malformed records and truncation are reported in parse diagnostics; records without timestamps, or with timestamps outside 1970–2100, do not enter the timeline.
 
 ## Install and run
 
@@ -130,7 +130,7 @@ Choose a **baseline** import (logs before a change) and a **target** import (log
 
 - Rates are **per 1,000 parsed events** by default, so a longer or busier capture is not an increase by itself; **per minute** is available when both captures have usable timestamps, and rows where the two bases disagree are flagged.
 - An exact binomial test on the two counts, corrected across groups with Benjamini-Hochberg, plus a minimum 1.5x rate ratio decide `increased`/`decreased`; small counts are `insufficient_data`.
-- Groups currently marked **resolved** that appear in the target are flagged for a second look; the review status has no fix date, so this is not called a confirmed regression.
+- When a group is resolved you can record **when the fix shipped and in which release**. A later comparison then calls it **regressed** only if the target has occurrences timestamped after that fix time, with their count; without a fix time a resolved group that reappears is just flagged for a second look, if every occurrence is timestamped before the fix it is reported as such, and occurrences without timestamps make the check inconclusive.
 - Warnings cover different formats or services, overlapping or reversed captures, missing timestamps, truncation and very different capture lengths. Results export as CSV, Markdown or JSON, and each row links to the existing investigation page.
 
 Reproducible demo with a synthetic pair (traffic doubles after the "deployment"); this is actual output against a local server:
@@ -139,8 +139,8 @@ Reproducible demo with a synthetic pair (traffic doubles after the "deployment")
 $ python scripts/demo.py --compare
 baseline: deploy_before.log -> import 1 (770 events)
 target: deploy_after.log -> import 2 (1548 events)
-Simulated an earlier fix: marked the warehouse ConnectionError group as resolved.
-Comparison: 2 new, 2 increased, 1 decreased, 2 absent from target, 1 marked resolved but observed; matches the declared ground truth
+Simulated an earlier fix: marked the warehouse ConnectionError group resolved in release 2026.03.05-1 (11:30 UTC).
+Comparison: 2 new, 2 increased, 1 decreased, 2 absent from target, 1 marked resolved but observed, 1 regressed after a recorded fix; matches the declared ground truth
 Open http://127.0.0.1:8000/compare?baseline=1&target=2 in the browser.
 ```
 
@@ -201,8 +201,17 @@ Important failures: an incident occupying 58 % of the training period is learned
 Recent security/maintenance repairs include CORS support for status-update `PUT`
 requests, masking structured access keys and long credential values, rejecting
 backups to the source database (including same-file aliases), and staging restore
-input before replacing safety copies or removing SQLite sidecars. Redaction
-remains best-effort.
+input before replacing safety copies or removing SQLite sidecars. Later repairs mask
+`pass`/`DB_PASS` structured keys, `secret_key`-style keys and URL passwords containing `@`;
+strip control characters from uploaded file names; accept a Bearer token alongside an
+empty `X-API-Key` header; URL-encode fingerprints in browser API paths; and treat
+out-of-range timestamps as unparseable instead of failing the import. A later sweep keeps
+the start *and* end of oversized stack traces (the root cause is at the end), separates Node
+errors with codes (`TypeError [ERR_…]`) and more HTTP status phrasings, reads ECS-style
+`service.name`, matches sensitive structured keys only on key-part boundaries (so
+`processName`, `prompt_tokens` and `pass_rate` are kept), catches `PGPASSWORD=`-style
+variables, stops wiping ordinary text after `cookie`/`authorization`/`pass`, and makes
+`restore` refuse empty or non-StackTriage database files. Redaction remains best-effort.
 The browser normally stores the entered API key in session storage. If browser
 policy blocks storage writes, it uses page memory instead: re-enter the key after
 reload. The key is never stored in local storage or included in a URL.

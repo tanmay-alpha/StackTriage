@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from typing import Annotated, Any, Generic, Literal, TypeVar
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
 
 from ..models import Level
 
@@ -92,6 +92,8 @@ class WindowCount(BaseModel):
 
 class IncidentDetail(IncidentItem):
     kind: str
+    fixed_at: datetime | None
+    fixed_version: str | None
     untimed_count: int
     sample_event_id: str
     sample_message: str
@@ -120,6 +122,29 @@ class EventOut(BaseModel):
 class StatusIn(BaseModel):
     model_config = ConfigDict(extra="forbid")
     status: Status
+    fixed_at: datetime | None = Field(default=None, description="when the fix shipped (status resolved only)")
+    fixed_version: Annotated[str, StringConstraints(strip_whitespace=True, max_length=64)] | None = Field(
+        default=None, description="release that contains the fix (status resolved only)")
+
+    @field_validator("fixed_at")
+    @classmethod
+    def _aware_and_in_range(cls, v: datetime | None) -> datetime | None:
+        if v is None:
+            return v
+        v = v if v.tzinfo else v.replace(tzinfo=UTC)
+        try:
+            year = v.astimezone(UTC).year
+        except OverflowError:  # an offset that pushes the instant past year 1 or 9999
+            year = 0
+        if not 1970 <= year <= 2100:
+            raise ValueError("fixed_at must be between 1970 and 2100")
+        return v
+
+
+class StatusOut(BaseModel):
+    status: Status
+    fixed_at: datetime | None
+    fixed_version: str | None
 
 
 class NoteIn(BaseModel):
@@ -165,6 +190,13 @@ class CompareItem(BaseModel):
     status: Status
     status_updated_at: datetime | None
     resolved_observed: bool = Field(description="marked resolved and present in the target capture")
+    fixed_at: datetime | None
+    fixed_version: str | None
+    fix_check: Literal["regressed", "before_fix", "no_fix_time", "untimed"] | None = Field(
+        description="resolved groups in the target: occurrences timestamped after the recorded fix time (regressed; "
+                    "a lower bound when some lack timestamps), none after it (before_fix), no fix time recorded, or "
+                    "no timestamped occurrence after the fix while some occurrences have no timestamp (untimed)")
+    occurrences_after_fix: int | None
     baseline: CompareRates | None
     target: CompareRates | None
     rate_ratio: float | None = Field(description="target rate / baseline rate on the chosen basis")

@@ -15,7 +15,7 @@ from datetime import datetime
 from ..fingerprint import exception_summary
 from ..models import Diagnostics, Level, Limits, LogEvent
 from ..redaction import redact
-from .common import normalize_level, parse_timestamp
+from .common import MAX_SERVICE_CHARS, clip_stack, clip_text, normalize_level, parse_timestamp
 
 _TS = r"(?P<ts>\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:[.,]\d{1,9})?(?:Z|[+-]\d{2}:?\d{2})?)"
 _LVL = r"(?P<level>TRACE|DEBUG|INFO|NOTICE|WARN(?:ING)?|ERROR|SEVERE|CRITICAL|FATAL)"
@@ -177,8 +177,8 @@ def parse_text(
             if len(text) > limits.max_stack_chars:
                 if not p.cont.dropped:
                     diag.add("STACK_TRUNCATED", p.line_no,
-                             f"stack truncated to {limits.max_stack_chars} characters")
-                text = text[: limits.max_stack_chars] + "\n... [truncated]"
+                             f"stack shortened to {limits.max_stack_chars} characters (start and end kept)")
+                text = clip_stack(text, limits.max_stack_chars)
             stack = redact(text, counts)
         if p.headerless:
             msg = (exception_summary(stack or "") or (p.cont.head[0].strip() if p.cont else ""))
@@ -199,7 +199,7 @@ def parse_text(
         fields = {k: redact(v, None)[: limits.max_field_chars] for k, v in p.fields.items() if v}
         return LogEvent(
             event_id="", line_no=p.line_no, source_format=fmt, timestamp=ts, level=p.level,
-            service=redact(p.service[:100]) if p.service else default_service,
+            service=clip_text(redact(p.service), MAX_SERVICE_CHARS) if p.service else default_service,
             logger=redact(p.logger[:200]) if p.logger else None, message=msg,
             stack_trace=stack, fields=fields,
         )

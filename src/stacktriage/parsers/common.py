@@ -71,14 +71,42 @@ def read_lines(
             return
 
 
+STACK_MARKER = "\n... [truncated] ...\n"
+TEXT_MARKER = "… [truncated]"
+MAX_SERVICE_CHARS = 100  # equals the API's service filter limit, so every stored service name can be filtered on
+
+
+def clip_stack(text: str, limit: int) -> str:
+    """Bound a stack trace to `limit` characters, keeping the head AND the tail: wrapper exceptions and the
+    first frames are at the top, the root cause (last Python traceback, deepest Java `Caused by:`) at the end."""
+    if len(text) <= limit:
+        return text
+    keep = max(limit - len(STACK_MARKER), 2)
+    head, tail = text[: keep // 2], text[len(text) - (keep - keep // 2):]
+    # cut at line boundaries so no frame line is half-kept
+    head = head[: head.rfind("\n")] if "\n" in head else head
+    tail = tail[tail.find("\n") + 1:] if "\n" in tail else tail
+    return head + STACK_MARKER + tail
+
+
+def clip_text(text: str, limit: int) -> str:
+    """Bound text to `limit` characters INCLUDING the truncation marker."""
+    return text if len(text) <= limit else text[: max(limit - len(TEXT_MARKER), 0)] + TEXT_MARKER
+
+
 # ---------------------------------------------------------------- timestamps
 _TZ_FIX = re.compile(r"([+-]\d{2})(\d{2})$")
+# Calendar timestamps outside this range are rejected as unusable: they are almost always corrupt
+# values, and a stray year-1 or year-9999 record would make the timeline span unbounded (and
+# pre-1970 instants cannot be converted back with datetime.fromtimestamp on Windows).
+MIN_YEAR, MAX_YEAR = 1970, 2100
 
 
 def parse_timestamp(value: str | int | float | None) -> datetime | None:
     """Parse ISO-8601-like strings and epoch numbers into aware UTC datetimes.
 
-    Naive timestamps are interpreted as UTC. Returns None if unparseable.
+    Naive timestamps are interpreted as UTC. Returns None if unparseable or outside
+    MIN_YEAR..MAX_YEAR.
     """
     if value is None or isinstance(value, bool):
         return None
@@ -110,9 +138,10 @@ def parse_timestamp(value: str | int | float | None) -> datetime | None:
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=UTC)
     try:
-        return dt.astimezone(UTC)
+        dt = dt.astimezone(UTC)
     except (OverflowError, ValueError):
         return None
+    return dt if MIN_YEAR <= dt.year <= MAX_YEAR else None
 
 
 def _from_epoch(x: float) -> datetime | None:

@@ -144,7 +144,7 @@ export function TimelineChart({ buckets, stepMs, series, bands = [], context, ki
   };
 
   const tip = active !== null && active < n ? tooltip(active) : null;
-  const tipLeft = active !== null ? x(buckets[active]!.startMs) + slot / 2 : 0;
+  const tipLeft = tip && active !== null ? x(buckets[active]!.startMs) + slot / 2 : 0;
   const flip = tipLeft > width * 0.6;
 
   const lineSeries = useMemo(() => {

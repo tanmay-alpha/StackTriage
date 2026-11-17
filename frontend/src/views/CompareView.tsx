@@ -25,6 +25,7 @@ const FINDING: Record<Kind, { label: string; hint: string }> = {
 
 const FILTERS: { id: CompareFilter | ""; label: string }[] = [
   { id: "", label: "All" },
+  { id: "regressed", label: "Regressed after fix" },
   { id: "new", label: "New" },
   { id: "increased", label: "Increased" },
   { id: "decreased", label: "Decreased" },
@@ -115,6 +116,15 @@ function KindIcon({ kind }: { kind: Kind }) {
   );
 }
 
+/** Circular arrow: the error came back after its recorded fix. */
+function RegressedIcon() {
+  return (
+    <svg className="glyph" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false">
+      <path d="M9.6 6.6A3.7 3.7 0 1 1 8.4 3.2M8.8 1v2.6H6.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
+  );
+}
+
 export function CompareView() {
   useDocTitle("Compare imports");
   const [params, setParams] = useSearchParams();
@@ -123,7 +133,7 @@ export function CompareView() {
   const basis: CompareBasis = params.get("basis") === "time" ? "time" : "events";
   const rawCategory = params.get("category");
   const category = isFilter(rawCategory) ? rawCategory : "";
-  const page = Math.max(1, Number(params.get("page")) || 1);
+  const page = Math.max(1, Math.floor(Number(params.get("page"))) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
   const update = (patch: Record<string, string | null>, opts: { resetPage?: boolean; replace?: boolean } = {}) => {
@@ -155,6 +165,13 @@ export function CompareView() {
   const query = { basis, category: category || undefined, limit: PAGE_SIZE, offset };
   const key = ready && !same ? `compare:${baselineParam}:${targetParam}:${JSON.stringify(query)}` : null;
   const cmp = useAsync<CompareResult>(key, (s) => api.get<CompareResult>(`/imports/${baselineParam}/compare/${targetParam}`, query, s));
+
+  // a stale or hand-edited ?page= past the end: go to the last page instead of showing an empty list
+  const lastPage = cmp.data ? Math.max(1, Math.ceil(cmp.data.total / PAGE_SIZE)) : null;
+  useEffect(() => {
+    if (lastPage !== null && page > lastPage) update({ page: lastPage === 1 ? null : String(lastPage) }, { resetPage: false, replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastPage, page]);
 
   // Keep the last result of the same pair and basis on screen while a filter or page loads.
   const last = useRef<CompareResult | null>(null);
@@ -433,7 +450,7 @@ function HowToRead({ p }: { p: CompareParameters }) {
           <strong>Disappeared</strong> means absent from the target capture, not fixed: the capture may be shorter or see different traffic, or the fingerprint may have changed (for example a shifted line number).
         </li>
         <li>
-          <strong>Marked resolved, observed in target</strong>: someone set the status to resolved and the group appears in the target. The status has no fix time, so check whether the target was captured after the fix before calling it a regression.
+          <strong>Regressed after fix</strong> is the only finding that calls a resolved group a regression: its fix time is recorded and the target has occurrences timestamped after it (a lower bound when some occurrences have no timestamp). <em>Only before recorded fix</em> means every occurrence in the target predates the fix, which is consistent with it. <em>No timestamps to check against fix</em>: some or all occurrences in the target have no timestamp, so they cannot be checked against the fix time. <strong>Marked resolved, observed in target</strong> is a flag, not a verdict: no fix time is recorded, so check whether the target was captured after the fix; recording the fix time on the incident page makes this check automatic.
         </li>
       </ul>
     </details>
@@ -498,7 +515,8 @@ function Row({ it, basis, p }: { it: CompareItem; basis: CompareBasis; p: Compar
   const q = it.q_value === null ? null : `q = ${fmtQ(it.q_value, p.alpha)}`;
   const evidenceTitle =
     it.evidence === "significant" ? `Unlikely to be chance (${q}, below ${p.alpha})` : it.evidence === "weak" ? `Could be chance${q ? ` (${q})` : ""}` : `Fewer than ${p.min_occurrences} occurrences in both captures together`;
-  const resolvedTitle = `Status is resolved${it.status_updated_at ? ` (last changed ${fmt.dateTime(it.status_updated_at)})` : ""} and this group appears in the target capture. The status has no fix time, so this alone does not confirm a regression.`;
+  const fix = it.fixed_at ? `${it.fixed_version ? `${it.fixed_version} ` : ""}(${fmt.dateTime(it.fixed_at)})` : "";
+  const resolvedTitle = `Status is resolved${it.status_updated_at ? ` (last changed ${fmt.dateTime(it.status_updated_at)})` : ""} and this group appears in the target capture. No fix time is recorded, so this alone does not confirm a regression. Record when the fix shipped on the incident page to check the occurrences against it.`;
   return (
     <tr>
       <td data-label="Finding">
@@ -511,7 +529,7 @@ function Row({ it, basis, p }: { it: CompareItem; basis: CompareBasis; p: Compar
         </div>
       </td>
       <td data-label="Error" className="cell-title">
-        <Link to={`/imports/${it.investigate_import_id}/incidents/${it.fingerprint}`} className="title-link mono" title={it.title}>
+        <Link to={`/imports/${it.investigate_import_id}/incidents/${encodeURIComponent(it.fingerprint)}`} className="title-link mono" title={it.title}>
           {it.title}
         </Link>
       </td>
@@ -540,7 +558,25 @@ function Row({ it, basis, p }: { it: CompareItem; basis: CompareBasis; p: Compar
       <td data-label="Status" className="cmp-col-status">
         <div className="cmp-cell">
           <StatusBadge status={it.status} />
-          {it.resolved_observed ? (
+          {it.fix_check === "regressed" ? (
+            <>
+              <span className="badge lvl-warning" title={`At least ${fmtInt(it.occurrences_after_fix ?? 0)} occurrence(s) in the target capture are timestamped after the recorded fix ${fix}: the error came back after the fix shipped. Occurrences without a timestamp are not counted.`}>
+                <RegressedIcon />
+                Regressed after fix
+              </span>
+              <span className="cmp-sub">
+                {fmtInt(it.occurrences_after_fix ?? 0)} after fix {fix}
+              </span>
+            </>
+          ) : it.fix_check === "before_fix" ? (
+            <span className="badge cmp-flag" title={`Every timestamped occurrence in the target capture is at or before the recorded fix ${fix}, so it is consistent with the fix.`}>
+              Only before recorded fix
+            </span>
+          ) : it.fix_check === "untimed" ? (
+            <span className="badge cmp-flag" title={`A fix is recorded ${fix}, but some or all occurrences in the target have no timestamp, so they cannot be checked against the fix time. No timestamped occurrence is after the fix.`}>
+              No timestamps to check against fix
+            </span>
+          ) : it.resolved_observed ? (
             <span className="badge cmp-flag" title={resolvedTitle}>
               Marked resolved, observed in target
             </span>

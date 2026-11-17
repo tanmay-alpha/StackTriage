@@ -50,8 +50,10 @@ _NORM_STEPS: list[tuple[re.Pattern[str], str | Callable[[re.Match[str]], str]]] 
     # alphanumeric ids: has a digit and a letter, 5+ chars (order-8841, req_a1b2c3, 7f3a9c1e)
     (re.compile(r"\b[\w-]{5,}\b"), lambda m: _mask_id(m)),
     (re.compile(r"\b[A-Za-z]+[-_#]\d+\b"), "<ID>"),
-    # HTTP status codes identify different errors (500 vs 404) and are kept
-    (re.compile(r"(?<![A-Za-z_\d])(?<!HTTP )(?<!<IP>:)(?<!status )(?<!status: )(?<!status=)\d+(?:\.\d+)?"), "<N>"),
+    # HTTP status codes identify different errors (500 vs 404) and are kept, as are HTTP versions (HTTP/1.1)
+    (re.compile(r"(?<![A-Za-z_\d])(?<!HTTP )(?<!HTTP/)(?<!HTTP/\d\.)(?<!HTTP/1\.1 )(?<!HTTP/1\.0 )(?<!HTTP/2 )(?<!HTTP/3 )"
+                r"(?<!<IP>:)(?<!status )(?<!status: )(?<!status=)(?<!status code )(?<!statusCode=)(?<!statusCode: )"
+                r"\d+(?:\.\d+)?"), "<N>"),
     (re.compile(r"\s+"), " "),
 ]
 
@@ -94,12 +96,21 @@ _JAVA_INFRA = (
     "com.zaxxer.", "org.postgresql.", "com.mysql.", "kotlin.",
 )
 
-_NODE_EXC = re.compile(r"^(?P<type>[A-Z]\w*(?:Error|Exception)|Error)(?::\s?(?P<msg>.*))?$")
+# Node errors may carry a code between the type and the message: `TypeError [ERR_INVALID_URL]: Invalid URL`
+_NODE_EXC = re.compile(
+    r"^(?P<type>[A-Z]\w*(?:Error|Exception)|Error)(?:\s\[(?P<code>[A-Z][A-Z0-9_]{1,60})\])?(?::\s?(?P<msg>.*))?$")
 _NODE_INFRA = re.compile(r"node_modules|^node:|^internal/|\(native\)|<anonymous>$")
 
 _MSG_EXC = re.compile(
-    r"(?P<type>(?:[A-Za-z_$][\w$]*\.)*[A-Z][\w$]*(?:Error|Exception))\b(?::\s*(?P<msg>.*))?"
+    r"(?P<type>(?:[A-Za-z_$][\w$]*\.)*[A-Z][\w$]*(?:Error|Exception))\b(?:\s\[(?P<code>[A-Z][A-Z0-9_]{1,60})\])?"
+    r"(?::\s*(?P<msg>.*))?"
 )
+
+
+def _exc_message(m: re.Match[str]) -> str:
+    """Message of an exception line, with a Node error code kept as part of the identity."""
+    msg = (m["msg"] or "").strip()
+    return f"[{m['code']}] {msg}".strip() if m["code"] else msg
 
 
 @dataclass(frozen=True, slots=True)
@@ -183,26 +194,27 @@ def _java_root(lines: list[str]) -> RootError | None:
     return RootError(exc_type, msg, frame)
 
 
+def _node_frames(lines: list[str]) -> list[tuple[str | None, str, str]]:
+    return [f for ln in lines if ln[:1] in (" ", "\t") and (f := _node_frame(ln))]
+
+
+def _node_app_frame(frames: list[tuple[str | None, str, str]]) -> str | None:
+    app = [f for f in frames if not _NODE_INFRA.search(f[1])]
+    fr = (app or frames or [None])[0]
+    return None if fr is None else f"{_basename(fr[1])}:{(fr[0] or '<anonymous>').strip()}:{fr[2]}"
+
+
 def _node_root(lines: list[str]) -> RootError | None:
     exc: re.Match[str] | None = None
-    frames: list[tuple[str | None, str, str]] = []
     for ln in lines:
         if ln and ln[0] not in " \t":
             m = _NODE_EXC.match(ln.strip())
-            if m and exc is None:
+            if m:
                 exc = m
-        else:
-            f = _node_frame(ln)
-            if f:
-                frames.append(f)
+                break
     if exc is None:
         return None
-    app = [f for f in frames if not _NODE_INFRA.search(f[1])]
-    fr = (app or frames or [None])[0]
-    frame = None
-    if fr is not None:
-        frame = f"{_basename(fr[1])}:{(fr[0] or '<anonymous>').strip()}:{fr[2]}"
-    return RootError(exc["type"], (exc["msg"] or "").strip(), frame)
+    return RootError(exc["type"], _exc_message(exc), _node_app_frame(_node_frames(lines)))
 
 
 def extract_root(message: str, stack_trace: str | None) -> RootError | None:
@@ -218,10 +230,11 @@ def extract_root(message: str, stack_trace: str | None) -> RootError | None:
         r = _node_root(lines)
         if r is not None:
             return r
-        # Node traces logged as "error: <message>" put the exception type in the message.
+        # Node traces logged as "error: <message>" put the exception type in the message; the frames still
+        # locate it.
         m = _MSG_EXC.search(message[:500])
         if m:
-            return RootError(m["type"], (m["msg"] or "").strip(), None)
+            return RootError(m["type"], _exc_message(m), _node_app_frame(_node_frames(lines)))
     return None
 
 

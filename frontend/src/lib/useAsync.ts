@@ -48,7 +48,8 @@ export function useAsync<T>(key: string | null, loader: (signal: AbortSignal) =>
   }, [key, tick, version]);
 
   const reload = useCallback(() => setTick((t) => t + 1), []);
-  const setData = useCallback((updater: (prev: T | null) => T | null) => setState((s) => ({ ...s, data: updater(s.data) })), []);
+  // bound to the key of the render that created it: a late optimistic update/rollback for a previous key is dropped
+  const setData = useCallback((updater: (prev: T | null) => T | null) => setState((s) => (s.key === key ? { ...s, data: updater(s.data) } : s)), [key]);
   return { data: state.key === key ? state.data : null, error: state.key === key ? state.error : null, loading: state.key !== key || state.loading, reload, setData };
 }
 
