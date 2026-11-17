@@ -2,15 +2,15 @@ import { useEffect, useId, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { ApiError, api } from "../api/client";
-import type { EventOut, ImportDetail, IncidentDetail, IncidentItem, NoteOut, Page } from "../api/types";
+import type { EventOut, ImportDetail, IncidentDetail, IncidentItem, NoteOut, Page, StatusOut } from "../api/types";
 import { episodeBands } from "../components/Anomaly";
 import { ExportButtons, StatusSelect } from "../components/IncidentControls";
 import { CopyButton, StackTrace } from "../components/StackTrace";
 import { TimelineChart } from "../components/TimelineChart";
 import type { ChartBucket, TooltipContent } from "../components/TimelineChart";
 import { anomalyAt, stepOf } from "../components/VolumeChart";
-import { ActivityBadge, Button, ConfirmDialog, EmptyState, ErrorState, LevelBadge, LinkButton, LoadingBlock, Pagination, Panel, Skeleton } from "../components/ui";
-import { classificationLabel, fmtDuration, fmtInt, fmtNum, fmtRate, recurrenceLabel, toMs } from "../lib/format";
+import { ActivityBadge, Button, ConfirmDialog, EmptyState, ErrorState, Field, LevelBadge, LinkButton, LoadingBlock, Pagination, Panel, Skeleton } from "../components/ui";
+import { classificationLabel, fmtDuration, fmtInt, fmtNum, fmtRate, recurrenceLabel, toMs, tzLabel } from "../lib/format";
 import { forgetImport, rememberImport } from "../lib/lastImport";
 import { useAsync } from "../lib/useAsync";
 import { useTime, useToast } from "../state/app";
@@ -67,18 +67,21 @@ export function InvestigationView() {
     );
   }
   const d = detail.data;
+  // the server's record after a status or fix change (a non-resolved status clears the fix record)
+  const applyStatus = (out: StatusOut) => detail.setData((p) => (p ? { ...p, ...out } : p));
 
   return (
     <>
       {back}
-      <Header d={d} importId={importId} onStatus={(s) => detail.setData((p) => (p ? { ...p, status: s } : p))} />
+      <Header d={d} importId={importId} onStatus={(s) => detail.setData((p) => (p ? { ...p, status: s } : p))} onSaved={applyStatus} />
       <div className="investigation">
         <div className="inv-main">
           <IncidentTimeline d={d} imp={imp.data} impLoading={imp.loading} />
           <Representative d={d} />
           <Records key={fingerprint} importId={importId} fingerprint={fingerprint} total={d.count} />
         </div>
-        <aside className="inv-side" aria-label="Notes, related incidents and export">
+        <aside className="inv-side" aria-label="Fix record, notes, related incidents and export">
+          {d.status === "resolved" ? <FixRecord d={d} onSaved={applyStatus} /> : null}
           <Notes key={d.fingerprint} d={d} onChange={(notes) => detail.setData((p) => (p ? { ...p, notes } : p))} />
           <Related d={d} importId={importId} />
           <Panel title="Export report">
@@ -91,7 +94,7 @@ export function InvestigationView() {
   );
 }
 
-function Header({ d, importId, onStatus }: { d: IncidentDetail; importId: number; onStatus: (s: IncidentDetail["status"]) => void }) {
+function Header({ d, importId, onStatus, onSaved }: { d: IncidentDetail; importId: number; onStatus: (s: IncidentDetail["status"]) => void; onSaved: (out: StatusOut) => void }) {
   const { fmt } = useTime();
   const a = d.activity;
   return (
@@ -101,7 +104,7 @@ function Header({ d, importId, onStatus }: { d: IncidentDetail; importId: number
           {d.title}
         </h1>
         <div className="inv-status">
-          <StatusSelect fingerprint={d.fingerprint} value={d.status} label={d.title} onChanged={onStatus} size="md" />
+          <StatusSelect fingerprint={d.fingerprint} value={d.status} label={d.title} onChanged={onStatus} onSaved={onSaved} size="md" />
         </div>
       </div>
       <div className="inv-badges">
@@ -341,6 +344,108 @@ function EventRow({ e }: { e: EventOut }) {
         </div>
       ) : null}
     </li>
+  );
+}
+
+function FixRecord({ d, onSaved }: { d: IncidentDetail; onSaved: (out: StatusOut) => void }) {
+  const { fmt } = useTime();
+  const hasRecord = d.fixed_at !== null || d.fixed_version !== null;
+  return (
+    <Panel title="Fix record">
+      <div className="stack-md">
+        <p className="muted small">Recording when the fix shipped lets a comparison tell a regression (occurrences after the fix) from older occurrences.</p>
+        {hasRecord ? (
+          <dl className="cmp-facts" data-testid="fix-record">
+            <dt>Fix shipped</dt>
+            <dd>{d.fixed_at ? fmt.dateTime(d.fixed_at) : "not recorded"}</dd>
+            <dt>Release</dt>
+            <dd className="mono">{d.fixed_version ?? "not recorded"}</dd>
+          </dl>
+        ) : (
+          <p className="muted small" data-testid="fix-record">
+            No fix recorded yet.
+          </p>
+        )}
+        {/* re-initialise the form when the saved record or the time zone changes */}
+        <FixForm key={`${d.fixed_at ?? ""}|${d.fixed_version ?? ""}|${fmt.tz}`} d={d} hasRecord={hasRecord} onSaved={onSaved} />
+      </div>
+    </Panel>
+  );
+}
+
+function FixForm({ d, hasRecord, onSaved }: { d: IncidentDetail; hasRecord: boolean; onSaved: (out: StatusOut) => void }) {
+  const { fmt } = useTime();
+  const { push } = useToast();
+  // datetime-local value (YYYY-MM-DDTHH:MM:SS) in the selected zone; seconds only, and ambiguous in a repeated DST hour,
+  // so an untouched input is not sent back (the server keeps the stored instant)
+  const [initialTime] = useState(() => (d.fixed_at ? fmt.dateTimeBare(d.fixed_at).replace(" ", "T") : ""));
+  const [time, setTime] = useState(initialTime);
+  const [version, setVersion] = useState(d.fixed_version ?? "");
+  const [busy, setBusy] = useState<"save" | "clear" | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const timeId = useId();
+  const versionId = useId();
+  const errorId = useId();
+
+  const send = async (kind: "save" | "clear", fix: { fixed_at?: string | null; fixed_version: string | null }) => {
+    setBusy(kind);
+    setError(null);
+    try {
+      const out = await api.put<StatusOut>(`/incidents/${encodeURIComponent(d.fingerprint)}/status`, { status: "resolved", ...fix });
+      onSaved(out);
+      push(kind === "save" ? "Fix record saved." : "Fix record cleared.");
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 422) setError(err.message);
+      else push(err instanceof Error ? `Could not save the fix record: ${err.message}` : "Could not save the fix record.", "error");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  // the input has no offset: Date parses it as local time, so append Z when the selected zone is UTC
+  const enteredMs = time ? Date.parse(fmt.tz === "utc" ? `${time}Z` : time) : null;
+
+  const save = (e: FormEvent) => {
+    e.preventDefault();
+    const fixedVersion = version.trim() || null;
+    if (time === initialTime) {
+      void send("save", { fixed_version: fixedVersion });
+      return;
+    }
+    if (Number.isNaN(enteredMs)) {
+      setError("Enter a valid date and time.");
+      return;
+    }
+    void send("save", { fixed_at: enteredMs === null ? null : new Date(enteredMs).toISOString(), fixed_version: fixedVersion });
+  };
+
+  const empty = time === "" && version.trim() === "";
+  return (
+    <form onSubmit={save} className="stack-sm" noValidate>
+      <Field
+        label={`Fix shipped at (${fmt.tz === "utc" ? "UTC" : "local time"})`}
+        htmlFor={timeId}
+        hint={`Entered in ${fmt.tz === "utc" ? "UTC" : `your local time${enteredMs !== null && !Number.isNaN(enteredMs) ? ` (${tzLabel("local", enteredMs)} at that time)` : ""}`}; switch the zone in the header.`}
+      >
+        <input id={timeId} className="input" type="datetime-local" step={1} value={time} onChange={(e) => setTime(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={error ? errorId : undefined} />
+      </Field>
+      <Field label="Release / version" htmlFor={versionId}>
+        <input id={versionId} className="input mono" type="text" maxLength={64} value={version} onChange={(e) => setVersion(e.target.value)} placeholder="e.g. 2026.03.05-1" autoComplete="off" spellCheck={false} />
+      </Field>
+      {error ? (
+        <p id={errorId} className="field-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+      <div className="form-actions">
+        <Button type="submit" variant="primary" size="sm" busy={busy === "save"} disabled={busy !== null || empty}>
+          Save fix record
+        </Button>
+        <Button size="sm" busy={busy === "clear"} disabled={busy !== null || !hasRecord} onClick={() => void send("clear", { fixed_at: null, fixed_version: null })}>
+          Clear
+        </Button>
+      </div>
+    </form>
   );
 }
 

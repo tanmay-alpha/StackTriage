@@ -112,7 +112,8 @@ function in `compare.py`; `/export` returns the same result as CSV, JSON or Mark
 | new | Fingerprint only in the target. |
 | disappeared | Fingerprint only in the baseline: absent from the target capture, not proven fixed. |
 | recurring | In both. `change` is `increased` / `decreased` / `no_clear_change` / `insufficient_data`. |
-| resolved and observed (flag) | Current review status is `resolved` and the fingerprint is in the target. Status has no fix timestamp, so this is a lead, not a confirmed regression. |
+| resolved and observed (flag) | Current review status is `resolved` and the fingerprint is in the target. Without a recorded fix time this is a lead, not a confirmed regression. |
+| regressed (fix check) | Resolved with a recorded fix time (`triage.fixed_ms`, optional `fixed_version`, schema v2) and the target has occurrences timestamped after it. `occurrences_after_fix` comes from one grouped COUNT over the target's events joined to `triage` (index `(import_id, fingerprint, ts_ms)`); it is a lower bound when some occurrences lack timestamps. Other outcomes: `before_fix` (every occurrence timestamped and none after the fix), `untimed` (none timestamped after the fix but some have no timestamp, so the check is inconclusive) and `no_fix_time`. Timestamps come from the logs, so clock skew between hosts can shift the boundary. |
 
 **Rates.** The default basis is occurrences per 1,000 parsed events of the same import: always
 defined and normalized for traffic, so a longer or busier capture is not an increase by

@@ -130,7 +130,7 @@ Choose a **baseline** import (logs before a change) and a **target** import (log
 
 - Rates are **per 1,000 parsed events** by default, so a longer or busier capture is not an increase by itself; **per minute** is available when both captures have usable timestamps, and rows where the two bases disagree are flagged.
 - An exact binomial test on the two counts, corrected across groups with Benjamini-Hochberg, plus a minimum 1.5x rate ratio decide `increased`/`decreased`; small counts are `insufficient_data`.
-- Groups currently marked **resolved** that appear in the target are flagged for a second look; the review status has no fix date, so this is not called a confirmed regression.
+- When a group is resolved you can record **when the fix shipped and in which release**. A later comparison then calls it **regressed** only if the target has occurrences timestamped after that fix time, with their count; without a fix time a resolved group that reappears is just flagged for a second look, if every occurrence is timestamped before the fix it is reported as such, and occurrences without timestamps make the check inconclusive.
 - Warnings cover different formats or services, overlapping or reversed captures, missing timestamps, truncation and very different capture lengths. Results export as CSV, Markdown or JSON, and each row links to the existing investigation page.
 
 Reproducible demo with a synthetic pair (traffic doubles after the "deployment"); this is actual output against a local server:
@@ -139,8 +139,8 @@ Reproducible demo with a synthetic pair (traffic doubles after the "deployment")
 $ python scripts/demo.py --compare
 baseline: deploy_before.log -> import 1 (770 events)
 target: deploy_after.log -> import 2 (1548 events)
-Simulated an earlier fix: marked the warehouse ConnectionError group as resolved.
-Comparison: 2 new, 2 increased, 1 decreased, 2 absent from target, 1 marked resolved but observed; matches the declared ground truth
+Simulated an earlier fix: marked the warehouse ConnectionError group resolved in release 2026.03.05-1 (11:30 UTC).
+Comparison: 2 new, 2 increased, 1 decreased, 2 absent from target, 1 marked resolved but observed, 1 regressed after a recorded fix; matches the declared ground truth
 Open http://127.0.0.1:8000/compare?baseline=1&target=2 in the browser.
 ```
 

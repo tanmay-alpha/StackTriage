@@ -151,6 +151,17 @@ export interface IncidentDetail extends IncidentItem {
   windows: WindowCount[];
   notes: NoteOut[];
   related: IncidentItem[];
+  /** when the fix shipped (only while resolved) */
+  fixed_at: string | null;
+  /** release that contains the fix (only while resolved) */
+  fixed_version: string | null;
+}
+
+/** PUT /incidents/{fp}/status response: the status and the fix record after the change. */
+export interface StatusOut {
+  status: Status;
+  fixed_at: string | null;
+  fixed_version: string | null;
 }
 
 export interface EventOut {
@@ -179,7 +190,9 @@ export interface Overview {
 export type CompareBasis = "events" | "time";
 export type CompareCategory = "new" | "disappeared" | "recurring";
 export type CompareChange = "increased" | "decreased" | "no_clear_change" | "insufficient_data";
-export type CompareFilter = CompareCategory | CompareChange | "resolved_observed";
+export type CompareFilter = CompareCategory | CompareChange | "resolved_observed" | "regressed";
+/** For resolved groups present in the target: their occurrences checked against the recorded fix time. */
+export type CompareFixCheck = "regressed" | "before_fix" | "no_fix_time" | "untimed";
 export type CompareEvidence = "significant" | "weak" | "low_sample";
 
 export interface CompareSide extends ImportSummary {
@@ -211,6 +224,11 @@ export interface CompareItem {
   status: Status;
   status_updated_at: string | null;
   resolved_observed: boolean;
+  fixed_at: string | null;
+  fixed_version: string | null;
+  fix_check: CompareFixCheck | null;
+  /** target occurrences timestamped after the fix (regressed: > 0; before_fix: 0) */
+  occurrences_after_fix: number | null;
   baseline: CompareRates | null;
   target: CompareRates | null;
   rate_ratio: number | null;

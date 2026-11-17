@@ -68,9 +68,12 @@ def run_compare(base: str, key: str | None) -> None:
     items = request_json(base, path, key)["items"]
     inventory = next(i for i in items if i["title"].startswith("ConnectionError: warehouse API"))
     if inventory["status"] == "open":  # never overwrite a status someone already set
+        # the synthetic deployment happened at 11:30 UTC, between the two captures
+        fix = {"status": "resolved", "fixed_at": "2026-03-05T11:30:00Z", "fixed_version": "2026.03.05-1"}
         request_json(base, f"/api/incidents/{inventory['fingerprint']}/status", key,
-                     json.dumps({"status": "resolved"}).encode(), method="PUT", content_type="application/json")
-        print("Simulated an earlier fix: marked the warehouse ConnectionError group as resolved.")
+                     json.dumps(fix).encode(), method="PUT", content_type="application/json")
+        print("Simulated an earlier fix: marked the warehouse ConnectionError group resolved in release "
+              "2026.03.05-1 (11:30 UTC).")
     result = request_json(base, path, key)
     got = {((i["baseline"] or {}).get("count", 0), (i["target"] or {}).get("count", 0)): i for i in result["items"]}
     for g in truth["groups"]:
@@ -80,8 +83,8 @@ def run_compare(base: str, key: str | None) -> None:
                                f"{item and (item['category'], item['change'])}")
     t = result["totals"]
     print(f"Comparison: {t['new']} new, {t['increased']} increased, {t['decreased']} decreased, "
-          f"{t['disappeared']} absent from target, {t['resolved_observed']} marked resolved but observed; "
-          "matches the declared ground truth")
+          f"{t['disappeared']} absent from target, {t['resolved_observed']} marked resolved but observed, "
+          f"{t['regressed']} regressed after a recorded fix; matches the declared ground truth")
     print(f"Open {base}/compare?baseline={ids[0]}&target={ids[1]} in the browser.")
 
 

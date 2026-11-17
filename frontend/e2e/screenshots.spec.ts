@@ -106,15 +106,15 @@ test("mobile incidents (390x844)", async ({ browser, request }) => {
 test("compare: desktop 1440x900 and mobile 390x844", async ({ page, browser, request }) => {
   const before = await seed(request, "deploy_before.log");
   const after = await seed(request, "deploy_after.log");
-  // one group marked resolved earlier, so the "Marked resolved, observed in target" flag is visible
+  // one group resolved with a recorded fix before the target capture, so the "Regressed after fix" row leads the table
   const res = await request.get(`/api/imports/${before.id}/compare/${after.id}?limit=200`);
   const body: { items: { fingerprint: string; title: string }[] } = await res.json();
   const inventory = body.items.find((i) => i.title.includes("warehouse API refused connection"));
-  if (inventory) await request.put(`/api/incidents/${inventory.fingerprint}/status`, { data: { status: "resolved" } });
+  if (inventory) await request.put(`/api/incidents/${inventory.fingerprint}/status`, { data: { status: "resolved", fixed_at: "2026-03-05T11:30:00Z", fixed_version: "2026.03.05-1" } });
   const url = `/compare?baseline=${before.id}&target=${after.id}`;
 
   await page.goto(url);
-  await expect(page.locator("[data-testid=compare-table] tbody tr").first()).toBeVisible();
+  await expect(page.locator("[data-testid=compare-table] tbody tr").first()).toContainText("Regressed after fix");
   await page.screenshot({ path: shot("compare") });
 
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, baseURL: "http://127.0.0.1:8765" });

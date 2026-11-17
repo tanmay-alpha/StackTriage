@@ -181,7 +181,7 @@ def test_fixture_pair_matches_declared_ground_truth(client):
         item = got[(g["baseline_count"], g["target_count"])]
         assert (item["category"], item["change"]) == (g["category"], g["change"]), g["id"]
     assert data["totals"] == {"new": 2, "disappeared": 2, "recurring": 5, "increased": 2, "decreased": 1,
-                              "no_clear_change": 1, "insufficient_data": 1, "resolved_observed": 0}
+                              "no_clear_change": 1, "insufficient_data": 1, "resolved_observed": 0, "regressed": 0}
     assert data["warnings"] == [] and data["time_comparable"] is True
 
 
