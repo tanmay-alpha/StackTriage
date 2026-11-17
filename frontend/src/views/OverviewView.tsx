@@ -135,9 +135,9 @@ function SummaryStrip({ imp }: { imp: ImportSummary }) {
         <dd className="num small-val">
           {imp.first_event ? (
             <>
-              {fmt.dateTime(imp.first_event).replace(` ${fmt.label}`, "")}
+              {fmt.dateTimeBare(imp.first_event)}
               <span className="muted"> to </span>
-              {fmt.dateTime(imp.last_event).replace(` ${fmt.label}`, "")}
+              {fmt.dateTimeBare(imp.last_event)}
             </>
           ) : (
             "no timestamps"
@@ -196,7 +196,7 @@ function TopGroups({ importId, state }: { importId: number; state: AsyncState<Pa
         <ul className="top-groups">
           {state.data.items.map((g) => (
             <li key={g.fingerprint}>
-              <Link to={`/imports/${importId}/incidents/${g.fingerprint}`} className="top-title mono" title={g.title}>
+              <Link to={`/imports/${importId}/incidents/${encodeURIComponent(g.fingerprint)}`} className="top-title mono" title={g.title}>
                 {g.title}
               </Link>
               <div className="top-meta">

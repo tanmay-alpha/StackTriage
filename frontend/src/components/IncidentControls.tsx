@@ -15,7 +15,7 @@ export function StatusSelect({ fingerprint, value, label, onChanged, size = "sm"
     onChanged(next);
     setBusy(true);
     try {
-      await api.put(`/incidents/${fingerprint}/status`, { status: next });
+      await api.put(`/incidents/${encodeURIComponent(fingerprint)}/status`, { status: next });
       push(`Status set to ${STATUS_LABEL[next].toLowerCase()}.`);
     } catch (e) {
       onChanged(prev);

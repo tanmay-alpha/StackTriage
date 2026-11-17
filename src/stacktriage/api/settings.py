@@ -51,3 +51,5 @@ class Settings:
             raise RuntimeError("STACKTRIAGE_ENV=production requires STACKTRIAGE_API_KEY to be set")
         if self.api_key is not None and len(self.api_key) < 16:
             raise RuntimeError("STACKTRIAGE_API_KEY must be at least 16 characters")
+        if self.max_upload_bytes < 1 or self.max_events < 1:
+            raise RuntimeError("STACKTRIAGE_MAX_UPLOAD_MB and STACKTRIAGE_MAX_EVENTS must be positive")

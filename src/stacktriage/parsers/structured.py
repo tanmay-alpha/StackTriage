@@ -15,7 +15,7 @@ from typing import Any
 
 from ..models import Diagnostics, Level, Limits, LogEvent
 from ..redaction import REDACTED_VALUE, is_sensitive_key, redact, scrub_structure
-from .common import normalize_level, parse_timestamp
+from .common import MAX_SERVICE_CHARS, clip_stack, clip_text, normalize_level, parse_timestamp
 
 TS_KEYS = ("timestamp", "@timestamp", "time", "ts", "datetime", "asctime", "date", "t")
 LEVEL_KEYS = ("level", "severity", "levelname", "log_level", "loglevel", "log.level", "lvl", "priority")
@@ -43,10 +43,12 @@ def _get(d: dict[str, Any], key: str) -> Any:
     return None
 
 
-def _pick(d: dict[str, Any], keys: tuple[str, ...]) -> tuple[str | None, Any]:
+def _pick(d: dict[str, Any], keys: tuple[str, ...], *, scalar: bool = False) -> tuple[str | None, Any]:
+    """First present key. `scalar` skips objects/arrays so ECS-style `{"service": {"name": ...}}` falls through
+    to `service.name` instead of becoming the JSON text of the object."""
     for k in keys:
         v = _get(d, k)
-        if v is not None and v != "" and v != []:
+        if v is not None and v != "" and v != [] and not (scalar and isinstance(v, (dict, list))):
             return k, v
     return None, None
 
@@ -82,6 +84,13 @@ def _store_value(key: str, value: Any, limits: Limits) -> str:
     return _clip(redact(_text(value)), limits.max_field_chars)
 
 
+def _clip_stack(text: str, limits: Limits, diag: Diagnostics, line_no: int) -> str:
+    if len(text) > limits.max_stack_chars:
+        diag.add("STACK_TRUNCATED", line_no,
+                 f"stack shortened to {limits.max_stack_chars} characters (start and end kept)")
+    return clip_stack(text, limits.max_stack_chars)
+
+
 def parse_jsonl(
     lines: Iterator[tuple[int, str]], *, default_service: str | None, limits: Limits, diag: Diagnostics,
 ) -> Iterator[LogEvent]:
@@ -101,11 +110,11 @@ def parse_jsonl(
         counts: dict[str, int] = {}
         used: set[str] = set()
 
-        ts_key, ts_val = _pick(obj, TS_KEYS)
-        lvl_key, lvl_val = _pick(obj, LEVEL_KEYS)
+        ts_key, ts_val = _pick(obj, TS_KEYS, scalar=True)
+        lvl_key, lvl_val = _pick(obj, LEVEL_KEYS, scalar=True)
         msg_key, msg_val = _pick(obj, MSG_KEYS)
-        svc_key, svc_val = _pick(obj, SERVICE_KEYS)
-        lg_key, lg_val = _pick(obj, LOGGER_KEYS)
+        svc_key, svc_val = _pick(obj, SERVICE_KEYS, scalar=True)
+        lg_key, lg_val = _pick(obj, LOGGER_KEYS, scalar=True)
         tr_key, tr_val = _pick(obj, TRACE_KEYS)
         if isinstance(tr_val, dict) and tr_key in ERR_OBJ_KEYS:
             tr_val = None  # unwrap error objects below, rather than serializing their metadata
@@ -153,7 +162,7 @@ def parse_jsonl(
         message = _clip(message, limits.max_message_chars)
         stack = None
         if tr_val is not None:
-            stack = redact(_clip(_text(tr_val), limits.max_stack_chars), counts)
+            stack = redact(_clip_stack(_text(tr_val), limits, diag, line_no), counts)
         if not message and stack:
             message = stack.splitlines()[0].strip()
         if not message:
@@ -181,7 +190,7 @@ def parse_jsonl(
         service = _text(svc_val) if svc_val is not None else default_service
         yield LogEvent(
             event_id="", line_no=line_no, source_format="jsonl", timestamp=ts, level=level,
-            service=_clip(redact(service), 100) if service else None,
+            service=clip_text(redact(service), MAX_SERVICE_CHARS) if service else None,
             logger=_clip(redact(_text(lg_val)), 200) if lg_val is not None else None,
             message=message, stack_trace=stack, fields=fields, metrics=metrics,
         )
@@ -248,7 +257,7 @@ def parse_csv(
                          "row has no level" if not lvl_raw else f"unrecognized level {_echo(lvl_raw)!r}")
             message = _clip(redact(cell("msg"), counts), limits.max_message_chars)
             trace = cell("trace")
-            stack = redact(_clip(trace, limits.max_stack_chars), counts) if trace else None
+            stack = redact(_clip_stack(trace, limits, diag, line_no), counts) if trace else None
 
             special = set(cols.values())
             fields: dict[str, str] = {}
@@ -270,7 +279,7 @@ def parse_csv(
             service = cell("service") or default_service
             yield LogEvent(
                 event_id="", line_no=line_no, source_format="csv", timestamp=ts, level=level,
-                service=_clip(redact(service), 100) if service else None,
+                service=clip_text(redact(service), MAX_SERVICE_CHARS) if service else None,
                 logger=_clip(redact(cell("logger")), 200) or None, message=message, stack_trace=stack,
                 fields=fields, metrics=metrics,
             )
