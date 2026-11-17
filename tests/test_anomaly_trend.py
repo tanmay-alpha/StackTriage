@@ -203,13 +203,24 @@ def test_drift_pattern_is_always_a_sustained_shift():
 
 # ---- regression: default and `statistical` unchanged -----------------------------------------------
 
-# sha256 of json.dumps(report.to_dict(), sort_keys=True) for `statistical`, recorded on main before the
-# trend candidate was added.
+# sha256 of the report with floats rounded to 9 significant digits (raw float output differs in the last bits
+# between platforms' math libraries), recorded from main's anomaly code before the trend candidate was added;
+# identical on Windows and Linux.
 STATISTICAL_FINGERPRINTS = {
-    ("slow_ramp", 0): "602df9a9b3ba03432fdc9948aec5f1e995cb9539d909908b8f442f2715622450",
-    ("noisy_mixed", 3): "67f29f3bf477e16a0a099ad1840b7cbd109a2f1e14e26cb9811749d4f0e6a248",
-    ("early_incident", 1): "41f8c83d552641caed0a79906b8aaedde868a2972c9fb09cb2db8f04daed6e19",
+    ("slow_ramp", 0): "8b0458274959947661fd6b36d4cfe314429099955b46f9524c1ddcd176a0f340",
+    ("noisy_mixed", 3): "54a785b5f8eececbd4172a0638369a0e3cef575f248622c944c2417e852dfc43",
+    ("early_incident", 1): "a0386b9259ed1afd42214db035d4d5897c30653e4fb674e9a6c9f2b1d2b5237c",
 }
+
+
+def _canon(o):
+    if isinstance(o, float):
+        return float(f"{o:.9g}")
+    if isinstance(o, dict):
+        return {k: _canon(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [_canon(v) for v in o]
+    return o
 
 
 def test_default_method_is_statistical():
@@ -221,8 +232,8 @@ def test_default_method_is_statistical():
 
 
 @pytest.mark.parametrize(("name", "seed"), sorted(STATISTICAL_FINGERPRINTS))
-def test_statistical_reports_are_bit_for_bit_unchanged(name, seed):
+def test_statistical_reports_are_unchanged(name, seed):
     rep = detect_anomalies(make_scenario(name, seed).timeline, method="statistical", seed=seed)
-    digest = hashlib.sha256(json.dumps(rep.to_dict(), sort_keys=True).encode()).hexdigest()
+    digest = hashlib.sha256(json.dumps(_canon(rep.to_dict()), sort_keys=True).encode()).hexdigest()
     assert digest == STATISTICAL_FINGERPRINTS[(name, seed)]
     assert "trend" not in rep.parameters
