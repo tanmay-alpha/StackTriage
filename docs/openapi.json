@@ -1234,7 +1234,7 @@
        }
       ],
       "title": "Fix Check",
-      "description": "resolved groups in the target: occurrences after the recorded fix time (regressed), only before it, no fix time recorded, or target occurrences without timestamps"
+      "description": "resolved groups in the target: occurrences timestamped after the recorded fix time (regressed; a lower bound when some lack timestamps), none after it (before_fix), no fix time recorded, or no timestamped occurrence after the fix while some occurrences have no timestamp (untimed)"
      },
      "occurrences_after_fix": {
       "anyOf": [

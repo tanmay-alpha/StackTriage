@@ -130,7 +130,7 @@ Choose a **baseline** import (logs before a change) and a **target** import (log
 
 - Rates are **per 1,000 parsed events** by default, so a longer or busier capture is not an increase by itself; **per minute** is available when both captures have usable timestamps, and rows where the two bases disagree are flagged.
 - An exact binomial test on the two counts, corrected across groups with Benjamini-Hochberg, plus a minimum 1.5x rate ratio decide `increased`/`decreased`; small counts are `insufficient_data`.
-- When a group is resolved you can record **when the fix shipped and in which release**. A later comparison then calls it **regressed** only if the target has occurrences timestamped after that fix time, with the exact count; without a fix time a resolved group that reappears is just flagged for a second look, and if every occurrence predates the fix it is reported as such.
+- When a group is resolved you can record **when the fix shipped and in which release**. A later comparison then calls it **regressed** only if the target has occurrences timestamped after that fix time, with their count; without a fix time a resolved group that reappears is just flagged for a second look, if every occurrence is timestamped before the fix it is reported as such, and occurrences without timestamps make the check inconclusive.
 - Warnings cover different formats or services, overlapping or reversed captures, missing timestamps, truncation and very different capture lengths. Results export as CSV, Markdown or JSON, and each row links to the existing investigation page.
 
 Reproducible demo with a synthetic pair (traffic doubles after the "deployment"); this is actual output against a local server:

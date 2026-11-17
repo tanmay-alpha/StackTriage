@@ -132,7 +132,11 @@ class StatusIn(BaseModel):
         if v is None:
             return v
         v = v if v.tzinfo else v.replace(tzinfo=UTC)
-        if not 1970 <= v.astimezone(UTC).year <= 2100:
+        try:
+            year = v.astimezone(UTC).year
+        except OverflowError:  # an offset that pushes the instant past year 1 or 9999
+            year = 0
+        if not 1970 <= year <= 2100:
             raise ValueError("fixed_at must be between 1970 and 2100")
         return v
 
@@ -189,8 +193,9 @@ class CompareItem(BaseModel):
     fixed_at: datetime | None
     fixed_version: str | None
     fix_check: Literal["regressed", "before_fix", "no_fix_time", "untimed"] | None = Field(
-        description="resolved groups in the target: occurrences after the recorded fix time (regressed), only before "
-                    "it, no fix time recorded, or target occurrences without timestamps")
+        description="resolved groups in the target: occurrences timestamped after the recorded fix time (regressed; "
+                    "a lower bound when some lack timestamps), none after it (before_fix), no fix time recorded, or "
+                    "no timestamped occurrence after the fix while some occurrences have no timestamp (untimed)")
     occurrences_after_fix: int | None
     baseline: CompareRates | None
     target: CompareRates | None

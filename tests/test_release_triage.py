@@ -119,6 +119,64 @@ def test_no_fix_time_and_untimed_target(client):
     assert _items(client, ib, it)["items"][0]["fix_check"] == "untimed"
 
 
+def test_partly_untimed_target_is_inconclusive_not_before_fix(client):
+    """Review finding: 2 timed occurrences before the fix + 3 untimed must not read as 'only before the fix'."""
+    ib = client.post("/api/imports", params={"filename": "a.log"},
+                     content=b"2026-03-05 10:00:00,000 - app - ERROR - boom\n").json()["id"]
+    target = b"".join([b'{"timestamp":"2026-03-05T12:00:00Z","level":"error","message":"boom"}\n',
+                       b'{"timestamp":"2026-03-05T12:00:01Z","level":"error","message":"boom"}\n',
+                       *[b'{"level":"error","message":"boom"}\n'] * 3])
+    it = client.post("/api/imports", params={"filename": "t.jsonl"}, content=target).json()["id"]
+    fp = _items(client, ib, it)["items"][0]["fingerprint"]
+    client.put(f"/api/incidents/{fp}/status", json={"status": "resolved", "fixed_at": "2026-03-05T12:30:00Z"})
+    row = _items(client, ib, it)["items"][0]
+    assert (row["target"]["count"], row["target"]["timed_count"]) == (5, 2)
+    assert (row["fix_check"], row["occurrences_after_fix"]) == ("untimed", None)
+    # a timed occurrence after the fix is still a regression (count is a lower bound)
+    client.put(f"/api/incidents/{fp}/status", json={"status": "resolved", "fixed_at": "2026-03-05T12:00:00Z"})
+    row = _items(client, ib, it)["items"][0]
+    assert (row["fix_check"], row["occurrences_after_fix"]) == ("regressed", 1)
+
+
+@pytest.mark.parametrize("fixed_at", ["9999-12-31T23:59:59-01:00", "0001-01-01T00:00:00+01:00"])
+def test_fix_time_offsets_beyond_datetime_range_are_422(client, fixed_at):
+    b, t = _pair(client)
+    fp = _fp(_items(client, b, t), "ConnectionError")
+    assert client.put(f"/api/incidents/{fp}/status", json={"status": "resolved", "fixed_at": fixed_at}).status_code == 422
+
+
+def test_explicit_null_fix_fields_with_other_statuses_are_accepted(client):
+    b, t = _pair(client)
+    fp = _fp(_items(client, b, t), "ConnectionError")
+    r = client.put(f"/api/incidents/{fp}/status", json={"status": "investigating", "fixed_at": None, "fixed_version": None})
+    assert r.status_code == 200 and r.json() == {"status": "investigating", "fixed_at": None, "fixed_version": None}
+
+
+def test_fix_checks_use_a_bounded_number_of_queries(client):
+    """Review finding: one COUNT per regressed group grew with the number of resolved groups."""
+    from sqlalchemy import event
+
+    before = "".join(f"2026-03-05 10:00:00,000 - app - ERROR - failure kind {chr(65 + i)}{chr(65 + j)} here\n"
+                     for i in range(10) for j in range(10))
+    after = before.replace("10:00:00", "12:00:00")
+    ib = client.post("/api/imports", params={"filename": "a.log"}, content=before.encode()).json()["id"]
+    it = client.post("/api/imports", params={"filename": "b.log"}, content=after.encode()).json()["id"]
+    items = _items(client, ib, it)["items"]
+    assert len(items) == 100
+    for i in items:
+        client.put(f"/api/incidents/{i['fingerprint']}/status", json={"status": "resolved", "fixed_at": DEPLOY})
+    statements: list[str] = []
+    engine = client.app.state.engine
+    spy = lambda conn, cursor, stmt, *a: statements.append(stmt)  # noqa: E731
+    event.listen(engine, "before_cursor_execute", spy)
+    try:
+        data = client.get(f"/api/imports/{ib}/compare/{it}", params={"limit": 1}).json()
+    finally:
+        event.remove(engine, "before_cursor_execute", spy)
+    assert data["totals"]["regressed"] == 100
+    assert len(statements) < 20, len(statements)
+
+
 def test_exports_include_fix_check(client):
     b, t = _pair(client)
     fp = _fp(_items(client, b, t), "ConnectionError")

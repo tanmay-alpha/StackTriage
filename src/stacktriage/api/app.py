@@ -364,20 +364,23 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     def fix_checks(db: Session, t: Import, result: cmp.Comparison, triage: dict) -> dict[str, tuple[str, int | None]]:
         """For resolved groups present in the target: did they occur after the recorded fix time?
-        One indexed COUNT per resolved group with a fix time; nothing for other groups."""
+        One grouped COUNT over the target's events for all resolved groups with a fix time."""
+        after = store.counts_after_fix(db, t.id)
         out: dict[str, tuple[str, int | None]] = {}
         for it in result.items:
             tr = triage.get(it.fingerprint, store.OPEN)
             if tr.status != "resolved" or it.target is None:
                 continue
+            n = after.get(it.fingerprint, 0)
             if tr.fixed_ms is None:
                 out[it.fingerprint] = ("no_fix_time", None)
-            elif it.target.timed_count == 0:
+            elif n > 0:
+                out[it.fingerprint] = ("regressed", n)  # at least n; untimed occurrences cannot add certainty
+            elif it.target.timed_count < it.target.count:
+                # no timestamped occurrence after the fix, but some occurrences have no timestamp at all
                 out[it.fingerprint] = ("untimed", None)
-            elif it.target.last_ms is not None and it.target.last_ms <= tr.fixed_ms:
-                out[it.fingerprint] = ("before_fix", 0)
             else:
-                out[it.fingerprint] = ("regressed", store.count_after(db, t.id, it.fingerprint, tr.fixed_ms))
+                out[it.fingerprint] = ("before_fix", 0)
         return out
 
     def compare_side(db: Session, imp: Import, st: cmp.ImportStats) -> schemas.CompareSide:

@@ -285,7 +285,7 @@ def set_status(s: Session, fingerprint: str, status: str, *, fixed_ms: int | Non
     statuses clear it; re-resolving without new values keeps an existing record."""
     if status not in STATUSES:
         raise ValueError(f"status must be one of {STATUSES}")
-    if status != "resolved" and (fixed_ms is not _KEEP or fixed_version is not _KEEP):
+    if status != "resolved" and any(v not in (_KEEP, None) for v in (fixed_ms, fixed_version)):
         raise ValueError("a fix time or version can only be recorded with status 'resolved'")
     ts = now_ms()
     row = s.get(Triage, fingerprint)
@@ -303,10 +303,16 @@ def fix_record(s: Session, fingerprint: str) -> tuple[int | None, str | None]:
     return (row[0], row[1]) if row else (None, None)
 
 
-def count_after(s: Session, import_id: int, fingerprint: str, after_ms: int) -> int:
-    """Occurrences of a group in an import timestamped strictly after `after_ms` (uses ix_events_import_fp_ts)."""
-    return s.scalar(select(func.count()).select_from(Event).where(
-        Event.import_id == import_id, Event.fingerprint == fingerprint, Event.ts_ms > after_ms)) or 0
+def counts_after_fix(s: Session, import_id: int) -> dict[str, int]:
+    """Per fingerprint: occurrences in an import timestamped strictly after that fingerprint's recorded fix time,
+    for every group currently resolved with a fix time. One grouped query (ix_events_import_fp_ts)."""
+    rows = s.execute(
+        select(Event.fingerprint, func.count())
+        .join(Triage, Triage.fingerprint == Event.fingerprint)
+        .where(Event.import_id == import_id, Triage.status == "resolved", Triage.fixed_ms.is_not(None),
+               Event.ts_ms > Triage.fixed_ms)
+        .group_by(Event.fingerprint))
+    return {fp: n for fp, n in rows}
 
 
 def fingerprint_exists(s: Session, fingerprint: str) -> bool:
