@@ -4,6 +4,12 @@ import { classificationLabel, featureLabel, fmtFeatureValue, fmtNum, toMs } from
 import { useTime } from "../state/app";
 import { Button, Callout, ClassificationBadge, Panel, SeverityBadge } from "./ui";
 
+const METHOD_LABEL: Record<string, string> = {
+  statistical: "statistical",
+  statistical_trend: "statistical + trend (CUSUM)",
+  isolation_forest: "isolation forest",
+};
+
 export function episodeBands(report: AnomalyReport | null | undefined) {
   return (report?.episodes ?? []).flatMap((e) => {
     const s = toMs(e.start);
@@ -78,7 +84,7 @@ export function UnusualPeriods({ report }: { report: AnomalyReport | null }) {
     body = (
       <>
         <p className="muted small method-line">
-          Statistical findings from the <strong>{report.method_used === "isolation_forest" ? "isolation forest" : (report.method_used ?? "statistical")}</strong> method
+          Statistical findings from the <strong>{METHOD_LABEL[report.method_used ?? "statistical"] ?? report.method_used}</strong> method
           {report.requested_method && report.requested_method !== report.method_used ? ` (requested: ${report.requested_method})` : ""}.
           {report.train_range ? ` Baseline learned from ${fmt.dateTime(report.train_range[0])} to ${fmt.dateTime(report.train_range[1])}.` : ""} These are periods that differ from the baseline, not causes.
         </p>

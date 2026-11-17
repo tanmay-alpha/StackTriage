@@ -172,19 +172,20 @@ SQLite stores `imports` (metadata, diagnostics, timeline and anomaly report), `g
 
 ## Anomaly detection: method and evidence
 
-The default is **statistical**, not Isolation Forest. It compares error count/ratio, falling event rate, new groups and numeric metric means with a median/MAD baseline from the earlier half of a log. Training-only calibration and a contamination guard limit leakage; at least 12 healthy training windows are required. Isolation Forest is an optional candidate on the same features, refitted for each analysis.
+The default is **statistical_trend**: the median/MAD **statistical** detector plus a one-sided CUSUM trend detector for slow drifts. The statistical part compares error count/ratio, falling event rate, new groups and numeric metric means with a robust baseline from the earlier half of a log; the CUSUM accumulates small upward deviations of error count, error ratio and metrics that no single window would flag, with its reference value and threshold calibrated on training windows only. Training-only calibration and a contamination guard limit leakage; at least 12 healthy training windows are required. `statistical` alone and Isolation Forest remain selectable.
 
-The following values are copied from [the evaluation report](docs/ml-evaluation.md): main synthetic scenarios, later period only, mean ± sample standard deviation over seeds 0–9.
+The trend detector was adopted by a rule written down before the evaluation seeds were run: better slow-ramp recall and delay, pooled F1 at most 0.01 lower and false-positive rate at most 0.005 higher than `statistical`. The following values are copied from [the evaluation report](docs/ml-evaluation.md): main synthetic scenarios, later period only, mean ± sample standard deviation over seeds 0–9.
 
 | Candidate | Precision | Recall | F1 | FPR/window | Episode precision |
 |---|---|---|---|---|---|
+| statistical_trend (default) | 0.880 ± 0.031 | 0.934 ± 0.016 | 0.906 ± 0.019 | 0.017 ± 0.005 | 0.477 ± 0.089 |
 | statistical | 0.890 ± 0.034 | 0.930 ± 0.020 | 0.909 ± 0.021 | 0.015 ± 0.005 | 0.502 ± 0.101 |
 | isolation_forest | 0.634 ± 0.062 | 0.832 ± 0.040 | 0.719 ± 0.053 | 0.063 ± 0.015 | 0.221 ± 0.016 |
 | error_count_rule | 0.717 ± 0.045 | 0.228 ± 0.019 | 0.346 ± 0.025 | 0.012 ± 0.003 | 0.242 ± 0.084 |
 
-Isolation Forest performed worse here in ranking and false alarms, not just threshold calibration. It was better on slow ramps: first flag after 4.4 rather than 14.7 windows. This is a conditional result on these fixtures, not a general claim about the algorithm.
+On the slow-ramp scenario the trend detector raises window recall from 0.34 to 0.61, but its first flag moves only from 14.7 to 12.4 windows after the ramp starts, a gain smaller than the spread across seeds (std 4.7–5.9); Isolation Forest still flags earlier (4.4 windows) at several times the false alarms. The price is slightly lower pooled precision, F1 and episode precision. Isolation Forest performed worse overall in ranking and false alarms. These are conditional results on these fixtures, not general claims about the algorithms.
 
-Important failures: statistical slow-ramp window recall is 0.34; an incident occupying 58 % of the training period is learned as normal (1/10 incidents detected); tiny logs are not scored; low-volume novelty is visible mainly in the first window of each new group. Around half the statistical detector's episodes touch no labelled incident. There is no seasonality model or detection of INFO-only traffic floods.
+Important failures: an incident occupying 58 % of the training period is learned as normal (1/10 incidents detected, unchanged by the trend detector); tiny logs are not scored; low-volume novelty is visible mainly in the first window of each new group. Around half of the episodes touch no labelled incident. There is no seasonality model or detection of INFO-only traffic floods.
 
 **All detection evidence is synthetic.** Constants were tuned on dev seeds 1000–1005; reported evaluation uses seeds 0–9. No real-world accuracy is established. Anomaly score is not a probability; classification and evidence-based severity are separate quantities. Findings describe unusual windows and contributing features, never root cause. See the report for full tables, methodology and failure cases.
 
