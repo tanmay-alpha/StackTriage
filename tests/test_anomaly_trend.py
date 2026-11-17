@@ -1,5 +1,5 @@
-"""Trend candidate (`statistical_trend`): CUSUM math, training-only calibration, and the
-regression guarantee that the default and the `statistical` method are unchanged."""
+"""Trend candidate (`statistical_trend`): CUSUM math, training-only calibration, the default chosen
+by the pre-registered rule, and the regression guarantee that `method="statistical"` is unchanged."""
 from __future__ import annotations
 
 import hashlib
@@ -170,8 +170,12 @@ STATISTICAL_FINGERPRINTS = {
 }
 
 
-def test_default_method_is_statistical():
-    assert AUTO_METHOD == "statistical"  # pre-registered rule outcome, docs/ml-evaluation.md section 5b
+def test_default_method_follows_the_pre_registered_rule():
+    # outcome of the rule in docs/ml-evaluation.md section 5b on evaluation seeds 0-9
+    assert AUTO_METHOD == "statistical_trend"
+    tl = make_scenario("slow_ramp", 4).timeline
+    auto = detect_anomalies(tl, seed=4)
+    assert auto.method_used == "statistical_trend" and "trend" in auto.parameters
 
 
 @pytest.mark.parametrize(("name", "seed"), sorted(STATISTICAL_FINGERPRINTS))

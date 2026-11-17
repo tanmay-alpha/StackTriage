@@ -121,9 +121,9 @@ decision, not an oversight.
   memorised scores: threshold = `max(0.02, 1.2 * q90 of the out-of-fold scores)` above their median.
   scikit-learn is imported lazily; without it `isolation_forest` falls back to `statistical`
   with a note.
-* **statistical_trend** (section 5b): `statistical` OR a one-sided tabular CUSUM per feature on the same
-  robust z-scores, for slow drifts. Selectable; whether it becomes the default is decided by the
-  pre-registered rule in section 5b.
+* **statistical_trend** (section 5b, **the default**): `statistical` OR a one-sided tabular CUSUM per feature
+  on the same robust z-scores, for slow drifts. Adopted as `AUTO_METHOD` by the pre-registered rule in
+  section 5b.
 * **error_count_rule** (sanity floor, not a candidate): flag a window when ERROR count >
   mean + 3 sd of the first half.
 
@@ -147,9 +147,10 @@ afterwards, on any seeds.
 
 Development and evaluation **scenario instances** use disjoint seeds, enforced by the CLI
 even with `--seeds`; both partitions intentionally share scenario families. This is not a test
-of generalization to unseen incident families. Only `--dev` applies the default-selection rule;
-the ordinary evaluation run reports the frozen default and never selects it from evaluation
-labels. Oracle threshold/feature figures are labelled diagnostics, never deployed thresholds.
+of generalization to unseen incident families. Only `--dev` applies the statistical-vs-Isolation-Forest
+selection rule. The single exception is the binary, pre-registered `statistical_trend` adoption rule
+(section 5b), which was written down with all constants frozen before it was evaluated on seeds 0-9.
+Oracle threshold/feature figures are labelled diagnostics, never deployed thresholds.
 
 ## 3. Evaluation design
 
@@ -201,7 +202,8 @@ feature are not perfect separators; no training window lies in the later period 
 incident starts after the training range; replacing the whole later period with something
 different does not change the baseline, the threshold or any training-period score (leakage);
 generation and detection are bit-for-bit repeatable; severity uses more than 2 levels and is
-not monotone in the score. In `--dev` only, `AUTO_METHOD` must equal the development decision.
+not monotone in the score. In `--dev` only, the base method of `AUTO_METHOD` must equal the development
+decision; on seeds 0-9, `AUTO_METHOD` must follow the pre-registered trend rule (section 5b).
 
 ## 4. Results (seeds 0-9)
 
@@ -210,6 +212,7 @@ not monotone in the score. In `--dev` only, `AUTO_METHOD` must equal the develop
 | candidate | precision | recall | F1 | FPR/window | incident recall | delay (win) | FA/incident | episode prec. | ROC-AUC | PR-AUC | best F1 (oracle threshold) |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | statistical | 0.890 ± 0.034 | 0.930 ± 0.020 | 0.909 ± 0.021 | 0.015 ± 0.005 | 1.000 ± 0.000 | 0.14 ± 0.22 | 1.614 ± 0.551 | 0.502 ± 0.101 | 0.976 ± 0.007 | 0.894 ± 0.026 | 0.917 ± 0.020 |
+| statistical_trend | 0.880 ± 0.031 | 0.934 ± 0.016 | 0.906 ± 0.019 | 0.017 ± 0.005 | 1.000 ± 0.000 | 0.14 ± 0.22 | 1.729 ± 0.524 | 0.477 ± 0.089 | 0.976 ± 0.007 | 0.894 ± 0.027 | 0.916 ± 0.020 |
 | isolation_forest | 0.634 ± 0.062 | 0.832 ± 0.040 | 0.719 ± 0.053 | 0.063 ± 0.015 | 0.900 ± 0.069 | 0.23 ± 0.17 | 6.771 ± 1.400 | 0.221 ± 0.016 | 0.942 ± 0.011 | 0.717 ± 0.063 | 0.732 ± 0.053 |
 | error_count_rule | 0.717 ± 0.045 | 0.228 ± 0.019 | 0.346 ± 0.025 | 0.012 ± 0.003 | 0.371 ± 0.074 | 2.02 ± 2.20 | 1.357 ± 0.280 | 0.242 ± 0.084 | 0.491 ± 0.033 | 0.317 ± 0.024 | 0.361 ± 0.029 |
 
@@ -235,45 +238,59 @@ single raw features reached ROC-AUC 1.0.
 | scenario | candidate | incidents detected | precision | recall | F1 | FPR/window | delay (win) | FP windows/seed | FP episodes/seed | ROC-AUC | PR-AUC |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | healthy | statistical | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.005 ± 0.007 | n/a | 0.60 | 0.60 | n/a | n/a |
+| healthy | statistical_trend | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.008 ± 0.010 | n/a | 1.00 | 0.90 | n/a | n/a |
 | healthy | isolation_forest | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.066 ± 0.036 | n/a | 7.90 | 7.20 | n/a | n/a |
 | healthy | error_count_rule | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.008 ± 0.016 | n/a | 1.00 | 1.00 | n/a | n/a |
 | error_spike | statistical | 10/10 | 0.940 ± 0.059 | 0.994 ± 0.018 | 0.965 ± 0.030 | 0.010 ± 0.010 | 0.0 ± 0.0 | 1.00 | 0.90 | 1.00 ± 0.00 | 0.99 ± 0.03 |
+| error_spike | statistical_trend | 10/10 | 0.940 ± 0.059 | 0.994 ± 0.018 | 0.965 ± 0.030 | 0.010 ± 0.010 | 0.0 ± 0.0 | 1.00 | 0.90 | 1.00 ± 0.00 | 0.99 ± 0.03 |
 | error_spike | isolation_forest | 10/10 | 0.697 ± 0.140 | 1.000 ± 0.000 | 0.815 ± 0.097 | 0.064 ± 0.036 | 0.0 ± 0.0 | 6.80 | 6.30 | 0.98 ± 0.02 | 0.86 ± 0.17 |
 | error_spike | error_count_rule | 10/10 | 0.960 ± 0.046 | 0.992 ± 0.026 | 0.975 ± 0.024 | 0.006 ± 0.007 | 0.1 ± 0.3 | 0.60 | 0.60 | 1.00 ± 0.00 | 1.00 ± 0.00 |
 | traffic_drop | statistical | 10/10 | 0.956 ± 0.034 | 0.971 ± 0.039 | 0.963 ± 0.027 | 0.008 ± 0.006 | 0.1 ± 0.3 | 0.80 | 0.80 | 1.00 ± 0.01 | 0.96 ± 0.07 |
+| traffic_drop | statistical_trend | 10/10 | 0.950 ± 0.040 | 0.971 ± 0.039 | 0.960 ± 0.028 | 0.009 ± 0.007 | 0.1 ± 0.3 | 0.90 | 0.90 | 1.00 ± 0.01 | 0.96 ± 0.07 |
 | traffic_drop | isolation_forest | 10/10 | 0.719 ± 0.144 | 0.800 ± 0.138 | 0.748 ± 0.112 | 0.060 ± 0.037 | 0.3 ± 0.5 | 6.10 | 5.50 | 0.96 ± 0.03 | 0.85 ± 0.11 |
 | traffic_drop | error_count_rule | 0/10 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.004 ± 0.005 | n/a | 0.40 | 0.40 | 0.15 ± 0.04 | 0.13 ± 0.02 |
 | latency_rise | statistical | 10/10 | 0.945 ± 0.047 | 0.933 ± 0.046 | 0.938 ± 0.029 | 0.013 ± 0.013 | 0.0 ± 0.0 | 1.30 | 1.30 | 0.99 ± 0.01 | 0.93 ± 0.07 |
+| latency_rise | statistical_trend | 10/10 | 0.930 ± 0.043 | 0.954 ± 0.023 | 0.941 ± 0.026 | 0.018 ± 0.012 | 0.0 ± 0.0 | 1.70 | 1.40 | 0.99 ± 0.01 | 0.93 ± 0.07 |
 | latency_rise | isolation_forest | 10/10 | 0.729 ± 0.106 | 0.808 ± 0.187 | 0.760 ± 0.135 | 0.070 ± 0.030 | 0.2 ± 0.4 | 6.80 | 6.00 | 0.96 ± 0.03 | 0.78 ± 0.13 |
 | latency_rise | error_count_rule | 1/10 | 0.020 ± 0.063 | 0.005 ± 0.016 | 0.008 ± 0.025 | 0.015 ± 0.012 | 18.0 ± 0.0 | 1.50 | 1.50 | 0.46 ± 0.06 | 0.20 ± 0.04 |
 | new_error_type | statistical | 10/10 | 0.767 ± 0.281 | 0.367 ± 0.105 | 0.482 ± 0.128 | 0.009 ± 0.011 | 0.8 ± 1.6 | 1.00 | 0.90 | 0.67 ± 0.12 | 0.41 ± 0.14 |
+| new_error_type | statistical_trend | 10/10 | 0.767 ± 0.281 | 0.367 ± 0.105 | 0.482 ± 0.128 | 0.009 ± 0.011 | 0.8 ± 1.6 | 1.00 | 0.90 | 0.66 ± 0.13 | 0.41 ± 0.14 |
 | new_error_type | isolation_forest | 3/10 | 0.050 ± 0.088 | 0.050 ± 0.081 | 0.049 ± 0.080 | 0.054 ± 0.021 | 2.3 ± 1.5 | 6.20 | 5.80 | 0.47 ± 0.13 | 0.07 ± 0.03 |
 | new_error_type | error_count_rule | 0/10 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.004 ± 0.007 | n/a | 0.50 | 0.50 | 0.46 ± 0.07 | 0.06 ± 0.02 |
 | busy_healthy | statistical | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.011 ± 0.008 | n/a | 1.30 | 1.30 | n/a | n/a |
+| busy_healthy | statistical_trend | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.012 ± 0.007 | n/a | 1.40 | 1.40 | n/a | n/a |
 | busy_healthy | isolation_forest | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.048 ± 0.022 | n/a | 5.70 | 5.10 | n/a | n/a |
 | busy_healthy | error_count_rule | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.012 ± 0.009 | n/a | 1.40 | 1.40 | n/a | n/a |
 | natural_bursts | statistical | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.033 ± 0.016 | n/a | 4.00 | 3.50 | n/a | n/a |
+| natural_bursts | statistical_trend | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.034 ± 0.016 | n/a | 4.10 | 3.60 | n/a | n/a |
 | natural_bursts | isolation_forest | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.072 ± 0.018 | n/a | 8.70 | 7.90 | n/a | n/a |
 | natural_bursts | error_count_rule | - | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.022 ± 0.016 | n/a | 2.70 | 2.30 | n/a | n/a |
 | noisy_mixed | statistical | 30/30 | 0.947 ± 0.035 | 0.963 ± 0.028 | 0.955 ± 0.022 | 0.038 ± 0.030 | 0.0 ± 0.1 | 2.70 | 2.00 | 0.99 ± 0.01 | 0.96 ± 0.03 |
+| noisy_mixed | statistical_trend | 30/30 | 0.941 ± 0.034 | 0.963 ± 0.028 | 0.952 ± 0.025 | 0.043 ± 0.030 | 0.0 ± 0.1 | 3.00 | 2.10 | 0.98 ± 0.01 | 0.96 ± 0.03 |
 | noisy_mixed | isolation_forest | 30/30 | 0.895 ± 0.036 | 0.910 ± 0.048 | 0.901 ± 0.030 | 0.073 ± 0.030 | 0.1 ± 0.3 | 5.20 | 3.60 | 0.97 ± 0.02 | 0.93 ± 0.04 |
 | noisy_mixed | error_count_rule | 15/30 | 0.865 ± 0.113 | 0.220 ± 0.040 | 0.348 ± 0.054 | 0.027 ± 0.027 | 2.1 ± 2.6 | 1.90 | 1.80 | 0.47 ± 0.03 | 0.53 ± 0.03 |
 | slow_ramp | statistical | 10/10 | 0.973 ± 0.031 | 0.338 ± 0.073 | 0.498 ± 0.084 | 0.010 ± 0.012 | 14.7 ± 5.9 | 0.60 | 0.60 | 0.79 ± 0.03 | 0.83 ± 0.04 |
+| slow_ramp | statistical_trend | 10/10 | 0.963 ± 0.033 | 0.608 ± 0.079 | 0.742 ± 0.058 | 0.025 ± 0.024 | 12.4 ± 4.7 | 1.50 | 0.70 | 0.86 ± 0.03 | 0.89 ± 0.03 |
 | slow_ramp | isolation_forest | 10/10 | 0.898 ± 0.056 | 0.537 ± 0.116 | 0.663 ± 0.089 | 0.067 ± 0.049 | 4.4 ± 4.1 | 4.00 | 3.60 | 0.79 ± 0.02 | 0.82 ± 0.03 |
 | slow_ramp | error_count_rule | 10/10 | 0.984 ± 0.026 | 0.383 ± 0.095 | 0.546 ± 0.098 | 0.005 ± 0.008 | 15.9 ± 6.1 | 0.30 | 0.30 | 0.86 ± 0.03 | 0.86 ± 0.03 |
 | early_incident | statistical | 10/10 | 0.924 ± 0.050 | 0.935 ± 0.097 | 0.926 ± 0.059 | 0.007 ± 0.006 | 0.0 ± 0.0 | 1.60 | 1.40 | 1.00 ± 0.00 | 0.96 ± 0.03 |
+| early_incident | statistical_trend | 10/10 | 0.917 ± 0.048 | 0.955 ± 0.064 | 0.934 ± 0.040 | 0.008 ± 0.006 | 0.0 ± 0.0 | 1.80 | 1.60 | 1.00 ± 0.00 | 0.96 ± 0.03 |
 | early_incident | isolation_forest | 10/10 | 0.678 ± 0.077 | 0.970 ± 0.048 | 0.794 ± 0.039 | 0.044 ± 0.015 | 0.0 ± 0.0 | 9.60 | 9.20 | 0.99 ± 0.00 | 0.91 ± 0.08 |
 | early_incident | error_count_rule | 10/10 | 1.000 ± 0.000 | 0.115 ± 0.047 | 0.203 ± 0.076 | 0.000 ± 0.000 | 8.6 ± 4.0 | 0.00 | 0.00 | 1.00 ± 0.00 | 0.99 ± 0.01 |
 | short_log | statistical | 10/10 | 0.921 ± 0.137 | 0.967 ± 0.070 | 0.940 ± 0.102 | 0.050 ± 0.090 | 0.0 ± 0.0 | 0.60 | 0.30 | 0.99 ± 0.03 | 0.98 ± 0.05 |
+| short_log | statistical_trend | 10/10 | 0.884 ± 0.154 | 0.967 ± 0.070 | 0.920 ± 0.111 | 0.075 ± 0.100 | 0.0 ± 0.0 | 0.90 | 0.40 | 0.98 ± 0.03 | 0.98 ± 0.05 |
 | short_log | isolation_forest | 10/10 | 0.746 ± 0.197 | 0.733 ± 0.285 | 0.714 ± 0.225 | 0.142 ± 0.171 | 0.5 ± 0.8 | 1.70 | 1.10 | 0.91 ± 0.10 | 0.81 ± 0.17 |
 | short_log | error_count_rule | 10/10 | 0.969 ± 0.065 | 0.983 ± 0.053 | 0.976 ± 0.056 | 0.017 ± 0.035 | 0.0 ± 0.0 | 0.20 | 0.20 | 1.00 ± 0.01 | 0.99 ± 0.02 |
 | tiny_log | statistical | 0/10 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | n/a | 0.00 | 0.00 | 0.50 ± 0.00 | 0.40 ± 0.00 |
+| tiny_log | statistical_trend | 0/10 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | n/a | 0.00 | 0.00 | 0.50 ± 0.00 | 0.40 ± 0.00 |
 | tiny_log | isolation_forest | 0/10 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | n/a | 0.00 | 0.00 | 0.50 ± 0.00 | 0.40 ± 0.00 |
 | tiny_log | error_count_rule | 10/10 | 0.957 ± 0.136 | 0.975 ± 0.079 | 0.958 ± 0.093 | 0.050 ± 0.158 | 0.1 ± 0.3 | 0.30 | 0.30 | 1.00 ± 0.00 | 1.00 ± 0.00 |
 | incident_at_start | statistical | 10/10 | 0.907 ± 0.112 | 0.958 ± 0.081 | 0.926 ± 0.067 | 0.006 ± 0.008 | 0.1 ± 0.3 | 1.40 | 1.40 | 1.00 ± 0.00 | 0.94 ± 0.09 |
+| incident_at_start | statistical_trend | 10/10 | 0.907 ± 0.112 | 0.967 ± 0.058 | 0.931 ± 0.063 | 0.006 ± 0.008 | 0.1 ± 0.3 | 1.40 | 1.40 | 1.00 ± 0.00 | 0.94 ± 0.09 |
 | incident_at_start | isolation_forest | 10/10 | 0.548 ± 0.125 | 0.967 ± 0.105 | 0.691 ± 0.102 | 0.046 ± 0.020 | 0.1 ± 0.3 | 10.40 | 10.20 | 0.99 ± 0.01 | 0.88 ± 0.12 |
 | incident_at_start | error_count_rule | 10/10 | 1.000 ± 0.000 | 0.400 ± 0.077 | 0.568 ± 0.077 | 0.000 ± 0.000 | 0.9 ± 0.7 | 0.00 | 0.00 | 1.00 ± 0.00 | 0.99 ± 0.01 |
 | incident_fills_baseline | statistical | 1/10 | 0.100 ± 0.316 | 0.001 ± 0.005 | 0.003 ± 0.009 | 0.005 ± 0.007 | 45.0 ± 0.0 | 0.80 | 0.80 | 0.44 ± 0.05 | 0.28 ± 0.04 |
+| incident_fills_baseline | statistical_trend | 1/10 | 0.100 ± 0.316 | 0.001 ± 0.005 | 0.003 ± 0.009 | 0.005 ± 0.007 | 45.0 ± 0.0 | 0.80 | 0.80 | 0.47 ± 0.08 | 0.32 ± 0.09 |
 | incident_fills_baseline | isolation_forest | 10/10 | 0.539 ± 0.182 | 0.066 ± 0.025 | 0.115 ± 0.042 | 0.026 ± 0.016 | 13.3 ± 16.5 | 4.40 | 4.30 | 0.58 ± 0.05 | 0.38 ± 0.04 |
 | incident_fills_baseline | error_count_rule | 1/10 | 0.100 ± 0.316 | 0.001 ± 0.005 | 0.003 ± 0.009 | 0.000 ± 0.000 | 18.0 ± 0.0 | 0.00 | 0.00 | 1.00 ± 0.00 | 1.00 ± 0.00 |
 
@@ -289,10 +306,13 @@ For `tiny_log` the AUC rows are meaningless (the detector refuses to score, so e
 | scenario | candidate | incident-window recall | windows excluded from baseline | later-period false windows |
 |---|---|---|---|---|
 | early_incident | statistical | 0.93 ± 0.10 | 17.2 ± 2.3 | 0.50 ± 0.53 |
+| early_incident | statistical_trend | 0.96 ± 0.06 | 17.2 ± 2.3 | 0.70 ± 0.67 |
 | early_incident | isolation_forest | 0.97 ± 0.05 | 17.2 ± 2.3 | 5.70 ± 2.06 |
 | incident_at_start | statistical | 0.96 ± 0.08 | 9.8 ± 1.8 | 0.80 ± 1.32 |
+| incident_at_start | statistical_trend | 0.97 ± 0.06 | 9.8 ± 1.8 | 0.80 ± 1.32 |
 | incident_at_start | isolation_forest | 0.97 ± 0.11 | 9.8 ± 1.8 | 6.50 ± 3.54 |
 | incident_fills_baseline | statistical | 0.00 ± 0.00 | 0.1 ± 0.3 | 0.60 ± 1.07 |
+| incident_fills_baseline | statistical_trend | 0.00 ± 0.00 | 0.1 ± 0.3 | 0.60 ± 1.07 |
 | incident_fills_baseline | isolation_forest | 0.07 ± 0.03 | 0.1 ± 0.3 | 3.00 ± 2.58 |
 
 ### Severity of episodes (evaluated period), split by whether the episode touches a labelled incident
@@ -301,6 +321,8 @@ For `tiny_log` the AUC rows are meaningless (the detector refuses to score, so e
 |---|---|---|---|---|---|
 | statistical | true incident | 67 | 77 | 68 | 5 |
 | statistical | false alarm | 81 | 39 | 1 | 0 |
+| statistical_trend | true incident | 37 | 43 | 76 | 6 |
+| statistical_trend | false alarm | 91 | 39 | 1 | 0 |
 | isolation_forest | true incident | 82 | 81 | 94 | 5 |
 | isolation_forest | false alarm | 411 | 106 | 1 | 0 |
 
@@ -322,13 +344,15 @@ the answer built in; it says nothing about performance on real logs.
 
 ## 5. Decision
 
-**Default (`AUTO_METHOD`) = `statistical`.** The rule is applied on development instances only:
+**Default (`AUTO_METHOD`) = `statistical_trend`** since the pre-registered trend rule in section 5b
+passed on the evaluation seeds. Its point detector is the `statistical` baseline chosen here.
+**Base method: `statistical` over Isolation Forest.** The rule is applied on development instances only:
 Isolation Forest becomes the default only if its mean pooled F1 beats the baseline's by more
 than the larger sample std over development seeds. The current `--dev` run (1000-1005) measures
 F1 0.698 (IF) vs 0.915 (statistical), difference -0.217 against a margin of 0.076, retaining
-`statistical`. That run exits non-zero if the constant disagrees with the development rule.
-The separate evaluation run (0-9) reports F1 0.719 vs 0.909 as held-out descriptive evidence,
-not as a selection gate. No constants or defaults were retuned from those evaluation results.
+`statistical` as the base. That run exits non-zero if the base of `AUTO_METHOD` disagrees with the
+development rule. The separate evaluation run (0-9) reports F1 0.719 vs 0.909 as held-out descriptive
+evidence, not as a selection gate for this choice. No constants were retuned from evaluation results.
 
 Why Isolation Forest loses here, as measured: (a) ranking quality alone is worse (ROC-AUC 0.942 vs 0.976,
 PR-AUC 0.717 vs 0.894, best-threshold F1 0.732 vs 0.917), so this is not just calibration; (b) its false
@@ -401,12 +425,48 @@ as negative/partial. The evaluation run prints the three checks and fails a gate
 with the outcome. This is the one place where evaluation seeds decide something; the decision is binary,
 and the rule and every constant were fixed beforehand.
 
+**Result (evaluation seeds 0-9, `python scripts/evaluate_anomaly.py`).**
+
+```
+(a) slow_ramp delay 12.40 vs 14.70 windows, window recall 0.608 vs 0.338: pass
+(b) pooled main F1 0.906 >= 0.909 - 0.01: pass
+(c) pooled FPR/window 0.0166 <= 0.0149 + 0.005: pass
+-> adopt statistical_trend as AUTO_METHOD
+```
+
+**Decision: `AUTO_METHOD = "statistical_trend"`.** `statistical` is unchanged and stays selectable
+(`method="statistical"`; its reports are pinned bit-for-bit by `tests/test_anomaly_trend.py`).
+
+| main scenarios, pooled (mean ± std, 10 seeds) | precision | recall | F1 | FPR/window | FA/incident | episode prec. |
+|---|---|---|---|---|---|---|
+| statistical | 0.890 ± 0.034 | 0.930 ± 0.020 | 0.909 ± 0.021 | 0.015 ± 0.005 | 1.614 ± 0.551 | 0.502 ± 0.101 |
+| statistical_trend | 0.880 ± 0.031 | 0.934 ± 0.016 | 0.906 ± 0.019 | 0.017 ± 0.005 | 1.729 ± 0.524 | 0.477 ± 0.089 |
+
+How to read it (all from the section 4 tables):
+
+* The gain is real but **partial**. `slow_ramp` window recall almost doubles (0.34 -> 0.61, F1 0.50 -> 0.74,
+  ROC-AUC 0.79 -> 0.86), but the first flag moves only from 14.7 to 12.4 windows (std 4.7-5.9 windows, so the
+  delay gain is within one std). The earliest flags on the ramp are still mostly noise crossings of the point
+  threshold; on the development seeds the first trend-only flags came 13-33 windows into the ramp. Isolation
+  Forest still flags the ramp earlier (4.4 windows) with 3.6 instead of 0.7 false episodes per run.
+* The price is about +0.002 FPR/window (0.015 -> 0.017), -0.003 F1 and -0.025 episode precision; `healthy` goes
+  from 0.6 to 1.0 false windows per seed, `short_log` F1 0.94 -> 0.92. `error_spike`, `new_error_type` and
+  `incident_fills_baseline` are unchanged (the last stays undetectable: 1/10, window recall 0.00).
+* Side effect: fewer, longer true-incident episodes (162 instead of 217, `low` 37 instead of 67), because
+  sub-threshold windows inside an incident are now often flagged by the trend and join the runs. False-alarm
+  episodes rise from 121 to 131.
+* All gates pass, including leakage (trend parameters and training-period scores do not change when the later
+  period is replaced) and determinism.
+
 ## 6. Known failure cases (all measured above)
 
-* **Slow ramps.** `slow_ramp`: the statistical window recall is 0.34 and the first flag comes 14.7 windows after
-  the ramp starts (the ERROR-count rule is similar, 15.9). Each window deviates a little from a global baseline; only
-  the late, steep part crosses the threshold. EWMA / trend detection is not implemented. Isolation Forest does
-  better here (4.4 windows).
+* **Slow ramps.** `slow_ramp`: `statistical` alone reaches window recall 0.34 and first flags 14.7 windows after
+  the ramp starts (the ERROR-count rule is similar, 15.9): each window deviates a little from a global baseline and
+  only the late, steep part crosses the threshold. The default `statistical_trend` (section 5b) raises window
+  recall to 0.61 but the first flag only to 12.4 windows; Isolation Forest flags earlier (4.4) with many more
+  false alarms. Earlier detection of a drift this slow (the expected ERROR-count shift starts at roughly 0.08
+  robust sigma per window, an estimate from the generator's rates) would need a lower `k`/`h`, which on the
+  development seeds cost far more false alarms than allowed.
 * **Incident that fills the baseline.** `incident_fills_baseline` (58 % of the training period): the median
   breakdown point is exceeded, nothing is excluded, the incident is learned as normal. Statistical: 1/10 incidents,
   window recall 0.00. Not detectable by this design; `train_fraction` and a healthy first period are a precondition.
@@ -430,9 +490,12 @@ and the rule and every constant were fixed beforehand.
   1.6 false episodes per incident; 1.5 % of windows). They are mostly `error_ratio` / `error_count` blips
   (`natural_bursts`: 3.5 false episodes per run) and natural novelty (`new_groups`, 28 windows over 10 seeds).
   A healthy log gives 0.6 false windows per 120. Lowering them costs recall (dev-seed floor 5.0: F1 0.78).
+  The default `statistical_trend` adds a few more (episode precision 0.48, 1.7 false episodes per incident,
+  1.7 % of windows, 1.0 false windows per healthy log); the anatomy above is for `statistical` only.
 * **Fragmented episodes.** Episodes are runs of consecutive flagged windows; an incident partly below the
-  threshold splits into several short episodes, and short episodes earn little severity (67 of 217 true-incident
-  episodes are `low`). Merging across small gaps was not added because the contract says "consecutive".
+  threshold splits into several short episodes, and short episodes earn little severity (`statistical`: 67 of 217
+  true-incident episodes are `low`; `statistical_trend` fragments less: 37 of 162). Merging across small gaps was
+  not added because the contract says "consecutive".
 * **Isolation Forest** flags 6.3 % of healthy windows even with out-of-fold calibration, and a few windows of
   the healthy training hour of the generated telemetry fixture.
 
@@ -461,8 +524,8 @@ and the rule and every constant were fixed beforehand.
 ## 8. Reproduce
 
 ```
-pip install -e ".[ml]"          # scikit-learn + numpy (statistical method needs neither)
-python scripts/evaluate_anomaly.py              # seeds 0-9, ~75 s, exit 1 if a gate fails
+pip install -e ".[ml]"          # scikit-learn + numpy (statistical / statistical_trend need neither)
+python scripts/evaluate_anomaly.py              # seeds 0-9, ~3 min, exit 1 if a gate fails
 python scripts/evaluate_anomaly.py --dev        # tuning seeds
 python scripts/make_ml_scenarios.py --seed 3    # summary of the generated scenarios
 python -m pytest -q tests/test_anomaly_*.py

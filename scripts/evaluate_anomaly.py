@@ -428,7 +428,7 @@ def main() -> int:
     print("top contributing feature: " + ", ".join(f"{k} {v}" for k, v in sorted(by_feature.items(), key=lambda kv: -kv[1])))
     print("classification:           " + ", ".join(f"{k} {v}" for k, v in sorted(by_class.items(), key=lambda kv: -kv[1])))
 
-    # ---- development-only selection; evaluation never chooses a default ---------------------------
+    # ---- development-only IF-vs-statistical selection (the trend rule below is the only evaluation-seed rule)
     if args.dev:
         f1_stat = [d["f1"] for d in per_seed["statistical"]]
         f1_if = [d["f1"] for d in per_seed["isolation_forest"]]
@@ -441,7 +441,9 @@ def main() -> int:
             f"  F1 isolation_forest {statistics.fmean(f1_if):.3f} - statistical {statistics.fmean(f1_stat):.3f} = "
             f"{gain:+.3f} (margin {margin:.3f})  ->  default = {decision}   (AUTO_METHOD = {AUTO_METHOD})"
         )
-        gates.check(AUTO_METHOD == decision, f"AUTO_METHOD ({AUTO_METHOD}) equals the development decision ({decision})")
+        # statistical_trend extends the statistical baseline, so this rule checks its base method
+        base = "statistical" if AUTO_METHOD == "statistical_trend" else AUTO_METHOD
+        gates.check(base == decision, f"AUTO_METHOD base ({base}) equals the development decision ({decision})")
     else:
         print(f"\nFrozen default: AUTO_METHOD = {AUTO_METHOD}; evaluation labels are not used for constant tuning.")
 
