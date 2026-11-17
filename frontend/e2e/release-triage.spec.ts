@@ -124,6 +124,57 @@ test("investigation: Clear removes a recorded fix and keeps the group resolved",
   await expect(page.getByRole("combobox", { name: /^Status:/ })).toHaveValue("resolved");
 });
 
+test("investigation: saving with the time untouched keeps the stored instant exactly (no fixed_at sent)", async ({ page, request }) => {
+  const s = await seedPair(request);
+  await recordFix(request, s.fingerprint, "2026-03-05T11:30:00.250Z", "2026.03.05-1");
+  await page.goto(investigateUrl(s));
+  await expect(page.getByRole("complementary", { name: "Fix record, notes, related incidents and export" })).toBeVisible();
+  await expect(fixPanel(page).getByTestId("fix-record")).toContainText("2026.03.05-1");
+
+  await fixPanel(page).getByLabel("Release / version").fill("2026.03.05-2");
+  const put = page.waitForRequest((r) => r.method() === "PUT" && r.url().includes("/status"));
+  await fixPanel(page).getByRole("button", { name: "Save fix record" }).click();
+  const sent = (await put).postDataJSON() as Record<string, unknown>;
+  expect(sent).toEqual({ status: "resolved", fixed_version: "2026.03.05-2" });
+  await expect(fixPanel(page).getByTestId("fix-record")).toContainText("2026.03.05-2");
+
+  const detail = (await (await request.get(`/api/imports/${s.after}/incidents/${s.fingerprint}`)).json()) as { fixed_at: string; fixed_version: string };
+  expect(Date.parse(detail.fixed_at)).toBe(Date.parse("2026-03-05T11:30:00.250Z"));
+  expect(detail.fixed_version).toBe("2026.03.05-2");
+
+  // emptying the time field sends an explicit null
+  await fixPanel(page).getByLabel("Fix shipped at (UTC)").fill("");
+  const put2 = page.waitForRequest((r) => r.method() === "PUT" && r.url().includes("/status"));
+  await fixPanel(page).getByRole("button", { name: "Save fix record" }).click();
+  expect((await put2).postDataJSON()).toEqual({ status: "resolved", fixed_at: null, fixed_version: "2026.03.05-2" });
+  await expect(fixPanel(page).getByTestId("fix-record")).toContainText("not recorded");
+});
+
+test.describe("local time zone", () => {
+  test.use({ timezoneId: "America/New_York" });
+
+  test("investigation: local entry is labelled 'local time' with the zone at the entered instant", async ({ page, request }) => {
+    const s = await seedPair(request);
+    await page.addInitScript(() => localStorage.setItem("stacktriage.tz", "local"));
+    expect((await request.put(`/api/incidents/${s.fingerprint}/status`, { data: { status: "resolved" } })).ok()).toBeTruthy();
+    await page.goto(investigateUrl(s));
+    const time = fixPanel(page).getByLabel("Fix shipped at (local time)");
+    await expect(time).toBeVisible();
+
+    // a January instant is EST, a July instant EDT, whatever today's abbreviation is
+    await time.fill("2026-01-15T09:00");
+    await expect(fixPanel(page).getByText(/Entered in your local time \(EST at that time\)/)).toBeVisible();
+    await time.fill("2026-07-01T12:00");
+    await expect(fixPanel(page).getByText(/Entered in your local time \(EDT at that time\)/)).toBeVisible();
+
+    await fixPanel(page).getByRole("button", { name: "Save fix record" }).click();
+    await expect(page.getByRole("status").filter({ hasText: "Fix record saved." })).toBeVisible();
+    await expect(fixPanel(page).getByTestId("fix-record")).toContainText("2026-07-01 12:00:00 EDT");
+    const detail = (await (await request.get(`/api/imports/${s.after}/incidents/${s.fingerprint}`)).json()) as { fixed_at: string };
+    expect(Date.parse(detail.fixed_at)).toBe(Date.parse("2026-07-01T16:00:00Z"));
+  });
+});
+
 test("compare: occurrences after the recorded fix are a regression, listed first and filterable", async ({ page, request }) => {
   const s = await seedPair(request);
   await recordFix(request, s.fingerprint, "2026-03-05T11:30:00Z", "2026.03.05-1");

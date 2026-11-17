@@ -10,7 +10,7 @@ import { TimelineChart } from "../components/TimelineChart";
 import type { ChartBucket, TooltipContent } from "../components/TimelineChart";
 import { anomalyAt, stepOf } from "../components/VolumeChart";
 import { ActivityBadge, Button, ConfirmDialog, EmptyState, ErrorState, Field, LevelBadge, LinkButton, LoadingBlock, Pagination, Panel, Skeleton } from "../components/ui";
-import { classificationLabel, fmtDuration, fmtInt, fmtNum, fmtRate, recurrenceLabel, toMs } from "../lib/format";
+import { classificationLabel, fmtDuration, fmtInt, fmtNum, fmtRate, recurrenceLabel, toMs, tzLabel } from "../lib/format";
 import { forgetImport, rememberImport } from "../lib/lastImport";
 import { useAsync } from "../lib/useAsync";
 import { useTime, useToast } from "../state/app";
@@ -80,7 +80,7 @@ export function InvestigationView() {
           <Representative d={d} />
           <Records key={fingerprint} importId={importId} fingerprint={fingerprint} total={d.count} />
         </div>
-        <aside className="inv-side" aria-label="Notes, related incidents and export">
+        <aside className="inv-side" aria-label="Fix record, notes, related incidents and export">
           {d.status === "resolved" ? <FixRecord d={d} onSaved={applyStatus} /> : null}
           <Notes key={d.fingerprint} d={d} onChange={(notes) => detail.setData((p) => (p ? { ...p, notes } : p))} />
           <Related d={d} importId={importId} />
@@ -376,8 +376,10 @@ function FixRecord({ d, onSaved }: { d: IncidentDetail; onSaved: (out: StatusOut
 function FixForm({ d, hasRecord, onSaved }: { d: IncidentDetail; hasRecord: boolean; onSaved: (out: StatusOut) => void }) {
   const { fmt } = useTime();
   const { push } = useToast();
-  // datetime-local value (YYYY-MM-DDTHH:MM:SS) in the selected zone
-  const [time, setTime] = useState(() => (d.fixed_at ? fmt.dateTimeBare(d.fixed_at).replace(" ", "T") : ""));
+  // datetime-local value (YYYY-MM-DDTHH:MM:SS) in the selected zone; seconds only, and ambiguous in a repeated DST hour,
+  // so an untouched input is not sent back (the server keeps the stored instant)
+  const [initialTime] = useState(() => (d.fixed_at ? fmt.dateTimeBare(d.fixed_at).replace(" ", "T") : ""));
+  const [time, setTime] = useState(initialTime);
   const [version, setVersion] = useState(d.fixed_version ?? "");
   const [busy, setBusy] = useState<"save" | "clear" | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -385,11 +387,11 @@ function FixForm({ d, hasRecord, onSaved }: { d: IncidentDetail; hasRecord: bool
   const versionId = useId();
   const errorId = useId();
 
-  const send = async (kind: "save" | "clear", fixedAt: string | null, fixedVersion: string | null) => {
+  const send = async (kind: "save" | "clear", fix: { fixed_at?: string | null; fixed_version: string | null }) => {
     setBusy(kind);
     setError(null);
     try {
-      const out = await api.put<StatusOut>(`/incidents/${encodeURIComponent(d.fingerprint)}/status`, { status: "resolved", fixed_at: fixedAt, fixed_version: fixedVersion });
+      const out = await api.put<StatusOut>(`/incidents/${encodeURIComponent(d.fingerprint)}/status`, { status: "resolved", ...fix });
       onSaved(out);
       push(kind === "save" ? "Fix record saved." : "Fix record cleared.");
     } catch (err) {
@@ -400,21 +402,31 @@ function FixForm({ d, hasRecord, onSaved }: { d: IncidentDetail; hasRecord: bool
     }
   };
 
+  // the input has no offset: Date parses it as local time, so append Z when the selected zone is UTC
+  const enteredMs = time ? Date.parse(fmt.tz === "utc" ? `${time}Z` : time) : null;
+
   const save = (e: FormEvent) => {
     e.preventDefault();
-    // the input has no offset: Date parses it as local time, so append Z when the selected zone is UTC
-    const ms = time ? Date.parse(fmt.tz === "utc" ? `${time}Z` : time) : null;
-    if (Number.isNaN(ms)) {
+    const fixedVersion = version.trim() || null;
+    if (time === initialTime) {
+      void send("save", { fixed_version: fixedVersion });
+      return;
+    }
+    if (Number.isNaN(enteredMs)) {
       setError("Enter a valid date and time.");
       return;
     }
-    void send("save", ms === null ? null : new Date(ms).toISOString(), version.trim() || null);
+    void send("save", { fixed_at: enteredMs === null ? null : new Date(enteredMs).toISOString(), fixed_version: fixedVersion });
   };
 
   const empty = time === "" && version.trim() === "";
   return (
     <form onSubmit={save} className="stack-sm" noValidate>
-      <Field label={`Fix shipped at (${fmt.label})`} htmlFor={timeId} hint={`Entered in ${fmt.tz === "utc" ? "UTC" : `your local time zone (${fmt.label})`}; switch the zone in the header.`}>
+      <Field
+        label={`Fix shipped at (${fmt.tz === "utc" ? "UTC" : "local time"})`}
+        htmlFor={timeId}
+        hint={`Entered in ${fmt.tz === "utc" ? "UTC" : `your local time${enteredMs !== null && !Number.isNaN(enteredMs) ? ` (${tzLabel("local", enteredMs)} at that time)` : ""}`}; switch the zone in the header.`}
+      >
         <input id={timeId} className="input" type="datetime-local" step={1} value={time} onChange={(e) => setTime(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={error ? errorId : undefined} />
       </Field>
       <Field label="Release / version" htmlFor={versionId}>
@@ -429,7 +441,7 @@ function FixForm({ d, hasRecord, onSaved }: { d: IncidentDetail; hasRecord: bool
         <Button type="submit" variant="primary" size="sm" busy={busy === "save"} disabled={busy !== null || empty}>
           Save fix record
         </Button>
-        <Button size="sm" busy={busy === "clear"} disabled={busy !== null || !hasRecord} onClick={() => void send("clear", null, null)}>
+        <Button size="sm" busy={busy === "clear"} disabled={busy !== null || !hasRecord} onClick={() => void send("clear", { fixed_at: null, fixed_version: null })}>
           Clear
         </Button>
       </div>

@@ -450,7 +450,7 @@ function HowToRead({ p }: { p: CompareParameters }) {
           <strong>Disappeared</strong> means absent from the target capture, not fixed: the capture may be shorter or see different traffic, or the fingerprint may have changed (for example a shifted line number).
         </li>
         <li>
-          <strong>Regressed after fix</strong> is the only finding that calls a resolved group a regression: its fix time is recorded and the target has occurrences timestamped after it. <em>Only before recorded fix</em> means every occurrence in the target predates the fix, which is consistent with it. <strong>Marked resolved, observed in target</strong> is a flag, not a verdict: no fix time is recorded, so check whether the target was captured after the fix; recording the fix time on the incident page makes this check automatic.
+          <strong>Regressed after fix</strong> is the only finding that calls a resolved group a regression: its fix time is recorded and the target has occurrences timestamped after it (a lower bound when some occurrences have no timestamp). <em>Only before recorded fix</em> means every occurrence in the target predates the fix, which is consistent with it. <em>No timestamps to check against fix</em>: some or all occurrences in the target have no timestamp, so they cannot be checked against the fix time. <strong>Marked resolved, observed in target</strong> is a flag, not a verdict: no fix time is recorded, so check whether the target was captured after the fix; recording the fix time on the incident page makes this check automatic.
         </li>
       </ul>
     </details>
@@ -560,7 +560,7 @@ function Row({ it, basis, p }: { it: CompareItem; basis: CompareBasis; p: Compar
           <StatusBadge status={it.status} />
           {it.fix_check === "regressed" ? (
             <>
-              <span className="badge lvl-warning" title={`${fmtInt(it.occurrences_after_fix ?? 0)} occurrence(s) in the target capture are timestamped after the recorded fix ${fix}: the error came back after the fix shipped.`}>
+              <span className="badge lvl-warning" title={`At least ${fmtInt(it.occurrences_after_fix ?? 0)} occurrence(s) in the target capture are timestamped after the recorded fix ${fix}: the error came back after the fix shipped. Occurrences without a timestamp are not counted.`}>
                 <RegressedIcon />
                 Regressed after fix
               </span>
@@ -573,7 +573,7 @@ function Row({ it, basis, p }: { it: CompareItem; basis: CompareBasis; p: Compar
               Only before recorded fix
             </span>
           ) : it.fix_check === "untimed" ? (
-            <span className="badge cmp-flag" title={`A fix is recorded ${fix}, but this group's occurrences in the target capture have no timestamps, so they cannot be checked against the fix time.`}>
+            <span className="badge cmp-flag" title={`A fix is recorded ${fix}, but some or all occurrences in the target have no timestamp, so they cannot be checked against the fix time. No timestamped occurrence is after the fix.`}>
               No timestamps to check against fix
             </span>
           ) : it.resolved_observed ? (
