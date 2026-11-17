@@ -172,19 +172,20 @@ SQLite stores `imports` (metadata, diagnostics, timeline and anomaly report), `g
 
 ## Anomaly detection: method and evidence
 
-The default is **statistical**, not Isolation Forest. It compares error count/ratio, falling event rate, new groups and numeric metric means with a median/MAD baseline from the earlier half of a log. Training-only calibration and a contamination guard limit leakage; at least 12 healthy training windows are required. Isolation Forest is an optional candidate on the same features, refitted for each analysis.
+The default is **statistical**, not Isolation Forest. It compares error count/ratio, falling event rate, new groups and numeric metric means with a median/MAD baseline from the earlier half of a log. Training-only calibration and a contamination guard limit leakage; at least 12 healthy training windows are required. Two alternatives are selectable: Isolation Forest on the same features, and **statistical_trend**, which adds a one-sided CUSUM that accumulates small upward deviations of error count, error ratio and metrics that no single window would flag (reference value and threshold calibrated on training windows only).
 
 The following values are copied from [the evaluation report](docs/ml-evaluation.md): main synthetic scenarios, later period only, mean ± sample standard deviation over seeds 0–9.
 
 | Candidate | Precision | Recall | F1 | FPR/window | Episode precision |
 |---|---|---|---|---|---|
-| statistical | 0.890 ± 0.034 | 0.930 ± 0.020 | 0.909 ± 0.021 | 0.015 ± 0.005 | 0.502 ± 0.101 |
+| statistical (default) | 0.890 ± 0.034 | 0.930 ± 0.020 | 0.909 ± 0.021 | 0.015 ± 0.005 | 0.502 ± 0.101 |
+| statistical_trend (post hoc, see below) | 0.888 ± 0.033 | 0.934 ± 0.016 | 0.910 ± 0.020 | 0.015 ± 0.005 | 0.493 ± 0.091 |
 | isolation_forest | 0.634 ± 0.062 | 0.832 ± 0.040 | 0.719 ± 0.053 | 0.063 ± 0.015 | 0.221 ± 0.016 |
 | error_count_rule | 0.717 ± 0.045 | 0.228 ± 0.019 | 0.346 ± 0.025 | 0.012 ± 0.003 | 0.242 ± 0.084 |
 
-Isolation Forest performed worse here in ranking and false alarms, not just threshold calibration. It was better on slow ramps: first flag after 4.4 rather than 14.7 windows. This is a conditional result on these fixtures, not a general claim about the algorithm.
+**The trend detector is not the default, on purpose.** It was first adopted by a rule written down before the evaluation seeds were run. An independent review then found that its re-scaling amplified flat training channels four-fold, raising false "drift" alarms on healthy logs with sparse errors (21 of 50 synthetic healthy logs at 0.02 errors per window, against 0 for `statistical`); the evaluation scenarios average about 1.6 errors per window and never exercised that case. The fix (never inflate a channel's scale) was made after the evaluation seeds had been seen, so the numbers above are post hoc rather than a pre-registered confirmation, and the default stays `statistical` until an untouched seed set confirms it. Post hoc, slow-ramp window recall is 0.58 versus 0.34, but the first flag moves only from 14.7 to 13.5 windows, within the spread across seeds; Isolation Forest still flags slow ramps earliest (4.4 windows) at several times the false alarms. These are conditional results on these fixtures, not general claims about the algorithms.
 
-Important failures: statistical slow-ramp window recall is 0.34; an incident occupying 58 % of the training period is learned as normal (1/10 incidents detected); tiny logs are not scored; low-volume novelty is visible mainly in the first window of each new group. Around half the statistical detector's episodes touch no labelled incident. There is no seasonality model or detection of INFO-only traffic floods.
+Important failures: statistical slow-ramp window recall is 0.34; an incident occupying 58 % of the training period is learned as normal (1/10 incidents detected, by every candidate); tiny logs are not scored; low-volume novelty is visible mainly in the first window of each new group. Around half the statistical detector's episodes touch no labelled incident. There is no seasonality model or detection of INFO-only traffic floods.
 
 **All detection evidence is synthetic.** Constants were tuned on dev seeds 1000–1005; reported evaluation uses seeds 0–9. No real-world accuracy is established. Anomaly score is not a probability; classification and evidence-based severity are separate quantities. Findings describe unusual windows and contributing features, never root cause. See the report for full tables, methodology and failure cases.
 

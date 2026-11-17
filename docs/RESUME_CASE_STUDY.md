@@ -31,9 +31,10 @@ success or real-world detection accuracy.
   links into the investigation workflow; verified against a synthetic pair with
   declared ground truth.
 - Evaluated a median/MAD statistical detector against Isolation Forest on labelled
-  synthetic time-window scenarios; documented the statistical baseline's reported
-  F1 of 0.909 versus 0.719 for Isolation Forest, along with false alarms,
-  slow-ramp weaknesses and training-contamination limits.
+  synthetic time-window scenarios (F1 0.909 versus 0.719); added an optional
+  training-calibrated CUSUM trend detector for slow drifts, adopted under a pre-registered
+  rule and then withdrawn as default after review found false alarms on sparse-error logs;
+  documented the defect, the post-hoc fix and why it is not yet the default.
 
 Use these only for work you personally performed and can explain. The metric
 bullet must retain the synthetic-data qualification.
@@ -148,11 +149,15 @@ baseline, with scale floors for sparse data. Isolation Forest uses scikit-learn,
 is refitted per analysis and uses out-of-fold training scores for calibration.
 Neither reads message semantics or loads a serialized model.
 
-The statistical candidate is the default: it is dependency-free and directly
-explains which feature deviated. Isolation Forest can model combinations but adds
-an optional dependency and seed sensitivity. Its displayed feature contributions
-come from the robust baseline, not causal explanations of its trees. Both need an
-adequately healthy initial period and at least 12 retained training windows.
+The statistical candidate is the default: it is dependency-free and directly explains
+which feature deviated. The selectable `statistical_trend` adds a one-sided CUSUM over
+robust z-scores of error count, error ratio and metrics, re-centred on training windows
+only, so a slow drift that no single window shows still accumulates to an alarm;
+trend-only windows are labelled `sustained_shift` and list the drifting features.
+Isolation Forest can model combinations but adds an optional dependency and seed
+sensitivity. Its displayed feature contributions come from the robust baseline, not causal
+explanations of its trees. All need an adequately healthy initial period and at least 12
+retained training windows.
 
 ### Metrics and their limits
 
@@ -162,7 +167,8 @@ scenarios, later period only; mean +/- sample standard deviation across seeds 0-
 
 | Candidate | Precision | Recall | F1 | False-positive rate/window | Episode precision |
 |---|---|---|---|---|---|
-| Statistical | 0.890 +/- 0.034 | 0.930 +/- 0.020 | 0.909 +/- 0.021 | 0.015 +/- 0.005 | 0.502 +/- 0.101 |
+| Statistical (default) | 0.890 +/- 0.034 | 0.930 +/- 0.020 | 0.909 +/- 0.021 | 0.015 +/- 0.005 | 0.502 +/- 0.101 |
+| Statistical + trend (post hoc) | 0.888 +/- 0.033 | 0.934 +/- 0.016 | 0.910 +/- 0.020 | 0.015 +/- 0.005 | 0.493 +/- 0.091 |
 | Isolation Forest | 0.634 +/- 0.062 | 0.832 +/- 0.040 | 0.719 +/- 0.053 | 0.063 +/- 0.015 | 0.221 +/- 0.016 |
 
 Window precision is the share of flagged windows labelled anomalous; recall is the
@@ -173,11 +179,17 @@ false episodes. Anomaly score is not a probability, and severity is graded from
 operational evidence separately from score and pattern classification.
 
 The report records constants chosen on development seeds 1000-1005 and evaluation
-on seeds 0-9. Isolation Forest detected slow ramps earlier (4.4 versus 14.7 windows
-on average), despite worse pooled results. Statistical slow-ramp window recall was
-0.34; an incident filling 58% of the training period was detected in only 1/10 runs.
-About half the statistical episodes touched no labelled incident. There is no
-seasonality model, INFO-only flood detector or established real-world accuracy.
+on seeds 0-9. The trend detector's adoption rule was committed before its first
+evaluation run and passed, but a review then showed its scale floor multiplied flat
+training channels by four: healthy logs with rare errors got false drift alarms, a case the
+scenarios (about 1.6 errors per window) never exercised. The fix came after the
+evaluation seeds were seen, so its numbers are post hoc and the default stays
+`statistical`. Post hoc, slow-ramp window recall is 0.58 versus 0.34, with the first flag
+at 13.5 versus 14.7 windows (within seed spread); Isolation Forest still flags earliest
+(4.4 windows) with far more false alarms. An incident filling 58% of the training period
+was detected in only 1/10 runs by every candidate. About half of the episodes touched no
+labelled incident. There is no seasonality model, INFO-only flood detector or established
+real-world accuracy.
 
 Reproduce with `python scripts/evaluate_anomaly.py` after installing the ML extra.
 Parser acceptance checks use `python scripts/acceptance_report.py`. Fixture counts
@@ -242,8 +254,11 @@ See [settings](../src/stacktriage/api/settings.py),
 7. **How is temporal leakage limited?** Earlier-period training and training-only
    threshold calibration; a contaminated first half can still invalidate baseline
    assumptions. Isolation Forest calibration uses out-of-fold training scores.
-8. **Why retain the simpler detector?** Better reported pooled synthetic F1 and
-   false-positive rate; acknowledge Isolation Forest's earlier slow-ramp detection.
+8. **Why is the CUSUM trend detector not the default?** It passed its pre-registered rule,
+   but review found false alarms on sparse-error logs that the scenarios never covered; the
+   fix was made after seeing the evaluation seeds, so adopting it now would be tuning on
+   the test set. It needs an untouched seed set first. Acknowledge Isolation Forest's
+   earlier slow-ramp flag and its higher false-alarm rate.
 9. **How do score and severity differ?** Unusualness is relative to a fitted
    baseline; severity uses error volume, duration, ratios and other episode
    evidence. Neither establishes actual customer impact.

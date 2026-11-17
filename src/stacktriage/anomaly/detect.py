@@ -11,6 +11,9 @@ Pipeline (details and measured results: docs/ml-evaluation.md):
    training windows only. Isolation Forest is refit from the same windows on every call.
 4. Score every window (0..1, 0.5 = threshold), flag, classify (classify.py), merge consecutive
    flagged windows into episodes and grade episode severity from evidence (severity.py).
+
+`statistical_trend` = the statistical point detector OR a one-sided CUSUM per feature on the
+same robust z-scores (trend.py), for slow drifts that never cross the point threshold.
 """
 from __future__ import annotations
 
@@ -18,15 +21,20 @@ import math
 from datetime import timedelta
 
 from ..timeline import Bucket, Timeline
-from .classify import final_classification, window_pattern
+from . import trend as trend_mod
+from .classify import TREND_PATTERN, final_classification, window_pattern
 from .features import BASE_FEATURES, METRIC_PREFIX, FeatureStat, fit_stat, observed, quantile
 from .scoring import isolation_forest_raw, sklearn_available, statistical_raw
 from .severity import EpisodeEvidence, grade
+from .trend import Channel, trend_scores
 from .types import AnomalyReport, Episode, WindowFinding
 
-METHODS = ("statistical", "isolation_forest")
+METHODS = ("statistical", "isolation_forest", "statistical_trend")
 
 # Decision of the evaluation in docs/ml-evaluation.md: which candidate "auto" runs.
+# statistical (dev rule vs Isolation Forest, section 5). statistical_trend stays selectable but is
+# not the default: its post-review constants were fixed after the evaluation seeds had been seen
+# (section 5c), so adopting it needs a fresh, untouched seed set.
 AUTO_METHOD = "statistical"
 
 MIN_TRAIN_WINDOWS = 12  # healthy windows needed to fit a baseline
@@ -67,7 +75,7 @@ def detect_anomalies(
     outside (0, 1).
     """
     if method != "auto" and method not in METHODS:
-        raise ValueError(f"unknown method {method!r}; use 'auto', 'statistical' or 'isolation_forest'")
+        raise ValueError(f"unknown method {method!r}; use 'auto' or one of {', '.join(METHODS)}")
     if not 0.0 < train_fraction < 1.0:
         raise ValueError("train_fraction must be strictly between 0 and 1")
     resolved = AUTO_METHOD if method == "auto" else method
@@ -125,7 +133,7 @@ def detect_anomalies(
     z_rows = [[s.z(v) for s, v in zip(stats, row)] for row in matrix]
     ex_rows = [[s.excess(z) for s, z in zip(stats, zr)] for zr in z_rows]
 
-    if resolved == "statistical":
+    if resolved in ("statistical", "statistical_trend"):
         raw = statistical_raw(ex_rows)
         raw_train = [raw[i] for i in kept]
         floor, cal_q, cal_margin = STAT_FLOOR, STAT_CAL_QUANTILE, STAT_CAL_MARGIN
@@ -139,23 +147,54 @@ def detect_anomalies(
         "baseline": {s.name: {"median": s.median, "scale": s.scale, "direction": s.direction} for s in stats},
     }
 
-    flagged = [r >= threshold for r in raw]
+    point = [r >= threshold for r in raw]
+    trend = None
+    if resolved == "statistical_trend":
+        z_cols = {f: [zr[j] for zr in z_rows] for j, f in enumerate(names)}
+        chans = trend_mod.channels(names, [s.direction for s in stats])
+        trend = trend_scores(chans, z_cols, point, kept)
+        report.parameters["trend"] = {
+            "k": trend_mod.K_REF,
+            "channels": {
+                _channel_key(c): {"threshold": h, "mean": trend.centers[c][0], "sd": trend.centers[c][1]}
+                for c, h in trend.thresholds.items()
+            },
+        }
+        flagged = [p or t >= 1.0 for p, t in zip(point, trend.raw)]
+    else:
+        flagged = point
     patterns: dict[int, str] = {}
     for i, f in enumerate(flagged):
-        if f:
-            patterns[i] = window_pattern(dict(zip(names, ex_rows[i])), dict(zip(names, z_rows[i])))
+        if not f:
+            continue
+        patterns[i] = (
+            window_pattern(dict(zip(names, ex_rows[i])), dict(zip(names, z_rows[i]))) if point[i]
+            else TREND_PATTERN
+        )
     runs = _runs(flagged)
     run_len = {i: len(r) for r in runs for i in r}
 
     stat_by_name = {s.name: s for s in stats}
     for i in range(n):
         w = report.windows[i]
-        w.score = raw[i] / (raw[i] + threshold)
+        if trend is None:
+            w.score = raw[i] / (raw[i] + threshold)
+        else:
+            r = max(raw[i] / threshold, trend.raw[i])
+            if not flagged[i]:
+                r = min(r, math.nextafter(1.0, 0.0))  # division rounding must not reach the 0.5 cut
+            w.score = r / (r + 1.0)
         if not flagged[i]:
             continue
         w.is_anomalous = True
         w.classification = final_classification(patterns[i], run_len[i])
-        w.contributions = _contributions(names, stat_by_name, obs[i], ex_rows[i], z_rows[i])
+        w.contributions = _contributions(
+            names, stat_by_name, obs[i], ex_rows[i], z_rows[i], fallback=point[i],
+        )
+        if trend is not None:
+            _add_trend_contributions(
+                w.contributions, trend, i, names, stat_by_name, obs[i], z_rows[i], first=not point[i],
+            )
 
     for run in runs:
         ep = _episode(report, run, buckets, stat_by_name, warmup, n)
@@ -193,11 +232,11 @@ def _select_training(rows: list[list[float]], names: list[str]) -> tuple[list[in
     return kept, final, excluded
 
 
-def _contributions(names, stat_by_name, obs, excess, z) -> list[dict]:
+def _contributions(names, stat_by_name, obs, excess, z, *, fallback: bool = True) -> list[dict]:
     order = sorted(range(len(names)), key=lambda j: -excess[j])[:TOP_CONTRIBUTORS]
     # features that deviate noticeably; if the flag came from a combination of small
-    # deviations, still name the single largest one
-    order = [j for j in order if excess[j] >= CONTRIB_MIN_Z] or order[:1]
+    # deviations, still name the single largest one (unless a trend alarm explains the flag)
+    order = [j for j in order if excess[j] >= CONTRIB_MIN_Z] or (order[:1] if fallback else [])
     out = []
     for j in order:
         if excess[j] <= 0:
@@ -208,6 +247,38 @@ def _contributions(names, stat_by_name, obs, excess, z) -> list[dict]:
             "baseline": s.median, "deviation": z[j],
         })
     return out
+
+
+def _channel_key(c: Channel) -> str:
+    return f"{c.feature}{'+' if c.sign > 0 else '-'}"
+
+
+def _add_trend_contributions(contribs, trend, i, names, stat_by_name, obs, z, *, first: bool) -> None:
+    """Name every feature whose CUSUM alarms in window i, with its cumulative sum and threshold.
+
+    `cusum` / `cusum_threshold` are in robust sigmas; a feature already listed by the point
+    detector gets the two keys added. `first`: drifting features go before point contributions
+    (the window was flagged by the trend alone).
+    """
+    alarms: dict[str, tuple[float, float]] = {}  # feature -> (S, h) of its strongest alarming channel
+    for ch, sums in trend.sums.items():
+        h = trend.thresholds[ch]
+        best = alarms.get(ch.feature)
+        if sums[i] >= h and (best is None or sums[i] / h > best[0] / best[1]):
+            alarms[ch.feature] = (sums[i], h)
+    ranked = sorted(alarms, key=lambda f: (-alarms[f][0] / alarms[f][1], f))[:TOP_CONTRIBUTORS]
+    listed = {c["feature"]: c for c in contribs}
+    new = []
+    for f in ranked:
+        s, h = alarms[f]
+        entry = listed.get(f)
+        if entry is None:
+            st = stat_by_name[f]
+            entry = {"feature": f, "observed": obs.get(f, math.nan), "baseline": st.median,
+                     "deviation": z[names.index(f)]}
+            new.append(entry)
+        entry["cusum"], entry["cusum_threshold"] = s, h
+    contribs[:] = new + contribs if first else contribs + new
 
 
 def _runs(flags: list[bool]) -> list[list[int]]:

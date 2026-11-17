@@ -309,7 +309,8 @@ def test_static_serving_traversal_and_special_paths(tmp_path):
 def test_anomaly_report_stored_and_exported(client):
     iid = upload(client, "telemetry.csv").json()["id"]
     a = client.get(f"/api/imports/{iid}").json()["anomaly"]
-    assert a["method_used"] == "statistical" and len(a["windows"]) == len(client.get(f"/api/imports/{iid}").json()["timeline"])
+    from stacktriage.anomaly import AUTO_METHOD
+    assert a["method_used"] == AUTO_METHOD and len(a["windows"]) == len(client.get(f"/api/imports/{iid}").json()["timeline"])
     assert len(a["episodes"]) >= 1
     ep = a["episodes"][0]
     assert ep["severity"] in ("low", "medium", "high", "critical") and ep["classification"] != "normal"
