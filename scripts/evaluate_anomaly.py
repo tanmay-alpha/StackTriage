@@ -22,10 +22,11 @@ mean +- std are over seeds (sample std).
 Sanity gates (exit status 1 if any fails): the ERROR-count rule and every single feature must
 not be perfect; no training window may lie in the evaluated period and the baseline must not
 change when the later period is replaced; reruns must be identical; severity must not be a
-monotone function of score and must use more than one level. Only --dev measures the
-statistical-vs-IsolationForest selection. The pre-registered statistical_trend rule
-(docs/ml-evaluation.md, section 5b) is evaluated on the evaluation seeds 0-9 and AUTO_METHOD
-must agree with its outcome; no constant is tuned on those seeds.
+monotone function of score and must use more than one level. Only --dev measures model
+selection (statistical vs IsolationForest; AUTO_METHOD must equal its outcome). The criteria of
+the statistical_trend rule (docs/ml-evaluation.md, sections 5b/5c) are printed for information
+only: its constants were corrected after the evaluation seeds had been seen, so evaluation seeds
+no longer select anything.
 """
 from __future__ import annotations
 
@@ -50,7 +51,7 @@ from stacktriage.anomaly import AUTO_METHOD, detect_anomalies  # noqa: E402
 from stacktriage.anomaly.features import observed  # noqa: E402
 
 METHODS = ("statistical", "statistical_trend", "isolation_forest")
-# Pre-registered adoption rule for statistical_trend (docs/ml-evaluation.md, section 5b).
+# Criteria of the statistical_trend adoption rule (docs/ml-evaluation.md, sections 5b/5c).
 TREND_F1_TOLERANCE = 0.01
 TREND_FPR_TOLERANCE = 0.005
 RULE = "error_count_rule"
@@ -428,7 +429,7 @@ def main() -> int:
     print("top contributing feature: " + ", ".join(f"{k} {v}" for k, v in sorted(by_feature.items(), key=lambda kv: -kv[1])))
     print("classification:           " + ", ".join(f"{k} {v}" for k, v in sorted(by_class.items(), key=lambda kv: -kv[1])))
 
-    # ---- development-only IF-vs-statistical selection (the trend rule below is the only evaluation-seed rule)
+    # ---- development-only selection; evaluation never chooses a default ---------------------------
     if args.dev:
         f1_stat = [d["f1"] for d in per_seed["statistical"]]
         f1_if = [d["f1"] for d in per_seed["isolation_forest"]]
@@ -441,22 +442,17 @@ def main() -> int:
             f"  F1 isolation_forest {statistics.fmean(f1_if):.3f} - statistical {statistics.fmean(f1_stat):.3f} = "
             f"{gain:+.3f} (margin {margin:.3f})  ->  default = {decision}   (AUTO_METHOD = {AUTO_METHOD})"
         )
-        # statistical_trend extends the statistical baseline, so this rule checks its base method
-        base = "statistical" if AUTO_METHOD == "statistical_trend" else AUTO_METHOD
-        gates.check(base == decision, f"AUTO_METHOD base ({base}) equals the development decision ({decision})")
+        gates.check(AUTO_METHOD == decision, f"AUTO_METHOD ({AUTO_METHOD}) equals the development decision ({decision})")
     else:
         print(f"\nFrozen default: AUTO_METHOD = {AUTO_METHOD}; evaluation labels are not used for constant tuning.")
 
-    # ---- pre-registered statistical_trend rule (docs/ml-evaluation.md, section 5b) ---------------
+    # ---- statistical_trend rule criteria, informational (docs/ml-evaluation.md, sections 5b/5c) -----
     adopt, lines = trend_rule(per_seed, runs, seeds)
-    partition_seeds = "evaluation seeds" if not args.dev else "development seeds (informational only)"
-    print(f"\nPre-registered statistical_trend rule on the {partition_seeds}:")
+    print("\nstatistical_trend rule criteria on these seeds (informational; post hoc on evaluation seeds, "
+          "see docs/ml-evaluation.md section 5c):")
     for line in lines:
         print("  " + line)
-    print(f"  -> {'adopt statistical_trend' if adopt else 'keep statistical'} as AUTO_METHOD")
-    if not args.dev and set(seeds) == set(EVAL_SEEDS):
-        expected = "statistical_trend" if adopt else "statistical"
-        gates.check(AUTO_METHOD == expected, f"AUTO_METHOD ({AUTO_METHOD}) follows the pre-registered trend rule ({expected})")
+    print(f"  -> criteria {'met' if adopt else 'not met'}; default stays {AUTO_METHOD} until fresh seeds confirm")
 
     print(f"\nGates: {len(gates.passed)} passed, {len(gates.failures)} failed   ({time.time() - t0:.0f}s)")
     for f in gates.failures:

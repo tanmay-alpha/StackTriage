@@ -32,9 +32,10 @@ from .types import AnomalyReport, Episode, WindowFinding
 METHODS = ("statistical", "isolation_forest", "statistical_trend")
 
 # Decision of the evaluation in docs/ml-evaluation.md: which candidate "auto" runs.
-# statistical (dev rule vs Isolation Forest, section 5), extended to statistical_trend by the
-# pre-registered trend rule on the evaluation seeds (section 5b).
-AUTO_METHOD = "statistical_trend"
+# statistical (dev rule vs Isolation Forest, section 5). statistical_trend stays selectable but is
+# not the default: its post-review constants were fixed after the evaluation seeds had been seen
+# (section 5c), so adopting it needs a fresh, untouched seed set.
+AUTO_METHOD = "statistical"
 
 MIN_TRAIN_WINDOWS = 12  # healthy windows needed to fit a baseline
 EXCLUDE_Z = 6.0  # a candidate training window deviating more than this is not healthy

@@ -1,9 +1,10 @@
-"""Trend candidate (`statistical_trend`): CUSUM math, training-only calibration, the default chosen
-by the pre-registered rule, and the regression guarantee that `method="statistical"` is unchanged."""
+"""Trend candidate (`statistical_trend`): CUSUM math, training-only calibration, sparse/flat-series
+regressions, the default (`statistical`), and the guarantee that `method="statistical"` is unchanged."""
 from __future__ import annotations
 
 import hashlib
 import json
+import math
 import random
 
 import pytest
@@ -56,7 +57,9 @@ def test_constant_drift_alarms_after_the_expected_number_of_steps():
 def test_standardizer_and_calibration_floor():
     assert trend_mod.standardizer([]) == (0.0, 1.0)
     mu, sd = trend_mod.standardizer([2.0, 2.0, 2.0])
-    assert mu == 2.0 and sd == trend_mod.SD_FLOOR  # flat series is not amplified
+    assert mu == 2.0 and sd == trend_mod.SD_FLOOR == 1.0  # a flat series is never amplified
+    assert trend_mod.standardizer([0.0, 0.2, 0.0, 0.2])[1] == 1.0  # sd 0.1 < 1: divisor stays 1
+    assert trend_mod.standardizer([0.0, 4.0, 0.0, 4.0])[1] == 2.0  # noisy series may be shrunk
     assert trend_mod.calibrate_h([0.0] * 30, [False] * 30, 1.0) == trend_mod.H_FLOOR
     drift = [2.0] * 10  # S reaches 10 on the training windows -> h = margin x 10
     assert trend_mod.calibrate_h(drift, [False] * 10, 1.0) == max(trend_mod.H_FLOOR, trend_mod.H_MARGIN * 10.0)
@@ -68,6 +71,45 @@ def test_channels_cover_error_features_upward_and_metrics_both_ways():
     assert [(c.feature, c.sign) for c in chans] == [
         ("error_count", 1), ("error_ratio", 1), ("metric.latency_ms", 1), ("metric.latency_ms", -1),
     ]
+
+
+# ---- regressions: flat or sparse training series must not amplify small deviations (section 5c) --------
+
+def _flags(rows: list[dict], method: str) -> list[int]:
+    return [i for i, w in enumerate(detect_anomalies(build(rows), method=method).windows) if w.is_anomalous]
+
+
+def test_single_known_error_after_an_error_free_training_period_is_not_a_trend():
+    rows = [{"total": 50, "errors": 1 if i == 45 else 0} for i in range(60)]
+    assert _flags(rows, "statistical") == []
+    assert _flags(rows, "statistical_trend") == []  # was windows 45-46 as sustained_shift with SD_FLOOR 0.25
+
+
+def test_small_step_of_a_constant_metric_is_not_a_trend():
+    rows = [{"total": 50, "errors": 0, "metrics": {"latency_ms": 100.0 if i < 30 else 102.0}} for i in range(60)]
+    assert _flags(rows, "statistical") == []
+    assert _flags(rows, "statistical_trend") == []
+
+
+def _poisson(rng: random.Random, lam: float) -> int:
+    limit, k, p = math.exp(-lam), 0, 1.0
+    while True:
+        p *= rng.random()
+        if p <= limit:
+            return k
+        k += 1
+
+
+@pytest.mark.parametrize("lam", (0.02, 0.05, 0.1))
+def test_sparse_stationary_errors_raise_no_more_trend_alarms_than_statistical(lam):
+    """Healthy logs with rare errors: logs with any later-period flag, trend vs statistical."""
+    logs_stat = logs_trend = 0
+    for s in range(30):
+        rng = random.Random(int(lam * 1000) * 100 + s)
+        rows = [{"total": 50 + rng.randint(-5, 5), "errors": _poisson(rng, lam)} for _ in range(120)]
+        logs_stat += any(i >= 60 for i in _flags(rows, "statistical"))
+        logs_trend += any(i >= 60 for i in _flags(rows, "statistical_trend"))
+    assert logs_trend <= logs_stat
 
 
 # ---- calibration uses training windows only -------------------------------------------------------
@@ -170,12 +212,12 @@ STATISTICAL_FINGERPRINTS = {
 }
 
 
-def test_default_method_follows_the_pre_registered_rule():
-    # outcome of the rule in docs/ml-evaluation.md section 5b on evaluation seeds 0-9
-    assert AUTO_METHOD == "statistical_trend"
-    tl = make_scenario("slow_ramp", 4).timeline
-    auto = detect_anomalies(tl, seed=4)
-    assert auto.method_used == "statistical_trend" and "trend" in auto.parameters
+def test_default_method_is_statistical():
+    # statistical_trend is not adopted: its constants were corrected after the evaluation seeds were
+    # seen (docs/ml-evaluation.md section 5c); adoption needs a fresh, untouched seed set
+    assert AUTO_METHOD == "statistical"
+    auto = detect_anomalies(make_scenario("slow_ramp", 4).timeline, seed=4)
+    assert auto.method_used == "statistical" and "trend" not in auto.parameters
 
 
 @pytest.mark.parametrize(("name", "seed"), sorted(STATISTICAL_FINGERPRINTS))

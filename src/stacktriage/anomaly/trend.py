@@ -6,11 +6,12 @@ deviations instead:
 
     S_0 = 0,   S_t = min(S_cap, max(0, S_{t-1} + x_t - k))     alarm while S_t >= h
 
-`x_t` is the robust z-score of one feature in its unusual direction, re-centred and re-scaled
-by the mean / standard deviation of that series on the training windows (median-centred
-z-scores of skewed counts have a positive mean in healthy data, which a CUSUM would
-accumulate). `k` is the reference value (drift per window, in training standard deviations,
-that is ignored), `h` the decision threshold.
+`x_t` is the robust z-score of one feature in its unusual direction, re-centred by its mean on
+the training windows (median-centred z-scores of skewed counts have a positive mean in healthy
+data, which a CUSUM would accumulate) and divided by max(1, its training standard deviation):
+the re-scaling may shrink a noisy series but never inflates the robust sigma of a flat one.
+`k` is the reference value (drift per window that is ignored), `h` the decision threshold, both
+in these units.
 
 * Channels: `error_count` and `error_ratio` upward, every numeric metric up *and* down (two
   one-sided sums, metrics have unknown polarity). `event_rate` and `new_groups` are left to the
@@ -23,7 +24,8 @@ that is ignored), `h` the decision threshold.
   time order, point-flagged ones held: h = max(H_FLOOR, H_MARGIN * largest S reached there).
   No labels and no window after the training period are used.
 
-Constants were chosen on the development seeds only (docs/ml-evaluation.md, section 5b).
+K, h and the cap were chosen on the development seeds only (docs/ml-evaluation.md, section 5b);
+SD_FLOOR was raised after review, once the evaluation seeds had been seen (section 5c).
 """
 from __future__ import annotations
 
@@ -32,11 +34,14 @@ import statistics
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-K_REF = 1.0  # training sds per window that are ignored (reference value k)
-H_FLOOR = 5.0  # smallest decision threshold h (training sds)
+K_REF = 1.0  # drift per window (units of x) that is ignored (reference value k)
+H_FLOOR = 5.0  # smallest decision threshold h (units of x)
 H_MARGIN = 1.0  # h >= margin x the largest CUSUM reached on the training windows
 S_CAP_FACTOR = 1.25  # S never exceeds this multiple of h
-SD_FLOOR = 0.25  # smallest training sd of a channel (robust sigmas), avoids amplifying flat series
+# Smallest divisor of the re-centred z (robust sigmas). 1.0 = never amplify: a flat training series
+# (no training errors, a constant metric) has sd ~0 and any smaller floor turned a 2-sigma blip into
+# a one-window alarm (post-review correction, docs/ml-evaluation.md section 5c).
+SD_FLOOR = 1.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -72,7 +77,7 @@ def first_alarm(sums: Sequence[float], h: float) -> int | None:
 
 
 def standardizer(train_xs: Sequence[float]) -> tuple[float, float]:
-    """(mean, sd) of a channel on its training windows; sd never below SD_FLOOR."""
+    """(mean, divisor) of a channel on its training windows; divisor = max(sd, SD_FLOOR)."""
     if not train_xs:
         return 0.0, 1.0
     mu = statistics.fmean(train_xs)
