@@ -71,6 +71,29 @@ def read_lines(
             return
 
 
+STACK_MARKER = "\n... [truncated] ...\n"
+TEXT_MARKER = "… [truncated]"
+MAX_SERVICE_CHARS = 100  # equals the API's service filter limit, so every stored service name can be filtered on
+
+
+def clip_stack(text: str, limit: int) -> str:
+    """Bound a stack trace to `limit` characters, keeping the head AND the tail: wrapper exceptions and the
+    first frames are at the top, the root cause (last Python traceback, deepest Java `Caused by:`) at the end."""
+    if len(text) <= limit:
+        return text
+    keep = max(limit - len(STACK_MARKER), 2)
+    head, tail = text[: keep // 2], text[len(text) - (keep - keep // 2):]
+    # cut at line boundaries so no frame line is half-kept
+    head = head[: head.rfind("\n")] if "\n" in head else head
+    tail = tail[tail.find("\n") + 1:] if "\n" in tail else tail
+    return head + STACK_MARKER + tail
+
+
+def clip_text(text: str, limit: int) -> str:
+    """Bound text to `limit` characters INCLUDING the truncation marker."""
+    return text if len(text) <= limit else text[: max(limit - len(TEXT_MARKER), 0)] + TEXT_MARKER
+
+
 # ---------------------------------------------------------------- timestamps
 _TZ_FIX = re.compile(r"([+-]\d{2})(\d{2})$")
 # Calendar timestamps outside this range are rejected as unusable: they are almost always corrupt
