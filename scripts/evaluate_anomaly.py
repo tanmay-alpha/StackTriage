@@ -4,7 +4,8 @@
     python scripts/evaluate_anomaly.py --dev        # the tuning seeds (never used for reported numbers)
     python scripts/evaluate_anomaly.py --seeds 3,4  # explicit seeds
 
-Candidates: the statistical robust-z baseline and scikit-learn IsolationForest (refit from the
+Candidates: the statistical robust-z baseline, `statistical_trend` (the same baseline OR a
+one-sided CUSUM per feature for slow drifts) and scikit-learn IsolationForest (refit from the
 training windows on every run), plus a single-feature "ERROR count" rule as a sanity floor.
 All fit on the first half of each timeline only and are scored on the later half
 (the `early_incident` stress scenario is additionally scored on the training period).
@@ -21,8 +22,10 @@ mean +- std are over seeds (sample std).
 Sanity gates (exit status 1 if any fails): the ERROR-count rule and every single feature must
 not be perfect; no training window may lie in the evaluated period and the baseline must not
 change when the later period is replaced; reruns must be identical; severity must not be a
-monotone function of score and must use more than one level. Only --dev measures model
-selection; evaluation reports the frozen AUTO_METHOD without selecting on held-out labels.
+monotone function of score and must use more than one level. Only --dev measures the
+statistical-vs-IsolationForest selection. The pre-registered statistical_trend rule
+(docs/ml-evaluation.md, section 5b) is evaluated on the evaluation seeds 0-9 and AUTO_METHOD
+must agree with its outcome; no constant is tuned on those seeds.
 """
 from __future__ import annotations
 
@@ -46,7 +49,10 @@ from sklearn.metrics import average_precision_score, precision_recall_curve, roc
 from stacktriage.anomaly import AUTO_METHOD, detect_anomalies  # noqa: E402
 from stacktriage.anomaly.features import observed  # noqa: E402
 
-METHODS = ("statistical", "isolation_forest")
+METHODS = ("statistical", "statistical_trend", "isolation_forest")
+# Pre-registered adoption rule for statistical_trend (docs/ml-evaluation.md, section 5b).
+TREND_F1_TOLERANCE = 0.01
+TREND_FPR_TOLERANCE = 0.005
 RULE = "error_count_rule"
 ALL_CANDIDATES = (*METHODS, RULE)
 FEATURES = ("error_count", "event_rate", "error_ratio", "new_groups", "metric.cpu_pct", "metric.latency_ms",
@@ -220,9 +226,34 @@ def leakage_checks(gates: Gates, sc: Scenario, method: str, rep, replace_later: 
     same = (
         rep.parameters.get("baseline") == rep2.parameters.get("baseline")
         and rep.parameters.get("threshold_raw") == rep2.parameters.get("threshold_raw")
+        and rep.parameters.get("trend") == rep2.parameters.get("trend")  # CUSUM thresholds / centres
         and [w.score for w in rep.windows[:s]] == [w.score for w in rep2.windows[:s]]
     )
     gates.check(same, f"{tag} baseline, threshold and training-period scores independent of the later period")
+
+
+def trend_rule(per_seed: dict, runs: dict, seeds) -> tuple[bool, list[str]]:
+    """Adopt statistical_trend only if (a) slow_ramp first-flag delay and window recall improve over
+    statistical, (b) pooled main F1 >= statistical's - 0.01, (c) pooled FPR/window <= statistical's + 0.005
+    (means over seeds). Delay is the mean over seeds of the per-seed delay of detected incidents."""
+    def ramp(c: str) -> tuple[float, float]:
+        rs = [runs[(c, "slow_ramp", s)] for s in seeds]
+        delays = [d for d in (_incident_stats([r])["delay"] for r in rs) if d == d]
+        return (statistics.fmean(_prf(r.labels, r.flags)["recall"] for r in rs),
+                statistics.fmean(delays) if delays else float("inf"))
+    (rec_s, del_s), (rec_t, del_t) = ramp("statistical"), ramp("statistical_trend")
+    f1_s, f1_t = (statistics.fmean(d["f1"] for d in per_seed[c]) for c in ("statistical", "statistical_trend"))
+    fpr_s, fpr_t = (statistics.fmean(d["fpr"] for d in per_seed[c]) for c in ("statistical", "statistical_trend"))
+    a = del_t < del_s and rec_t > rec_s
+    b = f1_t >= f1_s - TREND_F1_TOLERANCE
+    c = fpr_t <= fpr_s + TREND_FPR_TOLERANCE
+    lines = [
+        f"(a) slow_ramp delay {del_t:.2f} vs {del_s:.2f} windows, window recall {rec_t:.3f} vs {rec_s:.3f}: "
+        f"{'pass' if a else 'FAIL'}",
+        f"(b) pooled main F1 {f1_t:.3f} >= {f1_s:.3f} - {TREND_F1_TOLERANCE}: {'pass' if b else 'FAIL'}",
+        f"(c) pooled FPR/window {fpr_t:.4f} <= {fpr_s:.4f} + {TREND_FPR_TOLERANCE}: {'pass' if c else 'FAIL'}",
+    ]
+    return a and b and c, lines
 
 
 # ---- main ----------------------------------------------------------------------------------
@@ -412,7 +443,18 @@ def main() -> int:
         )
         gates.check(AUTO_METHOD == decision, f"AUTO_METHOD ({AUTO_METHOD}) equals the development decision ({decision})")
     else:
-        print(f"\nFrozen default: AUTO_METHOD = {AUTO_METHOD}; evaluation labels are not used for model selection.")
+        print(f"\nFrozen default: AUTO_METHOD = {AUTO_METHOD}; evaluation labels are not used for constant tuning.")
+
+    # ---- pre-registered statistical_trend rule (docs/ml-evaluation.md, section 5b) ---------------
+    adopt, lines = trend_rule(per_seed, runs, seeds)
+    partition_seeds = "evaluation seeds" if not args.dev else "development seeds (informational only)"
+    print(f"\nPre-registered statistical_trend rule on the {partition_seeds}:")
+    for line in lines:
+        print("  " + line)
+    print(f"  -> {'adopt statistical_trend' if adopt else 'keep statistical'} as AUTO_METHOD")
+    if not args.dev and set(seeds) == set(EVAL_SEEDS):
+        expected = "statistical_trend" if adopt else "statistical"
+        gates.check(AUTO_METHOD == expected, f"AUTO_METHOD ({AUTO_METHOD}) follows the pre-registered trend rule ({expected})")
 
     print(f"\nGates: {len(gates.passed)} passed, {len(gates.failures)} failed   ({time.time() - t0:.0f}s)")
     for f in gates.failures:

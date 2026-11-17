@@ -38,7 +38,8 @@ def test_report_shape_and_invariants(method):
         assert (w.classification == "normal") == (not w.is_anomalous)
         assert (not w.is_anomalous) <= (w.contributions == [])
         for c in w.contributions:
-            assert set(c) == {"feature", "observed", "baseline", "deviation"}
+            trend_keys = {"cusum", "cusum_threshold"} if method == "statistical_trend" and "cusum" in c else set()
+            assert set(c) == {"feature", "observed", "baseline", "deviation"} | trend_keys
     flagged = [i for i, w in enumerate(rep.windows) if w.is_anomalous]
     assert flagged, "noisy_mixed contains four labelled incidents"
     covered = sorted(i for e in rep.episodes for i in range(

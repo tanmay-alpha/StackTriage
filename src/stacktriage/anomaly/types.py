@@ -28,7 +28,9 @@ class WindowFinding:
     severity: str | None
     features: dict[str, float]  # observed values
     # top contributing features: {"feature", "observed", "baseline", "deviation"} where
-    # `deviation` is the signed robust z-score against the training-period baseline
+    # `deviation` is the signed robust z-score against the training-period baseline.
+    # `statistical_trend` adds {"cusum", "cusum_threshold"} (training sds) to features whose
+    # trend CUSUM alarms in this window.
     contributions: list[dict[str, Any]] = field(default_factory=list)
     used_for_training: bool = False  # True when this window was part of the baseline fit
 
@@ -49,7 +51,7 @@ class Episode:
 
 @dataclass(slots=True)
 class AnomalyReport:
-    method_used: str  # "statistical" | "isolation_forest"
+    method_used: str  # "statistical" | "isolation_forest" | "statistical_trend"
     requested_method: str
     windows: list[WindowFinding]  # one per bucket; unscored (score 0) when the report has notes only
     train_range: tuple[datetime, datetime] | None

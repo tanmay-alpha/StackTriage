@@ -37,6 +37,9 @@ with the same peak score get different severity).
    combinations of small deviations). Contributions still name the largest.
 5. `normal`: not anomalous.
 
+With `statistical_trend` (section 5b), a window flagged *only* by the trend CUSUM is a `sustained_shift`
+regardless of the run length: the CUSUM alarms only after deviations accumulated over several windows.
+
 Episode classification = classification of its peak-score window.
 `WindowFinding.contributions` lists the top (max 3) features that deviate by >= 2 sigma:
 `{"feature", "observed", "baseline", "deviation"}` where `baseline` is the training median and
@@ -118,6 +121,9 @@ decision, not an oversight.
   memorised scores: threshold = `max(0.02, 1.2 * q90 of the out-of-fold scores)` above their median.
   scikit-learn is imported lazily; without it `isolation_forest` falls back to `statistical`
   with a note.
+* **statistical_trend** (section 5b): `statistical` OR a one-sided tabular CUSUM per feature on the same
+  robust z-scores, for slow drifts. Selectable; whether it becomes the default is decided by the
+  pre-registered rule in section 5b.
 * **error_count_rule** (sanity floor, not a candidate): flag a window when ERROR count >
   mean + 3 sd of the first half.
 
@@ -335,6 +341,65 @@ window recall is equal or within noise of the statistical one. The statistical r
 Likely reasons (not isolated by an experiment): with ~60 training windows and 4-7 features a forest has
 little to learn that the per-feature deviations do not already say, and its scores are not tied to units the
 way a z-score is. The conclusion is conditional on this data: do not read it as "IF is bad in general".
+
+## 5b. Trend candidate for slow drifts (`statistical_trend`)
+
+**Motivation.** On `slow_ramp` the statistical detector reaches window recall 0.34 and first flags 14.7
+windows after the ramp starts (section 6): every ramp window is compared with the global baseline on its
+own, so only the late, steep part crosses the threshold.
+
+**Method** (`anomaly/trend.py`, combined in `anomaly/detect.py`). For each *trend channel* a one-sided
+tabular CUSUM `S_t = min(cap, max(0, S_{t-1} + x_t - k))` alarms while `S_t >= h`.
+
+* Channels: `error_count` up, `error_ratio` up, every numeric metric up *and* down (two one-sided sums;
+  metrics have unknown polarity). `event_rate` (step-like traffic drops) and `new_groups` (single-window
+  novelty) stay with the point detector.
+* `x_t` = the robust z of that feature (same baseline as `statistical`), signed in the channel's direction,
+  then re-centred and re-scaled by its mean and standard deviation on the training windows (sd floored at
+  0.25). Without this, median-centred z-scores of skewed Poisson counts have a positive mean in healthy data
+  and the sum drifts upwards on its own (measured on the development seeds: FPR/window 0.14 for the
+  un-centred first version with k 0.5, h 5).
+* Windows already flagged by the point detector are *held* (S unchanged): spikes stay the point detector's
+  job and an isolated burst does not leave a CUSUM tail. S is capped at `1.25 h`, so an alarm ends a few
+  windows after the series returns to its training mean.
+* Calibration, training windows only, no labels: the centring, the scaling and
+  `h = max(H_FLOOR, H_MARGIN * largest S reached on the training windows)` (time order, point-flagged
+  windows held). The CUSUM is causal, so training-period scores cannot depend on later windows; the leakage
+  gate also compares the fitted trend parameters (`parameters["trend"]`).
+* Combination: flag = statistical flag OR any channel alarms; score = `r / (r + 1)` with
+  `r = max(raw / threshold, max_channel S / h)`, so 0.5 is still the decision cut. The flags are a superset
+  of `statistical`'s, so its window recall and first-flag delay can only be equal or better; the question is
+  the price in false alarms.
+* Explanations: every feature whose CUSUM alarms is listed in `contributions` with two extra keys, `cusum`
+  and `cusum_threshold` (training sds). Trend-only windows list the drifting features first.
+
+**Tuning (development seeds 1000-1005 only; partial grids, not a full factorial).** `k` in
+{0.5, 0.75, 1.0, 1.5}, `H_FLOOR` in {5, 6, 8, 10, 12, 20}, `H_MARGIN` in {1, 1.5, 2}, cap factor in
+{1.0, 1.1, 1.25, 1.5}, sd floor in {0.25, 0.5, 1.0} and channel sets (error features only / metrics upward
+only / all). `H_MARGIN` and the sd floors 0.25/0.5 made little or no difference (the floor `H_FLOOR`
+dominates `h`); the channel set changed little at the chosen point, so all channels were kept. Low `k`/`h`
+buys ramp recall with false alarms (centred, k 0.5, h 5, cap 1.5: dev slow_ramp delay 11.3 but FPR/window
+0.084 vs 0.012). Selection: the earliest development first flag among settings that add at most +0.003
+FPR/window and lose at most 0.005 F1 (about 60 % / 50 % of the margins of rules (c) and (b) below), ties
+broken by slow_ramp window recall. Chosen: **k = 1.0, H_FLOOR = 5, H_MARGIN = 1.0, cap 1.25 h, sd floor
+0.25** (dev: slow_ramp first flag 13.5 vs 15.2 windows, window recall 0.62 vs 0.32; pooled F1 0.914 vs
+0.915, FPR/window 0.0151 vs 0.0123). `k 0.75, h 6, cap 1.25` had higher dev recall (0.67) at the same delay
+but used +0.004 of the 0.005 FPR margin. Development numbers here come from an ad-hoc tuning loop over the
+same `run_detector`/`pooled` code; `python scripts/evaluate_anomaly.py --dev` reproduces the chosen setting.
+No constant was changed after the evaluation seeds were run.
+
+**Pre-registered decision rule** (written here before the evaluation seeds 0-9 were run with this
+candidate; implemented in `scripts/evaluate_anomaly.py`, `trend_rule`). `statistical_trend` becomes
+`AUTO_METHOD` only if, on evaluation seeds 0-9 (means over seeds):
+
+* (a) on `slow_ramp`, the first-flag delay is lower **and** the window recall is higher than `statistical`'s;
+* (b) pooled main-scenario F1 >= `statistical`'s F1 - 0.01;
+* (c) pooled main-scenario FPR/window <= `statistical`'s FPR + 0.005.
+
+Otherwise `statistical` stays the default, `statistical_trend` stays selectable, and the result is reported
+as negative/partial. The evaluation run prints the three checks and fails a gate if `AUTO_METHOD` disagrees
+with the outcome. This is the one place where evaluation seeds decide something; the decision is binary,
+and the rule and every constant were fixed beforehand.
 
 ## 6. Known failure cases (all measured above)
 

@@ -16,6 +16,10 @@ Rules, first match wins (DEV_Z = 3.0 robust sigmas in the unusual direction = "d
 4. `unusual_pattern` flagged by the model but no single feature reaches DEV_Z (typical for a
                      multivariate Isolation Forest finding). Contributions still list the
                      largest deviations.
+
+Windows flagged *only* by the trend CUSUM (method `statistical_trend`) get the pattern
+`drift` and are always a `sustained_shift`: the CUSUM alarms only after deviations
+accumulated over several windows, whatever the length of the flagged run.
 """
 from __future__ import annotations
 
@@ -23,6 +27,7 @@ from collections.abc import Mapping
 
 DEV_Z = 3.0
 SUSTAINED_MIN_WINDOWS = 3
+TREND_PATTERN = "drift"
 
 
 def window_pattern(excess: Mapping[str, float], z: Mapping[str, float]) -> str:
@@ -42,6 +47,8 @@ def window_pattern(excess: Mapping[str, float], z: Mapping[str, float]) -> str:
 
 def final_classification(pattern: str, run_length: int) -> str:
     """Resolve `deviation` into spike / sustained_shift using the anomalous run length."""
+    if pattern == TREND_PATTERN:
+        return "sustained_shift"
     if pattern != "deviation":
         return pattern
     return "sustained_shift" if run_length >= SUSTAINED_MIN_WINDOWS else "spike"
